@@ -9,5 +9,6 @@ import { Component, input } from '@angular/core';
 export class DefaultLoginLayout {
   title = input('');
   primaryButtonText = input('');
-  secondaryButtonText = input('');
+  secondaryLinkText = input('');
+  primaryLinkText = input('');
 }

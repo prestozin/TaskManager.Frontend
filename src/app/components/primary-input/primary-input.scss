@@ -1,0 +1,13 @@
+@import "../../../styles/variables.scss";
+
+input {
+    border-radius: 34px;
+    background-color: $gray-bg;
+    border: 2px solid $text-color;
+    font-size: 18px;
+    color: $text-color;
+    height: 66px;
+    width: 470px;
+    text-align: center;
+    padding-right: 200px;
+}

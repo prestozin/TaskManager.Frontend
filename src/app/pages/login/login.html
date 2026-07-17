@@ -1,6 +1,23 @@
 <app-default-login-layout
 title = "Bem-vindo(a)!"
-primaryButtonText = "Login"
-secondaryButtonText = "Criar uma conta">
+primaryButtonText = "LOGIN"
+primaryLinkText = "Esqueceu sua senha?"
+secondaryLinkText = "Criar uma conta">
+
+    <form [formGroup]="loginForm">
+
+        <app-primary-input
+            type="email"
+            placeholder="Digite seu e-mail"
+            [control]="loginForm.controls.email">
+        </app-primary-input>
+
+        <app-primary-input
+            type="password"
+            placeholder="Digite sua senha"
+            [control]="loginForm.controls.password">
+        </app-primary-input>
+
+    </form>
 
 </app-default-login-layout>

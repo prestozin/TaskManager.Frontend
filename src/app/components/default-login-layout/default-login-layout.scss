@@ -2,29 +2,107 @@
 
 main {
     display: flex;
-    height: 100%;
+    width: 100%;
+    height: 100vh;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
 
     section {
         height: 100%;
     }
 
     .logo-section {
+        position: relative;
+        overflow: hidden;
+
         display: flex;
-        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        gap: 8px;
+        justify-content: left;
         flex: 1;
         
         background-color: $primary-color;
 
         h2 {
             color: white;
-            font-size: 65px;
+            font-size: 48px;
+        }
+
+        .features {
+            display:flex;
+            flex-direction:column;
+            padding-left: 150px;
+            padding-bottom: 120px;
+            gap:28px;
+            z-index: 1;
+
+            h2{
+                color:white;
+                font-size:48px;
+                padding-bottom: 100px;
+            }
+
+            .feature{
+                display:flex;
+                align-items:center;
+                gap:18px;
+
+                p{
+                    color:white;
+                    font-size:28px;
+                }
+            }
+        }
+
+        .logo {
+            position:absolute;
+
+            right:70px;
+
+            top:50%;
+
+            transform:translateY(-40%);
+
+            width:380px;
+            height:380px;
+
+
+            .logo-img {
+                position: absolute;
+
+                width: 190px;
+                height: 189px;
+
+                top: 50%;
+                left: 50%;
+
+                transform: translate(-40%, -60%);
+
+                z-index: 1;
+            }
+
+            .shape-logo {
+                position: absolute;
+
+                inset: 0;
+
+                width: 100%;
+                height: 100%;
+
+                object-fit: contain;
+
+                z-index: 0;
+            }
+        }
+
+        .shapes{
+            position:absolute;
+
+            width:100%;
+            height:100%;
+            object-fit:cover;
+
+            z-index:0;
         }
     }
 
@@ -33,6 +111,7 @@ main {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
         gap: 8px;
         flex: 1;
 
@@ -40,7 +119,36 @@ main {
 
         h2 {
             color: $primary-color;
-            font-size: 65px;
+            font-size: 48px;
+        }
+
+        button {
+            height: 66px;
+            width: 470px;
+
+            font-size: 20px;
+            font-weight: 400;
+            border-radius: 34px;
+            background-color: $primary-color;
+            color: white;
+            border: none;
+        }
+
+        a{
+            width: 100%;
+            font-size: 18px;
+            font-weight: 400;
+            color: $primary-color;
+        }
+
+        .forgot-password{
+            text-align:start;
+            padding: 0px 0px 30px 300px;
+        }
+
+        .create-account{
+            text-align:center;
+            padding-bottom: 10px;
         }
     }
 }

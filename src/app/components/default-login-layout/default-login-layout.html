@@ -1,14 +1,49 @@
 <main>
 
     <section class="form-section">
+
         <h2>{{ title() }}</h2>
+
+        <ng-content></ng-content>
+        
+        <a class="forgot-password" routerLink="/forgot-password"> {{ primaryLinkText() }}</a>
+
         <button>{{ primaryButtonText() }}</button>
-        <button>{{ secondaryButtonText() }}</button>
+        
+        <a class="create-account" routerLink="/register"> {{ secondaryLinkText() }}</a>
+
     </section>
     
     <section class="logo-section">
-        <h2>Task Manager</h2>
-        <img src="logo.svg"/>
+
+        <img class ="shapes" src="shapes.svg"/>
+
+        <div class="features">
+
+            <h2>Task Manager</h2>
+
+            <div class="feature">   
+                <img class ="checkmark-icon" src="checkmark_icon.svg"/>
+                <p>Organize</p>
+            </div>
+
+            <div class="feature" >   
+                <img class ="clock-icon" src="clock_icon.svg"/>
+                <p>Priorize</p>
+            </div>
+
+            <div class="feature" >   
+                <img class ="graphic-icon" src="graphic_icon.svg"/>
+                <p>Acompanhe</p>
+            </div>
+
+        </div>
+
+        <div class="logo">
+            <img class="logo-img" src="logo.svg"/>
+            <img class="shape-logo" src="shape_logo.svg"/>
+        </div>
+        
     </section>
 
 </main>
