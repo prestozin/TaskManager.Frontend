@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-default-login-layout',
@@ -11,4 +11,9 @@ export class DefaultLoginLayout {
   primaryButtonText = input('');
   secondaryLinkText = input('');
   primaryLinkText = input('');
+  submitClicked = output<void>();
+
+  submit(){
+    this.submitClicked.emit();
+  }
 }

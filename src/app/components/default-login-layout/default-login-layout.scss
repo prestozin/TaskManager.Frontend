@@ -33,7 +33,7 @@ main {
             h2{
                 color:white;
                 font-size:40px;
-                padding-bottom: 65px;
+                padding-bottom: 50px;
             }
 
             .feature{
@@ -51,13 +51,14 @@ main {
         .logo {
             position:absolute;
 
-            right:70px;
+  
 
             top:50%;
-
+            right:70px;
             transform:translateY(-40%);
 
-            width:380px;
+            width:100%;
+            max-width:380px;
             height:380px;
 
 
@@ -109,7 +110,7 @@ main {
         gap: 8px;
         flex: 1;
 
-        background-color: #ffffff;
+        background-color: white;
 
         .form-card {
 
@@ -117,47 +118,61 @@ main {
             flex-direction: column;
             align-items: center;
             border-radius: 24px;
-            border: 1px solid #e1dedeFF;
+            border: 1px solid #E1DEDE;
             box-shadow: 2px 2px 2px 0px #00000033;
-            background-color: #ffffff;
+            background-color: white;
             padding: 100px 80px 100px 80px;
 
             z-index: 2;
-        }
 
-        h2 {
-            color: $primary-color;
-            font-size: 40px;
-        }
+            h2 {
+                color: $primary-color;
+                font-size: 40px;
+            }
 
-        button {
-            height: 66px;
-            width: 470px;
+            .primary-button {
+                width: 100%;
+                max-width: 470px;
+                padding: 20px 0px;
 
-            font-size: 20px;
-            font-weight: 400;
-            border-radius: 34px;
-            background-color: $primary-color;
-            color: white;
-            border: none;
-        }
+                font-size: 20px;
+                font-weight: 400;
+                border-radius: 34px;
+                background-color: $primary-color;
+                color: white;
+                border: none;
+                cursor: pointer;
 
-        a{
-            width: 100%;
-            font-size: 16px;
-            font-weight: 400;
-            color: $primary-color;
-        }
+                &:hover {
+                    filter: brightness(1.1);
+                }
 
-        .forgot-password{
-            text-align:start;
-            padding: 6px 0px 30px 65px;
-        }
+                &:active {
+                transform: scale(0.97);
+                }
+            }
 
-        .create-account{
-            text-align:center;
-            padding-bottom: 10px;
-            padding-top: 10px;
-        }
+            a{
+                width: 100%;
+                font-size: 16px;
+                font-weight: 400;
+                color: $primary-color;
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }   
+
+            .forgot-password{
+                text-align:start;
+                padding: 6px 0px 30px 40px;
+            }
+
+            .create-account{
+                text-align:center;
+                padding-top: 10px;
+            }    
+        }       
     }
 }

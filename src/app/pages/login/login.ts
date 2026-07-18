@@ -19,4 +19,8 @@ export class Login {
     email: new FormControl<string>('', {nonNullable: true, validators: [Validators.required, Validators.email]}),
     password: new FormControl<string>('', {nonNullable: true, validators: [Validators.required, Validators.minLength(6)]})
   });
+
+  submit() {
+    console.log(this.loginForm.value) 
+  }
 }

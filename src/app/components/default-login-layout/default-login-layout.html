@@ -2,7 +2,7 @@
 
     <section class="form-section">
 
-        <div class = "form-card">
+        <div class="form-card">
 
             <h2>{{ title() }}</h2>
 
@@ -10,10 +10,10 @@
         
             <a class="forgot-password" routerLink="/forgot-password"> {{ primaryLinkText() }}</a>
 
-            <button>{{ primaryButtonText() }}</button>
+            <button class="primary-button" (click)="submit()">{{ primaryButtonText() }}</button>
         
             <a class="create-account" routerLink="/register"> {{ secondaryLinkText() }}</a>
-            
+
         </div>
 
         
