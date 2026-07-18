@@ -2,16 +2,21 @@
 
     <section class="form-section">
 
-        <h2>{{ title() }}</h2>
+        <div class = "form-card">
 
-        <ng-content></ng-content>
+            <h2>{{ title() }}</h2>
+
+            <ng-content></ng-content>
         
-        <a class="forgot-password" routerLink="/forgot-password"> {{ primaryLinkText() }}</a>
+            <a class="forgot-password" routerLink="/forgot-password"> {{ primaryLinkText() }}</a>
 
-        <button>{{ primaryButtonText() }}</button>
+            <button>{{ primaryButtonText() }}</button>
         
-        <a class="create-account" routerLink="/register"> {{ secondaryLinkText() }}</a>
+            <a class="create-account" routerLink="/register"> {{ secondaryLinkText() }}</a>
+            
+        </div>
 
+        
     </section>
     
     <section class="logo-section">
