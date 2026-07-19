@@ -1,12 +1,12 @@
 import { Component, input, output } from '@angular/core';
 
 @Component({
-  selector: 'app-default-login-layout',
+  selector: 'app-auth-layout',
   imports: [],
-  templateUrl: './default-login-layout.html',
-  styleUrl: './default-login-layout.scss',
+  templateUrl: './auth-layout.html',
+  styleUrl: './auth-layout.scss',
 })
-export class DefaultLoginLayout {
+export class AuthLayoutComponent {
   title = input('');
   primaryButtonText = input('');
   secondaryLinkText = input('');

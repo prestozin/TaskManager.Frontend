@@ -1,13 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Service } from '@angular/core';
+import { inject, Injectable  } from '@angular/core';
 
-@Service()
-export class Login {
+@Injectable({
+  providedIn: 'root'
+})
+
+export class AuthService {
     
-    constructor(private httpClient: HttpClient) {}
+    private httpClient = inject(HttpClient);
 
     login(email: string, password: string) {
+
         const body = { email, password };
+        
         return this.httpClient.post("https://api.example.com/login", body);
     }
 }
