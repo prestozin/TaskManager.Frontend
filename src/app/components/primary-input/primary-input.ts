@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 type InputTypes = "text" | "email" | "password"
@@ -14,13 +14,10 @@ type InputTypes = "text" | "email" | "password"
 
 export class PrimaryInput {
 
-  @Input({ required: true })
-  control!: FormControl;
+  control = input.required<FormControl>() ;
 
-  @Input()
-  type: InputTypes = "text";
+  type = input<InputTypes>('text');
 
-  @Input()
-  placeholder: string = "";
-  
+  placeholder = input<string>('');
+   
 }

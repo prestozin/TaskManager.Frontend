@@ -6,6 +6,7 @@ import { Component, input, output } from '@angular/core';
   templateUrl: './auth-layout.html',
   styleUrl: './auth-layout.scss',
 })
+
 export class AuthLayoutComponent {
   title = input('');
   primaryButtonText = input('');
