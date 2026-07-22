@@ -10,8 +10,7 @@ import { Component, input, output } from '@angular/core';
 export class AuthLayoutComponent {
   title = input('');
   primaryButtonText = input('');
-  secondaryLinkText = input('');
-  primaryLinkText = input('');
+  textLink = input('');
   submitClicked = output<void>();
 
   submit(){

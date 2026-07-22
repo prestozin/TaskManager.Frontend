@@ -1,34 +1,36 @@
 <app-auth-layout
 title = "Crie sua conta"
 primaryButtonText = "REGISTRAR"
-secondaryLinkText = "Já tem uma conta? Faça login">
+textLink = "Já tem uma conta? Faça login"
+(submitClicked)="submit()">
 
 <form auth-form [formGroup]="registerForm">
 
         <app-primary-input
             type="text"
-            placeholder="Digite seu nome"
+            placeholder="Nome"
             [control]="registerForm.controls.name">
         </app-primary-input>
         
         <app-primary-input
             type="email"
-            placeholder="Digite seu e-mail"
+            placeholder="E-mail"
             [control]="registerForm.controls.email">
         </app-primary-input>
 
         <app-primary-input
             type="password"
-            placeholder="Digite sua senha"
+            placeholder="Senha"
             [control]="registerForm.controls.password">
         </app-primary-input>
 
         <app-primary-input
             type="password"
-            placeholder="Confirme sua senha"
+            placeholder="Confirmar senha"
             [control]="registerForm.controls.password">
         </app-primary-input>
 
     </form>
 
 </app-auth-layout>
+

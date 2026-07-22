@@ -5,13 +5,13 @@
 
             <h2>{{ title() }}</h2>
 
-            <ng-content select="[auth-form]"></ng-content>
-        
-            <a class="forgot-password" routerLink="/forgot-password"> {{ primaryLinkText() }}</a>
+            <div class="form-container">
+                <ng-content select="[auth-form]"></ng-content>
+            </div>        
 
             <button class="primary-button" (click)="submit()">{{ primaryButtonText() }}</button>
         
-            <a class="create-account" routerLink="/register"> {{ secondaryLinkText() }}</a>
+            <a class="textLink" routerLink="/register"> {{ textLink() }}</a>
 
         </div>
 

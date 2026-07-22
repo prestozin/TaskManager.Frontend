@@ -23,4 +23,7 @@ export class Register {
     confirmPassword: new FormControl<string>('', {nonNullable: true, validators: [Validators.required, Validators.minLength(6)]})
   });
 
+  submit() {
+    console.log(this.registerForm.value) 
+  }
 }

@@ -1,23 +1,24 @@
 <app-auth-layout
 title = "Bem-vindo(a)!"
 primaryButtonText = "LOGIN"
-primaryLinkText = "Esqueceu sua senha?"
-secondaryLinkText = "Criar uma conta"
+textLink = "Criar uma conta"
 (submitClicked)="submit()">
 
     <form auth-form [formGroup]="loginForm">
 
         <app-primary-input
             type="email"
-            placeholder="Digite seu e-mail"
+            placeholder="Endereço de email"
             [control]="loginForm.controls.email">
         </app-primary-input>
 
         <app-primary-input
             type="password"
-            placeholder="Digite sua senha"
+            placeholder="Senha"
             [control]="loginForm.controls.password">
         </app-primary-input>
+
+        <a class="forgot-password" routerLink="/forgot-password"> Esqueceu sua senha? </a>
 
     </form>
 
