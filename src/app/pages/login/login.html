@@ -1,7 +1,6 @@
 <app-auth-layout
 title = "Bem-vindo(a)!"
 primaryButtonText = "LOGIN"
-textLink = "Criar uma conta"
 (submitClicked)="submit()">
 
     <form auth-form [formGroup]="loginForm">
@@ -21,5 +20,10 @@ textLink = "Criar uma conta"
         <a class="forgot-password" routerLink="/forgot-password"> Esqueceu sua senha? </a>
 
     </form>
+
+    <div auth-footer class="auth-footer">
+        <span class="footer-text">Não possui uma conta?</span>
+        <a class="textLink" routerLink="/register">Criar conta</a>
+    </div>
 
 </app-auth-layout>

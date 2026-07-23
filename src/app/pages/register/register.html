@@ -1,10 +1,11 @@
 <app-auth-layout
 title = "Crie sua conta"
 primaryButtonText = "REGISTRAR"
-textLink = "Já tem uma conta? Faça login"
+textLink = "Faça login"
+linkRoute = "/login"
 (submitClicked)="submit()">
 
-<form auth-form [formGroup]="registerForm">
+    <form auth-form [formGroup]="registerForm">
 
         <app-primary-input
             type="text"
@@ -32,5 +33,11 @@ textLink = "Já tem uma conta? Faça login"
 
     </form>
 
+    <div auth-footer class="auth-footer">
+        <span class="footer-text">Já tem uma conta?</span>
+        <a class="textLink" routerLink="/login">Faça login</a>
+    </div>
+
 </app-auth-layout>
+
 

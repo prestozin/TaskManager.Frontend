@@ -11,7 +11,7 @@
 
             <button class="primary-button" (click)="submit()">{{ primaryButtonText() }}</button>
         
-            <a class="textLink" routerLink="/register"> {{ textLink() }}</a>
+            <ng-content select="[auth-footer]"></ng-content>
 
         </div>
 

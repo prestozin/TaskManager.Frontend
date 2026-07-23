@@ -9,3 +9,22 @@ form {
     padding-top: 35px;
     padding-bottom: 24px;
 }
+
+.auth-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 16px;
+}
+
+.footer-text {
+    color: black;
+}
+
+.textLink {
+    color: $primary-color;
+    text-decoration: underline;
+    cursor: pointer;
+}

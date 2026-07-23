@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { AuthLayoutComponent } from "../../components/auth-layout/auth-layout";
 import { PrimaryInput } from '../../components/primary-input/primary-input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   imports: [
     AuthLayoutComponent,
     ReactiveFormsModule,
-    PrimaryInput
+    PrimaryInput,
+    RouterLink
   ],
   templateUrl: './register.html',
   styleUrl: './register.scss',

@@ -3,13 +3,15 @@ import { AuthLayoutComponent } from '../../components/auth-layout/auth-layout';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PrimaryInput } from '../../components/primary-input/primary-input';
 import { AuthService } from '../../services/auth';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   imports: [
     AuthLayoutComponent,
     ReactiveFormsModule,
-    PrimaryInput
+    PrimaryInput,
+    RouterLink
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
