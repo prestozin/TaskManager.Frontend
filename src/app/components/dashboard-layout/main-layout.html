@@ -1,0 +1,67 @@
+<div class= "layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <h2>Task Manager</h2>
+        </div>
+
+        <div class="logo">
+            <img class="logo-img" src="fav"/>
+            <img class="shape-logo" src=""/>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a class="menu-link" routerLink="/dashboard">
+                <img class="icon-menu" src="clock_icon.svg">
+                <span>Dashboard</span>
+            </a>
+
+            <a class="menu-link" routerLink="/tasks">
+                <img class="icon-menu" src="clock_icon.svg">
+                <span>Tarefas</span>
+            </a>
+
+            <a class="menu-link" routerLink="/profile">
+                <img class="icon-menu" src="clock_icon.svg">
+                <span>Perfil</span>
+            </a>
+
+            <a class="menu-link" routerLink="/settings">
+                <img class="icon-menu" src="clock_icon.svg">
+                <span>Configurações</span>
+            </a>
+                    
+        </nav>   
+        
+        <div class ="sidebar-footer">
+            <button>Sair</button>
+        </div>
+
+    </aside>
+
+    <div class="content">
+        <header>
+            <div class ="title-container">
+                <h2> {{ title() }} </h2>
+                <p>Vamos organizar as coisas!</p>
+            </div>
+    
+            <div class="user-container">
+                <img class="user-icon" src="">
+                <p class="user-name"> {{ username() }}</p>
+            </div>     
+        </header>
+    </div>
+
+    <main>
+            
+    </main>
+
+    <footer>
+        <p>Páginas</p>
+    </footer>
+
+</div>
+

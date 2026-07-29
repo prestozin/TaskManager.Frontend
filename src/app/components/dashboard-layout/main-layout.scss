@@ -1,0 +1,51 @@
+@import "../../../styles/variables.scss";
+
+h2 {
+    font-size: 40px;
+    color: white;
+}
+
+.layout{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    .sidebar{
+        background-color: $primary-color;
+
+        display: flex;
+        flex-direction: column;
+
+        width: 20%;
+        height: 100vh;
+
+        .sidebar-header{
+            display: flex;
+            padding-top: 40px;
+            padding-bottom: 100px;
+            justify-content: center;
+            
+            h2{
+                font-size: 38px;
+            }
+        }
+        .sidebar-menu{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .menu-link{
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                padding-left: 30px;
+                gap: 10px;
+      
+                .icon-menu{
+                    max-width: 40px;
+                }
+            }
+        }
+    }
+}
