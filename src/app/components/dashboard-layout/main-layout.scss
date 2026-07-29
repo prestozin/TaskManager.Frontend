@@ -18,6 +18,11 @@ h2 {
 
         width: 20%;
         height: 100vh;
+        padding-top: 60px;
+                
+        .icon-menu{
+            max-width: 40px;
+        }
 
         .sidebar-header{
             display: flex;
@@ -29,23 +34,53 @@ h2 {
                 font-size: 38px;
             }
         }
+
         .sidebar-menu{
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 10px;
+            padding: 0 20px;
 
             .menu-link{
                 color: white;
                 display: flex;
                 align-items: center;
-                justify-content: start;
-                padding-left: 30px;
+                padding: 15px 10px 15px 10px;
+                border-radius: 10px;
                 gap: 10px;
+
+                &:hover {
+                    filter: brightness(1.1);
+                    background-color: #142e7a;
+                }
       
-                .icon-menu{
-                    max-width: 40px;
+                
+            }
+        }
+
+        .sidebar-footer
+        {
+            padding: 115px 20px 0px 20px;
+
+            .btn-logout{
+                display: flex;
+                color: white;
+                align-items: center;
+                padding: 15px 10px 15px 10px;
+                background: transparent;
+                border: none; 
+                border-radius: 10px; 
+                gap: 10px;
+                width: 250px;
+                font-size: 16px;
+                
+                &:hover {
+                    filter: brightness(1.1);
+                    background-color: #142e7a;
                 }
             }
+
+             
         }
     }
 }
