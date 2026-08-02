@@ -12,14 +12,14 @@ h2 {
     .sidebar{
         background-color: $primary-color;
         position: relative;
-        padding-top: 60px;
+        padding-top: 40px;
 
         display: flex;
         flex-direction: column;
 
         width: 18%;
 
-        border: 10px solid green;
+        // border: 10px solid green;
                 
         .sidebar-header{
             display: flex;
@@ -90,17 +90,53 @@ h2 {
                 filter: brightness(1.1);
                 background-color: #142e7a;
             } 
+
+            &:active {
+                transform: scale(0.97);
+                }
         }
 
         .sidebar-shapes{
             position: absolute;
-
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
 
             z-index: 0;
 
             pointer-events: none;
+
+            .shape-top{
+                position: absolute;
+                top: 0px;
+                right: 0;
+            }
+
+            .shape-bottom{
+                position: absolute;
+                left: -9%;
+                top: 52%;
+                scale: 0.7;
+            }
+
+            .shape-right{
+                position: absolute;
+                right: -2%;
+                top: 60%;
+                scale: 0.8;
+            }
+
+            .shape-left{
+                position: absolute;
+                left: 0;
+                top: 10%;
+            }
+
+            .circle{
+                position: absolute;
+                top: 80%;
+                left: 50%;            
+            }
         }
     }
            
@@ -141,7 +177,7 @@ h2 {
                     align-items: center;
                     justify-content: center;  
                     
-                    font-size: 30px;
+                    font-size: 26px;
                     border-radius: 50%;
                     background-color: aqua;            
                 }
