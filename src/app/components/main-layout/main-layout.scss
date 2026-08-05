@@ -191,11 +191,26 @@ h2 {
         main{
             flex: 1;
             display: flex;
+            padding: 15px 20px 0px 20px;
 
             .body-content{
                 border: 5px solid blue;
+                border-radius: 15px;
                 flex: 1;
+                padding: 0px;
             }
-        }   
+        }  
+        
+        footer {
+            display: flex;
+            margin-left: 30px;
+            align-items: center;
+            padding: 8px 0px;
+                    
+            .footer-text{
+                font-size: 14px;
+                color: grey;
+            }            
+        }
     }   
 }

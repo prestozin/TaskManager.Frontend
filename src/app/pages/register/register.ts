@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthLayoutComponent } from "../../components/auth-layout/auth-layout";
-import { PrimaryInput } from '../../components/primary-input/primary-input';
+import { PrimaryInputComponent } from '../../components/primary-input/primary-input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   imports: [
     AuthLayoutComponent,
     ReactiveFormsModule,
-    PrimaryInput,
+    PrimaryInputComponent,
     RouterLink
   ],
   templateUrl: './register.html',

@@ -1,0 +1,80 @@
+@import "../../../styles/variables.scss";
+
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .task-container{
+        display: flex;
+        margin-left: 30px;
+
+        .task-texts{
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            gap: 8px;
+
+            .task-title{
+                font-size:18px;
+                font-weight: 400;
+                color: $primary-color;
+            }
+
+            .task-description{
+                font-size: 12px;
+                font-weight: 300;
+                color: grey;
+            }
+        }
+
+        .details-section{
+            display: flex;
+            gap: 100px;
+            margin-left: 800px;
+        }
+    }   
+
+    .task-header{
+       
+        .header-container{
+            padding: 30px 10px 15px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            color: $primary-color;
+            margin-top: 10px;
+            border-bottom: 1px solid $primary-color;
+        }
+
+        .header-title{
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .task-filter{
+            color: grey;
+            display: flex;
+            gap: 25px;
+
+            p{
+                font-size: 16px;
+                font-weight: 300;
+
+                 &:hover{
+                    cursor: pointer;
+                    color: $primary-color;
+                }
+
+                &:active{
+                    color: $primary-color;
+                    text-decoration: underline;
+                }
+            }
+
+           
+        }
+    }
+}
+

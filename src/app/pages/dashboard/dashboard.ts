@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MainLayoutComponent } from '../../components/dashboard-layout/main-layout';
+import { MainLayoutComponent } from '../../components/main-layout/main-layout';
 
 @Component({
   selector: 'app-dashboard',

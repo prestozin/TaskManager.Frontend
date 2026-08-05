@@ -12,7 +12,7 @@ type InputTypes = "text" | "email" | "password"
   styleUrl: './primary-input.scss',
 })
 
-export class PrimaryInput {
+export class PrimaryInputComponent {
 
   control = input.required<FormControl>() ;
 

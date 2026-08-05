@@ -1,8 +1,11 @@
 import { Component, input } from '@angular/core';
+import { TaskContainerComponent } from "../task-container/task-container";
 
 @Component({
   selector: 'app-main-layout',
-  imports: [],
+  imports: [
+    TaskContainerComponent
+  ],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })
