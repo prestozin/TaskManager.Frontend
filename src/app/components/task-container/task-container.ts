@@ -1,19 +1,14 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TaskComponent } from "../task/task";
 
 @Component({
   selector: 'app-task-container',
   imports: [
-    ReactiveFormsModule
-
+    TaskComponent
   ],
   templateUrl: './task-container.html',
   styleUrl: './task-container.scss',
 })
 export class TaskContainerComponent {
-
-  taskForm = new FormGroup({
-    title: new FormControl('',{ nonNullable: true }),
-    completed: new FormControl(false, { nonNullable: true })
-  });
+  
 }
