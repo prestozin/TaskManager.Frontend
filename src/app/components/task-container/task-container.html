@@ -1,4 +1,32 @@
-<div class="container">
+<div class="container-header">
+    <div class="header-top">
+
+        <h2 class="header-title">Minhas Tarefas</h2>
+
+        <div class="search-new-task-container">
+            <div class="search-container">
+                <img src="" alt="">
+                <input type="search" placeholder="Pesquisar tarefas..." [formControl]="searchControl">
+            </div>
+        
+            <button>
+                <p>Nova Tarefa</p>
+                <img src="" alt="">
+            </button>
+
+        </div>      
+
+    </div>
+
+    <div class="task-filters">
+        <p>Todas</p>
+        <p>Pendentes</p>
+        <p>Concluidas</p>
+    </div>
+
+</div>
+
+<div class="task-container">
      <label class="checkbox">
         <input type="checkbox" [formControl]="allTasksForm.controls.completed"> 
     </label>

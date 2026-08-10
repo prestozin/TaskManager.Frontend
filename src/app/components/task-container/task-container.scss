@@ -1,11 +1,56 @@
+@import "../../../styles/variables.scss";
+
 :host {
     --task-columns:  40px 1fr 200px 200px 200px 20px;
 }
 
-.container{    
+.container-header{
+    .header-top{
+        display: flex;
+        gap: 50px;
+        margin-left: 50px;
+        padding: 30px 0px;
+
+        .header-title{
+            font-size: 28px;
+            color: $primary-color;
+        }
+
+        .search-new-task-container{
+            display: flex;
+            gap: 20px;
+            margin-left: auto;
+            padding-right: 50px;
+            align-items: center;
+
+            p{
+                font-size: 16px;
+            }
+        }
+    }
+
+    .task-filters{
+        display: flex;
+        gap: 50px;
+        margin-left: 50px;
+        padding-bottom: 20px;
+        
+        p{
+            font-size: 18px;
+            color: grey;
+
+            &:hover{
+                color: $primary-color;
+            }
+
+        }
+    }
+}
+
+.task-container{    
     display: grid;
     grid-template-columns: var(--task-columns);
-    padding: 30px;
+    padding: 30px 60px;
     border: 2px solid orange;
 }
 
