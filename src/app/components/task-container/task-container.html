@@ -1,41 +1,56 @@
-<div class="container-header">
-    <div class="header-top">
+<div class="container">
 
-        <h2 class="header-title">Minhas Tarefas</h2>
+    <div class="container-header">
+        <div class="header-top">
 
-        <div class="search-new-task-container">
-            <div class="search-container">
-                <img src="" alt="">
-                <input type="search" placeholder="Pesquisar tarefas..." [formControl]="searchControl">
+            <h2 class="header-title">Minhas Tarefas</h2>
+
+            <div class="search-new-task-container">
+                <div class="search-container">
+                    <img src="" alt="">
+                    <input type="search" placeholder="Pesquisar tarefas..." [formControl]="searchControl">
+                </div>
+
+                <button>
+                    <p>Nova Tarefa</p>
+                    <img src="" alt="">
+                </button>
+
             </div>
-        
-            <button>
-                <p>Nova Tarefa</p>
-                <img src="" alt="">
-            </button>
 
-        </div>      
+        </div>
+
+        <div class="task-filters">
+            <p>Todas</p>
+            <p>Pendentes</p>
+            <p>Concluidas</p>
+        </div>
 
     </div>
 
-    <div class="task-filters">
-        <p>Todas</p>
-        <p>Pendentes</p>
-        <p>Concluidas</p>
+    <div class="task-container">
+
+        <label class="checkbox">
+            <input type="checkbox" [formControl]="allTasksForm.controls.completed">
+        </label>
+
+        <p class="prop-task">Tarefa</p>
+        <p class="prop-align">Data de Criação</p>
+        <p class="prop-align">Prioridade</p>
+        <p class="prop-align">Status</p>
+        <div empty-column></div>
+
     </div>
 
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+    <app-task></app-task>
+
 </div>
-
-<div class="task-container">
-     <label class="checkbox">
-        <input type="checkbox" [formControl]="allTasksForm.controls.completed"> 
-    </label>
-    <p class="prop-task">Tarefa</p>
-    <p class="prop-align">Data de Criação</p>
-    <p class="prop-align">Prioridade</p>
-    <p class="prop-align">Status</p>
-    <div></div>
-</div>
-
-
-<app-task></app-task>
