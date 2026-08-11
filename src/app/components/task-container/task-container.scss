@@ -11,12 +11,11 @@
     .container-header {
         .header-top {
             display: flex;
-            gap: 50px;
             margin-left: 50px;
-            padding: 30px 0px;
+            padding: 25px 0px;
 
             .header-title {
-                font-size: 28px;
+                font-size: 36px;
                 color: $primary-color;
             }
 
@@ -27,20 +26,44 @@
                 padding-right: 50px;
                 align-items: center;
 
-                p {
-                    font-size: 16px;
+
+
+                .search-input {
+                    padding: 10px;
+                    width: 280px;
+                    height: 45px;
+                    border-radius: 10px;
+                    border-color: grey;
+                }
+
+                .btn-newtask {
+                    display: flex;
+                    border: none;
+                    width: 180px;
+                    height: 45px;
+                    font-size: 18px;
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                    border-radius: 10px;
+                    background-color: $primary-color;
+
+                    &:active {
+                        scale: 0.95;
+                    }
+
                 }
             }
         }
 
         .task-filters {
             display: flex;
-            gap: 50px;
+            gap: 40px;
             margin-left: 50px;
             padding-bottom: 20px;
 
             p {
-                font-size: 18px;
+                font-size: 22px;
                 color: grey;
 
                 &:hover {
@@ -54,15 +77,16 @@
     .task-container {
         display: grid;
         grid-template-columns: var(--task-columns);
-        padding: 20px 60px;
+        padding: 25px 60px;
         border-top: 1px solid grey;
         align-items: center;
         color: grey;
 
         .prop-task {
-            font-size: 20px;
-
+            font-size: 24px;
         }
+
+  
     }
 
     .prop-align {

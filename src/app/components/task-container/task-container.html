@@ -8,10 +8,11 @@
             <div class="search-new-task-container">
                 <div class="search-container">
                     <img src="" alt="">
-                    <input type="search" placeholder="Pesquisar tarefas..." [formControl]="searchControl">
+                    <input class="search-input" type="search" placeholder="Pesquisar tarefas..."
+                        [formControl]="searchControl">
                 </div>
 
-                <button>
+                <button class="btn-newtask">
                     <p>Nova Tarefa</p>
                     <img src="" alt="">
                 </button>
@@ -31,26 +32,28 @@
     <div class="task-container">
 
         <label class="checkbox">
-            <input type="checkbox" [formControl]="allTasksForm.controls.completed">
+            <input class="checkbox-input" type="checkbox" [formControl]="allTasksForm.controls.completed">
         </label>
 
         <p class="prop-task">Tarefa</p>
-        <p class="prop-align">Data de Criação</p>
-        <p class="prop-align">Prioridade</p>
-        <p class="prop-align">Status</p>
+        <p class="prop-align prop-task">Data de Criação</p>
+        <p class="prop-align prop-task">Prioridade</p>
+        <p class="prop-align prop-task">Status</p>
         <div empty-column></div>
 
     </div>
 
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
-    <app-task></app-task>
+    <div class="tasks-wrapper">
+        <app-task></app-task>
+        <app-task></app-task>
+        <app-task></app-task>
+        <app-task></app-task>
+        <app-task></app-task>
+        <app-task></app-task>
+        <app-task></app-task>
+        <app-task></app-task>
+        <app-task></app-task>
+        <app-task></app-task>
+    </div>
 
 </div>
