@@ -12,10 +12,11 @@
         .header-top {
             display: flex;
             margin-left: 50px;
-            padding: 25px 0px;
+            padding-top: 20px;
 
             .header-title {
-                font-size: 36px;
+                font-size: 26px;
+                font-weight: 400;
                 color: $primary-color;
             }
 
@@ -26,22 +27,20 @@
                 padding-right: 50px;
                 align-items: center;
 
-
-
                 .search-input {
                     padding: 10px;
-                    width: 280px;
-                    height: 45px;
+                    width: 270px;
+                    height: 40px;
                     border-radius: 10px;
-                    border-color: grey;
+                    border: 1px solid grey;
                 }
 
                 .btn-newtask {
                     display: flex;
                     border: none;
-                    width: 180px;
-                    height: 45px;
-                    font-size: 18px;
+                    width: 140px;
+                    height: 40px;
+                    font-size: 15px;
                     justify-content: center;
                     align-items: center;
                     color: white;
@@ -51,7 +50,6 @@
                     &:active {
                         scale: 0.95;
                     }
-
                 }
             }
         }
@@ -60,10 +58,10 @@
             display: flex;
             gap: 40px;
             margin-left: 50px;
-            padding-bottom: 20px;
+            padding: 15px 0px 20px 0px;
 
             p {
-                font-size: 22px;
+                font-size: 18px;
                 color: grey;
 
                 &:hover {
@@ -83,14 +81,11 @@
         color: grey;
 
         .prop-task {
-            font-size: 24px;
+            font-size: 18px;
         }
-
-  
     }
 
     .prop-align {
         justify-self: center;
     }
-
 }
