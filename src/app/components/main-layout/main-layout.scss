@@ -187,9 +187,22 @@ h2 {
                 }
 
                 .user-name{
+                    display: flex;
                     color: $primary-color;
-                    font-size: 18px;
-                    font-weight: 400;
+                    font-size: 20px;
+                    font-weight: 450;
+                    align-items: center;
+                    gap: 15px;
+
+                    .user-arrow{
+                        position: relative;
+                        top: 2px;
+                        transform: rotate(-90deg);
+
+                        &:active{
+                            transform: rotate(0deg);
+                        }
+                    }
                 }
             }
         }

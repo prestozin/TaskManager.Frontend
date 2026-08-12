@@ -15,7 +15,7 @@
             padding-top: 20px;
 
             .header-title {
-                font-size: 26px;
+                font-size: 28px;
                 font-weight: 400;
                 color: $primary-color;
             }
@@ -27,20 +27,32 @@
                 padding-right: 50px;
                 align-items: center;
 
-                .search-input {
-                    padding: 10px;
-                    width: 270px;
-                    height: 40px;
-                    border-radius: 10px;
-                    border: 1px solid grey;
+                .search-container {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+
+                    .search-input {
+                        padding: 10px 40px;
+                        width: 270px;
+                        height: 40px;
+                        border-radius: 10px;
+                        border: 1px solid #7e8391;
+                        font-size: 16px;
+                    }
+
+                    .icon-search {
+                        position: absolute;
+                        left: 15px;
+                    }
                 }
 
                 .btn-newtask {
                     display: flex;
                     border: none;
-                    width: 140px;
+                    width: 150px;
                     height: 40px;
-                    font-size: 15px;
+                    font-size: 16px;
                     justify-content: center;
                     align-items: center;
                     color: white;
@@ -61,8 +73,8 @@
             padding: 15px 0px 20px 0px;
 
             p {
-                font-size: 18px;
-                color: grey;
+                font-size: 20px;
+                color: #7e8391;
 
                 &:hover {
                     color: $primary-color;
@@ -78,10 +90,10 @@
         padding: 25px 60px;
         border-top: 1px solid grey;
         align-items: center;
-        color: grey;
+        color: #7e8391;
 
         .prop-task {
-            font-size: 18px;
+            font-size: 20px;
         }
     }
 
