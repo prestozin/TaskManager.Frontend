@@ -5,7 +5,7 @@
 }
 
 .container {
-    border: 1px solid grey;
+    border: 1px solid $grey-text-color;
     border-radius: 30px;
 
     .container-header {
@@ -17,7 +17,7 @@
             .header-title {
                 font-size: 28px;
                 font-weight: 400;
-                color: $primary-color;
+                color: $primary-text-color;
             }
 
             .search-new-task-container {
@@ -55,7 +55,7 @@
                     font-size: 16px;
                     justify-content: center;
                     align-items: center;
-                    color: white;
+                    color: $secondary-text-color;
                     border-radius: 10px;
                     background-color: $primary-color;
 
@@ -74,10 +74,10 @@
 
             p {
                 font-size: 20px;
-                color: #7e8391;
+                color: $grey-text-color;
 
                 &:hover {
-                    color: $primary-color;
+                    color: $primary-text-color;
                 }
 
             }
@@ -88,9 +88,9 @@
         display: grid;
         grid-template-columns: var(--task-columns);
         padding: 25px 60px;
-        border-top: 1px solid grey;
+        border-top: 1px solid $grey-text-color;
         align-items: center;
-        color: #7e8391;
+        color: $grey-text-color;
 
         .prop-task {
             font-size: 20px;
@@ -124,12 +124,12 @@
             padding: 0px 5px;
             border-color: transparent;
             font-size: 14px;
-            color: $primary-color;
+            color: $primary-text-color;
             
             &:active{
-                border: 1px solid grey;
+                border: 1px solid $grey-text-color;
                 border-radius: 6px;
-                color: white;
+                color: $secondary-text-color;
                 background-color: $primary-color;
             }
         }

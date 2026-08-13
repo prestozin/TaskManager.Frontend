@@ -17,7 +17,7 @@ form {
 
         font-size: 16px;
         font-weight: 400;
-        color: $primary-color;
+        color: $primary-text-color;
         cursor: pointer;
 
         &:hover {
@@ -40,7 +40,7 @@ form {
 }
 
 .textLink {
-    color: $primary-color;
+    color: $primary-text-color;
     text-decoration: underline;
     cursor: pointer;
 }

@@ -11,4 +11,4 @@ import { TaskContainerComponent } from "../../components/task-container/task-con
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {}
+export class DashboardComponent {}

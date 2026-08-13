@@ -2,7 +2,7 @@
 
 h2 {
     font-size: 40px;
-    color: white;
+    color: $secondary-text-color;
 }
 
 .layout {
@@ -54,7 +54,7 @@ h2 {
             margin-top: auto;
             padding: 30px 10px;
             z-index: 1;
-            border-top: grey 1px solid;
+            border-top: $grey-text-color 1px solid;
 
             .btn-logout {
                 background: transparent;
@@ -70,7 +70,7 @@ h2 {
         }
 
         .sidebar-link {
-            color: white;
+            color: $secondary-text-color;
             display: flex;
             align-items: center;
             border-radius: 10px;
@@ -78,6 +78,7 @@ h2 {
             gap: 10px;
             font-size: 20px;
             font-weight: 350;
+            text-decoration: none;
 
             .icon-menu {
                 max-width: 40px;
@@ -90,6 +91,12 @@ h2 {
 
             &:active {
                 transform: scale(0.97);
+            }
+
+            &.active {
+                background-color: #142e7a;
+                color: $secondary-text-color;
+                
             }
         }
 
@@ -150,12 +157,12 @@ h2 {
             width: 100%;
             padding: 10px 25px;
             align-items: center;
-            border-bottom: 1px solid grey;
+            border-bottom: 1px solid $grey-text-color;
 
             .title-container {
                 font-size: 23px;
                 margin-left: 30px;
-                color: $primary-color;
+                color: $primary-text-color;
 
                 span {
                     font-size: 15px;
@@ -176,7 +183,7 @@ h2 {
                     height: 40px;
                     align-items: center;
                     justify-content: center;
-                    color: white;
+                    color: $secondary-text-color;
 
                     font-size: 22px;
                     border-radius: 50%;
@@ -185,7 +192,7 @@ h2 {
 
                 .user-name {
                     display: flex;
-                    color: $primary-color;
+                    color: $primary-text-color;
                     font-size: 20px;
                     font-weight: 450;
                     align-items: center;
@@ -210,6 +217,7 @@ h2 {
             min-height: 0;
             overflow: hidden;
             padding: 15px 20px 0px 20px;
+            background-color: $grey-bg;
 
             .body-content {
                 flex: 1;
@@ -226,7 +234,7 @@ h2 {
 
             .footer-text {
                 font-size: 14px;
-                color: grey;
+                color: $grey-text-color;
             }
         }
     }

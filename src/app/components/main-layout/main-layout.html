@@ -18,22 +18,22 @@
 
         <nav class="sidebar-menu">
 
-            <a class="sidebar-link" routerLink="/dashboard">
+            <a class="sidebar-link" routerLink="/dashboard" routerLinkActive="active">
                 <img class="icon-menu" src="sidebar/icons/dashboard-icon.svg">
                 <p>Dashboard</p>
             </a>
 
-            <a class="sidebar-link" routerLink="/tasks">
+            <a class="sidebar-link" routerLink="/tasks" routerLinkActive="active">
                 <img class="icon-menu" src="sidebar/icons/tasks-icon.svg">
                 <p class="link-text">Tarefas</p>
             </a>
 
-            <a class="sidebar-link" routerLink="/profile">
+            <a class="sidebar-link" routerLink="/profile" routerLinkActive="active">
                 <img class="icon-menu" src="sidebar/icons/profile-icon.svg">
                 <p>Perfil</p>
             </a>
 
-            <a class="sidebar-link" routerLink="/settings">
+            <a class="sidebar-link" routerLink="/settings" routerLinkActive="active">
                 <img class="icon-menu" src="sidebar/icons/settings-icon.svg">
                 <p>Configurações</p>
             </a>
@@ -42,7 +42,7 @@
         
         <footer class ="sidebar-footer">
         
-            <button class="sidebar-link btn-logout">
+            <button class="sidebar-link btn-logout" routerLink="/login">
                 <img class="icon-menu" src="sidebar/icons/logout-icon.svg">
                 <span>Sair</span>
             </button>
