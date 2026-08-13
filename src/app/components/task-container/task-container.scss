@@ -95,9 +95,43 @@
         .prop-task {
             font-size: 20px;
         }
+
+        .prop-align {
+            justify-self: center;
+        }
     }
 
-    .prop-align {
-        justify-self: center;
+
+}
+
+.container-footer {
+    display: flex;
+    padding: 10px;
+    color: #7e8391;
+
+    .footer-text{
+        margin-left: 20px;
+    }
+
+    .footer-buttons{
+        display: flex;
+        margin-left: auto;
+        gap: 14px;
+        margin-right: 80px;
+        
+
+        button{
+            padding: 0px 5px;
+            border-color: transparent;
+            font-size: 14px;
+            color: $primary-color;
+            
+            &:active{
+                border: 1px solid grey;
+                border-radius: 6px;
+                color: white;
+                background-color: $primary-color;
+            }
+        }
     }
 }
