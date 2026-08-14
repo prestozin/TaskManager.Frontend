@@ -19,5 +19,9 @@ export class TaskContainerComponent {
   }); 
 
   searchControl = new FormControl('', {nonNullable: true});
+  activeFilter = 'all';
 
+   setFilter(filter: string) {
+        this.activeFilter = filter;
+    }
 }

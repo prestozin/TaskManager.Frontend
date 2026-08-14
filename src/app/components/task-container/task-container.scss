@@ -73,11 +73,17 @@
             padding: 15px 0px 20px 0px;
 
             p {
-                font-size: 20px;
+                font-size: 18px;
                 color: $grey-text-color;
 
                 &:hover {
                     color: $primary-text-color;
+                }
+
+                &.active {
+                    color: $primary-text-color;
+                    text-decoration: underline 3px;
+                    text-underline-offset: 22.5px;
                 }
 
             }
@@ -93,7 +99,7 @@
         color: $grey-text-color;
 
         .prop-task {
-            font-size: 20px;
+            font-size: 18px;
         }
 
         .prop-align {
@@ -109,24 +115,24 @@
     padding: 10px;
     color: #7e8391;
 
-    .footer-text{
+    .footer-text {
         margin-left: 20px;
     }
 
-    .footer-buttons{
+    .footer-buttons {
         display: flex;
         margin-left: auto;
         gap: 14px;
         margin-right: 80px;
-        
 
-        button{
+
+        button {
             padding: 0px 5px;
             border-color: transparent;
             font-size: 14px;
             color: $primary-text-color;
-            
-            &:active{
+
+            &:active {
                 border: 1px solid $grey-text-color;
                 border-radius: 6px;
                 color: $secondary-text-color;

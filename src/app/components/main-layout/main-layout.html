@@ -44,7 +44,7 @@
         
             <button class="sidebar-link btn-logout" routerLink="/login">
                 <img class="icon-menu" src="sidebar/icons/logout-icon.svg">
-                <span>Sair</span>
+                <p>Sair</p>
             </button>
             
         </footer>
@@ -55,7 +55,7 @@
 
         <header class="header-content">
 
-            <div class ="title-container">
+            <div class ="header-title">
                 <p> Olá, Mateus <p>
                 <span>Vamos organizar as coisas!</span>
             </div>
@@ -64,7 +64,7 @@
                 <p class="user-icon"> M </p>
                 <p class="user-name">
                      Mateus
-                    <img class="user-arrow" src="content/icon-arrow.svg">
+                    <img [class.active]="isUserMenuOpen" (click)="toggleUserMenu()" class="user-arrow" src="content/icon-arrow.svg">
                 </p>
                 
             </div>

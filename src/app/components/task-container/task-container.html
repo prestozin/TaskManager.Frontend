@@ -22,9 +22,19 @@
         </div>
 
         <div class="task-filters">
-            <p>Todas</p>
-            <p>Pendentes</p>
-            <p>Concluidas</p>
+
+            <p [class.active]="activeFilter === 'all'" (click)="setFilter('all')">
+                Todas
+            </p>
+
+            <p [class.active]="activeFilter === 'pending'" (click)="setFilter('pending')">
+                Pendentes
+            </p>
+                
+            <p [class.active]="activeFilter === 'completed'" (click)="setFilter('completed')">
+                Concluidas
+            </p>
+            
         </div>
 
     </div>
@@ -35,7 +45,7 @@
             <input class="checkbox-input" type="checkbox" [formControl]="allTasksForm.controls.completed">
         </label>
 
-        <p class="prop-task">Tarefa</p>
+        <p class="prop-task">Tarefas</p>
         <p class="prop-align prop-task">Data de Criação</p>
         <p class="prop-align prop-task">Prioridade</p>
         <p class="prop-align prop-task">Status</p>
@@ -68,7 +78,8 @@
         <button>2</button>
         <button>3</button>
         <button>...</button>
-        <button> << </button>      
+        <button>
+            << </button>
 
     </div>
 </footer>
