@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, HostListener, input } from '@angular/core';
 import { TaskContainerComponent } from "../task-container/task-container";
 import { RouterLink, RouterLinkActive } from "@angular/router";
 
@@ -13,15 +13,22 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 })
 export class MainLayoutComponent {
 
-
-
   title = input('');
   username = input('');
   isUserMenuOpen = false;
 
   toggleUserMenu() {
-    return this.isUserMenuOpen == true ? this.isUserMenuOpen = false : this.isUserMenuOpen = true;
-      
+    this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent){
+    
+    const target = event.target as HTMLElement;
+
+    if (!target.closest('.user-container')) {
+      this.isUserMenuOpen = false;
+    }
   }
 
 }

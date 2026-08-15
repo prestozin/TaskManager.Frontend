@@ -1,52 +1,52 @@
-<div class= "layout">
+<div class="layout">
 
     <aside class="sidebar">
 
         <div class="sidebar-shapes">
-            <img class="shape-top" src="sidebar/shapes/shape-top.svg">
-            <img class="shape-bottom" src="sidebar/shapes/shape-bottom.svg">
-            <img class="shape-right" src="sidebar/shapes/shape-right.svg">
-            <img class="shape-left" src="sidebar/shapes/shape-left.svg">   
-            <img class="shape-circle" src="sidebar/shapes/shape-circle.svg">
+            <img class="shape-top" src="shapes/shape-top.svg">
+            <img class="shape-bottom" src="shapes/shape-bottom.svg">
+            <img class="shape-right" src="shapes/shape-right.svg">
+            <img class="shape-left" src="shapes/shape-left.svg">
+            <img class="shape-circle" src="shapes/shape-circle.svg">
         </div>
-        
-        
+
+
         <div class="sidebar-header">
             <h2>Task Manager</h2>
-            <img class="logo-img" src="logo.svg"/>
+            <img class="logo-img" src="logo.svg" />
         </div>
 
         <nav class="sidebar-menu">
 
             <a class="sidebar-link" routerLink="/dashboard" routerLinkActive="active">
-                <img class="icon-menu" src="sidebar/icons/dashboard-icon.svg">
+                <img class="icon-menu" src="icons/dashboard-icon.svg">
                 <p>Dashboard</p>
             </a>
 
             <a class="sidebar-link" routerLink="/tasks" routerLinkActive="active">
-                <img class="icon-menu" src="sidebar/icons/tasks-icon.svg">
+                <img class="icon-menu" src="icons/tasks-icon.svg">
                 <p class="link-text">Tarefas</p>
             </a>
 
             <a class="sidebar-link" routerLink="/profile" routerLinkActive="active">
-                <img class="icon-menu" src="sidebar/icons/profile-icon.svg">
+                <img class="icon-menu" src="icons/profile-icon.svg">
                 <p>Perfil</p>
             </a>
 
             <a class="sidebar-link" routerLink="/settings" routerLinkActive="active">
-                <img class="icon-menu" src="sidebar/icons/settings-icon.svg">
+                <img class="icon-menu" src="icons/settings-icon.svg">
                 <p>Configurações</p>
             </a>
-                    
-        </nav>   
-        
-        <footer class ="sidebar-footer">
-        
+
+        </nav>
+
+        <footer class="sidebar-footer">
+
             <button class="sidebar-link btn-logout" routerLink="/login">
-                <img class="icon-menu" src="sidebar/icons/logout-icon.svg">
+                <img class="icon-menu" src="icons/logout-icon.svg">
                 <p>Sair</p>
             </button>
-            
+
         </footer>
 
     </aside>
@@ -55,20 +55,47 @@
 
         <header class="header-content">
 
-            <div class ="header-title">
-                <p> Olá, Mateus <p>
-                <span>Vamos organizar as coisas!</span>
+            <div class="header-title">
+                <p> Olá, Mateus
+                <p>
+                    <span>Vamos organizar as coisas!</span>
             </div>
-    
-            <div class="user-container">
-                <p class="user-icon"> M </p>
-                <p class="user-name">
-                     Mateus
-                    <img [class.active]="isUserMenuOpen" (click)="toggleUserMenu()" class="user-arrow" src="content/icon-arrow.svg">
-                </p>
-                
+
+            <div class="user-container" (click)="toggleUserMenu()">
+
+                <div class="user-icon-container">
+                    <p class="user-icon"> M </p>
+
+                    @if (isUserMenuOpen)
+                    {
+                    <div class="user-dropdown">
+
+                        <div class="container-dropdown-buttons">
+                            <button class="btn-dropdown">
+                                <img class="dropdown-img" src="icons/theme-icon.svg">
+                                Tema
+                            </button>
+                            <button class="btn-dropdown">
+                                <img class="dropdown-img" src="icons/profile-icon.svg">
+                                Perfil</button>
+                            <button class="btn-dropdown">
+                                <img class="dropdown-img" src="icons/settings-icon.svg">
+                                Configurações</button>
+                            <button class="btn-dropdown">
+                                <img class="dropdown-img" src="icons/logout-icon.svg">
+                                Sair</button>
+                        </div>
+
+                    </div>
+                    }
+
+                    <img class="user-arrow" [class.active]="isUserMenuOpen" src="icons/arrow-icon.svg">
+                </div>
+
+
+
             </div>
-            
+
         </header>
 
         <main>
@@ -80,4 +107,3 @@
     </div>
 
 </div>
-

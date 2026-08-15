@@ -170,46 +170,115 @@ h2 {
                 }
             }
 
+
+
             .user-container {
                 display: flex;
+                position: relative;
                 align-items: center;
                 gap: 10px;
                 padding: 10px 0px;
                 margin-left: auto;
                 margin-right: 60px;
+                justify-content: center;
 
-                .user-icon {
+                .user-icon-container {
+                    position: relative;
                     display: flex;
-                    width: 38px;
-                    height: 38px;
-                    align-items: center;
-                    justify-content: center;
-                    color: $secondary-text-color;
 
-                    font-size: 22px;
-                    border-radius: 50%;
-                    background-color: $primary-color;
-                }
+                    .user-icon {
+                        display: flex;
+                        width: 38px;
+                        height: 38px;
+                        align-items: center;
+                        justify-content: center;
+                        color: $secondary-text-color;
+                        z-index: 2;
 
-                .user-name {
-                    display: flex;
-                    color: $primary-text-color;
-                    font-size: 18px;
-                    font-weight: 400;
-                    align-items: center;
-                    gap: 10px;
-
-                    .user-arrow {
-                        scale: 0.9;
-                        position: relative;
-                        top: 2px;
-                        transform: rotate(-90deg);
-
-                        &.active {
-                            transform: rotate(0deg);
-                        }
+                        font-size: 22px;
+                        border-radius: 50%;
+                        background-color: #4365c6;
                     }
+
+                    .user-dropdown {
+                        position: absolute;
+                        top: calc(100% - 50px);
+                        left: 38%;
+                        transform: translateX(-50%);
+
+                        display: flex;
+                        flex-direction: column;
+
+                        background-color: $primary-color;
+
+                        padding: 18px;
+
+                        border-radius: 10px;
+
+                        z-index: 1;
+
+                        width: 150px;
+                        height: 240px;
+
+                        align-items: center;
+
+                        transition:
+                            opacity 0.5s ease,
+                            transform 0.5s ease;
+
+                        @starting-style {
+                            opacity: 0;
+                            transform: translate(-50%, -10px);
+                        }
+
+                        .container-dropdown-buttons {
+                            display: flex;
+                            flex-direction: column;
+                            position: relative;
+                            top: 22%;
+
+                            .dropdown-img {
+                                width: 20px;
+                                height: 20px;
+                            }
+
+                            .btn-dropdown {
+                                display: flex;
+                                gap: 10px;
+                                border-radius: 6px;
+                                border: 1px solid $primary-color;
+                                padding: 10px;
+                                font-size: 14px;
+                                color: $secondary-text-color;
+                                background-color: $primary-color;
+                              
+                                &:active {
+                                    scale: 0.9;
+                                }
+
+                                &:hover {
+                                    background-color: $hover-button;
+                                }
+                            }
+
+                            .user-arrow {
+                                scale: 0.9;
+                                position: relative;
+                                top: 2px;
+                                transform: rotate(-90deg);
+
+                                &.active {
+                                    transform: rotate(0deg);
+                                }
+
+                            }
+
+                        }
+
+                    }
+
                 }
+
             }
         }
 
