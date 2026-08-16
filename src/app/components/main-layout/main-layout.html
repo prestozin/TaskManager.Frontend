@@ -10,10 +10,9 @@
             <img class="shape-circle" src="shapes/shape-circle.svg">
         </div>
 
-
         <div class="sidebar-header">
             <h2>Task Manager</h2>
-            <img class="logo-img" src="logo.svg" />
+            <img class="logo-img" src="logo.svg">
         </div>
 
         <nav class="sidebar-menu">
@@ -56,43 +55,59 @@
         <header class="header-content">
 
             <div class="header-title">
-                <p> Olá, Mateus
-                <p>
-                    <span>Vamos organizar as coisas!</span>
+                <p>Olá, Mateus</p>
+                <span>Vamos organizar as coisas!</span>
             </div>
 
-            <div class="user-container" (click)="toggleUserMenu()">
+            <div class="user-container">
 
-                <div class="user-icon-container">
-                    <p class="user-icon"> M </p>
+                <div class="user-trigger" (click)="toggleUserMenu()">
 
-                    @if (isUserMenuOpen)
-                    {
-                    <div class="user-dropdown">
+                    <div class="user-icon-container">
+                        <p class="user-icon">M</p>
+                    </div>
+
+                    <p class="user-name" [class.active]="isUserMenuOpen">
+                        Mateus
+                    </p>
+
+                    <img class="user-arrow" [class.active]="isUserMenuOpen" src="icons/arrow-icon.svg">
+
+                    @if (isUserMenuOpen) {
+
+                    <div class="user-dropdown" (click)="$event.stopPropagation()">
+
+                        <div class="dropdown-line"></div>
 
                         <div class="container-dropdown-buttons">
+
                             <button class="btn-dropdown">
                                 <img class="dropdown-img" src="icons/theme-icon.svg">
-                                Tema
+                                <span>Tema</span>
                             </button>
+
                             <button class="btn-dropdown">
                                 <img class="dropdown-img" src="icons/profile-icon.svg">
-                                Perfil</button>
+                                <span>Perfil</span>
+                            </button>
+
                             <button class="btn-dropdown">
                                 <img class="dropdown-img" src="icons/settings-icon.svg">
-                                Configurações</button>
+                                <span>Configurações</span>
+                            </button>
+
                             <button class="btn-dropdown">
                                 <img class="dropdown-img" src="icons/logout-icon.svg">
-                                Sair</button>
+                                <span>Sair</span>
+                            </button>
+
                         </div>
 
                     </div>
+
                     }
 
-                    <img class="user-arrow" [class.active]="isUserMenuOpen" src="icons/arrow-icon.svg">
                 </div>
-
-
 
             </div>
 
