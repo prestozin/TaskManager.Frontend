@@ -4,15 +4,15 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 type InputTypes = "text" | "email" | "password"
 
 @Component({
-  selector: 'app-primary-input',
+  selector: 'app-input-forms',
   imports: [
     ReactiveFormsModule,
   ],
-  templateUrl: './primary-input.html',
-  styleUrl: './primary-input.scss',
+  templateUrl: './input-forms.html',
+  styleUrl: './input-forms.scss',
 })
 
-export class PrimaryInputComponent {
+export class InputFormsComponent {
 
   control = input.required<FormControl>() ;
 

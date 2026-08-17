@@ -5,17 +5,17 @@ primaryButtonText = "LOGIN"
 
     <form auth-form [formGroup]="loginForm">
 
-        <app-primary-input
+        <app-input-forms
             type="email"
             placeholder="Endereço de email"
             [control]="loginForm.controls.email">
-        </app-primary-input>
+        </app-input-forms>
 
-        <app-primary-input
+        <app-input-forms
             type="password"
             placeholder="Senha"
             [control]="loginForm.controls.password">
-        </app-primary-input>
+        </app-input-forms>
 
         <a class="forgot-password" routerLink="/forgot-password"> Esqueceu sua senha? </a>
 

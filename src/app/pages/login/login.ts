@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthLayoutComponent } from '../../components/auth-layout/auth-layout';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PrimaryInputComponent } from '../../components/primary-input/primary-input';
+import { InputFormsComponent } from '../../components/input-forms/input-forms';
 import { AuthService } from '../../services/auth';
 import { RouterLink } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
   imports: [
     AuthLayoutComponent,
     ReactiveFormsModule,
-    PrimaryInputComponent,
+    InputFormsComponent,
     RouterLink
   ],
   templateUrl: './login.html',

@@ -7,29 +7,29 @@ linkRoute = "/login"
 
     <form auth-form [formGroup]="registerForm">
 
-        <app-primary-input
+        <app-input-forms
             type="text"
             placeholder="Nome"
             [control]="registerForm.controls.name">
-        </app-primary-input>
+        </app-input-forms>
         
-        <app-primary-input
+        <app-input-forms
             type="email"
             placeholder="E-mail"
             [control]="registerForm.controls.email">
-        </app-primary-input>
+        </app-input-forms>
 
-        <app-primary-input
+        <app-input-forms
             type="password"
             placeholder="Senha"
             [control]="registerForm.controls.password">
-        </app-primary-input>
+        </app-input-forms>
 
-        <app-primary-input
+        <app-input-forms
             type="password"
             placeholder="Confirmar senha"
             [control]="registerForm.controls.password">
-        </app-primary-input>
+        </app-input-forms>
 
     </form>
 
