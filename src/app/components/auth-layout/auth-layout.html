@@ -1,52 +1,68 @@
 <main>
-    <section class="form-section">
+    <div class="main-content">
 
-        <div class="form-card">
+        <section class="form-section">
 
-            <h2>{{ title() }}</h2>
+            <div class="form-card">
 
-            <div class="form-container">
-                <ng-content select="[auth-form]"></ng-content>
-            </div>        
+                <h2>{{ title() }}</h2>
 
-            <button class="primary-button" (click)="submit()">{{ primaryButtonText() }}</button>
-        
-            <ng-content select="[auth-footer]"></ng-content>
+                <div class="form-container">
+                    <ng-content select="[auth-form]"></ng-content>
+                </div>
 
-        </div>
+                <button class="primary-button" (click)="submit()">
+                    {{ primaryButtonText() }}
+                </button>
 
-        
-    </section>
-    
-    <section class="logo-section">
+                <ng-content select="[auth-footer]"></ng-content>
 
-        <img class ="shapes" src="shapes.svg"/>
-
-        <div class="features">
-
-            <h2>Task Manager</h2>
-
-            <div class="feature">   
-                <img class ="checkmark-icon" src="checkmark_icon.svg"/>
-                <p>Organize</p>
             </div>
 
-            <div class="feature" >   
-                <img class ="clock-icon" src="clock_icon.svg"/>
-                <p>Priorize</p>
+        </section>
+
+        <section class="logo-section">
+
+            <div class="shapes">
+                <img class="shape-left" src="shapes/auth/shape-auth-left.svg" />
+                <img class="shape-bottom" src="shapes/auth/shape-auth-bottom.svg" />
+                <img class="shape-top-left" src="shapes/auth/shape-auth-top.svg" />
+
+                <img class="shape-dots-top" src="shapes/auth/shape-auth-dots.svg" />
+                <img class="shape-dots-bottom" src="shapes/auth/shape-auth-dots.svg" />
             </div>
 
-            <div class="feature" >   
-                <img class ="graphic-icon" src="graphic_icon.svg"/>
-                <p>Acompanhe</p>
+            <div class="features">
+
+                <h2>Task Manager</h2>
+
+                <div class="icons-text">
+                    <div class="feature">
+                        <img class="checkmark-icon" src="checkmark_icon.svg" />
+                        <p>Organize</p>
+                    </div>
+
+                    <div class="feature">
+                        <img class="clock-icon" src="clock_icon.svg" />
+                        <p>Priorize</p>
+                    </div>
+
+                    <div class="feature">
+                        <img class="graphic-icon" src="graphic_icon.svg" />
+                        <p>Acompanhe</p>
+                    </div>
+
+
+                </div>
+
             </div>
 
-        </div>
+            <div class="logo">
+                <img class="logo-img" src="logo.svg" />
+                <img class="shape-logo" src="shapes/auth/shape-auth-circle.svg" />
+            </div>
 
-        <div class="logo">
-            <img class="logo-img" src="logo.svg"/>
-            <img class="shape-logo" src="shape_logo.svg"/>
-        </div>
-        
-    </section>
+        </section>
+
+    </div>
 </main>
