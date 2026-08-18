@@ -1,5 +1,5 @@
 import { Service } from '@angular/core';
-import { LoginResponse } from '../types/login-response';
+import { LoginResponse } from '../../types/login-response';
 
 @Service()
 export class TokenService {

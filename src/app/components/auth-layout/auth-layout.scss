@@ -53,7 +53,7 @@ main {
             h2 {
                 position: absolute;
                 color: $secondary-text-color;
-                font-size: 36px;
+                font-size: 40px;
                 padding-bottom: 0px;
                 margin: 0;
              
@@ -65,10 +65,11 @@ main {
                 display: flex;
                 align-items: center;
                 gap: 10px;
+                transform: translateY(50%);
 
                 p {
                     color: $secondary-text-color;
-                    font-size: 20px;
+                    font-size: 22px;
                 }
 
                 img {
@@ -86,7 +87,7 @@ main {
             width: 300px;
             height: 300px;
 
-            transform: translateY(-50%);
+            transform: translateY(-35%);
 
             z-index: 1;
 
@@ -196,7 +197,7 @@ main {
 
             h2 {
                 color: $primary-text-color;
-                font-size: 36px;
+                font-size: 40px;
                 margin: 0;
             }
 
@@ -206,7 +207,7 @@ main {
 
                 padding: 20px 0;
 
-                font-size: 18px;
+                font-size: 20px;
                 font-weight: 400;
 
                 border-radius: 30px;
