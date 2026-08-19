@@ -6,14 +6,14 @@
     </label>
 
     <div class="task-info">
-        <p class="task-title">Estudar ASP .NET</p>
-        <p class="description"> Estudar APIS de autenticação</p>
+        <p class="task-title">{{ task().title }}</p>
+        <p class="description">{{ task().description }}</p>
     </div>
 
                
-    <p class="task-details date">27/08/2026</p>
-    <p class="task-details">Alta</p>
-    <p class="task-details"> Pendente </p>
+    <p class="task-details date">{{ task().createdAt }}</p>
+    <p class="task-details priority">{{ task().priority }}</p>
+    <p class="task-details status"> {{ task().status }} </p>
     <img class="btn-options " src="icons/task-dots.svg" alt=""> 
     
 </div>

@@ -55,16 +55,9 @@
     </div>
 
     <div class="tasks-wrapper">
-        <app-task></app-task>
-        <app-task></app-task>
-        <app-task></app-task>
-        <app-task></app-task>
-        <app-task></app-task>
-        <app-task></app-task>
-        <app-task></app-task>
-        <app-task></app-task>
-        <app-task></app-task>
-        <app-task></app-task>
+        @for (task of visibleTasks; track task.id) {
+            <app-task [task]="task"></app-task>
+        }
     </div>
 
 </div>

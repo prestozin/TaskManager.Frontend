@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { tap } from 'rxjs';
-import { LoginResponse } from '../../types/login-response';
-import { TokenService } from '../token/token';
+import { LoginResponse } from '../../types/login/login-response';
+import { TokenService } from '../token/token.service';
 import { environment } from '../../environments/environment.development';
+import { ResultResponse } from '../../types/Result/result-response';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +21,9 @@ export class AuthService {
         const body = { email, password };
         
         return this.httpClient
-            .post<LoginResponse>(`${this.apiUrl}/login`, body)
-            .pipe(tap(result => {this.tokenService.save(result);}));
+            .post<ResultResponse<LoginResponse>>(`${this.apiUrl}/login`, body)
+            .pipe(tap(result => {
+                console.log('Resposta do login:', result);
+                this.tokenService.save(result.data);}));
     }
 }

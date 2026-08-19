@@ -1,7 +1,10 @@
-import { Service } from '@angular/core';
-import { LoginResponse } from '../../types/login-response';
+import { Injectable } from '@angular/core';
+import { LoginResponse } from '../../types/login/login-response';
 
-@Service()
+@Injectable({
+    providedIn: 'root'
+})
+
 export class TokenService {
 
     save(login: LoginResponse) {

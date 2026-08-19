@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { AuthLayoutComponent } from '../../components/auth-layout/auth-layout';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputFormsComponent } from '../../components/input-forms/input-forms';
-import { AuthService } from '../../services/auth/auth';
-import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +20,7 @@ import { RouterLink } from '@angular/router';
 export class Login {
 
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   loginForm = new FormGroup({
     email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
@@ -34,9 +35,8 @@ export class Login {
     const { email, password } = this.loginForm.getRawValue();
 
     this.authService.login(email, password).subscribe({
-      next: (response) => {
-        console.log('Login realizado com sucesso!');
-        console.log(response);
+      next: () => {
+        this.router.navigate(['/dashboard']);
       },
 
       error: (error) => {
