@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
-import { TaskResponse } from '../../types/task/task-response';
+import { ResultResponse } from '../../types/result/result-response';
+import { TaskPagedResponse } from '../../types/task/task-paged-response';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class TaskService {
 
     private apiUrl = `${environment.apiUrl}/Task`
 
-    getTasks(): Observable<TaskResponse[]> {
-        return this.httpClient.get<TaskResponse[]>(`${this.apiUrl}/GetAll`);
+    getTasks(): Observable<ResultResponse<TaskPagedResponse>> {
+        return this.httpClient.get<ResultResponse<TaskPagedResponse>>(`${this.apiUrl}/GetAll`);
     }
 }

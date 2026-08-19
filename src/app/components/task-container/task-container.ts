@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TaskComponent } from "../task/task";
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TaskResponse } from '../../types/task/task-response';
@@ -13,6 +13,7 @@ import { TaskService } from '../../services/task/task.service';
   templateUrl: './task-container.html',
   styleUrl: './task-container.scss',
 })
+
 export class TaskContainerComponent {
 
   private taskService = inject(TaskService);
@@ -23,30 +24,38 @@ export class TaskContainerComponent {
   });
 
   searchControl = new FormControl('', { nonNullable: true });
+
   activeFilter = 'all';
+
+  tasks = signal<TaskResponse[]>([]);
+  visibleTasks = signal<TaskResponse[]>([]);
 
   setFilter(filter: string) {
     this.activeFilter = filter;
   }
 
-  tasks: TaskResponse[] = [];
-  visibleTasks: TaskResponse[] = [];
-
   ngOnInit() {
+    console.log('TASK CONTAINER FOI INICIALIZADO');
     this.taskService.getTasks().subscribe({
-      next: (tasks) => { 
-        this.tasks = tasks; this.updateVisibleTasks(); 
+      next: (response) => {
+
+        console.log('GET TASKS EXECUTADO');
+
+        this.tasks.set(response.data.items);
+
+        this.updateVisibleTasks();
+
       },
 
-      error: (error) => { 
-        console.error('erro ao buscar tarefas:', error); 
+      error: (error) => {
+        console.error('erro ao buscar tarefas:', error);
       }
     })
   }
 
   private updateVisibleTasks() {
 
-    this.visibleTasks = this.tasks.slice(0, 10);
+    this.visibleTasks.set(this.tasks().slice(0, 10));
 
   }
 }

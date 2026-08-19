@@ -4,7 +4,7 @@ import { tap } from 'rxjs';
 import { LoginResponse } from '../../types/login/login-response';
 import { TokenService } from '../token/token.service';
 import { environment } from '../../environments/environment.development';
-import { ResultResponse } from '../../types/Result/result-response';
+import { ResultResponse } from '../../types/result/result-response';
 
 @Injectable({
     providedIn: 'root'
@@ -22,8 +22,9 @@ export class AuthService {
         
         return this.httpClient
             .post<ResultResponse<LoginResponse>>(`${this.apiUrl}/login`, body)
-            .pipe(tap(result => {
-                console.log('Resposta do login:', result);
-                this.tokenService.save(result.data);}));
+            .pipe( tap(response => {
+                this.tokenService.save(response.data);
+            })
+        );
     }
 }

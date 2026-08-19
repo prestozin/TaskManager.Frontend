@@ -55,7 +55,7 @@
     </div>
 
     <div class="tasks-wrapper">
-        @for (task of visibleTasks; track task.id) {
+        @for (task of visibleTasks(); track task.id) {
             <app-task [task]="task"></app-task>
         }
     </div>
@@ -63,7 +63,7 @@
 </div>
 
 <footer class="container-footer">
-    <p class="footer-text">Mostrando 1 de 54 tarefas</p>
+    <p class="footer-text">Mostrando {{visibleTasks().length }} de {{tasks().length}} tarefas</p>
 
     <div class="footer-buttons">
 

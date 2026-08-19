@@ -35,12 +35,20 @@ export class Login {
     const { email, password } = this.loginForm.getRawValue();
 
     this.authService.login(email, password).subscribe({
-      next: () => {
+      next: (response) => {
+
+        console.log('Login realizado!');
+
         this.router.navigate(['/dashboard']);
+
       },
 
       error: (error) => {
-        console.error('Erro ao realiar login:', error);
+
+        console.error(
+          'Erro ao realizar login:',
+          error
+        );
       }
     });
   }
