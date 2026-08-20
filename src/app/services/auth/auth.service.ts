@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { tap } from 'rxjs';
-import { LoginResponse } from '../../types/login/login-response';
+import { LoginResponse } from '../../types/auth/login-response';
 import { TokenService } from '../token/token.service';
 import { environment } from '../../environments/environment.development';
 import { ResultResponse } from '../../types/result/result-response';
+import { RegisterRequest } from '../../types/auth/register-request';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    
+
     private httpClient = inject(HttpClient);
     private tokenService = inject(TokenService);
 
@@ -19,12 +20,20 @@ export class AuthService {
     login(email: string, password: string) {
 
         const body = { email, password };
-        
+
         return this.httpClient
             .post<ResultResponse<LoginResponse>>(`${this.apiUrl}/login`, body)
-            .pipe( tap(response => {
+            .pipe(tap(response => {
                 this.tokenService.save(response.data);
             })
-        );
+            );
+    }
+
+    register(email: string, password: string, name: string) {
+        const body = { email, password, name };
+
+        return this.httpClient
+            .post<ResultResponse<null>>(`${this.apiUrl}/register`, body);
+
     }
 }
