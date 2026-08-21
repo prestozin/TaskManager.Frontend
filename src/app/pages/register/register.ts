@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { AuthLayoutComponent } from "../../components/auth-layout/auth-layout";
 import { InputFormsComponent } from '../../components/input-forms/input-forms';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,12 +18,14 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 
 export class Register {
+  
+  private cdr = inject(ChangeDetectorRef);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   errorMessage = '';
   successMessage = '';
-
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  isLoading = false;
 
   registerForm = new FormGroup({
     name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
@@ -34,22 +36,26 @@ export class Register {
     { validators: (form) => this.passwordsMatch(form) });
 
   submit() {
-    console.log('SUBMIT CHAMADO');
+
     if (this.registerForm.invalid) {
-      console.log('FORM INVALIDO');
+
       this.registerForm.markAllAsTouched();
 
       return;
     }
-    console.log('FORM VALIDO');
+
+    this.isLoading = true;
+
     const { email, password, name } = this.registerForm.getRawValue();
 
     this.authService.register(email, password, name).subscribe({
 
       next: (response) => {
-        console.log('RESPOSTA API:', response)
-        this.successMessage = response.message; console.log('MENSAGEM:', this.successMessage);
+
+        setTimeout(() => { this.isLoading = false;}, 1000);
         this.errorMessage = '';
+        this.successMessage = response.message;
+        this.cdr.detectChanges();
 
         setTimeout(() => {
           this.router.navigate(['/login']);
@@ -57,11 +63,11 @@ export class Register {
       },
 
       error: (error) => {
-        console.log('ERRO API:', error);
-        console.log('MENSAGEM DO BACK:', error.error?.message);
-
+        
+        this.isLoading = false;
+        this.successMessage = '';
         this.errorMessage = error.error.message;
-        this.successMessage = ''; console.log('SUBMIT MESSAGE:', this.errorMessage);
+        this.cdr.detectChanges();
       }
 
     })

@@ -11,8 +11,14 @@
                     <ng-content select="[auth-form]"></ng-content>
                 </div>
 
-                <button class="primary-button" (click)="submit()">
-                    {{ primaryButtonText() }}
+                <button class="primary-button" [disabled]="isLoading()" (click)="submit()">
+                    @if (isLoading()) 
+                    {
+                        <span class="spinner"></span>
+                    } 
+                    @else {
+                        {{ primaryButtonText() }}
+                    }
                 </button>
 
                 <ng-content select="[auth-footer]"></ng-content>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { AuthLayoutComponent } from '../../components/auth-layout/auth-layout';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputFormsComponent } from '../../components/input-forms/input-forms';
@@ -21,6 +21,11 @@ export class Login {
 
   private authService = inject(AuthService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
+
+  errorMessage = '';
+  successMessage = '';
+  isLoading = false;
 
   loginForm = new FormGroup({
     email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
@@ -32,23 +37,30 @@ export class Login {
     if (this.loginForm.invalid)
       return;
 
+    this.isLoading = true;
+
     const { email, password } = this.loginForm.getRawValue();
 
     this.authService.login(email, password).subscribe({
       next: (response) => {
 
-        console.log('Login realizado!');
+        setTimeout(() => { this.isLoading = false;}, 1000);
+        this.errorMessage = '';
+        this.successMessage = response.message;
+        this.cdr.detectChanges();
 
-        this.router.navigate(['/dashboard']);
-
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 3000);
       },
 
       error: (error) => {
 
-        console.error(
-          'Erro ao realizar login:',
-          error
-        );
+        this.isLoading = false;
+        this.successMessage = '';
+        this.errorMessage = error.error.message;
+        this.cdr.detectChanges();
+
       }
     });
   }

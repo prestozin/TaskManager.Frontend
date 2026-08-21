@@ -55,7 +55,7 @@
         <header class="header-content">
 
             <div class="header-title">
-                <p>Olá, Mateus</p>
+                <p>Olá, {{ userName }}</p>
                 <span>Vamos organizar as coisas!</span>
             </div>
 
@@ -64,11 +64,11 @@
                 <div class="user-trigger" (click)="toggleUserMenu()">
 
                     <div class="user-icon-container">
-                        <p class="user-icon">M</p>
+                        <p class="user-icon">{{ userIcon }}</p>
                     </div>
 
                     <p class="user-name" [class.active]="isUserMenuOpen">
-                        Mateus
+                        {{ userName }}
                     </p>
 
                     <img class="user-arrow" [class.active]="isUserMenuOpen" src="icons/arrow-icon.svg">

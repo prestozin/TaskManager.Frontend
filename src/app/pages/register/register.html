@@ -1,5 +1,9 @@
-<app-auth-layout title="Crie sua conta" primaryButtonText="REGISTRAR" textLink="Faça login" linkRoute="/login"
-    (submitClicked)="submit()">
+<app-auth-layout 
+title="Crie sua conta" 
+primaryButtonText="REGISTRAR" 
+textLink="Faça login" linkRoute="/login"
+(submitClicked)="submit()"
+[isLoading]="isLoading">
 
     <form auth-form [formGroup]="registerForm">
 

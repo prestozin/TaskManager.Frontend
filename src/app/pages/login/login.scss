@@ -45,4 +45,18 @@ form {
     text-decoration: underline;
     cursor: pointer;
 }
-    
+  
+.error-message{
+    position: absolute;
+    color: red;
+    font-size: 16px;
+    top: 60%;
+}
+
+.success-message{
+    position: absolute;
+    color: green;
+    font-size: 16px;
+    top: 60%;
+}
+

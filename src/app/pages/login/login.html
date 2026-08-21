@@ -1,23 +1,21 @@
-<app-auth-layout
-title = "Bem-vindo(a)!"
-primaryButtonText = "LOGIN"
-(submitClicked)="submit()">
+<app-auth-layout 
+title="Bem-vindo(a)!" 
+primaryButtonText="LOGIN" 
+(submitClicked)="submit()"
+[isLoading]="isLoading">
 
     <form auth-form [formGroup]="loginForm">
 
-        <app-input-forms
-            type="email"
-            placeholder="Endereço de email"
-            [control]="loginForm.controls.email">
+        <app-input-forms type="email" placeholder="Endereço de email" [control]="loginForm.controls.email">
         </app-input-forms>
 
-        <app-input-forms
-            type="password"
-            placeholder="Senha"
-            [control]="loginForm.controls.password">
+        <app-input-forms type="password" placeholder="Senha" [control]="loginForm.controls.password">
         </app-input-forms>
 
         <a class="forgot-password" routerLink="/forgot-password"> Esqueceu sua senha? </a>
+
+        @if (errorMessage) { <p class="error-message"> {{ errorMessage }} </p> }
+        @if (successMessage) { <p class="success-message"> {{ successMessage }} </p> }
 
     </form>
 

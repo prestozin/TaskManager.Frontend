@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MainLayoutComponent } from '../../components/main-layout/main-layout';
 import { TaskContainerComponent } from "../../components/task-container/task-container";
 
@@ -13,4 +13,5 @@ import { TaskContainerComponent } from "../../components/task-container/task-con
 })
 export class DashboardComponent {
   
+
 }
