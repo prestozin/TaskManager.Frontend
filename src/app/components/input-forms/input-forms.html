@@ -2,4 +2,19 @@
     [type]="type()"
     [formControl]="control()"
     [placeholder]="placeholder()"
+    [class.invalid] ="control().invalid && control().touched"
 />
+
+@if (control().invalid && control().touched){
+    @if (control().hasError('required')) {
+        <p class="error-message">Campo obrigatório</p>
+    }
+
+    @if (control().hasError('email')){
+        <p class="error-message">Digite um e-mail válido</p>
+    }
+
+     @if (control().hasError('minlength')){
+        <p class="error-message">O campo deve ter pelo menos 6 caracteres.</p>
+    }
+}

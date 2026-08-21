@@ -11,3 +11,14 @@ input {
     text-align: start;
     padding: 0px 40px;
 }
+
+input.invalid {
+    border-color: red;
+}
+
+.error-message {
+    position: relative;
+    margin: 3px 0px 0px 40px;
+    color: red;
+    font-size: 13px;
+}

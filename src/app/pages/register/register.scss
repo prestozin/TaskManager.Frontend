@@ -28,3 +28,22 @@ form {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.password-error-message {
+    position: relative;
+    align-self: flex-start;
+    margin-left: 40px;
+    bottom: 18px;
+    color: red;
+    font-size: 13px;
+}
+
+.error-message{
+    color: red;
+    font-size: 16px;
+}
+
+.success-message{
+    color: green;
+    font-size: 16px;
+}

@@ -1,36 +1,32 @@
-<app-auth-layout
-title = "Crie sua conta"
-primaryButtonText = "REGISTRAR"
-textLink = "Faça login"
-linkRoute = "/login"
-(submitClicked)="submit()">
+<app-auth-layout title="Crie sua conta" primaryButtonText="REGISTRAR" textLink="Faça login" linkRoute="/login"
+    (submitClicked)="submit()">
 
     <form auth-form [formGroup]="registerForm">
 
-        <app-input-forms
-            type="text"
-            placeholder="Nome"
-            [control]="registerForm.controls.name">
-        </app-input-forms>
-        
-        <app-input-forms
-            type="email"
-            placeholder="E-mail"
-            [control]="registerForm.controls.email">
+        <app-input-forms type="text" placeholder="Nome" [control]="registerForm.controls.name">
         </app-input-forms>
 
-        <app-input-forms
-            type="password"
-            placeholder="Senha"
-            [control]="registerForm.controls.password">
+        <app-input-forms type="email" placeholder="E-mail" [control]="registerForm.controls.email">
         </app-input-forms>
 
-        <app-input-forms
-            type="password"
-            placeholder="Confirmar senha"
+        <app-input-forms type="password" placeholder="Senha" [control]="registerForm.controls.password">
+        </app-input-forms>
+
+        <app-input-forms type="password" placeholder="Confirmar senha"
             [control]="registerForm.controls.confirmPassword">
         </app-input-forms>
 
+
+        @if (registerForm.controls.confirmPassword.value &&
+        registerForm.controls.confirmPassword.touched &&
+        registerForm.hasError('passwordsMismatch')
+        && !registerForm.controls.confirmPassword.hasError('minlength') )
+        { <p class="password-error-message"> As senhas não coincidem. </p> }
+
+
+        @if (errorMessage) { <p class="error-message"> {{ errorMessage }} </p> }
+        @if (successMessage) { <p class="success-message"> {{ successMessage }} </p> }
+    
     </form>
 
     <div auth-footer class="auth-footer">
@@ -38,6 +34,6 @@ linkRoute = "/login"
         <a class="textLink" routerLink="/login">Faça login</a>
     </div>
 
+
+
 </app-auth-layout>
-
-

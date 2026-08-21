@@ -13,7 +13,7 @@ type InputTypes = "text" | "email" | "password"
 })
 
 export class InputFormsComponent {
-
+  
   control = input.required<FormControl>() ;
 
   type = input<InputTypes>('text');
