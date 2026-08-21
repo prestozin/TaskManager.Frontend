@@ -1,13 +1,13 @@
 @import "../../../styles/variables.scss";
 
-.task{
+.task {
     display: grid;
     align-items: center;
     grid-template-columns: var(--task-columns);
     padding: 15px 60px;
     border-top: 1px solid $grey-text-color;
 
-    .task-info{
+    .task-info {
         display: flex;
         flex-direction: column;
         font-size: 18px;
@@ -15,37 +15,51 @@
         font-weight: 400;
         gap: 5px;
 
-        .description{
+        .description {
             font-size: 15px;
             color: $grey-text-color;
             margin-left: 2px
         }
     }
-    
-    .btn-options{
+
+    .btn-options {
         display: flex;
         scale: 0.7;
         justify-content: center;
 
-        &:hover{
+        &:hover {
             cursor: pointer;
         }
 
-       &:active{
+        &:active {
             scale: 0.6;
-       }
+        }
     }
 
-    .task-details{
+    .task-details {
         justify-self: center;
         font-size: 17px;
         font-weight: 400;
     }
 
-    .date{
+    .date {
         color: $primary-text-color;
     }
-}  
 
+    .status-concluida {
+        color: #16b03a;
+    }
 
+    .priority-baixa, .status-inprogress {
 
+        color: rgb(13, 60, 189);
+    }
+
+    .priority-media, .status-pending {
+        color: #f2ac04;
+    }
+
+    .priority-alta {
+        color:red;
+    }
+}

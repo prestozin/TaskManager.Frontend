@@ -11,9 +11,9 @@
     </div>
 
                
-    <p class="task-details date">{{ task().createdAt }}</p>
-    <p class="task-details priority">{{ task().priority }}</p>
-    <p class="task-details status"> {{ task().status }} </p>
+    <p class="task-details date">{{ task().createdAt | date:'dd/MM/yyyy' }}</p>
+    <p class="task-details priority" [ngClass]="'priority-' + normalizeClass(task().priority)">{{ task().priority }}</p>
+    <p class="task-details status" [ngClass]="'status-' + normalizeClass(task().status)"> {{ task().status }} </p>
     <img class="btn-options " src="icons/task-dots.svg" alt=""> 
     
 </div>
