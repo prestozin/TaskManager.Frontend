@@ -15,10 +15,22 @@
         font-weight: 400;
         gap: 5px;
 
+        .task-title {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            line-clamp: 1;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+        }
+
         .description {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            line-clamp: 3;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
             font-size: 15px;
             color: $grey-text-color;
-            margin-left: 2px
         }
     }
 
@@ -50,16 +62,18 @@
         color: #16b03a;
     }
 
-    .priority-baixa, .status-inprogress {
+    .priority-baixa,
+    .status-inprogress {
 
         color: rgb(13, 60, 189);
     }
 
-    .priority-media, .status-pending {
+    .priority-media,
+    .status-pending {
         color: #f2ac04;
     }
 
     .priority-alta {
-        color:red;
+        color: red;
     }
 }

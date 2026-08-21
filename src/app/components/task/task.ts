@@ -25,8 +25,14 @@ export class TaskComponent {
   normalizeClass(value: string): string {
     return value
       .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '-');
+      .normalize('NFD') //separa os acentos
+      .replace(/[\u0300-\u036f]/g, '') //remove os acentos
+      .replace(/\s+/g, '-'); //transforma espaços em -
+  }
+
+  capitalizeFirst(value: string): string {
+    if (!value) return '';
+
+    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
   }
 }
