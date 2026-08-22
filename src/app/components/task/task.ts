@@ -35,4 +35,14 @@ export class TaskComponent {
 
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
   }
+
+  truncateText(value: string, maxLength: number = 80): string {
+    if (!value) return '';
+
+    if (value.length <= maxLength) {
+      return value;
+    }
+
+    return value.substring(0, maxLength) + '...';
+  }
 }

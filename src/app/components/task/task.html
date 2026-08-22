@@ -6,14 +6,14 @@
     </label>
 
     <div class="task-info">
-        <p class="task-title">{{  capitalizeFirst(task().title) }}</p>
-        <p class="description">{{  capitalizeFirst(task().description) }}</p>
+        <p class="task-title">{{   truncateText(capitalizeFirst(task().title))  }}</p>
+        <p class="description">{{  truncateText(capitalizeFirst(task().description)) }}</p>
     </div>
 
                
     <p class="task-details date">{{ task().createdAt | date:'dd/MM/yyyy' }}</p>
-    <p class="task-details priority" [ngClass]="'priority-' + normalizeClass(task().priority)">{{ task().priority }}</p>
-    <p class="task-details status" [ngClass]="'status-' + normalizeClass(task().status)"> {{ task().status }} </p>
+    <p class="task-details priority" [ngClass]="'priority-' + normalizeClass(task().priority)">{{ capitalizeFirst(task().priority) }}</p>
+    <p class="task-details status" [ngClass]="'status-' + normalizeClass(task().status)"> {{ capitalizeFirst(task().status) }} </p>
     <img class="btn-options " src="icons/task-dots.svg" alt=""> 
     
 </div>
