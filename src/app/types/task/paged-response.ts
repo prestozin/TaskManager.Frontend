@@ -1,6 +1,6 @@
 import { TaskResponse } from "./task-response";
 
-export type TaskPagedResponse = {
+export type PagedResponse = {
     items: TaskResponse[];
     pageNumber: number;
     pageSize: number;

@@ -3,6 +3,8 @@ import { TaskComponent } from "../task/task";
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TaskResponse } from '../../types/task/task-response';
 import { TaskService } from '../../services/task/task.service';
+import { ETaskStatus } from '../../enums/ETaskStatus';
+import { TaskPagedParams } from '../../types/task/task-paged-params';
 
 @Component({
   selector: 'app-task-container',
@@ -25,37 +27,38 @@ export class TaskContainerComponent {
 
   searchControl = new FormControl('', { nonNullable: true });
 
-  activeFilter = 'all';
+  TaskStatus = ETaskStatus;
 
   tasks = signal<TaskResponse[]>([]);
-  visibleTasks = signal<TaskResponse[]>([]);
 
-  setFilter(filter: string) {
-    this.activeFilter = filter;
-  }
+  pagedParams = new TaskPagedParams();
+
 
   ngOnInit() {
-    console.log('TASK CONTAINER FOI INICIALIZADO');
-    this.taskService.getTasks().subscribe({
+    this.getTasks()
+  }
+
+  private getTasks() {
+
+    this.taskService.getPaged(this.pagedParams).subscribe({
+
       next: (response) => {
-
-        console.log('GET TASKS EXECUTADO');
-
         this.tasks.set(response.data.items);
-
-        this.updateVisibleTasks();
-
       },
-
       error: (error) => {
-        console.error('erro ao buscar tarefas:', error);
+        console.error('erro ao buscar tarefas:', error)
+        this.tasks.set([]);
       }
-    })
+
+    });
   }
 
-  private updateVisibleTasks() {
+  filterTasks(filter: ETaskStatus | null) {
 
-    this.visibleTasks.set(this.tasks().slice(0, 10));
+    this.pagedParams.taskStatusId = filter;
+    this.pagedParams.pageNumber = 1;
 
+    this.getTasks();
   }
+
 }
