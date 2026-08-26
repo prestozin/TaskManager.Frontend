@@ -65,21 +65,32 @@
 </div>
 
 <footer class="container-footer">
-    <p class="footer-text">Mostrando {{tasks().length }} de {{tasks().length}} tarefas</p>
+    <p class="footer-text">Mostrando {{ pagedParams.pageNumber }} de {{tasks().length}} tarefas</p>
 
     <div class="footer-buttons">
 
         <p>Páginas: </p>
 
-        <button class="previous-page" (click)="changePage(currentPage - 1)"> << </button>
-
+        <button class="first-page btn-pages" (click)="changePage(1)"> < </button>
+        <button class="previous-page btn-pages" (click)="changePage(currentPage - 1)"> << </button>
+   
         @for (page of pages; track page) {
             <button [class.active]="currentPage === page" 
                     (click)=" changePage(page)">
                     {{ page }} 
             </button>
         }
-        <button class="next-page" (click)="changePage(currentPage + 1)"> >> </button>
+
+        <input class="choose-page btn-pages" 
+                type="number"
+                placeholder="..." 
+                [formControl]="pageInput" 
+                min="1" 
+                [max]="pages.length" 
+                (keydown.enter)="changePage(pageInput.value)">
+
+        <button class="next-page btn-pages" (click)="changePage(currentPage + 1)"> >> </button>
+        <button class="last-page btn-pages" (click)="changePage(pages.length)"> > </button>
 
     </div>
 </footer>

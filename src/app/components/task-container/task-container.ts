@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { TaskComponent } from "../task/task";
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TaskResponse } from '../../types/task/task-response';
@@ -39,6 +39,8 @@ export class TaskContainerComponent {
 
   currentPage: number = 1;
 
+  pageInput = new FormControl<number | null>(null);
+
   ngOnInit() {
     this.getTasks()
   }
@@ -78,10 +80,10 @@ export class TaskContainerComponent {
     this.pagedParams.sort = sort;
     this.getTasks();
   }
-  changePage(page: number) {
+  changePage(page: number | null) {
 
-    if (page < 1 || page > this.pages.length)
-      return
+    if (page === null || page < 1 || page > this.pages.length) 
+        return;
 
     this.currentPage = page;
     this.pagedParams.pageNumber = page;

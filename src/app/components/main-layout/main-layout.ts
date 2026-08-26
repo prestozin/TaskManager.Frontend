@@ -31,6 +31,10 @@ export class MainLayoutComponent {
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
+  logoutUser(){
+    this.tokenService.clear()
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent){
     

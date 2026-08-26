@@ -1,9 +1,6 @@
 import { ETaskStatus } from "../../enums/ETaskStatus";
+import { PagedParams } from "../paged-params";
 
-export class TaskPagedParams {
-  pageNumber = 1;
-  pageSize = 10;
-  sort = 'CreatedAt';
-  order = 'desc';
+export class TaskPagedParams extends PagedParams {
   taskStatusId: ETaskStatus | null = null;
 }

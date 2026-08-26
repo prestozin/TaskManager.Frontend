@@ -138,7 +138,7 @@
             color: $primary-text-color;
 
             &:active {
-               scale: 0.95;
+                scale: 0.95;
             }
 
             &:hover {
@@ -146,6 +146,29 @@
                 color: $secondary-text-color;
                 background-color: $primary-color;
             }
+        }
+
+        .btn-pages {
+            padding: 0px 5px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: 14px;
+            color: $primary-text-color;
+        }
+
+        input[type="number"] {
+            appearance: textfield;
+            width: 20px;
+            height: 20px;
+            padding: 4px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            appearance: none;
+            margin: 0;
         }
     }
 }
