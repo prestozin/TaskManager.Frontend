@@ -101,6 +101,10 @@
 
         .prop-task {
             font-size: 18px;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
 
         .prop-align {
@@ -126,16 +130,19 @@
         gap: 14px;
         margin-right: 80px;
 
-
         button {
             padding: 0px 5px;
-            border-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 6px;
             font-size: 14px;
             color: $primary-text-color;
 
             &:active {
-                border: 1px solid $grey-text-color;
-                border-radius: 6px;
+               scale: 0.95;
+            }
+
+            &:hover {
+                border-color: $grey-text-color;
                 color: $secondary-text-color;
                 background-color: $primary-color;
             }

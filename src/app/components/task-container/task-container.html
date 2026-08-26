@@ -28,11 +28,13 @@
                 Todas
             </p>
 
-            <p [class.active]="pagedParams.taskStatusId === TaskStatus.Pending" (click)="filterTasks(TaskStatus.Pending)">
+            <p [class.active]="pagedParams.taskStatusId === TaskStatus.Pending"
+                (click)="filterTasks(TaskStatus.Pending)">
                 Pendentes
             </p>
 
-            <p [class.active]="pagedParams.taskStatusId === TaskStatus.Completed" (click)="filterTasks(TaskStatus.Completed)">
+            <p [class.active]="pagedParams.taskStatusId === TaskStatus.Completed"
+                (click)="filterTasks(TaskStatus.Completed)">
                 Concluidas
             </p>
 
@@ -47,16 +49,16 @@
         </label>
 
         <p class="prop-task">Tarefas</p>
-        <p class="prop-align prop-task">Data de Criação</p>
-        <p class="prop-align prop-task">Prioridade</p>
-        <p class="prop-align prop-task">Status</p>
+        <p class="prop-align prop-task" (click)="orderTasks(TaskSort.CreatedAt)">Data de Criação</p>
+        <p class="prop-align prop-task" (click)="orderTasks(TaskSort.TaskPriority)">Prioridade</p>
+        <p class="prop-align prop-task" (click)="orderTasks(TaskSort.TaskStatus)">Status</p>
         <div empty-column></div>
 
     </div>
 
     <div class="tasks-wrapper">
         @for (task of tasks(); track task.id) {
-            <app-task [task]="task"></app-task>
+        <app-task [task]="task"></app-task>
         }
     </div>
 
@@ -67,13 +69,17 @@
 
     <div class="footer-buttons">
 
-        <button> >> </button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>...</button>
-        <button>
-            << </button>
+        <p>Páginas: </p>
+
+        <button class="previous-page" (click)="changePage(currentPage - 1)"> << </button>
+
+        @for (page of pages; track page) {
+            <button [class.active]="currentPage === page" 
+                    (click)=" changePage(page)">
+                    {{ page }} 
+            </button>
+        }
+        <button class="next-page" (click)="changePage(currentPage + 1)"> >> </button>
 
     </div>
 </footer>

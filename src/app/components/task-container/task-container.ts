@@ -5,6 +5,7 @@ import { TaskResponse } from '../../types/task/task-response';
 import { TaskService } from '../../services/task/task.service';
 import { ETaskStatus } from '../../enums/ETaskStatus';
 import { TaskPagedParams } from '../../types/task/task-paged-params';
+import { ETaskSort } from '../../enums/ETaskSort';
 
 @Component({
   selector: 'app-task-container',
@@ -28,11 +29,15 @@ export class TaskContainerComponent {
   searchControl = new FormControl('', { nonNullable: true });
 
   TaskStatus = ETaskStatus;
+  TaskSort = ETaskSort;
 
   tasks = signal<TaskResponse[]>([]);
 
   pagedParams = new TaskPagedParams();
 
+  pages: number[] = [];
+
+  currentPage: number = 1;
 
   ngOnInit() {
     this.getTasks()
@@ -43,7 +48,14 @@ export class TaskContainerComponent {
     this.taskService.getPaged(this.pagedParams).subscribe({
 
       next: (response) => {
+
+        const totalCount = response.data.totalCount;
+        const pageSize = this.pagedParams.pageSize;
+        const totalPages = Math.ceil(totalCount / pageSize);
+
+        this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
         this.tasks.set(response.data.items);
+
       },
       error: (error) => {
         console.error('erro ao buscar tarefas:', error)
@@ -56,9 +68,27 @@ export class TaskContainerComponent {
   filterTasks(filter: ETaskStatus | null) {
 
     this.pagedParams.taskStatusId = filter;
-    this.pagedParams.pageNumber = 1;
+    this.pagedParams.pageNumber = this.currentPage;
 
     this.getTasks();
+  }
+
+  orderTasks(sort: string) {
+    this.pagedParams.order = this.pagedParams.order === "asc" ? "desc" : "asc";
+    this.pagedParams.sort = sort;
+    this.getTasks();
+  }
+  changePage(page: number) {
+
+    if (page < 1 || page > this.pages.length)
+      return
+
+    this.currentPage = page;
+    this.pagedParams.pageNumber = page;
+
+    this.getTasks();
+
+    console.log(this.currentPage)
   }
 
 }
