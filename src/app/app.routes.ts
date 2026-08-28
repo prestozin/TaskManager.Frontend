@@ -23,14 +23,17 @@ export const routes: Routes = [
     },
     {
         path: 'tasks',
-        component: TasksComponent
+        component: TasksComponent,
+        canActivate: [authGuard]
     },
     {
         path: 'profile',
-        component: ProfileComponent
+        component: ProfileComponent,
+        canActivate: [authGuard]
     },
      {
         path: 'settings',
-        component: SettingsComponent
+        component: SettingsComponent,
+        canActivate: [authGuard]
     },
 ];

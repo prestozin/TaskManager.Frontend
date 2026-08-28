@@ -1,15 +1,16 @@
 @import "../../../styles/variables.scss";
 
 input {
-    border-radius: 30px;
+    border-radius:  var(--input-radius, 380px);;
     background-color: transparent;
     border: 2px solid grey;
     font-size: 18px;
     color: black;
-    height: 66px;
-    width: 380px;
+    height: var(--input-height, 66px);
+    width: var(--input-width, 380px);
     text-align: start;
     padding: 0px 40px;
+    
 }
 
 input.invalid {

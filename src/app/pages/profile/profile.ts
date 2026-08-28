@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { MainLayoutComponent } from '../../components/main-layout/main-layout';
+import { NewTaskComponent } from '../../components/new-task/new-task.component';
 
 @Component({
   selector: 'app-profile',
   imports: [
-    MainLayoutComponent
+    MainLayoutComponent,
+    NewTaskComponent
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',

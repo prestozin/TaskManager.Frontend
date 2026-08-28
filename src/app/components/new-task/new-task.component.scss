@@ -1,0 +1,107 @@
+@import "../../../styles/variables.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    width: 650px;
+    height: 750px;
+    border: 1px solid red;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+
+    .container-header {
+        display: flex;
+        color: $primary-color;
+        gap: 15px;
+        align-items: center;
+
+
+        .header-texts {
+            font-size: 28px;
+            font-weight: 600;
+
+            .header-subtitle {
+                font-size: 20px;
+                color: gray;
+            }
+        }
+
+        .img-icon {
+            width: 50px;
+            height: 50px;
+
+        }
+    }
+
+    .container-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .content-box {
+            display: flex;
+            flex-direction: column;
+            color: $primary-color;
+            font-size: 20px;
+            font-weight: 600;
+
+
+            .task-title {
+                margin-left: 30px;
+                margin-bottom: 10px;
+            }
+
+            .priority-dropdown {
+                display: flex;
+                border: 2px solid grey;
+                border-radius: 10px;
+                padding: 15px;
+                background-color: #e7dfdf;
+
+                .dropdown-text {
+                    margin-left: 20px;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    .container-footer {
+        display: flex;
+        gap: 30px;
+
+
+        .btn-cancel,
+        .btn-save {
+            border-radius: 10px;
+            width: 160px;
+            height: 45px;
+            border: 1px solid $primary-color;
+            color: $primary-color;
+            font-size: 20px;
+            font-weight: 600;
+
+            &:active {
+                scale: 0.95;
+            }
+        }
+
+        .btn-save {
+            background-color: $primary-color;
+            color: white;
+
+        }
+    }
+
+    .form-title, .form-description {
+        --input-width: 500px;
+        --input-radius: 10px;
+    }
+
+    .form-description {
+        
+        --input-height: 220px;
+    }
+}

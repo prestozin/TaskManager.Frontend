@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="container-header">
+        <img class="img-icon" src="icons/new-task-icon.svg">
+        <div class="header-texts">
+            <p class="header-title">Adicionar nova tarefa</p>
+            <p class="header-subtitle">Preencha as informações da nova tarefa</p>
+        </div>
+
+    </div>
+
+    <div class="container-content">
+
+        <div class="content-box">
+            <p class="task-title">Título</p>
+            <app-input-forms class="form-title" type="text" placeholder="Insira um título para a tarefa"
+                [control]="newTaskForm.controls.titulo">
+            </app-input-forms>
+        </div>
+
+        <div class="content-box">
+            <p class="task-title">Prioridade</p>
+            <div class="priority-dropdown">
+                <p class="dropdown-text">Alta</p>
+            </div>
+        </div>
+
+
+        <div class="content-box">
+            <p class="task-title">Descrição</p>
+            <app-input-forms class="form-description" type="text" placeholder="Insira uma descrição para sua tarefa"
+                [control]="newTaskForm.controls.descricao">
+            </app-input-forms>
+
+        </div>
+
+    </div>
+
+    <div class="container-footer">
+        <button class="btn-cancel">Cancelar</button>
+        <button class="btn-save">Salvar</button>
+    </div>
+</div>
