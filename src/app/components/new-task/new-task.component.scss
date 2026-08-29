@@ -6,10 +6,10 @@
     border-radius: 15px;
     width: 650px;
     height: 750px;
-    border: 1px solid red;
     gap: 40px;
     justify-content: center;
     align-items: center;
+    background-color: white;
 
     .container-header {
         display: flex;
@@ -29,8 +29,8 @@
         }
 
         .img-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
 
         }
     }
@@ -47,22 +47,66 @@
             font-size: 20px;
             font-weight: 600;
 
-
             .task-title {
-                margin-left: 30px;
+                margin-left: 20px;
                 margin-bottom: 10px;
             }
 
             .priority-dropdown {
+                position: relative;
                 display: flex;
                 border: 2px solid grey;
                 border-radius: 10px;
                 padding: 15px;
-                background-color: #e7dfdf;
+                background-color: #dcdada;
+                align-items: center;
 
                 .dropdown-text {
-                    margin-left: 20px;
+                    margin-left: 8px;
                     font-weight: 400;
+                }
+
+                .dropdown-arrow {
+                    margin-left: auto;
+                    transition: transform 0.2s ease;
+                }
+
+                &.active {
+                    .dropdown-arrow {
+                        transform: rotate(180deg);
+                    }
+                }
+
+                .priority-options {
+                    position: absolute;
+
+                    top: calc(100% + 5px);
+                    left: 0;
+
+                    width: 100%;
+                    box-sizing: border-box;
+
+                    background-color: #dcdada;
+
+                    border: 2px solid grey;
+                    border-radius: 10px;
+
+                    overflow: hidden;
+
+                    z-index: 100;
+
+                    .priority-option {
+                        padding: 15px 20px;
+
+                        font-weight: 400;
+
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: $hover-button;
+                            color: white;
+                        }
+                    }
                 }
             }
         }
@@ -95,13 +139,18 @@
         }
     }
 
-    .form-title, .form-description {
+    .form-title,
+    .form-description {
         --input-width: 500px;
         --input-radius: 10px;
+        --input-padding: 15px 20px
     }
 
-    .form-description {
-        
-        --input-height: 220px;
+    .form-title{
+        --input-height: 59px;    
     }
+    .form-description {
+        --input-height: 220px;    
+    }
+    
 }

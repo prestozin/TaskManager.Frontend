@@ -5,8 +5,7 @@ import { NewTaskComponent } from '../../components/new-task/new-task.component';
 @Component({
   selector: 'app-profile',
   imports: [
-    MainLayoutComponent,
-    NewTaskComponent
+    MainLayoutComponent
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',

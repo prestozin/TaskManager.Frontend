@@ -15,5 +15,14 @@ import { NewTaskComponent } from "../../components/new-task/new-task.component";
 })
 export class DashboardComponent {
   
+  isNewTaskOpen = false;
 
+  openNewTask() {
+    this.isNewTaskOpen = true;
+  }
+
+  closeNewTask() {
+    console.log('close task clicked')
+    this.isNewTaskOpen = false;
+  }
 }

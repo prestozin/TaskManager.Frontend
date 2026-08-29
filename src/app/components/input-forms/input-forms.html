@@ -1,10 +1,23 @@
-<input
-    class="new-task-input"
-    [type]="type()"
-    [formControl]="control()"
-    [placeholder]="placeholder()"
-    [class.invalid] ="control().invalid && control().touched"
-/>
+@if (type() === 'textarea') {
+
+    <textarea
+        class="new-task-input"
+        [formControl]="control()"
+        [placeholder]="placeholder()"
+        [class.invalid]="control().invalid && control().touched">
+    </textarea>
+
+} @else {
+
+    <input
+        class="new-task-input"
+        [type]="type()"
+        [formControl]="control()"
+        [placeholder]="placeholder()"
+        [class.invalid]="control().invalid && control().touched"
+    />
+
+}
 
 @if (control().invalid && control().touched){
     @if (control().hasError('required')) {

@@ -1,8 +1,17 @@
 <app-main-layout>
 
-   <app-task-container body-content></app-task-container>     
-  
+   <app-task-container body-content (newTaskClicked)="openNewTask()"> </app-task-container>
+
 </app-main-layout>
 
+@if (isNewTaskOpen) {
 
+<div class="modal-overlay" (click)="closeNewTask()">
 
+   <div class="modal-content" (click)="$event.stopPropagation()">
+      <app-new-task (cancelClicked)="closeNewTask()"></app-new-task>
+   </div>
+
+</div>
+
+}

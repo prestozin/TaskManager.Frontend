@@ -19,15 +19,28 @@
 
         <div class="content-box">
             <p class="task-title">Prioridade</p>
-            <div class="priority-dropdown">
-                <p class="dropdown-text">Alta</p>
+            <div class="priority-dropdown" [class.active]="isPriorityDropdownOpen" (click)="togglePriorityDropdown()">
+                <p class="dropdown-text">{{ selectedPriority.name }}</p>
+                <img class="dropdown-arrow" src="icons/arrow-icon.svg">
+
+                @if (isPriorityDropdownOpen) {
+                <div class="priority-options">
+
+                    @for (priority of priorities; track priority.id) {
+
+                    <p class="priority-option" (click)="selectPriority(priority); 
+                        $event.stopPropagation()"> {{ priority.name }}
+                    </p>
+                    }
+                </div>
+                }
             </div>
         </div>
 
 
         <div class="content-box">
             <p class="task-title">Descrição</p>
-            <app-input-forms class="form-description" type="text" placeholder="Insira uma descrição para sua tarefa"
+            <app-input-forms class="form-description" type="textarea" placeholder="Insira uma descrição para sua tarefa"
                 [control]="newTaskForm.controls.descricao">
             </app-input-forms>
 
@@ -36,7 +49,7 @@
     </div>
 
     <div class="container-footer">
-        <button class="btn-cancel">Cancelar</button>
+        <button class="btn-cancel" (click)="cancelNewTask()">Cancelar</button>
         <button class="btn-save">Salvar</button>
     </div>
 </div>

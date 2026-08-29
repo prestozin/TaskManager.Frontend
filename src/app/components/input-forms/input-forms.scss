@@ -1,6 +1,6 @@
 @import "../../../styles/variables.scss";
 
-input {
+input, textarea {
     border-radius:  var(--input-radius, 380px);;
     background-color: transparent;
     border: 2px solid grey;
@@ -9,8 +9,7 @@ input {
     height: var(--input-height, 66px);
     width: var(--input-width, 380px);
     text-align: start;
-    padding: 0px 40px;
-    
+    padding: var(--input-padding, 0px 40px);  
 }
 
 input.invalid {

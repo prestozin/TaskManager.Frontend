@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
-type InputTypes = "text" | "email" | "password"
+type InputTypes = "text" | "email" | "password" | 'textarea';
 
 @Component({
   selector: 'app-input-forms',
