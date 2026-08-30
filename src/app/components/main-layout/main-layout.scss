@@ -72,7 +72,7 @@ h2 {
 
                 &:hover {
                     filter: brightness(1.1);
-                    background-color: #142e7a;
+                    background-color: $hover-button;
                 }
             }
         }
@@ -100,7 +100,7 @@ h2 {
 
             &:hover {
                 filter: brightness(1.1);
-                background-color: #142e7a;
+                background-color: $hover-button;
             }
 
             &:active {
@@ -108,7 +108,7 @@ h2 {
             }
 
             &.active {
-                background-color: #142e7a;
+                background-color: $hover-button;
                 color: $secondary-text-color;
             }
         }
@@ -126,36 +126,112 @@ h2 {
             pointer-events: none;
 
             .shape-top {
+
                 position: absolute;
-                top: 0;
-                right: 0;
+                top: -4%;
+                right: -28.2%;
+
+                scale: 0.6;
+
+                width: 250px;
+                height: 150px;
+
+                background-color: $shape-color;
+
+                mask: url('/shapes/main-layout/shape-top.svg') no-repeat center;
+                mask-size: contain;
+
+                -webkit-mask: url('/shapes/main-layout/shape-top.svg') no-repeat center;
+                -webkit-mask-size: contain;
             }
 
             .shape-bottom {
                 position: absolute;
-                left: -6%;
-                top: 50%;
-                scale: 0.6;
+
+                scale: 1.4;
+
+                width: 250px;
+                height: 250px;
+
+                right: 53%;
+                top: 53%;
+
+                transform: scale(0.6);
+
+                background-color: $shape-color;
+
+                mask: url('/shapes/main-layout/shape-bottom.svg') no-repeat center;
+                mask-size: contain;
+
+                -webkit-mask: url('/shapes/main-layout/shape-bottom.svg') no-repeat center;
+                -webkit-mask-size: contain;
             }
+
 
             .shape-right {
                 position: absolute;
-                right: -1.3%;
-                top: 56%;
-                scale: 0.8;
+
+                scale: 0.7; 
+
+                width: 250px;
+                height: 250px;
+
+                right: -32.7%;
+                top: 50%;
+                
+
+                transform: scale(0.8);
+
+                background-color: $shape-color;
+
+                mask: url('/shapes/main-layout/shape-right.svg') no-repeat center;
+                mask-size: contain;
+
+                -webkit-mask: url('/shapes/main-layout/shape-right.svg') no-repeat center;
+                -webkit-mask-size: contain;
             }
+
 
             .shape-left {
                 position: absolute;
-                left: 0;
-                top: 10%;
+
+                scale: 0.45;
+                width: 250px;
+                height: 250px;
+
+                left: -35%;
+                top: 6%;
+
+                background-color: $shape-color;
+
+                mask: url('/shapes/main-layout/shape-left.svg') no-repeat center;
+                mask-size: contain;
+
+                -webkit-mask: url('/shapes/main-layout/shape-left.svg') no-repeat center;
+                -webkit-mask-size: contain;
             }
+
 
             .shape-circle {
                 position: absolute;
-                scale: 0.8;
-                top: 75%;
-                left: 50%;
+
+                scale: 0.3;
+
+                width: 250px;
+                height: 250px;
+
+                top: 65%;
+                left: 15%;
+
+                transform: scale(0.8);
+
+                background-color: $shape-color;
+
+                mask: url('/shapes/main-layout/shape-circle.svg') no-repeat center;
+                mask-size: contain;
+
+                -webkit-mask: url('/shapes/main-layout/shape-circle.svg') no-repeat center;
+                -webkit-mask-size: contain;
             }
         }
     }
@@ -241,7 +317,7 @@ h2 {
 
                             border-radius: 50%;
 
-                            background-color: #4365c6;
+                            background-color: #032070;
                         }
                     }
 

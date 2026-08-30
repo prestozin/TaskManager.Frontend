@@ -52,28 +52,38 @@
         justify-self: center;
         font-size: 17px;
         font-weight: 400;
+
     }
 
     .date {
         color: $primary-text-color;
     }
 
-    .status-concluida {
-        color: #16b03a;
+    .priority,
+    .status {
+        padding: 8px 12px;
+        border-radius: 8px;
     }
 
     .priority-baixa,
     .status-em-progresso {
-
-        color: rgb(13, 60, 189);
+        color: #2563eb;
+        background-color: #c9d9ee;
     }
 
     .priority-media,
     .status-pendente {
-        color: #f2ac04;
+        color: #ee7002;
+        background-color: #d7c68180;
     }
 
     .priority-alta {
-        color: red;
+        color: #ff0000;
+        background-color: #f4a9a97f;
+    }
+
+    .status-concluida {
+        color: #16a34a;
+        background-color: #dcfce7;
     }
 }
