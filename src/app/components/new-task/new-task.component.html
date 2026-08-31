@@ -17,25 +17,9 @@
             </app-input-forms>
         </div>
 
-        <div class="content-box">
-            <p class="task-title">Prioridade</p>
-            <div class="priority-dropdown" [class.active]="isPriorityDropdownOpen" (click)="togglePriorityDropdown()">
-                <p class="dropdown-text">{{ selectedPriority.name }}</p>
-                <img class="dropdown-arrow" src="icons/arrow-icon.svg">
-
-                @if (isPriorityDropdownOpen) {
-                <div class="priority-options">
-
-                    @for (priority of priorities; track priority.id) {
-
-                    <p class="priority-option" (click)="selectPriority(priority); 
-                        $event.stopPropagation()"> {{ priority.name }}
-                    </p>
-                    }
-                </div>
-                }
-            </div>
-        </div>
+        <app-dropdown [options]="priorities" [selectedOption]="selectedPriority" label="Prioridade"
+            (optionSelected)="selectPriority($event)">
+        </app-dropdown>
 
 
         <div class="content-box">

@@ -7,12 +7,14 @@ import { ETaskStatus } from '../../enums/ETaskStatus';
 import { TaskPagedParams } from '../../types/task/task-paged-params';
 import { ETaskSort } from '../../enums/ETaskSort';
 import { PagedResponse } from '../../types/task/paged-response';
+import { DropdownComponent, DropdownOption } from "../dropdown/dropdown";
 
 @Component({
   selector: 'app-task-container',
   imports: [
     TaskComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DropdownComponent,
   ],
   templateUrl: './task-container.html',
   styleUrl: './task-container.scss',
@@ -63,6 +65,23 @@ export class TaskContainerComponent {
 
     return [this.pagedParams.pageNumber - 1, this.pagedParams.pageNumber, this.pagedParams.pageNumber + 1];
   });
+
+  priorities = [{ id: 1, name: 'Baixa' },
+  { id: 2, name: 'Média' },
+  { id: 3, name: 'Alta' }
+  ];
+
+  selectedPriority = this.priorities[2];
+
+  status = [{ id: 1, name: 'pendente' },
+  { id: 2, name: 'em progresso' },
+  { id: 3, name: 'concluida' }
+  ];
+
+  selectedStatus = this.status[2];
+
+
+
 
   ngOnInit() {
     this.getTasks()
@@ -124,5 +143,13 @@ export class TaskContainerComponent {
 
   openNewTask() {
     this.newTaskClicked.emit();
+  }
+
+  selectPriority(priority: DropdownOption): void {
+    this.selectedPriority = priority;
+  }
+
+  selectStatus(status: DropdownOption): void {
+    this.selectedStatus = status;
   }
 }

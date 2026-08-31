@@ -5,17 +5,17 @@
 
             <h2 class="header-title">Minhas Tarefas</h2>
 
+
+
             <div class="search-new-task-container">
-                <div class="search-container">
-                    <img class="icon-search" src="icons/search-icon.svg" alt="">
-                    <input class="search-input" type="search" placeholder="Pesquisar tarefas..."
-                        [formControl]="searchControl">
-                </div>
+
 
                 <button class="btn-newtask" (click)="openNewTask()">
                     <img src="icons/plus-icon.svg" alt="">
                     <p>Nova Tarefa</p>
                 </button>
+
+
 
             </div>
 
@@ -23,19 +23,19 @@
 
         <div class="task-filters">
 
-            <p [class.active]="pagedParams.taskStatusId === null" (click)="filterTasks(null)">
-                Todas
-            </p>
+            <div class="search-container">
+                <img class="icon-search" src="icons/search-icon.svg" alt="">
+                <input class="search-input" type="search" placeholder="Pesquisar tarefas..."
+                    [formControl]="searchControl">
+            </div>
 
-            <p [class.active]="pagedParams.taskStatusId === TaskStatus.Pending"
-                (click)="filterTasks(TaskStatus.Pending)">
-                Pendentes
-            </p>
+            <app-dropdown class="priority-dropdown"[options]="priorities" [selectedOption]="selectedPriority" 
+                label="Prioridade" (optionSelected)="selectPriority($event)"> 
+            </app-dropdown>
 
-            <p [class.active]="pagedParams.taskStatusId === TaskStatus.Completed"
-                (click)="filterTasks(TaskStatus.Completed)">
-                Concluidas
-            </p>
+            <app-dropdown class="status-dropdown"[options]="status" [selectedOption]="selectedStatus" 
+                label="Status" (optionSelected)="selectStatus($event)"> 
+            </app-dropdown>
 
         </div>
 
@@ -70,30 +70,26 @@
 
         <p>Páginas: </p>
 
-        <button class="first-page btn-pages" (click)="changePage(1)"> << </button>
-        <button class="previous-page btn-pages" (click)="changePage(pagedParams.pageNumber - 1)"> < </button>
-   
-        @for (page of visiblePages(); track page) {
-            <button class="btn-pages" 
-                    [class.active]="pagedParams.pageNumber === page" 
-                    (click)=" changePage(page)">
-                    {{ page }} 
-            </button>
-        }
+        <button class="first-page btn-pages" (click)="changePage(1)">
+            << </button>
+                <button class="previous-page btn-pages" (click)="changePage(pagedParams.pageNumber - 1)">
+                    < </button>
 
-        <input 
-            #pageInputElement
-            class="choose-page btn-pages" 
-            type="number"
-            placeholder="..." 
-            [formControl]="pageInput" 
-            min="1" 
-            [max]="pagedResponse()?.totalPages ?? 1" 
-            (keydown.enter)="goToPage(pageInputElement)"
-            (blur)="pageInput.reset()">
+                        @for (page of visiblePages(); track page) {
+                        <button class="btn-pages" [class.active]="pagedParams.pageNumber === page"
+                            (click)=" changePage(page)">
+                            {{ page }}
+                        </button>
+                        }
 
-        <button class="next-page btn-pages" (click)="changePage(pagedParams.pageNumber + 1)"> > </button>
-        <button class="last-page btn-pages" (click)="changePage(pagedResponse()?.totalPages ?? 1)"> >> </button>
+                        <input #pageInputElement class="choose-page btn-pages" type="number" placeholder="__"
+                            [formControl]="pageInput" min="1" [max]="pagedResponse()?.totalPages ?? 1"
+                            (keydown.enter)="goToPage(pageInputElement)" (blur)="pageInput.reset()">
+
+                        <button class="next-page btn-pages" (click)="changePage(pagedParams.pageNumber + 1)"> >
+                        </button>
+                        <button class="last-page btn-pages" (click)="changePage(pagedResponse()?.totalPages ?? 1)"> >>
+                        </button>
 
     </div>
 </footer>
