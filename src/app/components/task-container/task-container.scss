@@ -57,7 +57,7 @@
                     align-items: center;
                     color: $secondary-text-color;
                     border-radius: 10px;
-                    background-color: $primary-color;
+                    background-color: $hover-button;
                     gap: 6px;
 
                     &:active {
@@ -82,7 +82,7 @@
                 }
 
                 &.active {
-                    color: $primary-text-color;
+                    color: $primary-color;
                     text-decoration: underline 3px;
                     text-underline-offset: 22.5px;
                 }
@@ -97,7 +97,8 @@
         padding: 25px 60px;
         border-top: 1px solid $grey-text-color;
         align-items: center;
-        color: $grey-text-color;
+        color: $primary-color;
+        font-weight: 600;
 
         .prop-task {
             font-size: 18px;
@@ -141,7 +142,7 @@
                 scale: 0.95;
             }
 
-            &:hover {
+            &:hover, &.active {
                 border-color: $grey-text-color;
                 color: $secondary-text-color;
                 background-color: $primary-color;

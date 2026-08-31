@@ -196,7 +196,7 @@ main {
             z-index: 2;
 
             h2 {
-                color: $primary-text-color;
+                color: $hover-button;
                 font-size: 40px;
                 margin: 0;
             }
@@ -217,7 +217,7 @@ main {
                 border-radius: 30px;
                 border: none;
 
-                background-color: $primary-color;
+                background-color: $hover-button;
                 color: $secondary-text-color;
 
                 cursor: pointer;

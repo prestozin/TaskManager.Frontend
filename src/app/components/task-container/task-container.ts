@@ -1,4 +1,4 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import { TaskComponent } from "../task/task";
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TaskResponse } from '../../types/task/task-response';
@@ -6,6 +6,7 @@ import { TaskService } from '../../services/task/task.service';
 import { ETaskStatus } from '../../enums/ETaskStatus';
 import { TaskPagedParams } from '../../types/task/task-paged-params';
 import { ETaskSort } from '../../enums/ETaskSort';
+import { PagedResponse } from '../../types/task/paged-response';
 
 @Component({
   selector: 'app-task-container',
@@ -35,13 +36,33 @@ export class TaskContainerComponent {
 
   pagedParams = new TaskPagedParams();
 
-  pages: number[] = [];
-
-  currentPage: number = 1;
+  pagedResponse = signal<PagedResponse | null>(null);
 
   pageInput = new FormControl<number | null>(null);
 
   newTaskClicked = output();
+
+  visiblePages = computed(() => {
+    const totalPages = this.pagedResponse()?.totalPages ?? 0;
+
+    if (totalPages === 0) {
+      return [];
+    }
+
+    if (totalPages <= 3) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    if (this.pagedParams.pageNumber === 1) {
+      return [1, 2, 3];
+    }
+
+    if (this.pagedParams.pageNumber === totalPages) {
+      return [totalPages - 2, totalPages - 1, totalPages];
+    }
+
+    return [this.pagedParams.pageNumber - 1, this.pagedParams.pageNumber, this.pagedParams.pageNumber + 1];
+  });
 
   ngOnInit() {
     this.getTasks()
@@ -53,17 +74,15 @@ export class TaskContainerComponent {
 
       next: (response) => {
 
-        const totalCount = response.data.totalCount;
-        const pageSize = this.pagedParams.pageSize;
-        const totalPages = Math.ceil(totalCount / pageSize);
-
-        this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+        this.pagedResponse.set(response.data);
         this.tasks.set(response.data.items);
 
       },
       error: (error) => {
         console.error('erro ao buscar tarefas:', error)
         this.tasks.set([]);
+        this.pagedResponse.set(null);
+
       }
 
     });
@@ -72,7 +91,7 @@ export class TaskContainerComponent {
   filterTasks(filter: ETaskStatus | null) {
 
     this.pagedParams.taskStatusId = filter;
-    this.pagedParams.pageNumber = this.currentPage;
+    this.pagedParams.pageNumber = 1;
 
     this.getTasks();
   }
@@ -85,15 +104,22 @@ export class TaskContainerComponent {
 
   changePage(page: number | null) {
 
-    if (page === null || page < 1 || page > this.pages.length)
+    const totalPages = this.pagedResponse()?.totalPages ?? 0;
+
+    if (page === null || page < 1 || page > totalPages)
       return;
 
-    this.currentPage = page;
     this.pagedParams.pageNumber = page;
 
     this.getTasks();
+  }
 
-    console.log(this.currentPage)
+  goToPage(input: HTMLInputElement) {
+    const page = this.pageInput.value;
+
+    input.blur();  //remove o foco do input
+
+    this.changePage(page);
   }
 
   openNewTask() {

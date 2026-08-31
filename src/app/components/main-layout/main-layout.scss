@@ -1,9 +1,5 @@
 @import "../../../styles/variables.scss";
 
-h2 {
-    font-size: 40px;
-    color: $secondary-text-color;
-}
 
 .layout {
     display: flex;
@@ -33,6 +29,7 @@ h2 {
 
             h2 {
                 font-size: 30px;
+                color: $secondary-text-color;
             }
 
             .logo-img {
@@ -243,12 +240,10 @@ h2 {
         flex-direction: column;
 
         .header-content {
+            
             display: flex;
-
             width: 100%;
-
             padding: 10px 25px;
-
             border-bottom: 1px solid $grey-text-color;
 
             .header-title {
@@ -317,7 +312,7 @@ h2 {
 
                             border-radius: 50%;
 
-                            background-color: #032070;
+                            background-color: $hover-button;
                         }
                     }
 

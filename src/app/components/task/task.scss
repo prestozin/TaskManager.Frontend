@@ -56,34 +56,38 @@
     }
 
     .date {
-        color: $primary-text-color;
+        color: $black-gray;
     }
 
     .priority,
     .status {
         padding: 8px 12px;
-        border-radius: 8px;
+        border-radius: 10px;
     }
 
     .priority-baixa,
     .status-em-progresso {
         color: #2563eb;
-        background-color: #c9d9ee;
+        background-color: #c9d9ee5d;
+        border: 1px solid #2564eb34;
     }
 
     .priority-media,
     .status-pendente {
-        color: #ee7002;
-        background-color: #d7c68180;
+        color: #e79f03e0;
+        background-color: #c5b9321f;
+        border: 1px solid #eda70f4f
     }
 
-    .priority-alta {
+    .priority-alta, .status-cancelada {
         color: #ff0000;
-        background-color: #f4a9a97f;
+        background-color: #f4a9a93a;
+        border: 1px solid #ff000035
     }
 
     .status-concluida {
         color: #16a34a;
         background-color: #dcfce7;
+        border: 1px solid #34985797;
     }
 }
