@@ -12,6 +12,7 @@
 
         .header-top {
             display: flex;
+            flex-direction: column;
             margin-left: 50px;
             padding-top: 20px;
 
@@ -54,6 +55,16 @@
             margin-left: 50px;
             padding: 15px 0px 20px 0px;
 
+            .filter-field {
+                display: flex;
+                flex-direction: column;
+                font-size: 18px;
+                color: $grey-text-color;
+                
+                .filter-label {
+                    margin: 0px 0px 5px 10px;
+                }
+            }
             .search-container {
                 position: relative;
                 display: flex;
@@ -74,19 +85,6 @@
                 }
             }
 
-            .priority-dropdown {
-                --title-size: 18px;
-                --title-weigth: 400;
-
-                --option-font-size: 18px;
-            }
-
-            .status-dropdown {
-                --title-size: 18px;
-                                --title-weigth: 400;
-
-                --option-font-size: 18px;
-            }
         }
     }
 

@@ -139,6 +139,19 @@
         }
     }
 
+    .dropdown-priority{
+        --option-font-size: 20px;
+        --option-padding: 15px;
+        --title-size: 20px;
+        --title-weight: 600;
+        --title-color: $primary-text-color;
+        --dropdown-width: 500px;
+        --main-text-size: 20px;
+        --dropdown-height: 59px;
+        --title-left-margin: 22px;
+        --main-text-margin-left: 10px;
+    }
+
     .form-title,
     .form-description {
         --input-width: 500px;

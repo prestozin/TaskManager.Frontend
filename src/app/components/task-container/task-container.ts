@@ -73,14 +73,12 @@ export class TaskContainerComponent {
 
   selectedPriority = this.priorities[2];
 
-  status = [{ id: 1, name: 'pendente' },
-  { id: 2, name: 'em progresso' },
-  { id: 3, name: 'concluida' }
+  status = [{ id: 1, name: 'Pendente' },
+  { id: 2, name: 'Em progresso' },
+  { id: 3, name: 'Concluída' }
   ];
 
   selectedStatus = this.status[2];
-
-
 
 
   ngOnInit() {
@@ -147,9 +145,17 @@ export class TaskContainerComponent {
 
   selectPriority(priority: DropdownOption): void {
     this.selectedPriority = priority;
+    this.pagedParams.sort = priority.id === 1 ? ETaskSort.TaskPriority : ETaskSort.CreatedAt;
+    this.pagedParams.pageNumber = 1;
+
+    this.getTasks();
   }
 
   selectStatus(status: DropdownOption): void {
     this.selectedStatus = status;
+    this.pagedParams.taskStatusId = status.id;
+    this.pagedParams.pageNumber = 1;
+
+    this.getTasks();
   }
 }

@@ -5,17 +5,12 @@
 
             <h2 class="header-title">Minhas Tarefas</h2>
 
-
-
             <div class="search-new-task-container">
-
 
                 <button class="btn-newtask" (click)="openNewTask()">
                     <img src="icons/plus-icon.svg" alt="">
                     <p>Nova Tarefa</p>
                 </button>
-
-
 
             </div>
 
@@ -23,18 +18,23 @@
 
         <div class="task-filters">
 
-            <div class="search-container">
-                <img class="icon-search" src="icons/search-icon.svg" alt="">
-                <input class="search-input" type="search" placeholder="Pesquisar tarefas..."
-                    [formControl]="searchControl">
+            <div class="filter-field">
+                <p class="filter-label">Pesquisar</p>
+
+                <div class="search-container">
+                    <img class="icon-search" src="icons/search-icon.svg" alt="">
+                    <input class="search-input" type="search" placeholder="Pesquisar tarefas..."
+                        [formControl]="searchControl">
+                </div>
+
             </div>
 
-            <app-dropdown class="priority-dropdown"[options]="priorities" [selectedOption]="selectedPriority" 
-                label="Prioridade" (optionSelected)="selectPriority($event)"> 
+            <app-dropdown class="priority-dropdown" [options]="priorities" [selectedOption]="selectedPriority"
+                label="Prioridade" (optionSelected)="selectPriority($event)">
             </app-dropdown>
 
-            <app-dropdown class="status-dropdown"[options]="status" [selectedOption]="selectedStatus" 
-                label="Status" (optionSelected)="selectStatus($event)"> 
+            <app-dropdown class="status-dropdown" [options]="status" [selectedOption]="selectedStatus" label="Status"
+                (optionSelected)="selectStatus($event)">
             </app-dropdown>
 
         </div>
