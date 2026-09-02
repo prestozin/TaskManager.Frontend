@@ -1,9 +1,5 @@
 import { Component, input, output } from '@angular/core';
-
-export interface DropdownOption {
-  id: number;
-  name: string;
-}
+import { SelectableOption } from '../../interfaces/selectable-option';
 
 @Component({
   selector: 'app-dropdown',
@@ -16,10 +12,10 @@ export class DropdownComponent {
   label = input<string>('');
   placeholder = input<string>('Selecione uma opção');
 
-  options = input.required<DropdownOption[]>();
-  selectedOption = input<DropdownOption | null>(null);
+  options = input.required<SelectableOption[]>();
+  selectedOption = input<SelectableOption | null>(null);
 
-  optionSelected = output<DropdownOption>();
+  optionSelected = output<SelectableOption>();
 
   isOpen = false;
 
@@ -27,7 +23,7 @@ export class DropdownComponent {
     this.isOpen = !this.isOpen;
   }
 
-  selectOption(option: DropdownOption) {
+  selectOption(option: SelectableOption): void {
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

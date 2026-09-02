@@ -1,7 +1,8 @@
 import { Component, output } from '@angular/core';
 import { InputFormsComponent } from '../input-forms/input-forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DropdownComponent, DropdownOption } from '../dropdown/dropdown';
+import { DropdownComponent } from '../dropdown/dropdown';
+import { SelectableOption } from '../../interfaces/selectable-option';
 
 @Component({
   selector: 'app-new-task',
@@ -19,22 +20,20 @@ export class NewTaskComponent {
     descricao: new FormControl<string>('', { nonNullable: true, validators: [Validators.maxLength(500)] })
   });
 
-  priorities = [{ id: 1, name: 'Baixa' },
-  { id: 2, name: 'Média' },
-  { id: 3, name: 'Alta' }
-  ];
+  priorityOptions: SelectableOption[] = [];
 
-  selectedPriority = this.priorities[2];
+  selectedPriority = this.priorityOptions[2];
 
   isPriorityDropdownOpen = false;
 
   cancelClicked = output();
+  
 
   cancelNewTask() {
     this.cancelClicked.emit();
   }
 
-  selectPriority(priority: DropdownOption): void {
+  selectPriority(priority: SelectableOption): void {
     this.selectedPriority = priority;
   }
 

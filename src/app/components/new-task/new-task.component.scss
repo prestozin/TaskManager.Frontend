@@ -144,12 +144,15 @@
         --option-padding: 15px;
         --title-size: 20px;
         --title-weight: 600;
-        --title-color: $primary-text-color;
+        --title-color: #0b2f6a;
         --dropdown-width: 500px;
         --main-text-size: 20px;
         --dropdown-height: 59px;
         --title-left-margin: 22px;
         --main-text-margin-left: 10px;
+        --border-options: 2px solid grey;
+        --dropdown-border-width: calc(100% + 4px);
+        --dropdown-border-left: -2px;
     }
 
     .form-title,

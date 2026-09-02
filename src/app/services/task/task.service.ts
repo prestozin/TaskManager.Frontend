@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ResultResponse } from '../../types/result/result-response';
 import { PagedResponse } from '../../types/task/paged-response';
 import { TaskPagedParams } from '../../types/task/task-paged-params';
+import { TaskSelectablesResponse } from '../../interfaces/task-selectables-response';
 
 
 @Injectable({
@@ -27,7 +28,16 @@ export class TaskService {
         if (params.taskStatusId !== null) {
             httpParams = httpParams.set('TaskStatusId', params.taskStatusId);
         }
+
+        if (params.taskPriorityId !== null) {
+            httpParams = httpParams.set('TaskPriorityId', params.taskPriorityId);
+        }
         return this.httpClient.get<ResultResponse<PagedResponse>>
             (`${this.apiUrl}/GetPaged`, { params: httpParams });
+    }
+
+    getSelectables(): Observable<ResultResponse<TaskSelectablesResponse>> {
+        return this.httpClient.get<ResultResponse<TaskSelectablesResponse>>
+            (`${this.apiUrl}/GetSelectables`);
     }
 }

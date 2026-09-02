@@ -3,11 +3,11 @@ import { TaskComponent } from "../task/task";
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TaskResponse } from '../../types/task/task-response';
 import { TaskService } from '../../services/task/task.service';
-import { ETaskStatus } from '../../enums/ETaskStatus';
 import { TaskPagedParams } from '../../types/task/task-paged-params';
 import { ETaskSort } from '../../enums/ETaskSort';
 import { PagedResponse } from '../../types/task/paged-response';
-import { DropdownComponent, DropdownOption } from "../dropdown/dropdown";
+import { DropdownComponent } from "../dropdown/dropdown";
+import { SelectableOption } from '../../interfaces/selectable-option';
 
 @Component({
   selector: 'app-task-container',
@@ -31,7 +31,6 @@ export class TaskContainerComponent {
 
   searchControl = new FormControl('', { nonNullable: true });
 
-  TaskStatus = ETaskStatus;
   TaskSort = ETaskSort;
 
   tasks = signal<TaskResponse[]>([]);
@@ -66,22 +65,21 @@ export class TaskContainerComponent {
     return [this.pagedParams.pageNumber - 1, this.pagedParams.pageNumber, this.pagedParams.pageNumber + 1];
   });
 
-  priorities = [{ id: 1, name: 'Baixa' },
-  { id: 2, name: 'Média' },
-  { id: 3, name: 'Alta' }
-  ];
+  statusOptions: SelectableOption[] = [];
+  priorityOptions: SelectableOption[] = [];
 
-  selectedPriority = this.priorities[2];
+  selectedStatus: SelectableOption = {
+    id: null,
+    name: 'Todos os status'
+  };
 
-  status = [{ id: 1, name: 'Pendente' },
-  { id: 2, name: 'Em progresso' },
-  { id: 3, name: 'Concluída' }
-  ];
-
-  selectedStatus = this.status[2];
-
+  selectedPriority: SelectableOption = {
+    id: null,
+    name: 'Todas as prioridades'
+  };
 
   ngOnInit() {
+    this.loadSelectables();
     this.getTasks()
   }
 
@@ -105,21 +103,13 @@ export class TaskContainerComponent {
     });
   }
 
-  filterTasks(filter: ETaskStatus | null) {
-
-    this.pagedParams.taskStatusId = filter;
-    this.pagedParams.pageNumber = 1;
-
-    this.getTasks();
-  }
-
-  orderTasks(sort: string) {
+  orderTasks(sort: string): void {
     this.pagedParams.order = this.pagedParams.order === "asc" ? "desc" : "asc";
     this.pagedParams.sort = sort;
     this.getTasks();
   }
 
-  changePage(page: number | null) {
+  changePage(page: number | null): void {
 
     const totalPages = this.pagedResponse()?.totalPages ?? 0;
 
@@ -131,7 +121,7 @@ export class TaskContainerComponent {
     this.getTasks();
   }
 
-  goToPage(input: HTMLInputElement) {
+  goToPage(input: HTMLInputElement): void {
     const page = this.pageInput.value;
 
     input.blur();  //remove o foco do input
@@ -139,23 +129,47 @@ export class TaskContainerComponent {
     this.changePage(page);
   }
 
-  openNewTask() {
+  openNewTask(): void {
     this.newTaskClicked.emit();
   }
 
-  selectPriority(priority: DropdownOption): void {
-    this.selectedPriority = priority;
-    this.pagedParams.sort = priority.id === 1 ? ETaskSort.TaskPriority : ETaskSort.CreatedAt;
-    this.pagedParams.pageNumber = 1;
+  loadSelectables(): void {
+    this.taskService.getSelectables().subscribe({
+      next: (response) => {
+        this.statusOptions = [
+          { id: null, name: 'Todos os status' },
+          ...response.data.status
+        ];
 
+        this.priorityOptions = [
+          { id: null, name: 'Todas as prioridades' },
+          ...response.data.priority
+        ];
+      },
+      error: (error) => {
+        console.error('Erro ao buscar opções de status e prioridade:', error);
+      }
+    });
+  }
+
+  private applyFilters(): void {
+    this.pagedParams.pageNumber = 1;
     this.getTasks();
   }
 
-  selectStatus(status: DropdownOption): void {
+  selectPriority(priority: SelectableOption): void {
+     console.log('Prioridade selecionada:', priority);
+
+  this.selectedPriority = priority;
+  this.pagedParams.taskPriorityId = priority.id;
+
+  console.log('Paged params:', this.pagedParams);
+    this.applyFilters();
+  }
+
+  selectStatus(status: SelectableOption): void {
     this.selectedStatus = status;
     this.pagedParams.taskStatusId = status.id;
-    this.pagedParams.pageNumber = 1;
-
-    this.getTasks();
+    this.applyFilters();
   }
 }

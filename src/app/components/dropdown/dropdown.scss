@@ -24,7 +24,7 @@
         height: var(--dropdown-height, 40px);
         box-sizing: border-box;
 
-        border: 1px solid grey;
+        border: var(--border-options, 1px solid grey);
         border-radius: 8px;
 
         background-color: white;
@@ -58,14 +58,14 @@
             position: absolute;
 
             top: 100%;
-            left: -1px;
+            left: var(--dropdown-border-left, -1px);
 
-            width: calc(100% + 2px);
+            width: var(--dropdown-border-width, calc(100% + 2px));
             box-sizing: border-box;
 
             background-color: white;
 
-            border: 1px solid grey;
+            border: var(--border-options, 1px solid grey);
             border-top: none;
 
             border-radius: 0 0 8px 8px;
