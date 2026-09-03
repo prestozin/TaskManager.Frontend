@@ -14,19 +14,32 @@
                     <p class="filter-label">Pesquisar</p>
 
                     <div class="search-container">
+
                         <img class="icon-search" src="icons/search-icon.svg" alt="">
-                        <input class="search-input" type="search" placeholder="Pesquisar tarefas..."
+
+                        <input 
+                            class="search-input" 
+                            type="search" 
+                            placeholder="Pesquisar tarefas..."
                             [formControl]="searchControl">
                     </div>
 
                 </div>
 
-                <app-dropdown class="priority-dropdown" [options]="priorityOptions()" [selectedOption]="selectedPriority()"
-                    label="Prioridade" (optionSelected)="selectPriority($event)">
+                <app-dropdown 
+                    class="priority-dropdown"
+                    label="Prioridade" 
+                    [options]="priorityOptions()" 
+                    [selectedOption]="selectedPriority()"
+                    (optionSelected)="selectPriority($event)">
                 </app-dropdown>
 
-                <app-dropdown class="status-dropdown" [options]="statusOptions()" [selectedOption]="selectedStatus()"
-                    label="Status" (optionSelected)="selectStatus($event)">
+                <app-dropdown 
+                    class="status-dropdown"
+                    label="Status"
+                    [options]="statusOptions()" 
+                    [selectedOption]="selectedStatus()"
+                    (optionSelected)="selectStatus($event)">
                 </app-dropdown>
 
             </div>
@@ -43,7 +56,7 @@
     <div class="task-container">
 
         <label class="checkbox">
-            <input class="checkbox-input" type="checkbox" [formControl]="allTasksForm.controls.completed">
+            <input class="checkbox-input" type="checkbox" [formControl]="allTasksControl">
         </label>
 
         <p class="prop-task">Tarefas</p>
@@ -63,25 +76,29 @@
 </div>
 
 <footer class="container-footer">
-    <p class="footer-text">Mostrando {{ tasks().length }} de {{pagedResponse()?.totalCount}} tarefas</p>
+    <p class="footer-text">Mostrando {{ tasks().length }} de {{ pagedResponse()?.totalCount ?? 0 }} tarefas</p>
 
     <div class="footer-buttons">
 
         <p>Páginas: </p>
 
         <button class="first-page btn-pages" (click)="changePage(1)"> << </button>
-        <button class="previous-page btn-pages" (click)="changePage(pagedParams.pageNumber - 1)"> < </button>
+        <button class="previous-page btn-pages" (click)="changePage(currentPage() - 1)"> < </button>
 
         @for (page of visiblePages(); track page) 
         {
-            <button class="btn-pages" [class.active]="pagedParams.pageNumber === page" (click)=" changePage(page)"> {{ page }} </button> 
+            <button class="btn-pages" [class.active]="currentPage() === page" (click)=" changePage(page)"> {{ page }} </button> 
         }
 
-        <input #pageInputElement class="choose-page btn-pages" type="number" placeholder="__" 
-        [formControl]="pageInput" min="1" [max]="pagedResponse()?.totalPages ?? 1"
-        (keydown.enter)="goToPage(pageInputElement)" (blur)="pageInput.reset()">
+        <input 
+            #pageInputElement 
+            class="choose-page btn-pages" 
+            type="number" placeholder="__" 
+            [formControl]="pageInput" min="1" [max]="pagedResponse()?.totalPages ?? 1"
+            (keydown.enter)="goToPage(pageInputElement)" 
+            (blur)="pageInput.reset()">
 
-    <button class="next-page btn-pages" (click)="changePage(pagedParams.pageNumber + 1)"> > </button>
+    <button class="next-page btn-pages" (click)="changePage(currentPage() + 1)"> > </button>
     <button class="last-page btn-pages" (click)="changePage(pagedResponse()?.totalPages ?? 1)"> >> </button>
 
     </div>

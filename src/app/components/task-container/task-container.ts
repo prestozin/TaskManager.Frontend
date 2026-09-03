@@ -1,11 +1,7 @@
 import { Component, computed, inject, output, signal } from '@angular/core';
 import { TaskComponent } from "../task/task";
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TaskResponse } from '../../types/task/task-response';
-import { TaskService } from '../../services/task/task.service';
-import { TaskPagedParams } from '../../types/task/task-paged-params';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ETaskSort } from '../../enums/ETaskSort';
-import { PagedResponse } from '../../types/task/paged-response';
 import { DropdownComponent } from "../dropdown/dropdown";
 import { SelectableOption } from '../../interfaces/selectable-option';
 import { TaskFacade } from '../../facades/task.facade';
@@ -23,13 +19,7 @@ import { TaskFacade } from '../../facades/task.facade';
 
 export class TaskContainerComponent {
 
-  private taskService = inject(TaskService);
   private taskFacade = inject(TaskFacade);
-
-  allTasksForm = new FormGroup({
-    title: new FormControl('', { nonNullable: true }),
-    completed: new FormControl(false, { nonNullable: true })
-  });
 
   tasks = this.taskFacade.tasks;
   pagedResponse = this.taskFacade.pagedResponse;
@@ -40,36 +30,39 @@ export class TaskContainerComponent {
   selectedStatus = this.taskFacade.selectedStatus;
   selectedPriority = this.taskFacade.selectedPriority;
 
-  searchControl = new FormControl('', { nonNullable: true });
+  currentPage = this.taskFacade.currentPage;
 
   TaskSort = ETaskSort;
 
-  pagedParams = new TaskPagedParams();
+  newTaskClicked = output();
+
+  allTasksControl = new FormControl(false, { nonNullable: true});
+
+  searchControl = new FormControl('', { nonNullable: true });
 
   pageInput = new FormControl<number | null>(null);
 
-  newTaskClicked = output();
-
   visiblePages = computed(() => {
     const totalPages = this.pagedResponse()?.totalPages ?? 0;
+    const currentPage = this.currentPage();
 
-    if (totalPages === 0) {
-      return [];
+    if (totalPages === 0) { 
+      return []; 
     }
 
-    if (totalPages <= 3) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    if (totalPages <= 3) { 
+      return Array.from( { length: totalPages }, (_, index) => index + 1 );
     }
 
-    if (this.pagedParams.pageNumber === 1) {
+    if (currentPage === 1) {
       return [1, 2, 3];
     }
 
-    if (this.pagedParams.pageNumber === totalPages) {
-      return [totalPages - 2, totalPages - 1, totalPages];
+    if (currentPage === totalPages) {
+      return [totalPages - 2, totalPages - 1, totalPages ];
     }
 
-    return [this.pagedParams.pageNumber - 1, this.pagedParams.pageNumber, this.pagedParams.pageNumber + 1];
+    return [currentPage - 1, currentPage, currentPage + 1];
   });
 
 
@@ -97,9 +90,7 @@ export class TaskContainerComponent {
     if (page === null || page < 1 || page > totalPages)
       return;
 
-    this.pagedParams.pageNumber = page;
-
-    this.taskFacade.loadTasks();
+    this.taskFacade.changePage(page);
   }
 
   goToPage(input: HTMLInputElement): void {

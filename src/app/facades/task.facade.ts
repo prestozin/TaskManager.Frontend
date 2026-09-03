@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import { TaskService } from "../services/task/task.service";
 import { TaskResponse } from "../types/task/task-response";
 import { SelectableOption } from "../interfaces/selectable-option";
@@ -20,6 +20,9 @@ export class TaskFacade {
     tasks = signal<TaskResponse[]>([]);
     pagedResponse = signal<PagedResponse | null>(null);
 
+    currentPage = computed(
+        () => this.pagedResponse()?.pageNumber ?? 1
+    );
 
     statusOptions = signal<SelectableOption[]>([]);
     priorityOptions = signal<SelectableOption[]>([]);
