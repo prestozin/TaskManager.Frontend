@@ -17,10 +17,13 @@
             </app-input-forms>
         </div>
 
-        <app-dropdown class="dropdown-priority" [options]="priorityOptions" [selectedOption]="selectedPriority" label="Prioridade"
+        <app-dropdown class="dropdown-priority" [options]="priorityOptions()" [selectedOption]="selectedPriority" label="Prioridade"
             (optionSelected)="selectPriority($event)">
         </app-dropdown>
 
+        <app-dropdown class="dropdown-status" [options]="statusOptions()" [selectedOption]="selectedStatus" label="Status"
+            (optionSelected)="selectStatus($event)">
+        </app-dropdown>
 
         <div class="content-box">
             <p class="task-title">Descrição</p>

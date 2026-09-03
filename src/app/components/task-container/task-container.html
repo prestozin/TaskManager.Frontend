@@ -21,23 +21,22 @@
 
                 </div>
 
-                <app-dropdown class="priority-dropdown" [options]="priorityOptions" [selectedOption]="selectedPriority"
+                <app-dropdown class="priority-dropdown" [options]="priorityOptions()" [selectedOption]="selectedPriority()"
                     label="Prioridade" (optionSelected)="selectPriority($event)">
                 </app-dropdown>
 
-                <app-dropdown class="status-dropdown" [options]="statusOptions" [selectedOption]="selectedStatus"
+                <app-dropdown class="status-dropdown" [options]="statusOptions()" [selectedOption]="selectedStatus()"
                     label="Status" (optionSelected)="selectStatus($event)">
                 </app-dropdown>
 
             </div>
 
-            <button class="btn-newtask" (click)="openNewTask()">
+            <button class="btn-newtask" (click)="createNewTask()">
                 <img src="icons/plus-icon.svg" alt="">
                 <p>Nova Tarefa</p>
             </button>
 
         </div>
-
 
     </div>
 
@@ -70,26 +69,20 @@
 
         <p>Páginas: </p>
 
-        <button class="first-page btn-pages" (click)="changePage(1)">
-            << </button>
-                <button class="previous-page btn-pages" (click)="changePage(pagedParams.pageNumber - 1)">
-                    < </button>
+        <button class="first-page btn-pages" (click)="changePage(1)"> << </button>
+        <button class="previous-page btn-pages" (click)="changePage(pagedParams.pageNumber - 1)"> < </button>
 
-                        @for (page of visiblePages(); track page) {
-                        <button class="btn-pages" [class.active]="pagedParams.pageNumber === page"
-                            (click)=" changePage(page)">
-                            {{ page }}
-                        </button>
-                        }
+        @for (page of visiblePages(); track page) 
+        {
+            <button class="btn-pages" [class.active]="pagedParams.pageNumber === page" (click)=" changePage(page)"> {{ page }} </button> 
+        }
 
-                        <input #pageInputElement class="choose-page btn-pages" type="number" placeholder="__"
-                            [formControl]="pageInput" min="1" [max]="pagedResponse()?.totalPages ?? 1"
-                            (keydown.enter)="goToPage(pageInputElement)" (blur)="pageInput.reset()">
+        <input #pageInputElement class="choose-page btn-pages" type="number" placeholder="__" 
+        [formControl]="pageInput" min="1" [max]="pagedResponse()?.totalPages ?? 1"
+        (keydown.enter)="goToPage(pageInputElement)" (blur)="pageInput.reset()">
 
-                        <button class="next-page btn-pages" (click)="changePage(pagedParams.pageNumber + 1)"> >
-                        </button>
-                        <button class="last-page btn-pages" (click)="changePage(pagedResponse()?.totalPages ?? 1)"> >>
-                        </button>
+    <button class="next-page btn-pages" (click)="changePage(pagedParams.pageNumber + 1)"> > </button>
+    <button class="last-page btn-pages" (click)="changePage(pagedResponse()?.totalPages ?? 1)"> >> </button>
 
     </div>
 </footer>

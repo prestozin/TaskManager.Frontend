@@ -5,7 +5,7 @@
     flex-direction: column;
     border-radius: 15px;
     width: 650px;
-    height: 750px;
+    height: 850px;
     gap: 40px;
     justify-content: center;
     align-items: center;
@@ -139,7 +139,7 @@
         }
     }
 
-    .dropdown-priority{
+    .dropdown-priority, .dropdown-status{
         --option-font-size: 20px;
         --option-padding: 15px;
         --title-size: 20px;

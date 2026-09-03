@@ -8,6 +8,7 @@ import { ETaskSort } from '../../enums/ETaskSort';
 import { PagedResponse } from '../../types/task/paged-response';
 import { DropdownComponent } from "../dropdown/dropdown";
 import { SelectableOption } from '../../interfaces/selectable-option';
+import { TaskFacade } from '../../facades/task.facade';
 
 @Component({
   selector: 'app-task-container',
@@ -23,21 +24,27 @@ import { SelectableOption } from '../../interfaces/selectable-option';
 export class TaskContainerComponent {
 
   private taskService = inject(TaskService);
+  private taskFacade = inject(TaskFacade);
 
   allTasksForm = new FormGroup({
     title: new FormControl('', { nonNullable: true }),
     completed: new FormControl(false, { nonNullable: true })
   });
 
+  tasks = this.taskFacade.tasks;
+  pagedResponse = this.taskFacade.pagedResponse;
+
+  statusOptions = this.taskFacade.statusOptions;
+  priorityOptions = this.taskFacade.priorityOptions;
+
+  selectedStatus = this.taskFacade.selectedStatus;
+  selectedPriority = this.taskFacade.selectedPriority;
+
   searchControl = new FormControl('', { nonNullable: true });
 
   TaskSort = ETaskSort;
 
-  tasks = signal<TaskResponse[]>([]);
-
   pagedParams = new TaskPagedParams();
-
-  pagedResponse = signal<PagedResponse | null>(null);
 
   pageInput = new FormControl<number | null>(null);
 
@@ -65,48 +72,22 @@ export class TaskContainerComponent {
     return [this.pagedParams.pageNumber - 1, this.pagedParams.pageNumber, this.pagedParams.pageNumber + 1];
   });
 
-  statusOptions: SelectableOption[] = [];
-  priorityOptions: SelectableOption[] = [];
-
-  selectedStatus: SelectableOption = {
-    id: null,
-    name: 'Todos os status'
-  };
-
-  selectedPriority: SelectableOption = {
-    id: null,
-    name: 'Todas as prioridades'
-  };
 
   ngOnInit() {
-    this.loadSelectables();
-    this.getTasks()
+    this.taskFacade.loadSelectables();
+    this.taskFacade.loadTasks();
   }
 
-  private getTasks() {
+  selectStatus(status: SelectableOption): void {
+    this.taskFacade.selectStatus(status);
+  }
 
-    this.taskService.getPaged(this.pagedParams).subscribe({
-
-      next: (response) => {
-
-        this.pagedResponse.set(response.data);
-        this.tasks.set(response.data.items);
-
-      },
-      error: (error) => {
-        console.error('erro ao buscar tarefas:', error)
-        this.tasks.set([]);
-        this.pagedResponse.set(null);
-
-      }
-
-    });
+  selectPriority(priority: SelectableOption): void {
+    this.taskFacade.selectPriority(priority);
   }
 
   orderTasks(sort: string): void {
-    this.pagedParams.order = this.pagedParams.order === "asc" ? "desc" : "asc";
-    this.pagedParams.sort = sort;
-    this.getTasks();
+    this.taskFacade.orderTasks(sort);
   }
 
   changePage(page: number | null): void {
@@ -118,7 +99,7 @@ export class TaskContainerComponent {
 
     this.pagedParams.pageNumber = page;
 
-    this.getTasks();
+    this.taskFacade.loadTasks();
   }
 
   goToPage(input: HTMLInputElement): void {
@@ -129,47 +110,7 @@ export class TaskContainerComponent {
     this.changePage(page);
   }
 
-  openNewTask(): void {
+  createNewTask(): void {
     this.newTaskClicked.emit();
-  }
-
-  loadSelectables(): void {
-    this.taskService.getSelectables().subscribe({
-      next: (response) => {
-        this.statusOptions = [
-          { id: null, name: 'Todos os status' },
-          ...response.data.status
-        ];
-
-        this.priorityOptions = [
-          { id: null, name: 'Todas as prioridades' },
-          ...response.data.priority
-        ];
-      },
-      error: (error) => {
-        console.error('Erro ao buscar opções de status e prioridade:', error);
-      }
-    });
-  }
-
-  private applyFilters(): void {
-    this.pagedParams.pageNumber = 1;
-    this.getTasks();
-  }
-
-  selectPriority(priority: SelectableOption): void {
-     console.log('Prioridade selecionada:', priority);
-
-  this.selectedPriority = priority;
-  this.pagedParams.taskPriorityId = priority.id;
-
-  console.log('Paged params:', this.pagedParams);
-    this.applyFilters();
-  }
-
-  selectStatus(status: SelectableOption): void {
-    this.selectedStatus = status;
-    this.pagedParams.taskStatusId = status.id;
-    this.applyFilters();
   }
 }
