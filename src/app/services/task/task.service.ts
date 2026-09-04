@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ResultResponse } from '../../types/result/result-response';
 import { PagedResponse } from '../../types/task/paged-response';
 import { TaskPagedParams } from '../../types/task/task-paged-params';
-import { TaskSelectablesResponse } from '../../interfaces/task-selectables-response';
+import { TaskSelectablesResponse } from '../../interfaces/task/task-selectables-response';
 
 
 @Injectable({

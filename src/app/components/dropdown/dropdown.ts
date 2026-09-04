@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { SelectableOption } from '../../interfaces/selectable-option';
+import { SelectableOption } from '../../interfaces/task/selectable-option';
 
 @Component({
   selector: 'app-dropdown',

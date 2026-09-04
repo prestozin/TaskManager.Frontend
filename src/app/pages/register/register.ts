@@ -3,7 +3,8 @@ import { AuthLayoutComponent } from "../../components/auth-layout/auth-layout";
 import { InputFormsComponent } from '../../components/input-forms/input-forms';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
+import { RegisterRequest } from '../../interfaces/auth/register-request';
+import { AuthFacade } from '../../facades/auth/auth.facade';
 
 @Component({
   selector: 'app-register',
@@ -18,9 +19,9 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 
 export class Register {
-  
+
   private cdr = inject(ChangeDetectorRef);
-  private authService = inject(AuthService);
+  private authFacade = inject(AuthFacade);
   private router = inject(Router);
 
   errorMessage = '';
@@ -35,7 +36,7 @@ export class Register {
   },
     { validators: (form) => this.passwordsMatch(form) });
 
-  submit() {
+  submit(): void {
 
     if (this.registerForm.invalid) {
 
@@ -46,27 +47,31 @@ export class Register {
 
     this.isLoading = true;
 
-    const { email, password, name } = this.registerForm.getRawValue();
+    const request: RegisterRequest = this.registerForm.getRawValue();
 
-    this.authService.register(email, password, name).subscribe({
+    this.authFacade.register(request).subscribe({
 
       next: (response) => {
 
-        setTimeout(() => { this.isLoading = false;}, 1000);
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
+
         this.errorMessage = '';
         this.successMessage = response.message;
         this.cdr.detectChanges();
 
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 5000);
+        }, 3000);
       },
 
       error: (error) => {
-        
+
         this.isLoading = false;
         this.successMessage = '';
-        this.errorMessage = error.error.message;
+        this.errorMessage = error.error.message ?? 'Erro ao realizar cadastro.';
+
         this.cdr.detectChanges();
       }
 

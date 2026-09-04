@@ -3,8 +3,8 @@ import { TaskComponent } from "../task/task";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ETaskSort } from '../../enums/ETaskSort';
 import { DropdownComponent } from "../dropdown/dropdown";
-import { SelectableOption } from '../../interfaces/selectable-option';
-import { TaskFacade } from '../../facades/task.facade';
+import { SelectableOption } from '../../interfaces/task/selectable-option';
+import { TaskFacade } from '../../facades/task/task.facade';
 
 @Component({
   selector: 'app-task-container',
@@ -68,7 +68,7 @@ export class TaskContainerComponent {
 
   ngOnInit() {
     this.taskFacade.loadSelectables();
-    this.taskFacade.loadTasks();
+    this.taskFacade.getTasks();
   }
 
   selectStatus(status: SelectableOption): void {

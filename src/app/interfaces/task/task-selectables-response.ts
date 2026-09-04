@@ -1,4 +1,5 @@
-import { TaskPriorityResponse } from "../types/task/task-priority-response";
+
+import { TaskPriorityResponse } from "../../types/task/task-priority-response";
 import { TaskStatusResponse } from "./task-status-response";
 
 

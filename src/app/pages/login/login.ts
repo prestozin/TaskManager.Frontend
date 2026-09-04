@@ -4,6 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { InputFormsComponent } from '../../components/input-forms/input-forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { AuthFacade } from '../../facades/auth/auth.facade';
+import { LoginRequest } from '../../interfaces/auth/login-request';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,7 @@ import { Router, RouterLink } from '@angular/router';
 
 export class Login {
 
-  private authService = inject(AuthService);
+  private authFacade = inject(AuthFacade);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
 
@@ -32,37 +34,41 @@ export class Login {
     password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] })
   });
 
-  submit() {
+  submit(): void {
 
     if (this.loginForm.invalid)
       return;
 
     this.isLoading = true;
 
-    const { email, password } = this.loginForm.getRawValue();
+    const request: LoginRequest = this.loginForm.getRawValue();
 
-    this.authService.login(email, password).subscribe({
+    this.authFacade.login(request).subscribe({
       next: (response) => {
 
-        setTimeout(() => { this.isLoading = false;}, 1000);
         this.errorMessage = '';
         this.successMessage = response.message;
-        this.cdr.detectChanges();
 
         setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 3000);
+          this.isLoading = false;
+        }, 1000);
+
+        this.cdr.detectChanges();
+
+        this.router.navigate(['/dashboard']);
       },
 
       error: (error) => {
 
         this.isLoading = false;
         this.successMessage = '';
-        this.errorMessage = error.error.message;
-        this.cdr.detectChanges();
 
+        this.errorMessage = error.error?.message ?? 'Erro ao realizar login.';
+
+        this.cdr.detectChanges();
       }
     });
   }
-
 }
+
+

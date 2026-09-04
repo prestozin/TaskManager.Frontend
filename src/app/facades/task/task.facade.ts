@@ -1,11 +1,11 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { TaskService } from "../services/task/task.service";
-import { TaskResponse } from "../types/task/task-response";
-import { SelectableOption } from "../interfaces/selectable-option";
-import { TaskPagedParams } from "../types/task/task-paged-params";
-import { PagedResponse } from "../types/task/paged-response";
+import { TaskService } from "../../services/task/task.service";
+import { TaskResponse } from "../../types/task/task-response";
+import { SelectableOption } from "../../interfaces/task/selectable-option";
+import { TaskPagedParams } from "../../types/task/task-paged-params";
+import { PagedResponse } from "../../types/task/paged-response";
 import { HttpErrorResponse } from "@angular/common/http";
-import { ResultResponse } from "../types/result/result-response";
+import { ResultResponse } from "../../types/result/result-response";
 
 @Injectable({
     providedIn: 'root'
@@ -47,7 +47,7 @@ export class TaskFacade {
         );
     }
 
-    loadTasks(): void {
+    getTasks(): void {
         this.taskService.getPaged(this.pagedParams).subscribe({
             next: (response) => {
                 this.pagedResponse.set(response.data);
@@ -105,17 +105,17 @@ export class TaskFacade {
 
     changePage(page: number): void {
         this.pagedParams.pageNumber = page;
-        this.loadTasks();
+        this.getTasks();
     }
 
     orderTasks(sort: string): void {
         this.pagedParams.order = this.pagedParams.order === 'asc' ? 'desc' : 'asc';
         this.pagedParams.sort = sort;
-        this.loadTasks();
+        this.getTasks();
     }
 
     private applyFilters(): void {
         this.pagedParams.pageNumber = 1;
-        this.loadTasks();
+        this.getTasks();
     }
 }

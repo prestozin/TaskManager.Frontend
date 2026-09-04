@@ -2,8 +2,8 @@ import { Component, inject, output } from '@angular/core';
 import { InputFormsComponent } from '../input-forms/input-forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DropdownComponent } from '../dropdown/dropdown';
-import { SelectableOption } from '../../interfaces/selectable-option';
-import { TaskFacade } from '../../facades/task.facade';
+import { SelectableOption } from '../../interfaces/task/selectable-option';
+import { TaskFacade } from '../../facades/task/task.facade';
 
 @Component({
   selector: 'app-new-task',
