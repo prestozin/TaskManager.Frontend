@@ -1,0 +1,267 @@
+@use "variables" as *;
+
+main {
+    min-height: 100vh;
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    background-color: #e5e5f5;
+}
+
+.main-content {
+    display: flex;
+    scale: 1.05;
+
+    width: 100%;
+    max-width: 1500px;
+    height: 800px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 20px #00000020;
+    border-radius: 10px;
+
+    section {
+        height: 100%;
+    }
+
+    .logo-section {
+        position: relative;
+        overflow: hidden;
+
+        width: 50%;
+
+        background-color: $primary-color;
+
+        .features {
+            display: flex;
+            justify-content: center;
+            align-items: start;
+
+            .icons-text {
+                position: absolute;
+
+                top: 38%;
+                left: 18%;
+
+            }
+
+            h2 {
+                position: absolute;
+                color: $secondary-text-color;
+                font-size: 40px;
+                padding-bottom: 0px;
+                margin: 0;
+
+                top: 24.5%;
+                left: 20%;
+            }
+
+            .feature {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                transform: translateY(50%);
+
+                p {
+                    color: $secondary-text-color;
+                    font-size: 22px;
+                }
+
+                img {
+                    scale: 0.8;
+                }
+            }
+        }
+
+        .logo {
+            position: absolute;
+
+            top: 50%;
+            right: 100px;
+
+            width: 300px;
+            height: 300px;
+
+            transform: translateY(-35%);
+
+            z-index: 1;
+
+            .shape-logo {
+                position: absolute;
+
+                inset: 0;
+
+                width: 100%;
+                height: 100%;
+
+                object-fit: contain;
+            }
+
+            .logo-img {
+                position: absolute;
+
+                top: 46%;
+                left: 58%;
+
+                width: 160px;
+                height: 160px;
+
+                transform: translate(-50%, -50%);
+
+                z-index: 5;
+            }
+        }
+
+        .shapes {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            z-index: 0;
+            pointer-events: none;
+
+            img {
+                position: absolute;
+            }
+
+            .shape-top-left {
+                top: -5%;
+                left: 66%;
+                scale: 0.9;
+            }
+
+            .shape-left {
+                top: 8%;
+                scale: 0.75;
+                left: -2.4%;
+            }
+
+            .shape-top-right {
+                top: -15%;
+                right: -12%;
+            }
+
+            .shape-bottom {
+                bottom: -3%;
+                left: 32%;
+            }
+
+            .shape-dots-top {
+                top: 5%;
+                right: 5%;
+                scale: 0.9;
+            }
+
+            .shape-dots-bottom {
+                bottom: 5%;
+                left: 6%;
+                scale: 0.9;
+            }
+        }
+    }
+
+    .form-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        gap: 8px;
+
+        width: 50%;
+
+        background-color: $secondary-text-color;
+
+        .form-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            border-radius: 24px;
+            border: 1px solid #E1DEDE;
+
+            box-shadow: 2px 2px 2px 0px #00000033;
+
+            background-color: $secondary-text-color;
+
+            padding: 85px 80px;
+
+            z-index: 2;
+
+            h2 {
+                color: $hover-button;
+                font-size: 40px;
+                margin: 0;
+            }
+
+            .primary-button {
+                width: 100%;
+                max-width: 380px;
+
+                padding: 20px 0;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                font-size: 20px;
+                font-weight: 400;
+
+                border-radius: 30px;
+                border: none;
+
+                background-color: $hover-button;
+                color: $secondary-text-color;
+
+                cursor: pointer;
+
+                &:hover {
+                    filter: brightness(1.1);
+                }
+
+                &:active {
+                    transform: scale(0.97);
+                }
+
+            }
+
+            .primary-button:disabled {
+                cursor: not-allowed;
+                opacity: 0.7;
+            }
+
+        }
+    }
+
+    .spinner {
+        width: 20px;
+        height: 20px;
+
+        box-sizing: border-box;
+
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-right-color: white;
+
+        border-radius: 50%;
+
+        animation: spinner-rotate 0.8s linear infinite;
+    }
+
+    @keyframes spinner-rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+}

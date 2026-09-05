@@ -1,0 +1,174 @@
+@use "variables" as *;
+
+:host {
+    --task-columns: 40px 1fr 200px 200px 200px 20px;
+}
+
+.container {
+    border: 1px solid $grey-text-color;
+    border-radius: 30px;
+
+    .container-header {
+
+        .header-top {
+            display: flex;
+            flex-direction: column;
+            margin-left: 50px;
+            padding-top: 20px;
+
+            .header-title {
+                font-size: 28px;
+                font-weight: 400;
+                color: $primary-text-color;
+            }
+
+        }
+
+        .container-filter-new-task {
+            display: flex;
+            margin-bottom: 10px;
+
+            .btn-newtask {
+                display: flex;
+                margin-left: auto;
+                margin-right: 60px;
+                border: none;
+                width: 150px;
+                height: 40px;
+                font-size: 16px;
+                justify-content: center;
+                align-items: center;
+                color: $secondary-text-color;
+                border-radius: 10px;
+                background-color: $hover-button;
+                gap: 6px;
+
+                &:active {
+                    scale: 0.95;
+                }
+            }
+        }
+
+        .task-filters {
+            display: flex;
+            gap: 40px;
+            margin-left: 50px;
+            padding: 15px 0px 20px 0px;
+
+            .filter-field {
+                display: flex;
+                flex-direction: column;
+                font-size: 18px;
+                color: $grey-text-color;
+
+                .filter-label {
+                    margin: 0px 0px 5px 10px;
+                }
+            }
+
+            .search-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                .search-input {
+                    padding: 10px 40px;
+                    width: 270px;
+                    height: 40px;
+                    border-radius: 10px;
+                    border: 1px solid #7e8391;
+                    font-size: 16px;
+                }
+
+                .icon-search {
+                    position: absolute;
+                    left: 15px;
+                }
+            }
+
+        }
+    }
+
+    .task-container {
+        display: grid;
+        grid-template-columns: var(--task-columns);
+        padding: 25px 60px;
+        border-top: 1px solid $grey-text-color;
+        align-items: center;
+        color: $primary-color;
+        font-weight: 600;
+
+        .prop-task {
+            font-size: 18px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .prop-align {
+            justify-self: center;
+        }
+    }
+
+
+}
+
+.container-footer {
+    display: flex;
+    padding: 10px;
+    color: #7e8391;
+
+    .footer-text {
+        margin-left: 20px;
+    }
+
+    .footer-buttons {
+        display: flex;
+        margin-left: auto;
+        gap: 14px;
+        margin-right: 80px;
+
+        button {
+            padding: 0px 5px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: 14px;
+            color: $primary-text-color;
+
+            &:active {
+                scale: 0.95;
+            }
+
+            &:hover,
+            &.active {
+                border-color: $grey-text-color;
+                color: $secondary-text-color;
+                background-color: $primary-color;
+            }
+        }
+
+        .btn-pages {
+            padding: 0px 5px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: 14px;
+            color: $primary-text-color;
+        }
+
+        input[type="number"] {
+            appearance: textfield;
+            width: 20px;
+            height: 20px;
+            padding: 4px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            appearance: none;
+            margin: 0;
+        }
+    }
+}

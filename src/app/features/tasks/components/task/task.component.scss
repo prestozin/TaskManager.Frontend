@@ -1,0 +1,93 @@
+@use "variables" as *;
+
+.task {
+    display: grid;
+    align-items: center;
+    grid-template-columns: var(--task-columns);
+    padding: 15px 60px;
+    border-top: 1px solid $grey-text-color;
+
+    .task-info {
+        display: flex;
+        flex-direction: column;
+        font-size: 18px;
+        color: $primary-text-color;
+        font-weight: 400;
+        gap: 5px;
+
+        .task-title {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            line-clamp: 1;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+        }
+
+        .description {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            line-clamp: 3;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            font-size: 15px;
+            color: $grey-text-color;
+        }
+    }
+
+    .btn-options {
+        display: flex;
+        scale: 0.7;
+        justify-content: center;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:active {
+            scale: 0.6;
+        }
+    }
+
+    .task-details {
+        justify-self: center;
+        font-size: 17px;
+        font-weight: 400;
+
+    }
+
+    .date {
+        color: $black-gray;
+    }
+
+    .priority,
+    .status {
+        padding: 8px 12px;
+        border-radius: 10px;
+    }
+
+    .priority-baixa,
+    .status-em-progresso {
+        color: #2563eb;
+        background-color: #c9d9ee5d;
+        border: 1px solid #2564eb34;
+    }
+
+    .priority-media,
+    .status-pendente {
+        color: #e79f03e0;
+        background-color: #c5b9321f;
+        border: 1px solid #eda70f4f
+    }
+
+    .priority-alta, .status-cancelada {
+        color: #ff0000;
+        background-color: #f4a9a93a;
+        border: 1px solid #ff000035
+    }
+
+    .status-concluida {
+        color: #16a34a;
+        background-color: #dcfce7;
+        border: 1px solid #34985797;
+    }
+}
