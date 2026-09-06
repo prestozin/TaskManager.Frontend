@@ -17,13 +17,17 @@
             </app-input-forms>
         </div>
 
-        <app-dropdown class="dropdown-priority" [options]="priorityOptions()" [selectedOption]="selectedPriority" label="Prioridade"
-            (optionSelected)="selectPriority($event)">
-        </app-dropdown>
+        <div class="dropdown-container">
 
-        <app-dropdown class="dropdown-status" [options]="statusOptions()" [selectedOption]="selectedStatus" label="Status"
-            (optionSelected)="selectStatus($event)">
-        </app-dropdown>
+            <app-dropdown class="dropdown-priority" [options]="priorityOptions()" [selectedOption]="selectedPriority"
+                label="Prioridade" (optionSelected)="selectPriority($event)">
+            </app-dropdown>
+
+            <app-dropdown class="dropdown-status" [options]="statusOptions()" [selectedOption]="selectedStatus"
+                label="Status" (optionSelected)="selectStatus($event)">
+            </app-dropdown>
+
+        </div>
 
         <div class="content-box">
             <p class="task-title">Descrição</p>
@@ -37,6 +41,6 @@
 
     <div class="container-footer">
         <button class="btn-cancel" (click)="cancelNewTask()">Cancelar</button>
-        <button class="btn-save">Salvar</button>
+        <button class="btn-save" (click)="createNewTask()">Salvar</button>
     </div>
 </div>

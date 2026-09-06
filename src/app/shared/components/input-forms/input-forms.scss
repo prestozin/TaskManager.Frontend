@@ -3,8 +3,8 @@
 input, textarea {
     border-radius:  var(--input-radius, 380px);;
     background-color: transparent;
-    border: 2px solid grey;
-    font-size: 18px;
+    border: var(--input-border, 2px solid grey);
+    font-size: var(--input-text-placeholder, 18px);
     color: black;
     height: var(--input-height, 66px);
     width: var(--input-width, 380px);

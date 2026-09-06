@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: column;
     border-radius: 15px;
-    width: 650px;
-    height: 850px;
+    width: 600px;
+    height: 730px;
     gap: 40px;
     justify-content: center;
     align-items: center;
@@ -19,7 +19,7 @@
 
 
         .header-texts {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 600;
 
             .header-subtitle {
@@ -45,77 +45,24 @@
             flex-direction: column;
             color: $primary-color;
             font-size: 20px;
-            font-weight: 600;
+            font-weight: 400;
 
             .task-title {
                 margin-left: 20px;
                 margin-bottom: 10px;
             }
+   
+        }
 
-            .priority-dropdown {
-                position: relative;
-                display: flex;
-                border: 2px solid grey;
-                border-radius: 10px;
-                padding: 15px;
-                background-color: #dcdada;
-                align-items: center;
-
-                .dropdown-text {
-                    margin-left: 8px;
-                    font-weight: 400;
-                }
-
-                .dropdown-arrow {
-                    margin-left: auto;
-                    transition: transform 0.2s ease;
-                }
-
-                &.active {
-                    .dropdown-arrow {
-                        transform: rotate(180deg);
-                    }
-                }
-
-                .priority-options {
-                    position: absolute;
-
-                    top: calc(100% + 5px);
-                    left: 0;
-
-                    width: 100%;
-                    box-sizing: border-box;
-
-                    background-color: #dcdada;
-
-                    border: 2px solid grey;
-                    border-radius: 10px;
-
-                    overflow: hidden;
-
-                    z-index: 100;
-
-                    .priority-option {
-                        padding: 15px 20px;
-
-                        font-weight: 400;
-
-                        cursor: pointer;
-
-                        &:hover {
-                            background-color: $hover-button;
-                            color: white;
-                        }
-                    }
-                }
-            }
+        .dropdown-container{
+            display: flex;
+            gap: 20px;
         }
     }
 
     .container-footer {
         display: flex;
         gap: 30px;
-
 
         .btn-cancel,
         .btn-save {
@@ -125,7 +72,7 @@
             border: 1px solid $primary-color;
             color: $primary-color;
             font-size: 20px;
-            font-weight: 600;
+            font-weight: 400;
 
             &:active {
                 scale: 0.95;
@@ -140,33 +87,35 @@
     }
 
     .dropdown-priority, .dropdown-status{
-        --option-font-size: 20px;
         --option-padding: 15px;
         --title-size: 20px;
-        --title-weight: 600;
+        --title-weight: 400;
         --title-color: #0b2f6a;
-        --dropdown-width: 500px;
-        --main-text-size: 20px;
+        --dropdown-width: 215px;
+        --main-text-size: 16px;
         --dropdown-height: 59px;
         --title-left-margin: 22px;
         --main-text-margin-left: 10px;
-        --border-options: 2px solid grey;
-        --dropdown-border-width: calc(100% + 4px);
-        --dropdown-border-left: -2px;
+        --border-options: 1px solid grey;
+        --dropdown-border-width: calc(100% + 2px);
+        --dropdown-border-left: -1px;
+        --options-text-color: grey;
     }
 
     .form-title,
     .form-description {
-        --input-width: 500px;
+        --input-width: 450px;
         --input-radius: 10px;
-        --input-padding: 15px 20px
+        --input-padding: 15px 20px;
+        --input-border: 1px solid grey;
+        --input-text-placeholder: 16px;
     }
 
     .form-title{
         --input-height: 59px;    
     }
     .form-description {
-        --input-height: 220px;    
+        --input-height: 180px;    
     }
     
 }

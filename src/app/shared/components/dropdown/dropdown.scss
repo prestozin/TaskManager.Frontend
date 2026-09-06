@@ -41,9 +41,13 @@
 
             margin-left: var(--main-text-margin-left, 5px);
             font-size: var(--main-text-size, 16px);
-            color: $primary-text-color;
+            color: var(--options-text-color, $primary-text-color);
 
             cursor: pointer;
+
+            &.selected {
+                color: $primary-text-color;
+            }
         }
 
 
@@ -77,7 +81,7 @@
 
             padding: var(--option-padding, 10px 0px 10px 15px);
 
-            font-size: var(--option-font-size, 16px);
+            font-size: var(--main-text-size, 16px);
             color: $primary-text-color;
 
             cursor: pointer;

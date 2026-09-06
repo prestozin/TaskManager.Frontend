@@ -2,7 +2,7 @@
     <p class="dropdown-title">{{ label() }}</p>
 
     <div class="dropdown" [class.open]="isOpen" (click)="toggleDropdown()">
-        <p class="dropdown-text">
+        <p class="dropdown-text" [class.selected]="selectedOption()">
             {{ selectedOption()?.name ?? placeholder() }}
         </p>
         <img class="dropdown-arrow" src="icons/arrow-icon.svg" alt="">

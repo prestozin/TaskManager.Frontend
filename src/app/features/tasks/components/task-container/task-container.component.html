@@ -44,7 +44,7 @@
 
             </div>
 
-            <button class="btn-newtask" (click)="createNewTask()">
+            <button class="btn-newtask" (click)="openNewTask()">
                 <img src="icons/plus-icon.svg" alt="">
                 <p>Nova Tarefa</p>
             </button>
@@ -103,3 +103,16 @@
 
     </div>
 </footer>
+
+@if (isNewTaskOpen) 
+{
+
+    <div class="modal-overlay" (click)="closeNewTask()">
+
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <app-new-task (cancelClicked)="closeNewTask()" (taskCreated)="addTask($event)"> </app-new-task>
+        </div>
+
+    </div>
+
+}

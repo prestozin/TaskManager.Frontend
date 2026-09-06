@@ -5,9 +5,10 @@ export interface TaskResponse {
     id: string;
     title: string;
     description: string;
+    createdAt: string;
     status: string;
     priority: string;
-    createdAt: string;
+
 }
 
 export interface TaskCreateRequest {

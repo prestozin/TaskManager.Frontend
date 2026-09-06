@@ -5,6 +5,8 @@ import { ETaskSort } from '../../enums/ETaskSort';
 import { DropdownComponent } from '../../../../shared/components/dropdown/dropdown';
 import { TaskFacade } from '../../facades/task.facade';
 import { SelectableOption } from '../../../../shared/models/selectables.models';
+import { NewTaskComponent } from '../new-task/new-task.component';
+import { TaskCreateRequest } from '@features/tasks/models/task.models';
 
 
 
@@ -14,6 +16,7 @@ import { SelectableOption } from '../../../../shared/models/selectables.models';
     TaskComponent,
     ReactiveFormsModule,
     DropdownComponent,
+    NewTaskComponent,
   ],
   templateUrl: './task-container.component.html',
   styleUrl: './task-container.component.scss',
@@ -26,8 +29,14 @@ export class TaskContainerComponent {
   tasks = this.taskFacade.tasks;
   pagedResponse = this.taskFacade.pagedResponse;
 
-  statusOptions = this.taskFacade.statusOptions;
-  priorityOptions = this.taskFacade.priorityOptions;
+  statusOptions = computed<SelectableOption[]>(() => [
+    { id: null, name: 'Todos os status' },
+    ...this.taskFacade.statusOptions()
+  ]);
+  priorityOptions = computed<SelectableOption[]>(() => [
+    { id: null, name: 'Todas as prioridades' },
+    ...this.taskFacade.priorityOptions()
+  ]);
 
   selectedStatus = this.taskFacade.selectedStatus;
   selectedPriority = this.taskFacade.selectedPriority;
@@ -38,22 +47,24 @@ export class TaskContainerComponent {
 
   newTaskClicked = output();
 
-  allTasksControl = new FormControl(false, { nonNullable: true});
+  allTasksControl = new FormControl(false, { nonNullable: true });
 
   searchControl = new FormControl('', { nonNullable: true });
 
   pageInput = new FormControl<number | null>(null);
 
+  isNewTaskOpen = false;
+
   visiblePages = computed(() => {
     const totalPages = this.pagedResponse()?.totalPages ?? 0;
     const currentPage = this.currentPage();
 
-    if (totalPages === 0) { 
-      return []; 
+    if (totalPages === 0) {
+      return [];
     }
 
-    if (totalPages <= 3) { 
-      return Array.from( { length: totalPages }, (_, index) => index + 1 );
+    if (totalPages <= 3) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
     }
 
     if (currentPage === 1) {
@@ -61,12 +72,11 @@ export class TaskContainerComponent {
     }
 
     if (currentPage === totalPages) {
-      return [totalPages - 2, totalPages - 1, totalPages ];
+      return [totalPages - 2, totalPages - 1, totalPages];
     }
 
     return [currentPage - 1, currentPage, currentPage + 1];
   });
-
 
   ngOnInit() {
     this.taskFacade.loadSelectables();
@@ -103,7 +113,17 @@ export class TaskContainerComponent {
     this.changePage(page);
   }
 
-  createNewTask(): void {
-    this.newTaskClicked.emit();
+  addTask(request: TaskCreateRequest): void {
+    this.taskFacade.addTask(request);
+    this.closeNewTask();
+  }
+
+  openNewTask(): void {
+    this.isNewTaskOpen = true;
+  }
+
+  closeNewTask(): void {
+    console.log('close task clicked')
+    this.isNewTaskOpen = false;
   }
 }

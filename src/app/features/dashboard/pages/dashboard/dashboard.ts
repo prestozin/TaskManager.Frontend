@@ -8,22 +8,11 @@ import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
   selector: 'app-dashboard',
   imports: [
     MainLayoutComponent,
-    TaskContainerComponent,
-    NewTaskComponent
+    TaskContainerComponent
 ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class DashboardComponent {
-  
-  isNewTaskOpen = false;
 
-  openNewTask() {
-    this.isNewTaskOpen = true;
-  }
-
-  closeNewTask() {
-    console.log('close task clicked')
-    this.isNewTaskOpen = false;
-  }
 }

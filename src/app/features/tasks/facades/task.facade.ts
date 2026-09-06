@@ -3,7 +3,7 @@ import { computed, inject, Injectable, signal } from "@angular/core";
 import { PagedResponse } from "@shared/models/pagination.models";
 import { ResultResponse } from "@shared/models/response.models";
 import { SelectableOption } from "@shared/models/selectables.models";
-import { TaskResponse, TaskPagedParams } from "../models/task.models";
+import { TaskResponse, TaskPagedParams, TaskCreateRequest } from "../models/task.models";
 import { TaskService } from "../services/task.service";
 
 
@@ -47,6 +47,17 @@ export class TaskFacade {
         );
     }
 
+    addTask(request: TaskCreateRequest): void {
+        this.taskService.addTask(request).subscribe({
+            next: (response) => {
+                this.getTasks();
+            },
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
+            }
+        });
+    }
+
     getTasks(): void {
         this.taskService.getPaged(this.pagedParams).subscribe({
             next: (response) => {
@@ -65,28 +76,12 @@ export class TaskFacade {
     loadSelectables(): void {
         this.taskService.getSelectables().subscribe({
             next: (response) => {
-                this.statusOptions.set([
-                    {
-                        id: null,
-                        name: 'Todos os status'
-                    },
-                    ...response.data.status
-                ]);
-
-                this.priorityOptions.set([
-                    {
-                        id: null,
-                        name: 'Todas as prioridades'
-                    },
-                    ...response.data.priority
-                ]);
+                this.statusOptions.set(response.data.status);
+                this.priorityOptions.set(response.data.priority);
             },
 
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
-
-                this.tasks.set([]);
-                this.pagedResponse.set(null);
             }
         });
     }

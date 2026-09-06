@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
-import { TaskPagedParams, TaskResponse, TaskSelectablesResponse } from '../models/task.models';
+import { TaskCreateRequest, TaskPagedParams, TaskResponse, TaskSelectablesResponse } from '../models/task.models';
 import { ResultResponse } from '../../../shared/models/response.models';
 import { PagedResponse } from '../../../shared/models/pagination.models';
 
@@ -16,6 +16,11 @@ export class TaskService {
     private httpClient = inject(HttpClient);
 
     private apiUrl = `${environment.apiUrl}/Task`
+
+    addTask(request: TaskCreateRequest): Observable<ResultResponse<string>> {
+        return this.httpClient.post<ResultResponse<string>>
+            (`${this.apiUrl}/AddTask`, request);
+    }
 
     getPaged(params: TaskPagedParams): Observable<ResultResponse<PagedResponse<TaskResponse>>> {
 
