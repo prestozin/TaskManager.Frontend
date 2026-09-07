@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, HostListener, input, output } from '@angular/core';
 import { SelectableOption } from '@shared/models/selectables.models';
 
 @Component({
@@ -19,12 +19,24 @@ export class DropdownComponent {
 
   isOpen = false;
 
-  toggleDropdown() {
+  toggleDropdown(): void {
     this.isOpen = !this.isOpen;
   }
 
   selectOption(option: SelectableOption): void {
     this.optionSelected.emit(option);
     this.isOpen = false;
+  }
+
+  closeDropdown(): void {
+    this.isOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.dropdown')) {
+      this.closeDropdown();
+    }
   }
 }

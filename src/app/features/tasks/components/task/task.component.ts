@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgClass } from '@angular/common';
 import { TaskResponse } from '../../models/task.models';
@@ -16,6 +16,7 @@ import { TaskResponse } from '../../models/task.models';
 export class TaskComponent {
 
   task = input.required<TaskResponse>();
+  optionsClicked = output<HTMLElement>();
 
   taskForm = new FormGroup({
     title: new FormControl('', { nonNullable: true }),
@@ -45,4 +46,5 @@ export class TaskComponent {
 
     return value.substring(0, maxLength) + '...';
   }
+
 }

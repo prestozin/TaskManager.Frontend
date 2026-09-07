@@ -1,4 +1,4 @@
-import { Component, computed, inject, output, signal } from '@angular/core';
+import { Component, computed, HostListener, inject, output, signal } from '@angular/core';
 import { TaskComponent } from "../task/task.component";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ETaskSort } from '../../enums/ETaskSort';
@@ -7,6 +7,7 @@ import { TaskFacade } from '../../facades/task.facade';
 import { SelectableOption } from '../../../../shared/models/selectables.models';
 import { NewTaskComponent } from '../new-task/new-task.component';
 import { TaskCreateRequest } from '@features/tasks/models/task.models';
+import { TaskOptionsComponent } from '../task-options/task-options.component';
 
 
 
@@ -17,6 +18,7 @@ import { TaskCreateRequest } from '@features/tasks/models/task.models';
     ReactiveFormsModule,
     DropdownComponent,
     NewTaskComponent,
+    TaskOptionsComponent
   ],
   templateUrl: './task-container.component.html',
   styleUrl: './task-container.component.scss',
@@ -40,6 +42,8 @@ export class TaskContainerComponent {
 
   selectedStatus = this.taskFacade.selectedStatus;
   selectedPriority = this.taskFacade.selectedPriority;
+  selectedTask = signal<string | null>(null);
+  selectedTaskPosition = signal<{ top: number; right: number; } | null>(null);
 
   currentPage = this.taskFacade.currentPage;
 
@@ -125,5 +129,31 @@ export class TaskContainerComponent {
   closeNewTask(): void {
     console.log('close task clicked')
     this.isNewTaskOpen = false;
+  }
+
+  openTaskOptions(taskId: string, element: HTMLElement): void {
+    const rect = element.getBoundingClientRect();  //pega as dimensões e posição do elemento clicado
+    const wrapper = element.closest('.tasks-wrapper') as HTMLElement; //pega o elemento pai mais próximo com a classe 'tasks-wrapper'
+    const wrapperRect = wrapper.getBoundingClientRect(); //pega as dimensões e posição do elemento pai
+
+    this.selectedTask.set(taskId);
+
+    this.selectedTaskPosition.set({
+      top: rect.bottom - wrapperRect.top + -70, 
+      right: wrapperRect.right - rect.right + 10 
+    });
+
+    console.log(taskId);
+    console.log(rect);
+  }
+
+  closeTaskOptions(): void {
+    this.selectedTask.set(null);
+    this.selectedTaskPosition.set(null);
+  }
+
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    this.closeTaskOptions();
   }
 }

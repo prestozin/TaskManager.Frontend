@@ -1,0 +1,45 @@
+@use "variables" as *;
+
+.task-options {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 150px;
+
+    background: white;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    z-index: 1000;
+
+    button {
+        display: flex;
+        padding: 10px 14px;
+
+        background: transparent;
+        border: none;
+
+        text-align: left;
+        cursor: pointer;
+        align-items: center;
+        gap: 5px;
+        font-size: 15px;
+        color: $primary-color;
+
+        &:hover {
+            background: $hover-button;
+            color: white;
+        }
+
+        &:active {
+            scale: 0.95;
+        }
+    }
+}

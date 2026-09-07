@@ -51,11 +51,10 @@ export class Login {
 
         setTimeout(() => {
           this.isLoading = false;
-        }, 1000);
+          this.router.navigate(['/dashboard']);
+        }, 1500);
 
         this.cdr.detectChanges();
-
-        this.router.navigate(['/dashboard']);
       },
 
       error: (error) => {
