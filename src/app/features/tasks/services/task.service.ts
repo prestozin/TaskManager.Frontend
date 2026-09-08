@@ -22,6 +22,11 @@ export class TaskService {
             (`${this.apiUrl}/AddTask`, request);
     }
 
+    deleteTask(taskId: string): Observable<ResultResponse<string>> {
+        return this.httpClient.delete<ResultResponse<string>>
+            (`${this.apiUrl}/${taskId}`);
+    }
+
     getPaged(params: TaskPagedParams): Observable<ResultResponse<PagedResponse<TaskResponse>>> {
 
         let httpParams = new HttpParams()

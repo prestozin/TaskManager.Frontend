@@ -5,6 +5,7 @@ import { ResultResponse } from "@shared/models/response.models";
 import { SelectableOption } from "@shared/models/selectables.models";
 import { TaskResponse, TaskPagedParams, TaskCreateRequest } from "../models/task.models";
 import { TaskService } from "../services/task.service";
+import { FeedbackService } from "@core/services/feedback/feedback.service";
 
 
 @Injectable({
@@ -14,6 +15,7 @@ import { TaskService } from "../services/task.service";
 export class TaskFacade {
 
     private taskService = inject(TaskService);
+    private feedbackService = inject(FeedbackService)
 
     pagedParams = new TaskPagedParams();
 
@@ -51,11 +53,26 @@ export class TaskFacade {
         this.taskService.addTask(request).subscribe({
             next: (response) => {
                 this.getTasks();
+                this.feedbackService.showMessage(response.message, 'Tarefa criada com sucesso', 'success')
             },
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
+                this.feedbackService.showMessage(error.message, 'Erro ao criar tarefa', 'error')
             }
         });
+    }
+
+    deleteTask(taskId: string): void {
+        this.taskService.deleteTask(taskId).subscribe({
+            next: (response) => {
+                this.getTasks();
+                this.feedbackService.showMessage(response.message, 'Tarefa deletada com sucesso', 'warning')
+            },
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
+                this.feedbackService.showMessage(error.message, 'Erro ao deletar tarefa', 'error')
+            }
+        })
     }
 
     getTasks(): void {

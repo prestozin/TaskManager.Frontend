@@ -1,13 +1,15 @@
 import { Component, HostListener, inject, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TokenService } from '@core/services/token/token.service';
+import { FeedbackMessageComponent } from '@shared/components/feedback-message/feedback-message.component';
 
 
 @Component({
   selector: 'app-main-layout',
   imports: [
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    FeedbackMessageComponent,
   ],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',

@@ -122,6 +122,10 @@ export class TaskContainerComponent {
     this.closeNewTask();
   }
 
+  deleteTask(taskId: string): void {
+    this.taskFacade.deleteTask(taskId);
+  }
+  
   openNewTask(): void {
     this.isNewTaskOpen = true;
   }
@@ -139,8 +143,8 @@ export class TaskContainerComponent {
     this.selectedTask.set(taskId);
 
     this.selectedTaskPosition.set({
-      top: rect.bottom - wrapperRect.top + -70, 
-      right: wrapperRect.right - rect.right + 10 
+      top: rect.bottom - wrapperRect.top + -30, 
+      right: wrapperRect.right - rect.right + 20 
     });
 
     console.log(taskId);

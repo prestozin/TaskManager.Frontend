@@ -1,0 +1,88 @@
+.container {
+    position: fixed;
+    border-radius: 10px;
+    top: 35px;
+    right: 20px;
+    z-index: 1000;
+    width: 400px;
+    height: 100px;
+    box-shadow: 0 4px 10px #00000030;
+    background-color: white;
+
+    animation: slide-down 300ms ease-out;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        width: 8px;
+        height: 100%;
+
+        border-radius: 10px 0 0 10px;
+    }
+
+    &.success::before {
+        background-color: green;
+    }
+
+    &.error::before {
+        background-color: red;
+    }
+
+    &.warning::before {
+        background-color: orange;
+    }
+
+    &.alert::before {
+        background-color: blue;
+    }
+
+    &.closing {
+        animation: fade-out 300ms ease-in forwards;
+    }
+
+
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+
+    .message-title {
+        margin-left: 20px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .message-description {
+        margin: 2px 0 0 20px;
+        font-size: 17px;
+        color: grey;
+    }
+}
+
+@keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

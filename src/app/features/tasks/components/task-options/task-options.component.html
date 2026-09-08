@@ -10,7 +10,7 @@
         Editar
     </button>
 
-    <button class="btn-delete">
+    <button class="btn-delete" (click)="deleteClicked.emit(taskId())">
         <img class="icon" src="icons/search-icon.svg" alt="Excluir" />
         Excluir
     </button>

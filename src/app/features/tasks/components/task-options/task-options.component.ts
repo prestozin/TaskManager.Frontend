@@ -8,8 +8,8 @@ import { Component, input, output } from '@angular/core';
 export class TaskOptionsComponent {
 
   taskId = input.required<string>();
-
   position = input.required<{ top: number; right: number; }>();
+  deleteClicked = output<string>();
 
   closeClicked = output<void>();
 }

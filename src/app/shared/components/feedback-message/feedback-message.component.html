@@ -1,0 +1,14 @@
+@if (feedbackService.messageTitle()){
+<div class="container" 
+    [class.closing]="feedbackService.isClosing()" 
+    [class.success]="feedbackService.messageType() === 'success'"
+    [class.error]="feedbackService.messageType() === 'error'"
+    [class.warning]="feedbackService.messageType() === 'warning'"
+    [class.alert]="feedbackService.messageType() === 'alert'">
+
+    <div class="messages">
+        <p class="message-title">{{ feedbackService.messageTitle() }}</p>
+        <p class="message-description"> {{ feedbackService.messageDescription() }}</p>
+    </div>
+</div>
+}

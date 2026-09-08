@@ -79,7 +79,8 @@
             <app-task-options 
                 [taskId]="selectedTask()!" 
                 [position]="selectedTaskPosition()!" 
-                (closeOptions)="closeTaskOptions()">
+                (closeOptions)="closeTaskOptions()"
+                (deleteClicked)="deleteTask($event)">
             </app-task-options>
         }
     </div>
