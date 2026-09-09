@@ -5,9 +5,10 @@ import { ETaskSort } from '../../enums/ETaskSort';
 import { DropdownComponent } from '../../../../shared/components/dropdown/dropdown';
 import { TaskFacade } from '../../facades/task.facade';
 import { SelectableOption } from '../../../../shared/models/selectables.models';
-import { NewTaskComponent } from '../new-task/new-task.component';
-import { TaskCreateRequest } from '@features/tasks/models/task.models';
+import { TaskFormComponent } from '../task-form/task-form.component';
+import { TaskCreateRequest, TaskResponse } from '@features/tasks/models/task.models';
 import { TaskOptionsComponent } from '../task-options/task-options.component';
+import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
 
 
 
@@ -17,8 +18,9 @@ import { TaskOptionsComponent } from '../task-options/task-options.component';
     TaskComponent,
     ReactiveFormsModule,
     DropdownComponent,
-    NewTaskComponent,
-    TaskOptionsComponent
+    TaskFormComponent,
+    TaskOptionsComponent,
+    ConfirmationModalComponent
   ],
   templateUrl: './task-container.component.html',
   styleUrl: './task-container.component.scss',
@@ -42,7 +44,6 @@ export class TaskContainerComponent {
 
   selectedStatus = this.taskFacade.selectedStatus;
   selectedPriority = this.taskFacade.selectedPriority;
-  selectedTask = signal<string | null>(null);
   selectedTaskPosition = signal<{ top: number; right: number; } | null>(null);
 
   currentPage = this.taskFacade.currentPage;
@@ -57,7 +58,12 @@ export class TaskContainerComponent {
 
   pageInput = new FormControl<number | null>(null);
 
-  isNewTaskOpen = false;
+  taskFormMode = signal<'create' | 'edit'>('create');
+  isTaskFormOpen = signal(false);
+
+  selectedTask = signal<TaskResponse | null>(null);
+
+  isDeleteConfirmationOpen = signal(false);
 
   visiblePages = computed(() => {
     const totalPages = this.pagedResponse()?.totalPages ?? 0;
@@ -119,45 +125,66 @@ export class TaskContainerComponent {
 
   addTask(request: TaskCreateRequest): void {
     this.taskFacade.addTask(request);
-    this.closeNewTask();
+    this.closeTaskForm();
   }
 
-  deleteTask(taskId: string): void {
-    this.taskFacade.deleteTask(taskId);
-  }
-  
-  openNewTask(): void {
-    this.isNewTaskOpen = true;
+  deleteTask(): void {
+    const task = this.selectedTask();
+
+    if (!task) return;
+
+    this.taskFacade.deleteTask(task.id);
+
+    this.selectedTask.set(null);
+    this.closeDeleteConfirmation();
   }
 
-  closeNewTask(): void {
-    console.log('close task clicked')
-    this.isNewTaskOpen = false;
+  openCreateTask(): void {
+    this.taskFormMode.set('create');
+    this.selectedTask.set(null);
+    this.isTaskFormOpen.set(true);
   }
 
-  openTaskOptions(taskId: string, element: HTMLElement): void {
+  openEditTask(): void {
+    if (!this.selectedTask()) return;
+
+    this.taskFormMode.set('edit');
+    this.isTaskFormOpen.set(true);
+    this.closeTaskOptions();
+  }
+
+  closeTaskForm(): void {
+    this.isTaskFormOpen.set(false);
+  }
+
+  openTaskOptions(task: TaskResponse, element: HTMLElement): void {
     const rect = element.getBoundingClientRect();  //pega as dimensões e posição do elemento clicado
     const wrapper = element.closest('.tasks-wrapper') as HTMLElement; //pega o elemento pai mais próximo com a classe 'tasks-wrapper'
     const wrapperRect = wrapper.getBoundingClientRect(); //pega as dimensões e posição do elemento pai
 
-    this.selectedTask.set(taskId);
+    this.selectedTask.set(task);
 
     this.selectedTaskPosition.set({
-      top: rect.bottom - wrapperRect.top + -30, 
-      right: wrapperRect.right - rect.right + 20 
+      top: rect.bottom - wrapperRect.top + -30,
+      right: wrapperRect.right - rect.right + 20
     });
-
-    console.log(taskId);
-    console.log(rect);
   }
 
   closeTaskOptions(): void {
-    this.selectedTask.set(null);
     this.selectedTaskPosition.set(null);
   }
 
   @HostListener('document:click')
   onDocumentClick(): void {
     this.closeTaskOptions();
+  }
+
+  openDeleteConfirmation(): void {
+    this.isDeleteConfirmationOpen.set(true);
+
+  }
+
+  closeDeleteConfirmation(): void {
+    this.isDeleteConfirmationOpen.set(false);
   }
 }

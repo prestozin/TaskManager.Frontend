@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="container-header">
+        <img class="img-icon" src="icons/new-task-icon.svg">
+        <div class="header-texts">
+            <p class="header-title">Adicionar nova tarefa</p>
+            <p class="header-subtitle">Preencha as informações da nova tarefa</p>
+        </div>
+
+    </div>
+
+    <div class="container-content">
+
+        <div class="content-box">
+            <p class="task-title">Título</p>
+            <app-input-forms 
+                class="form-title" 
+                type="text" 
+                placeholder="Insira um título para a tarefa"
+                [control]="taskForm.controls.titulo">
+            </app-input-forms>
+        </div>
+
+        <div class="dropdown-container">
+
+            <app-dropdown 
+                class="dropdown-priority" 
+                [options]="priorityOptions()" 
+                [selectedOption]="selectedPriority"
+                label="Prioridade" 
+                (optionSelected)="selectPriority($event)">
+            </app-dropdown>
+
+            <app-dropdown 
+                class="dropdown-status" 
+                [options]="statusOptions()" 
+                [selectedOption]="selectedStatus"
+                label="Status" 
+                (optionSelected)="selectStatus($event)">
+            </app-dropdown>
+
+        </div>
+
+        <div class="content-box">
+
+            <p class="task-title">Descrição</p>
+
+            <app-input-forms 
+                class="form-description" 
+                type="textarea" 
+                placeholder="Insira uma descrição para sua tarefa"
+                [control]="taskForm.controls.descricao">
+            </app-input-forms>
+
+        </div>
+
+    </div>
+
+    <div class="container-footer">
+        <button class="btn-cancel" (click)="cancelSubmit()">Cancelar</button>
+        <button class="btn-save" (click)="submitTask()">Salvar</button>
+    </div>
+</div>

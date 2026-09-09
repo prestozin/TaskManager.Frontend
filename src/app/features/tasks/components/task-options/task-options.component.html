@@ -5,12 +5,12 @@
         Visualizar
     </button>
 
-    <button class="btn-edit">
+    <button class="btn-edit" (click)="editTaskClicked.emit()">
         <img class="icon" src="icons/search-icon.svg" alt="Editar" />
         Editar
     </button>
 
-    <button class="btn-delete" (click)="deleteClicked.emit(taskId())">
+    <button class="btn-delete" (click)="deleteTaskClicked.emit()">
         <img class="icon" src="icons/search-icon.svg" alt="Excluir" />
         Excluir
     </button>

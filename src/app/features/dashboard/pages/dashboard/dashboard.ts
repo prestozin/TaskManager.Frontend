@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NewTaskComponent } from '@features/tasks/components/new-task/new-task.component';
+import { TaskFormComponent } from '@features/tasks/components/task-form/task-form.component';
 import { TaskContainerComponent } from '@features/tasks/components/task-container/task-container.component';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
 

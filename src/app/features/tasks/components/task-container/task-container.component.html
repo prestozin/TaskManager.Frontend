@@ -44,7 +44,7 @@
 
             </div>
 
-            <button class="btn-newtask" (click)="openNewTask()">
+            <button class="btn-newtask" (click)="openCreateTask()">
                 <img src="icons/plus-icon.svg" alt="">
                 <p>Nova Tarefa</p>
             </button>
@@ -71,18 +71,30 @@
         @for (task of tasks(); track task.id) {
             <app-task 
                 [task]="task" 
-                (optionsClicked)="openTaskOptions(task.id, $event)">
+                (optionsClicked)="openTaskOptions(task, $event)">
             </app-task>
         }
 
         @if (selectedTask() && selectedTaskPosition()) {
             <app-task-options 
-                [taskId]="selectedTask()!" 
                 [position]="selectedTaskPosition()!" 
                 (closeOptions)="closeTaskOptions()"
-                (deleteClicked)="deleteTask($event)">
+                (deleteTaskClicked)="openDeleteConfirmation()"
+                (editTaskClicked)="openEditTask()">
             </app-task-options>
         }
+
+        @if (isDeleteConfirmationOpen()){
+            <app-confirmation-modal
+                title="Excluir tarefa?"
+                description="Essa ação não poderá ser desfeita."
+                confirmText="Excluir"
+                (confirm)="deleteTask()"
+                (cancel)="closeDeleteConfirmation()">
+
+            </app-confirmation-modal>
+        }
+         
     </div>
 
 </div>
@@ -116,15 +128,20 @@
     </div>
 </footer>
 
-@if (isNewTaskOpen) 
-{
-
-    <div class="modal-overlay" (click)="closeNewTask()">
+@if (isTaskFormOpen()) {
+    <div class="modal-overlay" (click)="closeTaskForm()">
 
         <div class="modal-content" (click)="$event.stopPropagation()">
-            <app-new-task (cancelClicked)="closeNewTask()" (taskCreated)="addTask($event)"> </app-new-task>
+            <app-task-form 
+                [mode]="taskFormMode()"
+                [task]="selectedTask()"
+                (taskSaved)="addTask($event)"
+                (cancelClicked)="closeTaskForm()"> 
+            </app-task-form>
         </div>
 
     </div>
-
 }
+
+
+          

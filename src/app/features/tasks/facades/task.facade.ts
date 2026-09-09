@@ -3,9 +3,10 @@ import { computed, inject, Injectable, signal } from "@angular/core";
 import { PagedResponse } from "@shared/models/pagination.models";
 import { ResultResponse } from "@shared/models/response.models";
 import { SelectableOption } from "@shared/models/selectables.models";
-import { TaskResponse, TaskPagedParams, TaskCreateRequest } from "../models/task.models";
+import { TaskResponse, TaskPagedParams, TaskCreateRequest, TaskEditRequest } from "../models/task.models";
 import { TaskService } from "../services/task.service";
 import { FeedbackService } from "@core/services/feedback/feedback.service";
+import { TASK_MESSAGES } from "@shared/constants/messages";
 
 
 @Injectable({
@@ -53,24 +54,37 @@ export class TaskFacade {
         this.taskService.addTask(request).subscribe({
             next: (response) => {
                 this.getTasks();
-                this.feedbackService.showMessage(response.message, 'Tarefa criada com sucesso', 'success')
+                this.feedbackService.showMessage(response.message, TASK_MESSAGES.CREATED_SUCCESSFULLY, 'success')
             },
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
-                this.feedbackService.showMessage(error.message, 'Erro ao criar tarefa', 'error')
+                this.feedbackService.showMessage(error.message, TASK_MESSAGES.CREATED_FAILED, 'error')
             }
         });
+    }
+
+    editTask(request: TaskEditRequest): void {
+        this.taskService.editTask(request).subscribe({
+            next: (response) => {
+                this.getTasks();
+                this.feedbackService.showMessage(response.message, TASK_MESSAGES.EDITED_SUCCESSFULLY, 'success')
+            },
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
+                this.feedbackService.showMessage(error.message, TASK_MESSAGES.EDITED_FAILED, 'error')
+            }
+        })
     }
 
     deleteTask(taskId: string): void {
         this.taskService.deleteTask(taskId).subscribe({
             next: (response) => {
                 this.getTasks();
-                this.feedbackService.showMessage(response.message, 'Tarefa deletada com sucesso', 'warning')
+                this.feedbackService.showMessage(response.message, TASK_MESSAGES.DELETED_SUCCESSFULLY, 'warning')
             },
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
-                this.feedbackService.showMessage(error.message, 'Erro ao deletar tarefa', 'error')
+                this.feedbackService.showMessage(error.message, TASK_MESSAGES.DELETED_FAILED, 'error')
             }
         })
     }

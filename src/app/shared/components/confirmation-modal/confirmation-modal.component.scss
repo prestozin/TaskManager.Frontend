@@ -1,0 +1,75 @@
+@use "variables" as *;
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(70, 81, 201, 0.251);
+
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        height: 200px;
+        padding: 25px;
+
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px #00000030;
+        gap: 40px;
+
+
+        .texts {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+
+
+            .modal-title {
+                font-size: 24px;
+                font-weight: 600;
+            }
+
+            .modal-description {
+                font-size: 17px;
+                color: red;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            
+
+            .btn {
+                font-size: 18px;
+                padding: 8px 15px;
+                border-radius: 10px;
+                border: transparent;
+                width: 120px;
+                
+
+                &:active{
+                    scale: 0.95;
+                }
+            }
+
+            .btn-confirm {
+                background-color: $hover-button;
+                color: white;
+            }
+
+            .btn-cancel{
+                border: 1px solid grey;
+            }
+        }
+    }
+}
