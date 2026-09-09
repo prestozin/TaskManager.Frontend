@@ -6,7 +6,7 @@ import { DropdownComponent } from '../../../../shared/components/dropdown/dropdo
 import { TaskFacade } from '../../facades/task.facade';
 import { SelectableOption } from '../../../../shared/models/selectables.models';
 import { TaskFormComponent } from '../task-form/task-form.component';
-import { TaskCreateRequest, TaskResponse } from '@features/tasks/models/task.models';
+import { TaskCreateRequest, TaskEditRequest, TaskResponse } from '@features/tasks/models/task.models';
 import { TaskOptionsComponent } from '../task-options/task-options.component';
 import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
 
@@ -42,8 +42,12 @@ export class TaskContainerComponent {
     ...this.taskFacade.priorityOptions()
   ]);
 
+  priorityFormOptions = this.taskFacade.priorityOptions;
+  statusFormOptions = this.taskFacade.statusOptions;
+
   selectedStatus = this.taskFacade.selectedStatus;
   selectedPriority = this.taskFacade.selectedPriority;
+
   selectedTaskPosition = signal<{ top: number; right: number; } | null>(null);
 
   currentPage = this.taskFacade.currentPage;
@@ -123,8 +127,22 @@ export class TaskContainerComponent {
     this.changePage(page);
   }
 
+  saveTask(request: TaskCreateRequest | TaskEditRequest) {
+    if (this.taskFormMode() === 'create') {
+      this.addTask(request)
+    }
+    else {
+      this.editTask(request as TaskEditRequest);
+    }
+  }
+
   addTask(request: TaskCreateRequest): void {
     this.taskFacade.addTask(request);
+    this.closeTaskForm();
+  }
+
+  editTask(request: TaskEditRequest): void {
+    this.taskFacade.editTask(request);
     this.closeTaskForm();
   }
 
@@ -139,16 +157,15 @@ export class TaskContainerComponent {
     this.closeDeleteConfirmation();
   }
 
-  openCreateTask(): void {
-    this.taskFormMode.set('create');
-    this.selectedTask.set(null);
-    this.isTaskFormOpen.set(true);
-  }
+  openTaskForm(mode: 'create' | 'edit'): void {
+    if (mode === 'edit' && !this.selectedTask()) return;
 
-  openEditTask(): void {
-    if (!this.selectedTask()) return;
+    this.taskFormMode.set(mode);
 
-    this.taskFormMode.set('edit');
+    if (mode === 'create') {
+      this.selectedTask.set(null);
+    }
+
     this.isTaskFormOpen.set(true);
     this.closeTaskOptions();
   }
@@ -181,7 +198,6 @@ export class TaskContainerComponent {
 
   openDeleteConfirmation(): void {
     this.isDeleteConfirmationOpen.set(true);
-
   }
 
   closeDeleteConfirmation(): void {

@@ -65,7 +65,7 @@
         gap: 30px;
 
         .btn-cancel,
-        .btn-save {
+        .btn-submit {
             border-radius: 10px;
             width: 160px;
             height: 45px;
@@ -79,7 +79,7 @@
             }
         }
 
-        .btn-save {
+        .btn-submit {
             background-color: $primary-color;
             color: white;
 

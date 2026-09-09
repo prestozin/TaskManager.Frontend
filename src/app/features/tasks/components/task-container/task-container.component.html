@@ -44,7 +44,7 @@
 
             </div>
 
-            <button class="btn-newtask" (click)="openCreateTask()">
+            <button class="btn-newtask" (click)="openTaskForm('create')">
                 <img src="icons/plus-icon.svg" alt="">
                 <p>Nova Tarefa</p>
             </button>
@@ -80,7 +80,7 @@
                 [position]="selectedTaskPosition()!" 
                 (closeOptions)="closeTaskOptions()"
                 (deleteTaskClicked)="openDeleteConfirmation()"
-                (editTaskClicked)="openEditTask()">
+                (editTaskClicked)="openTaskForm('edit')">
             </app-task-options>
         }
 
@@ -135,7 +135,9 @@
             <app-task-form 
                 [mode]="taskFormMode()"
                 [task]="selectedTask()"
-                (taskSaved)="addTask($event)"
+                [priorityOptions]="priorityFormOptions()"
+                [statusOptions]="statusFormOptions()"
+                (submitClicked)="saveTask($event)"
                 (cancelClicked)="closeTaskForm()"> 
             </app-task-form>
         </div>

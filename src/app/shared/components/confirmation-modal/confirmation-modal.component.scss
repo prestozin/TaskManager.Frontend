@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: center;
 
-    background-color: rgba(70, 81, 201, 0.251);
+    background-color: rgba(137, 145, 236, 0.251);
 
 
     .container {
@@ -47,7 +47,6 @@
             display: flex;
             gap: 15px;
             justify-content: center;
-            
 
             .btn {
                 font-size: 18px;
@@ -55,9 +54,8 @@
                 border-radius: 10px;
                 border: transparent;
                 width: 120px;
-                
 
-                &:active{
+                &:active {
                     scale: 0.95;
                 }
             }
@@ -67,7 +65,7 @@
                 color: white;
             }
 
-            .btn-cancel{
+            .btn-cancel {
                 border: 1px solid grey;
             }
         }

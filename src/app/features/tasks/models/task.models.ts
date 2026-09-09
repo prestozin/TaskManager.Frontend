@@ -8,7 +8,6 @@ export interface TaskResponse {
     createdAt: string;
     status: string;
     priority: string;
-
 }
 
 export interface TaskCreateRequest {

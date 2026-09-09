@@ -2,8 +2,8 @@
     <div class="container-header">
         <img class="img-icon" src="icons/new-task-icon.svg">
         <div class="header-texts">
-            <p class="header-title">Adicionar nova tarefa</p>
-            <p class="header-subtitle">Preencha as informações da nova tarefa</p>
+            <p class="header-title">{{ formTitle() }}</p>
+            <p class="header-subtitle">{{ formSubtitle() }}</p>
         </div>
 
     </div>
@@ -41,22 +41,19 @@
         </div>
 
         <div class="content-box">
-
             <p class="task-title">Descrição</p>
-
             <app-input-forms 
                 class="form-description" 
                 type="textarea" 
                 placeholder="Insira uma descrição para sua tarefa"
                 [control]="taskForm.controls.descricao">
             </app-input-forms>
-
         </div>
 
     </div>
 
     <div class="container-footer">
         <button class="btn-cancel" (click)="cancelSubmit()">Cancelar</button>
-        <button class="btn-save" (click)="submitTask()">Salvar</button>
+        <button class="btn-submit" (click)="submitTask()">{{ submitText() }}</button>
     </div>
 </div>

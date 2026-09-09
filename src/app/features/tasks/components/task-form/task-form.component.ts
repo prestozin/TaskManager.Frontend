@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TaskFacade } from '@features/tasks/facades/task.facade';
 import { TaskCreateRequest, TaskEditRequest, TaskResponse } from '@features/tasks/models/task.models';
@@ -18,24 +18,50 @@ import { SelectableOption } from '@shared/models/selectables.models';
 
 export class TaskFormComponent {
 
-  private taskFacade = inject(TaskFacade);
-
   taskForm = new FormGroup({
     titulo: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] }),
     descricao: new FormControl<string>('', { nonNullable: true, validators: [Validators.maxLength(500)] })
   });
 
-  priorityOptions = this.taskFacade.priorityOptions;
-  statusOptions = this.taskFacade.statusOptions;
+
+  formTitle = computed(() => 
+    this.mode() === 'create' ? 'Adicionar nova tarefa' : 'Editar tarefa');
+
+  formSubtitle = computed(() => 
+    this.mode() === 'create' ? 'Preencha as informações da nova tarefa' : 'Altere as informações da tarefa');
+
+  submitText = computed(() =>
+    this.mode() === 'create' ? 'Criar' : 'Salvar alterações');
+
+  priorityOptions = input.required<SelectableOption[]>();
+  statusOptions = input.required<SelectableOption[]>();
 
   selectedPriority: SelectableOption | null = null;
   selectedStatus: SelectableOption | null = null;
 
   cancelClicked = output();
-  taskSaved = output<TaskCreateRequest | TaskEditRequest>();
+  submitClicked = output<TaskCreateRequest | TaskEditRequest>();
 
   mode = input<'create' | 'edit'>('create');
   task = input<TaskResponse | null>(null);
+
+  ngOnInit(): void {
+    const task = this.task();
+
+    if (this.mode() === 'edit' && task) {
+      this.taskForm.patchValue({
+        titulo: task.title,
+        descricao: task.description
+      });
+
+      this.selectedPriority =
+        this.priorityOptions().find(option => option.name === task.priority) ?? null;
+
+      this.selectedStatus =
+        this.statusOptions().find(option => option.name === task.status) ?? null;
+
+    }
+  }
 
   submitTask(): void {
     if (this.taskForm.invalid) {
@@ -53,11 +79,11 @@ export class TaskFormComponent {
       const request: TaskCreateRequest = {
         title: formValue.titulo,
         description: formValue.descricao,
-        statusId: this.selectedStatus.id!,
-        priorityId: this.selectedPriority.id!
+        statusId: this.selectedStatus.id,
+        priorityId: this.selectedPriority.id
       };
 
-      this.taskSaved.emit(request);
+      this.submitClicked.emit(request);
       return;
     }
 
@@ -72,7 +98,7 @@ export class TaskFormComponent {
       statusId: this.selectedStatus.id,
       priorityId: this.selectedPriority.id
     }
-    this.taskSaved.emit(request);
+    this.submitClicked.emit(request);
   }
 
   cancelSubmit(): void {
