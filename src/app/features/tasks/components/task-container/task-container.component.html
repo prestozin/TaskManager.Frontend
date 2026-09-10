@@ -74,28 +74,35 @@
         @for (task of tasks(); track task.id) {
             <app-task 
                 [task]="task" 
-                (optionsClicked)="openTaskOptions(task, $event)">
+                (optionsClicked)="openTaskOptions(task.id, $event)">
             </app-task>
         }
 
-        @if (selectedTask() && selectedTaskPosition()) {
+        @if (selectedTaskId() && selectedTaskPosition()) {
             <app-task-options 
                 [position]="selectedTaskPosition()!" 
                 (closeOptions)="closeTaskOptions()"
                 (deleteTaskClicked)="openDeleteConfirmation()"
-                (editTaskClicked)="openTaskForm('edit')">
+                (editTaskClicked)="openTaskForm('edit')"
+                (viewTaskClicked)="openTaskDetails()">
             </app-task-options>
         }
 
-        @if (isDeleteConfirmationOpen()){
+        @if (activeModal() === 'delete'){
             <app-confirmation-modal
                 title="Excluir tarefa?"
                 description="Essa ação não poderá ser desfeita."
                 confirmText="Excluir"
                 (confirm)="deleteTask()"
-                (cancel)="closeDeleteConfirmation()">
+                (cancel)="closeModal()">
 
             </app-confirmation-modal>
+        }
+
+        @if (activeModal() === 'view' && selectedTask()) {
+            <app-task-view 
+                [task]="selectedTask()!"> 
+            </app-task-view>
         }
          
     </div>
@@ -131,8 +138,8 @@
     </div>
 </footer>
 
-@if (isTaskFormOpen()) {
-    <div class="modal-overlay" (click)="closeTaskForm()">
+@if ((activeModal() === 'create' || activeModal() === 'edit') && (activeModal() === 'create' || selectedTask())) {
+    <div class="modal-overlay" (click)="closeModal()">
 
         <div class="modal-content" (click)="$event.stopPropagation()">
             <app-task-form 
@@ -141,7 +148,7 @@
                 [priorityOptions]="priorityFormOptions()"
                 [statusOptions]="statusFormOptions()"
                 (submitClicked)="saveTask($event)"
-                (cancelClicked)="closeTaskForm()"> 
+                (cancelClicked)="closeModal()"> 
             </app-task-form>
         </div>
 

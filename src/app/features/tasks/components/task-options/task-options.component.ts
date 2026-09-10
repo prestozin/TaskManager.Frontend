@@ -11,6 +11,6 @@ export class TaskOptionsComponent {
   
   deleteTaskClicked = output<void>();
   editTaskClicked = output<void>();
-
+  viewTaskClicked = output<void>();
   closeClicked = output<void>();
 }

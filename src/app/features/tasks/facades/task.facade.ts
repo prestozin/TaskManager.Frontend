@@ -17,15 +17,16 @@ export class TaskFacade {
 
     private taskService = inject(TaskService);
     private feedbackService = inject(FeedbackService)
+    private readonly _selectedTask = signal<TaskResponse | null>(null);
 
     pagedParams = new TaskPagedParams();
 
     tasks = signal<TaskResponse[]>([]);
     pagedResponse = signal<PagedResponse<TaskResponse> | null>(null);
 
-    currentPage = computed(
-        () => this.pagedResponse()?.pageNumber ?? 1
-    );
+    currentPage = computed(() => this.pagedResponse()?.pageNumber ?? 1);
+
+    readonly selectedTask = this._selectedTask.asReadonly();
 
     statusOptions = signal<SelectableOption[]>([]);
     priorityOptions = signal<SelectableOption[]>([]);
@@ -48,6 +49,22 @@ export class TaskFacade {
         this.errorMessage.set(
             response?.message ?? 'Ocorreu um erro inesperado.'
         );
+    }
+
+    getTaskById(taskId: string): void {
+        this._selectedTask.set(null);
+
+        this.taskService.getTaskById(taskId).subscribe({
+            next: (response) => {
+                if (response.isSuccess) {
+                    this._selectedTask.set(response.data);
+                }
+            },
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
+                this.feedbackService.showMessage(error.message, '', 'error')
+            }
+        })
     }
 
     addTask(request: TaskCreateRequest): void {
@@ -109,6 +126,10 @@ export class TaskFacade {
         this.pagedParams.pageNumber = 1;
 
         this.getTasks();
+    }
+
+    clearSelectedTask(): void {
+        this._selectedTask.set(null);
     }
     loadSelectables(): void {
         this.taskService.getSelectables().subscribe({

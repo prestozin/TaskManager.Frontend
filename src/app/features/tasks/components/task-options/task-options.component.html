@@ -1,6 +1,6 @@
 <div class="task-options" [style.top.px]="position().top" [style.right.px]="position().right">
 
-    <button class="btn-view">
+    <button class="btn-view" (click)="viewTaskClicked.emit()">
         <img class="icon" src="icons/search-icon.svg" alt="Visualizar" />
         Visualizar
     </button>

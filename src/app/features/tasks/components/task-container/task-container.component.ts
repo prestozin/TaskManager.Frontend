@@ -1,77 +1,126 @@
-import { Component, computed, HostListener, inject, output, signal } from '@angular/core';
-import { TaskComponent } from "../task/task.component";
+import { Component, computed, HostListener, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ETaskSort } from '../../enums/ETaskSort';
-import { DropdownComponent } from '../../../../shared/components/dropdown/dropdown';
-import { TaskFacade } from '../../facades/task.facade';
-import { SelectableOption } from '../../../../shared/models/selectables.models';
-import { TaskFormComponent } from '../task-form/task-form.component';
-import { TaskCreateRequest, TaskEditRequest, TaskResponse } from '@features/tasks/models/task.models';
-import { TaskOptionsComponent } from '../task-options/task-options.component';
-import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
+import { TaskComponent } from '../task/task.component';
+import { TaskFormComponent } from '../task-form/task-form.component';
+import { TaskOptionsComponent } from '../task-options/task-options.component';
+import { TaskViewComponent } from '../task-view/task-view.component';
+
+import { DropdownComponent } from '@shared/components/dropdown/dropdown';
+import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
+
+import { TaskFacade } from '../../facades/task.facade';
+import { ETaskSort } from '../../enums/ETaskSort';
+
+import { SelectableOption } from '@shared/models/selectables.models';
+import {
+  TaskCreateRequest,
+  TaskEditRequest
+} from '@features/tasks/models/task.models';
+import { TaskUiState } from '../states/task-state';
+
+
+type TaskModal =
+  | 'create'
+  | 'edit'
+  | 'view'
+  | 'delete'
+  | null;
 
 
 @Component({
   selector: 'app-task-container',
+  providers: [TaskUiState],
   imports: [
     TaskComponent,
     ReactiveFormsModule,
     DropdownComponent,
     TaskFormComponent,
     TaskOptionsComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    TaskViewComponent
   ],
   templateUrl: './task-container.component.html',
   styleUrl: './task-container.component.scss',
 })
-
 export class TaskContainerComponent {
 
-  private taskFacade = inject(TaskFacade);
+  // =========================
+  // Dependencies
+  // =========================
 
-  tasks = this.taskFacade.tasks;
-  pagedResponse = this.taskFacade.pagedResponse;
+  private readonly taskFacade = inject(TaskFacade);
+  private readonly taskUiState = inject(TaskUiState);
 
-  statusOptions = computed<SelectableOption[]>(() => [
+
+  // =========================
+  // Facade state
+  // =========================
+
+  readonly tasks = this.taskFacade.tasks;
+  readonly pagedResponse = this.taskFacade.pagedResponse;
+  readonly selectedTask = this.taskFacade.selectedTask;
+
+  readonly selectedStatus = this.taskFacade.selectedStatus;
+  readonly selectedPriority = this.taskFacade.selectedPriority;
+
+  readonly currentPage = this.taskFacade.currentPage;
+
+  readonly priorityFormOptions = this.taskFacade.priorityOptions;
+  readonly statusFormOptions = this.taskFacade.statusOptions;
+
+
+  // =========================
+  // UI state
+  // =========================
+
+  readonly selectedTaskId = this.taskUiState.selectedTaskId;
+
+  readonly selectedTaskPosition = this.taskUiState.selectedTaskPosition;
+
+  readonly activeModal = this.taskUiState.activeModal;
+
+
+  // =========================
+  // Form controls
+  // =========================
+
+  readonly allTasksControl = new FormControl(false, {
+    nonNullable: true
+  });
+
+  readonly searchControl = new FormControl('', {
+    nonNullable: true
+  });
+
+  readonly pageInput = new FormControl<number | null>(null);
+
+
+  // =========================
+  // Selectables / Filters
+  // =========================
+
+  readonly statusOptions = computed<SelectableOption[]>(() => [
     { id: null, name: 'Todos os status' },
     ...this.taskFacade.statusOptions()
   ]);
-  
-  priorityOptions = computed<SelectableOption[]>(() => [
+
+  readonly priorityOptions = computed<SelectableOption[]>(() => [
     { id: null, name: 'Todas as prioridades' },
     ...this.taskFacade.priorityOptions()
   ]);
 
-  priorityFormOptions = this.taskFacade.priorityOptions;
-  statusFormOptions = this.taskFacade.statusOptions;
 
-  selectedStatus = this.taskFacade.selectedStatus;
-  selectedPriority = this.taskFacade.selectedPriority;
+  // =========================
+  // Derived state
+  // =========================
 
-  selectedTaskPosition = signal<{ top: number; right: number; } | null>(null);
+  readonly taskFormMode = computed<'create' | 'edit'>(() =>
+    this.activeModal() === 'edit' ? 'edit' : 'create'
+  );
 
-  currentPage = this.taskFacade.currentPage;
-
-  TaskSort = ETaskSort;
-
-  newTaskClicked = output();
-
-  allTasksControl = new FormControl(false, { nonNullable: true });
-
-  searchControl = new FormControl('', { nonNullable: true });
-
-  pageInput = new FormControl<number | null>(null);
-
-  taskFormMode = signal<'create' | 'edit'>('create');
-  isTaskFormOpen = signal(false);
-
-  selectedTask = signal<TaskResponse | null>(null);
-
-  isDeleteConfirmationOpen = signal(false);
-
-  visiblePages = computed(() => {
+  readonly visiblePages = computed(() => {
     const totalPages = this.pagedResponse()?.totalPages ?? 0;
     const currentPage = this.currentPage();
 
@@ -80,7 +129,10 @@ export class TaskContainerComponent {
     }
 
     if (totalPages <= 3) {
-      return Array.from({ length: totalPages }, (_, index) => index + 1);
+      return Array.from(
+        { length: totalPages },
+        (_, index) => index + 1
+      );
     }
 
     if (currentPage === 1) {
@@ -94,14 +146,36 @@ export class TaskContainerComponent {
     return [currentPage - 1, currentPage, currentPage + 1];
   });
 
-  ngOnInit() {
+
+  // =========================
+  // Constants
+  // =========================
+
+  readonly TaskSort = ETaskSort;
+
+
+  // =========================
+  // Lifecycle
+  // =========================
+
+  ngOnInit(): void {
     this.taskFacade.loadSelectables();
     this.taskFacade.getTasks();
 
     this.searchControl.valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged()) // aguarda 300ms após o usuário parar de digitar e evita repetir a busca quando o valor não muda
-      .subscribe(search => { this.taskFacade.searchTasks(search); });
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(search => {
+        this.taskFacade.searchTasks(search);
+      });
   }
+
+
+  // =========================
+  // Filters
+  // =========================
 
   selectStatus(status: SelectableOption): void {
     this.taskFacade.selectStatus(status);
@@ -111,102 +185,150 @@ export class TaskContainerComponent {
     this.taskFacade.selectPriority(priority);
   }
 
+
+  // =========================
+  // Sorting
+  // =========================
+
   orderTasks(sort: string): void {
     this.taskFacade.orderTasks(sort);
   }
 
-  changePage(page: number | null): void {
 
+  // =========================
+  // Pagination
+  // =========================
+
+  changePage(page: number | null): void {
     const totalPages = this.pagedResponse()?.totalPages ?? 0;
 
-    if (page === null || page < 1 || page > totalPages)
+    if (page === null || page < 1 || page > totalPages) {
       return;
+    }
 
     this.taskFacade.changePage(page);
   }
 
   goToPage(input: HTMLInputElement): void {
-    const page = this.pageInput.value;
-
-    input.blur();  //remove o foco do input
-
-    this.changePage(page);
+    input.blur();
+    this.changePage(this.pageInput.value);
   }
 
-  saveTask(request: TaskCreateRequest | TaskEditRequest) {
+
+  // =========================
+  // Task actions
+  // =========================
+
+  saveTask(
+    request: TaskCreateRequest | TaskEditRequest
+  ): void {
     if (this.taskFormMode() === 'create') {
-      this.addTask(request as TaskCreateRequest)
+      this.taskFacade.addTask(request as TaskCreateRequest);
     }
     else {
-      this.editTask(request as TaskEditRequest);
+      this.taskFacade.editTask(request as TaskEditRequest);
     }
-  }
 
-  addTask(request: TaskCreateRequest): void {
-    this.taskFacade.addTask(request);
-    this.closeTaskForm();
-  }
-
-  editTask(request: TaskEditRequest): void {
-    this.taskFacade.editTask(request);
-    this.closeTaskForm();
+    this.closeModal();
   }
 
   deleteTask(): void {
-    const task = this.selectedTask();
+    const taskId = this.selectedTaskId();
 
-    if (!task) return;
+    if (!taskId) return;
 
-    this.taskFacade.deleteTask(task.id);
-
-    this.selectedTask.set(null);
-    this.closeDeleteConfirmation();
+    this.taskFacade.deleteTask(taskId);
+    this.closeModal();
   }
+
+
+  // =========================
+  // Task form
+  // =========================
 
   openTaskForm(mode: 'create' | 'edit'): void {
-    if (mode === 'edit' && !this.selectedTask()) return;
+    if (mode === 'edit') {
+      const taskId = this.selectedTaskId();
 
-    this.taskFormMode.set(mode);
+      if (!taskId) return;
 
-    if (mode === 'create') {
-      this.selectedTask.set(null);
+      this.taskFacade.getTaskById(taskId);
+    } 
+    else {
+      this.taskFacade.clearSelectedTask();
     }
 
-    this.isTaskFormOpen.set(true);
-    this.closeTaskOptions();
+    this.taskUiState.openModal(mode);
+    this.taskUiState.closeTaskOptions();
   }
 
-  closeTaskForm(): void {
-    this.isTaskFormOpen.set(false);
+
+  // =========================
+  // Task details
+  // =========================
+
+  openTaskDetails(): void {
+    const taskId = this.selectedTaskId();
+
+    if (!taskId) return;
+
+    this.taskFacade.getTaskById(taskId);
+
+    this.taskUiState.openModal('view');
+    this.taskUiState.closeTaskOptions();
   }
 
-  openTaskOptions(task: TaskResponse, element: HTMLElement): void {
-    const rect = element.getBoundingClientRect();  //pega as dimensões e posição do elemento clicado
-    const wrapper = element.closest('.tasks-wrapper') as HTMLElement; //pega o elemento pai mais próximo com a classe 'tasks-wrapper'
-    const wrapperRect = wrapper.getBoundingClientRect(); //pega as dimensões e posição do elemento pai
 
-    this.selectedTask.set(task);
+  // =========================
+  // Task options menu
+  // =========================
 
-    this.selectedTaskPosition.set({
-      top: rect.bottom - wrapperRect.top + -30,
+  openTaskOptions(taskId: string, element: HTMLElement): void {
+    const rect = element.getBoundingClientRect();
+
+    const wrapper = element.closest('.tasks-wrapper') as HTMLElement;
+
+    const wrapperRect = wrapper.getBoundingClientRect();
+
+    this.taskUiState.selectTask(taskId);
+
+    this.taskUiState.setTaskOptionsPosition({
+      top: rect.bottom - wrapperRect.top - 30,
       right: wrapperRect.right - rect.right + 20
     });
   }
 
   closeTaskOptions(): void {
-    this.selectedTaskPosition.set(null);
+    this.taskUiState.closeTaskOptions();
   }
+
+
+  // =========================
+  // Modal
+  // =========================
+
+  openModal(modal: TaskModal): void {
+    this.taskUiState.openModal(modal);
+  }
+
+  closeModal(): void {
+    this.taskUiState.closeModal();
+  }
+
+  openDeleteConfirmation(): void {
+    if (!this.selectedTaskId()) return;
+
+    this.taskUiState.openModal('delete');
+    this.taskUiState.closeTaskOptions();
+  }
+
+
+  // =========================
+  // Document events
+  // =========================
 
   @HostListener('document:click')
   onDocumentClick(): void {
     this.closeTaskOptions();
-  }
-
-  openDeleteConfirmation(): void {
-    this.isDeleteConfirmationOpen.set(true);
-  }
-
-  closeDeleteConfirmation(): void {
-    this.isDeleteConfirmationOpen.set(false);
   }
 }

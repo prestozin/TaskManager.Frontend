@@ -17,6 +17,11 @@ export class TaskService {
 
     private apiUrl = `${environment.apiUrl}/Task`
 
+    getTaskById(taskId: string): Observable<ResultResponse<TaskResponse>> {
+        return this.httpClient.get<ResultResponse<TaskResponse>>
+            (`${this.apiUrl}/${taskId}`);
+    }
+
     addTask(request: TaskCreateRequest): Observable<ResultResponse<string>> {
         return this.httpClient.post<ResultResponse<string>>
             (`${this.apiUrl}/AddTask`, request);
