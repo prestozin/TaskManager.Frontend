@@ -19,5 +19,7 @@ export class InputFormsComponent {
   type = input<InputTypes>('text');
 
   placeholder = input<string>('');
+
+  maxLength = input<number | null>(null);
    
 }

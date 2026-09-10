@@ -33,5 +33,6 @@ export interface TaskSelectablesResponse {
 export class TaskPagedParams extends PagedParams {
     taskStatusId: number | null = null;
     taskPriorityId: number | null = null;
+    search: string | null = null;
 }
 

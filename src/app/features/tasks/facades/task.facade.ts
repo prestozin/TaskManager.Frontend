@@ -80,7 +80,7 @@ export class TaskFacade {
         this.taskService.deleteTask(taskId).subscribe({
             next: (response) => {
                 this.getTasks();
-                this.feedbackService.showMessage(response.message, TASK_MESSAGES.DELETED_SUCCESSFULLY, 'warning')
+                this.feedbackService.showMessage(response.message, TASK_MESSAGES.DELETED_SUCCESSFULLY, 'success')
             },
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
@@ -104,6 +104,12 @@ export class TaskFacade {
         });
     };
 
+    searchTasks(search: string): void {
+        this.pagedParams.search = search.trim() || null;
+        this.pagedParams.pageNumber = 1;
+
+        this.getTasks();
+    }
     loadSelectables(): void {
         this.taskService.getSelectables().subscribe({
             next: (response) => {

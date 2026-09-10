@@ -1,6 +1,5 @@
 import { Component, computed, inject, input, output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TaskFacade } from '@features/tasks/facades/task.facade';
 import { TaskCreateRequest, TaskEditRequest, TaskResponse } from '@features/tasks/models/task.models';
 import { DropdownComponent } from '@shared/components/dropdown/dropdown';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
@@ -59,7 +58,6 @@ export class TaskFormComponent {
 
       this.selectedStatus =
         this.statusOptions().find(option => option.name === task.status) ?? null;
-
     }
   }
 

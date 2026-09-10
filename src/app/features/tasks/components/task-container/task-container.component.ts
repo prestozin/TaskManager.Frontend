@@ -9,6 +9,7 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 import { TaskCreateRequest, TaskEditRequest, TaskResponse } from '@features/tasks/models/task.models';
 import { TaskOptionsComponent } from '../task-options/task-options.component';
 import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 
 
@@ -37,6 +38,7 @@ export class TaskContainerComponent {
     { id: null, name: 'Todos os status' },
     ...this.taskFacade.statusOptions()
   ]);
+  
   priorityOptions = computed<SelectableOption[]>(() => [
     { id: null, name: 'Todas as prioridades' },
     ...this.taskFacade.priorityOptions()
@@ -95,6 +97,10 @@ export class TaskContainerComponent {
   ngOnInit() {
     this.taskFacade.loadSelectables();
     this.taskFacade.getTasks();
+
+    this.searchControl.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged()) // aguarda 300ms após o usuário parar de digitar e evita repetir a busca quando o valor não muda
+      .subscribe(search => { this.taskFacade.searchTasks(search); });
   }
 
   selectStatus(status: SelectableOption): void {
@@ -129,7 +135,7 @@ export class TaskContainerComponent {
 
   saveTask(request: TaskCreateRequest | TaskEditRequest) {
     if (this.taskFormMode() === 'create') {
-      this.addTask(request)
+      this.addTask(request as TaskCreateRequest)
     }
     else {
       this.editTask(request as TaskEditRequest);

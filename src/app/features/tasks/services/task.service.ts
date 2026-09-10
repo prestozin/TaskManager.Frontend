@@ -33,22 +33,29 @@ export class TaskService {
     }
 
     getPaged(params: TaskPagedParams): Observable<ResultResponse<PagedResponse<TaskResponse>>> {
+        const httpParams = this.buildHttpParams(params);
 
+        return this.httpClient.get<ResultResponse<PagedResponse<TaskResponse>>>
+            (`${this.apiUrl}/GetPaged`, { params: httpParams });
+    }
+
+    private buildHttpParams(params: TaskPagedParams): HttpParams {
         let httpParams = new HttpParams()
             .set('PageNumber', params.pageNumber)
             .set('PageSize', params.pageSize)
             .set('Sort', params.sort)
             .set('Order', params.order);
 
-        if (params.taskStatusId !== null) {
+        if (params.taskStatusId !== null)
             httpParams = httpParams.set('TaskStatusId', params.taskStatusId);
-        }
 
-        if (params.taskPriorityId !== null) {
+        if (params.taskPriorityId !== null)
             httpParams = httpParams.set('TaskPriorityId', params.taskPriorityId);
-        }
-        return this.httpClient.get<ResultResponse<PagedResponse<TaskResponse>>>
-            (`${this.apiUrl}/GetPaged`, { params: httpParams });
+
+        if (params.search)
+            httpParams = httpParams.set('Search', params.search);
+
+        return httpParams;
     }
 
     getSelectables(): Observable<ResultResponse<TaskSelectablesResponse>> {
