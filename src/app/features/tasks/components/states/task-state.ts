@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { TaskModal, TaskOptionsPosition } from '@features/tasks/models/task-state.models';
+import { TaskModal, TaskOptionsPosition } from '@features/tasks/models/task-ui-state.models';
 
 
 @Injectable()
