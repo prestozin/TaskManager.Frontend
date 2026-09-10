@@ -1,4 +1,4 @@
-import { Component, computed, HostListener, inject, signal } from '@angular/core';
+import { Component, computed, HostListener, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
@@ -11,22 +11,13 @@ import { DropdownComponent } from '@shared/components/dropdown/dropdown';
 import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
 
 import { TaskFacade } from '../../facades/task.facade';
-import { ETaskSort } from '../../enums/ETaskSort';
+import { ETaskSort } from '../../enums/task.enum';
 
 import { SelectableOption } from '@shared/models/selectables.models';
-import {
-  TaskCreateRequest,
-  TaskEditRequest
-} from '@features/tasks/models/task.models';
-import { TaskUiState } from '../states/task-state';
 
+import { TaskCreateRequest, TaskEditRequest } from '@features/tasks/models/task.models';
 
-type TaskModal =
-  | 'create'
-  | 'edit'
-  | 'view'
-  | 'delete'
-  | null;
+import { TaskUiState } from '../../states/task-ui.state';
 
 
 @Component({
@@ -59,15 +50,19 @@ export class TaskContainerComponent {
   // =========================
 
   readonly tasks = this.taskFacade.tasks;
+
   readonly pagedResponse = this.taskFacade.pagedResponse;
+
   readonly selectedTask = this.taskFacade.selectedTask;
 
   readonly selectedStatus = this.taskFacade.selectedStatus;
+
   readonly selectedPriority = this.taskFacade.selectedPriority;
 
   readonly currentPage = this.taskFacade.currentPage;
 
   readonly priorityFormOptions = this.taskFacade.priorityOptions;
+
   readonly statusFormOptions = this.taskFacade.statusOptions;
 
 
@@ -211,6 +206,7 @@ export class TaskContainerComponent {
 
   goToPage(input: HTMLInputElement): void {
     input.blur();
+
     this.changePage(this.pageInput.value);
   }
 
@@ -219,9 +215,7 @@ export class TaskContainerComponent {
   // Task actions
   // =========================
 
-  saveTask(
-    request: TaskCreateRequest | TaskEditRequest
-  ): void {
+  saveTask(request: TaskCreateRequest | TaskEditRequest): void {
     if (this.taskFormMode() === 'create') {
       this.taskFacade.addTask(request as TaskCreateRequest);
     }
@@ -235,9 +229,12 @@ export class TaskContainerComponent {
   deleteTask(): void {
     const taskId = this.selectedTaskId();
 
-    if (!taskId) return;
+    if (!taskId) {
+      return;
+    }
 
     this.taskFacade.deleteTask(taskId);
+
     this.closeModal();
   }
 
@@ -250,10 +247,12 @@ export class TaskContainerComponent {
     if (mode === 'edit') {
       const taskId = this.selectedTaskId();
 
-      if (!taskId) return;
+      if (!taskId) {
+        return;
+      }
 
       this.taskFacade.getTaskById(taskId);
-    } 
+    }
     else {
       this.taskFacade.clearSelectedTask();
     }
@@ -270,7 +269,9 @@ export class TaskContainerComponent {
   openTaskDetails(): void {
     const taskId = this.selectedTaskId();
 
-    if (!taskId) return;
+    if (!taskId) {
+      return;
+    }
 
     this.taskFacade.getTaskById(taskId);
 
@@ -284,10 +285,13 @@ export class TaskContainerComponent {
   // =========================
 
   openTaskOptions(taskId: string, element: HTMLElement): void {
+    const wrapper = element.closest('.tasks-wrapper') as HTMLElement | null;
+
+    if (!wrapper) {
+      return;
+    }
+
     const rect = element.getBoundingClientRect();
-
-    const wrapper = element.closest('.tasks-wrapper') as HTMLElement;
-
     const wrapperRect = wrapper.getBoundingClientRect();
 
     this.taskUiState.selectTask(taskId);
@@ -307,16 +311,14 @@ export class TaskContainerComponent {
   // Modal
   // =========================
 
-  openModal(modal: TaskModal): void {
-    this.taskUiState.openModal(modal);
-  }
-
   closeModal(): void {
     this.taskUiState.closeModal();
   }
 
   openDeleteConfirmation(): void {
-    if (!this.selectedTaskId()) return;
+    if (!this.selectedTaskId()) {
+      return;
+    }
 
     this.taskUiState.openModal('delete');
     this.taskUiState.closeTaskOptions();

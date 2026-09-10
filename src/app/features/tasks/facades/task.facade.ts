@@ -1,16 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { FeedbackService } from '@core/services/feedback/feedback.service';
 
 import { TASK_MESSAGES } from '@shared/constants/messages';
-import { PagedResponse } from '@shared/models/pagination.models';
 import { ResultResponse } from '@shared/models/response.models';
 import { SelectableOption } from '@shared/models/selectables.models';
 
-import { TaskCreateRequest, TaskEditRequest, TaskPagedParams, TaskResponse } from '../models/task.models';
+import { TaskCreateRequest, TaskEditRequest } from '../models/task.models';
 
 import { TaskService } from '../services/task.service';
+import { TaskDataState } from '../states/task-data.state';
+import { EFeedbackType } from '@shared/enums/feedback.enum';
 
 
 @Injectable({
@@ -24,123 +25,98 @@ export class TaskFacade {
     // =========================
 
     private readonly taskService = inject(TaskService);
+    private readonly taskDataState = inject(TaskDataState);
     private readonly feedbackService = inject(FeedbackService);
 
 
     // =========================
-    // Query state
+    // State
     // =========================
 
-    private readonly pagedParams = new TaskPagedParams();
+    get tasks() {
+        return this.taskDataState.tasks;
+    }
 
+    get pagedResponse() {
+        return this.taskDataState.pagedResponse;
+    }
 
-    // =========================
-    // Internal state
-    // =========================
+    get selectedTask() {
+        return this.taskDataState.selectedTask;
+    }
 
-    private readonly _tasks = signal<TaskResponse[]>([]);
+    get statusOptions() {
+        return this.taskDataState.statusOptions;
+    }
 
-    private readonly _pagedResponse = signal<PagedResponse<TaskResponse> | null>(null);
+    get priorityOptions() {
+        return this.taskDataState.priorityOptions;
+    }
 
-    private readonly _selectedTask = signal<TaskResponse | null>(null);
+    get selectedStatus() {
+        return this.taskDataState.selectedStatus;
+    }
 
-    private readonly _statusOptions = signal<SelectableOption[]>([]);
+    get selectedPriority() {
+        return this.taskDataState.selectedPriority;
+    }
 
-    private readonly _priorityOptions = signal<SelectableOption[]>([]);
+    get currentPage() {
+        return this.taskDataState.currentPage;
+    }
 
-    private readonly _selectedStatus =
-        signal<SelectableOption>({
-            id: null,
-            name: 'Todos os status'
-        });
+    get errorMessage() {
+        return this.taskDataState.errorMessage;
+    }
 
-    private readonly _selectedPriority =
-        signal<SelectableOption>({
-            id: null,
-            name: 'Todas as prioridades'
-        });
-
-    private readonly _errorMessage = signal<string | null>(null);
-
-
-    // =========================
-    // Public state
-    // =========================
-
-    readonly tasks = this._tasks.asReadonly();
-
-    readonly pagedResponse = this._pagedResponse.asReadonly();
-
-    readonly selectedTask = this._selectedTask.asReadonly();
-
-    readonly statusOptions = this._statusOptions.asReadonly();
-
-    readonly priorityOptions = this._priorityOptions.asReadonly();
-
-    readonly selectedStatus = this._selectedStatus.asReadonly();
-
-    readonly selectedPriority = this._selectedPriority.asReadonly();
-
-    readonly errorMessage = this._errorMessage.asReadonly();
 
 
     // =========================
-    // Derived state
-    // =========================
-
-    readonly currentPage = computed(() => this._pagedResponse()?.pageNumber ?? 1);
-
-
-    // =========================
-    // Queries
+    // Data loading
     // =========================
 
     getTasks(): void {
-        this.taskService.getPaged(this.pagedParams).subscribe({
+        this.taskService.getPaged(this.taskDataState.pagedParams).subscribe({
             next: response => {
-                this._pagedResponse.set(response.data);
-                this._tasks.set(response.data.items);
+                this.taskDataState.setTasks(response.data);
             },
 
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
-
-                this._tasks.set([]);
-                this._pagedResponse.set(null);
+                this.taskDataState.clearTasks();
             }
         });
     }
 
     getTaskById(taskId: string): void {
-        this._selectedTask.set(null);
+        this.taskDataState.clearSelectedTask();
 
         this.taskService.getTaskById(taskId).subscribe({
             next: response => {
                 if (response.isSuccess) {
-                    this._selectedTask.set(response.data);
+                    this.taskDataState.setSelectedTask(response.data);
                 }
             },
 
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
 
-                this.feedbackService.showMessage( error.message, '','error');
+                this.feedbackService.showMessage(error.message, '', EFeedbackType.Error);
             }
         });
     }
 
     loadSelectables(): void {
         this.taskService.getSelectables().subscribe({
-                next: response => {
-                    this._statusOptions.set(response.data.status);
+            next: response => {
+                this.taskDataState.setStatusOptions(response.data.status);
+                this.taskDataState.setPriorityOptions(response.data.priority);
+            },
 
-                    this._priorityOptions.set(response.data.priority);
-                },
-
-                error: (error: HttpErrorResponse) => {
-                    this.handleError(error);
-                }
-            });
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
+            }
+        });
     }
 
 
@@ -150,54 +126,50 @@ export class TaskFacade {
 
     addTask(request: TaskCreateRequest): void {
         this.taskService.addTask(request).subscribe({
-                next: response => {
-                    this.getTasks();
+            next: response => {
+                this.getTasks();
 
-                    this.feedbackService.showMessage(response.message,TASK_MESSAGES.CREATED_SUCCESSFULLY,'success');
-                },
+                this.feedbackService.showMessage(response.message, TASK_MESSAGES.CREATED_SUCCESSFULLY, EFeedbackType.Success);
+            },
 
-                error: (error: HttpErrorResponse) => {
-                    this.handleError(error);
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
 
-                    this.feedbackService.showMessage(error.message,TASK_MESSAGES.CREATED_FAILED,'error');
-                }
-            });
+                this.feedbackService.showMessage(error.message, TASK_MESSAGES.CREATED_FAILED, EFeedbackType.Error);
+            }
+        });
     }
 
     editTask(request: TaskEditRequest): void {
         this.taskService.editTask(request).subscribe({
-                next: response => {
-                    this.getTasks();
+            next: response => {
+                this.getTasks();
 
-                    this.feedbackService.showMessage(response.message,TASK_MESSAGES.EDITED_SUCCESSFULLY,'success');
-                },
+                this.feedbackService.showMessage(response.message, TASK_MESSAGES.EDITED_SUCCESSFULLY, EFeedbackType.Success);
+            },
 
-                error: (error: HttpErrorResponse) => {
-                    this.handleError(error);
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
 
-                    this.feedbackService.showMessage(error.message,TASK_MESSAGES.EDITED_FAILED,'error');
-                }
-            });
+                this.feedbackService.showMessage(error.message, TASK_MESSAGES.EDITED_FAILED, EFeedbackType.Error);
+            }
+        });
     }
 
     deleteTask(taskId: string): void {
         this.taskService.deleteTask(taskId).subscribe({
-                next: response => {
-                    this.getTasks();
+            next: response => {
+                this.getTasks();
 
-                    this.feedbackService.showMessage(
-                        response.message,
-                        TASK_MESSAGES.DELETED_SUCCESSFULLY,
-                        'success'
-                    );
-                },
+                this.feedbackService.showMessage(response.message, TASK_MESSAGES.DELETED_SUCCESSFULLY, EFeedbackType.Success);
+            },
 
-                error: (error: HttpErrorResponse) => {
-                    this.handleError(error);
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
 
-                    this.feedbackService.showMessage(error.message, TASK_MESSAGES.DELETED_FAILED, 'error');
-                }
-            });
+                this.feedbackService.showMessage(error.message, TASK_MESSAGES.DELETED_FAILED, EFeedbackType.Error);
+            }
+        });
     }
 
 
@@ -206,31 +178,22 @@ export class TaskFacade {
     // =========================
 
     searchTasks(search: string): void {
-        this.pagedParams.search = search.trim() || null;
-
-        this.resetPage();
+        this.taskDataState.setSearch(search);
         this.getTasks();
     }
 
     selectStatus(status: SelectableOption): void {
-        this._selectedStatus.set(status);
-        this.pagedParams.taskStatusId = status.id;
-
-        this.applyFilters();
+        this.taskDataState.setStatus(status);
+        this.getTasks();
     }
 
     selectPriority(priority: SelectableOption): void {
-        this._selectedPriority.set(priority);
-        this.pagedParams.taskPriorityId = priority.id;
-
-        this.applyFilters();
+        this.taskDataState.setPriority(priority);
+        this.getTasks();
     }
 
     orderTasks(sort: string): void {
-        this.pagedParams.order = this.pagedParams.order === 'asc' ? 'desc' : 'asc';
-
-        this.pagedParams.sort = sort;
-
+        this.taskDataState.toggleSort(sort);
         this.getTasks();
     }
 
@@ -240,7 +203,7 @@ export class TaskFacade {
     // =========================
 
     changePage(page: number): void {
-        this.pagedParams.pageNumber = page;
+        this.taskDataState.setPage(page);
         this.getTasks();
     }
 
@@ -250,7 +213,7 @@ export class TaskFacade {
     // =========================
 
     clearSelectedTask(): void {
-        this._selectedTask.set(null);
+        this.taskDataState.clearSelectedTask();
     }
 
 
@@ -258,18 +221,9 @@ export class TaskFacade {
     // Private helpers
     // =========================
 
-    private applyFilters(): void {
-        this.resetPage();
-        this.getTasks();
-    }
-
-    private resetPage(): void {
-        this.pagedParams.pageNumber = 1;
-    }
-
-    private handleError( error: HttpErrorResponse): void {
+    private handleError(error: HttpErrorResponse): void {
         const response = error.error as ResultResponse<null>;
 
-        this._errorMessage.set( response?.message ?? 'Ocorreu um erro inesperado.');
+        this.taskDataState.setError(response?.message ?? 'Ocorreu um erro inesperado.');
     }
 }
