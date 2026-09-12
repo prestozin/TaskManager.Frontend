@@ -280,6 +280,11 @@ export class TaskContainerComponent {
     this.taskUiState.closeTaskOptions();
   }
 
+  openTaskDetailsById(taskId: string): void {
+    this.taskUiState.selectTask(taskId);
+    this.openTaskDetails();
+  }
+
   closeTaskDetails(): void {
     this.taskUiState.startClosingTaskDetails();
 

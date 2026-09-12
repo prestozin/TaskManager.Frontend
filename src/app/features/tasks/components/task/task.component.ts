@@ -20,6 +20,7 @@ export class TaskComponent {
 
   task = input.required<TaskResponse>();
   optionsClicked = output<HTMLElement>();
+  taskClicked = output<string>();
 
   taskForm = new FormGroup({
     title: new FormControl('', { nonNullable: true }),

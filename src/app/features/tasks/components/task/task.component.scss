@@ -37,6 +37,10 @@
             -webkit-line-clamp: 1;
 
             overflow: hidden;
+
+            &:hover{
+                cursor: pointer;
+            }
         }
 
         .description {

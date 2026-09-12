@@ -114,7 +114,8 @@
 
                 <app-task
                     [task]="task"
-                    (optionsClicked)="openTaskOptions(task.id, $event)">
+                    (optionsClicked)="openTaskOptions(task.id, $event)"
+                    (taskClicked)="openTaskDetailsById($event)">
                 </app-task>
 
             }

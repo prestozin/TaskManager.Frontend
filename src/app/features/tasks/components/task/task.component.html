@@ -6,7 +6,11 @@
     </label>
 
     <div class="task-info">
-        <p class="task-title">{{   truncateText(capitalizeFirst(task().title))  }}</p>
+        <p 
+            class="task-title"
+            (click)="taskClicked.emit(task().id)">
+            {{ truncateText(capitalizeFirst(task().title)) }}
+        </p>
         <p class="description">{{  truncateText(capitalizeFirst(task().description)) }}</p>
     </div>
 
