@@ -1,0 +1,180 @@
+@use "variables" as *;
+@use "task-styles" as *;
+
+:host {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    @include task-badges;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;;
+
+    box-sizing: border-box;
+
+    padding: 32px;
+
+    background-color: rgb(245, 240, 240);
+
+    .container-title {
+        margin-top: 0px;
+
+        font-size: 22px;
+        font-weight: 600;
+
+        color: $primary-text-color;
+    }
+
+    .task-infos {
+        display: flex;
+        flex-direction: column;
+
+        gap: 30px;
+
+        margin-top: 65px;
+    }
+
+    .task-title-wrapper,
+    .task-date-wrapper,
+    .task-priority-wrapper,
+    .task-status-wrapper,
+    .task-description-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        gap: 6px;
+    }
+
+    .task-title,
+    .task-description {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    .field-label {
+        margin: 0;
+
+        font-size: 17px;
+        font-weight: 500;
+
+        color: $primary-color;
+    }
+
+    .task-title {
+        margin: 0;
+
+        font-size: 20px;
+        font-weight: 600;
+
+        color: $primary-text-color;
+    }
+
+    .task-date {
+
+        font-size: 17px;
+
+        color: $primary-text-color;
+    }
+
+    .task-priority {
+        width: fit-content;
+
+        margin-left: 0px;
+        padding: 5px 12px;
+
+        border-radius: 8px;
+
+        font-size: 17px;
+
+    }
+
+    .task-status {
+        width: fit-content;
+
+        margin: 0;
+        padding: 5px 12px;
+
+        border-radius: 8px;
+
+        font-size: 17px;
+    }
+
+    .task-description {
+        margin: 0;
+
+        font-size: 16px;
+        line-height: 1.5;
+
+        color: $primary-text-color;
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        margin-top: auto;
+  
+    }
+
+    .delete-wrapper {
+        display: flex;
+        align-items: center;
+
+        gap: 6px;
+
+        margin-right: auto;
+    }
+
+    .btn-delete,
+    .btn-edit,
+    .btn-close {
+        height: 38px;
+
+        border-radius: 8px;
+
+        font-size: 16px;
+
+        cursor: pointer;
+
+        &:active{
+            scale: 0.95;
+        }
+    }
+
+    .btn-delete {
+        border: 1px solid #ff5c5c;
+
+        padding: 0 14px;
+
+        color: #d43434;
+        background-color: transparent;
+    }
+
+    .btn-edit {
+        min-width: 85px;
+
+        border: 1px solid $primary-color;
+
+        color: $primary-color;
+        background-color: white;
+    }
+
+    .btn-close {
+        min-width: 85px;
+
+        border: none;
+
+        color: $secondary-text-color;
+        background-color: $hover-button;
+    }
+}

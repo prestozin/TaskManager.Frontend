@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FeedbackService } from '@core/services/feedback/feedback.service';
 
 

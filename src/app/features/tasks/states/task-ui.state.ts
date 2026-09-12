@@ -17,6 +17,10 @@ export class TaskUiState {
 
     readonly activeModal = this._activeModal.asReadonly();
 
+    private readonly _isClosingTaskDetails = signal(false);
+
+    readonly isClosingTaskDetails = this._isClosingTaskDetails.asReadonly();
+
 
     selectTask(taskId: string): void {
         this._selectedTaskId.set(taskId);
@@ -29,12 +33,20 @@ export class TaskUiState {
     closeTaskOptions(): void {
         this._selectedTaskPosition.set(null);
     }
- 
+
     openModal(modal: TaskModal): void {
         this._activeModal.set(modal);
     }
 
     closeModal(): void {
         this._activeModal.set(null);
+    }
+
+    startClosingTaskDetails(): void {
+        this._isClosingTaskDetails.set(true);
+    }
+
+    finishClosingTaskDetails(): void {
+        this._isClosingTaskDetails.set(false);
     }
 }

@@ -2,6 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgClass } from '@angular/common';
 import { TaskResponse } from '../../models/task.models';
+import { normalizeClass } from '@shared/helpers/string.helper';
 
 @Component({
   selector: 'app-task',
@@ -15,6 +16,8 @@ import { TaskResponse } from '../../models/task.models';
 })
 export class TaskComponent {
 
+  readonly normalizeClass = normalizeClass;
+
   task = input.required<TaskResponse>();
   optionsClicked = output<HTMLElement>();
 
@@ -22,14 +25,6 @@ export class TaskComponent {
     title: new FormControl('', { nonNullable: true }),
     completed: new FormControl(false, { nonNullable: true })
   });
-
-  normalizeClass(value: string): string {
-    return value
-      .toLowerCase()
-      .normalize('NFD') //separa os acentos
-      .replace(/[\u0300-\u036f]/g, '') //remove os acentos
-      .replace(/\s+/g, '-'); //transforma espaços em -
-  }
 
   capitalizeFirst(value: string): string {
     if (!value) return '';

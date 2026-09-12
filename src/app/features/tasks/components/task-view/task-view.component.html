@@ -1,4 +1,54 @@
-<p>{{ task().title }}</p>
-<p>{{ task().description }}</p>
-<p>{{ task().status }}</p>
-<p>{{ task().priority }}</p>
+<div class="container">
+
+    <p class="container-title">Detalhes da tarefa</p>
+
+    <div class="task-infos">
+
+        <div class="task-title-wrapper">
+            <p class="field-label">Título</p>
+            <p class="task-title">{{ task().title }}</p>
+        </div>
+
+        <div class="task-date-wrapper">
+            <p class="field-label">Data de criação</p>
+            <p class="task-date">{{ task().createdAt | date:'dd/MM/yyyy' }}</p>
+        </div>
+
+        <div class="task-priority-wrapper">
+            <p class="field-label">Prioridade</p>
+
+            <p
+                class="task-priority priority"
+                [ngClass]="'priority-' + normalizeClass(task().priority)">
+                {{ task().priority }}
+            </p>
+        </div>
+
+        <div class="task-status-wrapper">
+            <p class="field-label">Status</p>
+            
+            <p
+                class="task-status status"
+                [ngClass]="'status-' + normalizeClass(task().status)">
+                {{ task().status }}
+            </p>
+        </div>
+
+        <div class="task-description-wrapper">
+            <p class="field-label">Descrição</p>
+            <p class="task-description">{{ task().description }}</p>
+        </div>
+
+    </div>
+
+    <div class="buttons">
+        <div class="delete-wrapper">
+            <img src="">
+            <button class="btn-delete" (click)="deleteTaskClicked.emit()">Excluir tarefa</button>
+        </div>
+
+        <button class="btn-edit" (click)="editTaskClicked.emit()">Editar</button>
+        <button class="btn-close" (click)="closeClicked.emit()">Fechar</button>
+    </div>
+
+</div>

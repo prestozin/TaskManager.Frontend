@@ -76,6 +76,7 @@ export class TaskContainerComponent {
 
   readonly activeModal = this.taskUiState.activeModal;
 
+  readonly isClosingTaskDetails = this.taskUiState.isClosingTaskDetails;
 
   // =========================
   // Form controls
@@ -279,6 +280,14 @@ export class TaskContainerComponent {
     this.taskUiState.closeTaskOptions();
   }
 
+  closeTaskDetails(): void {
+    this.taskUiState.startClosingTaskDetails();
+
+    setTimeout(() => {
+      this.taskUiState.closeModal();
+      this.taskUiState.finishClosingTaskDetails();
+    }, 250);
+  }
 
   // =========================
   // Task options menu

@@ -1,159 +1,273 @@
-<div class="container">
+<div class="task-page">
 
-    <div class="container-header">
-        <div class="header-top">
+    <div class="container">
 
-            <h2 class="header-title">Minhas Tarefas</h2>
+        <header class="container-header">
 
-        </div>
+            <h2 class="header-title">
+                Minhas Tarefas
+            </h2>
 
-        <div class="container-filter-new-task">
-            <div class="task-filters">
+            <div class="header-actions">
 
-                <div class="filter-field">
-                    <p class="filter-label">Pesquisar</p>
+                <div class="task-filters">
 
-                    <div class="search-container">
+                    <div class="filter-field">
 
-                        <img class="icon-search" src="icons/search-icon.svg" alt="">
+                        <label
+                            class="filter-label"
+                            for="task-search">
+                            Pesquisar
+                        </label>
 
-                        <input 
-                            class="search-input" 
-                            type="search" 
-                            placeholder="Pesquisar tarefas..."
-                            [formControl]="searchControl">
+                        <div class="search-container">
+
+                            <img class="icon-search" src="icons/search-icon.svg" alt="">
+
+                            <input
+                                id="task-search"
+                                class="search-input"
+                                type="search"
+                                placeholder="Pesquisar tarefas..."
+                                [formControl]="searchControl">
+
+                        </div>
+
                     </div>
+
+                    <app-dropdown
+                        class="priority-dropdown"
+                        label="Prioridade"
+                        [options]="priorityOptions()"
+                        [selectedOption]="selectedPriority()"
+                        (optionSelected)="selectPriority($event)">
+                    </app-dropdown>
+
+                    <app-dropdown
+                        class="status-dropdown"
+                        label="Status"
+                        [options]="statusOptions()"
+                        [selectedOption]="selectedStatus()"
+                        (optionSelected)="selectStatus($event)">
+                    </app-dropdown>
 
                 </div>
 
-                <app-dropdown 
-                    class="priority-dropdown"
-                    label="Prioridade" 
-                    [options]="priorityOptions()" 
-                    [selectedOption]="selectedPriority()"
-                    (optionSelected)="selectPriority($event)">
-                </app-dropdown>
+                <button
+                    type="button"
+                    class="btn-new-task"
+                    (click)="openTaskForm('create')">
 
-                <app-dropdown 
-                    class="status-dropdown"
-                    label="Status"
-                    [options]="statusOptions()" 
-                    [selectedOption]="selectedStatus()"
-                    (optionSelected)="selectStatus($event)">
-                </app-dropdown>
+                    <img src="icons/plus-icon.svg" alt="">
+
+                    <span>Nova Tarefa</span>
+
+                </button>
 
             </div>
 
-            <button class="btn-newtask" (click)="openTaskForm('create')">
-                <img src="icons/plus-icon.svg" alt="">
-                <p>Nova Tarefa</p>
+        </header>
+
+
+        <div class="task-list-header">
+
+            <label class="checkbox">
+                <input
+                    class="checkbox-input"
+                    type="checkbox"
+                    [formControl]="allTasksControl">
+            </label>
+
+            <p class="column-title">
+                Tarefas
+            </p>
+
+            <button
+                type="button"
+                class="column-title column-sortable"
+                (click)="orderTasks(TaskSort.CreatedAt)">
+                Data de Criação
+            </button>
+
+            <button
+                type="button"
+                class="column-title column-sortable"
+                (click)="orderTasks(TaskSort.TaskPriority)">
+                Prioridade
+            </button>
+
+            <button
+                type="button"
+                class="column-title column-sortable"
+                (click)="orderTasks(TaskSort.TaskStatus)">
+                Status
+            </button>
+
+            <div class="actions-column"></div>
+
+        </div>
+
+
+        <div class="tasks-wrapper">
+
+            @for (task of tasks(); track task.id) {
+
+                <app-task
+                    [task]="task"
+                    (optionsClicked)="openTaskOptions(task.id, $event)">
+                </app-task>
+
+            }
+
+            @if (selectedTaskId() && selectedTaskPosition()) {
+
+                <app-task-options
+                    [position]="selectedTaskPosition()!"
+                    (closeOptions)="closeTaskOptions()"
+                    (deleteTaskClicked)="openDeleteConfirmation()"
+                    (editTaskClicked)="openTaskForm('edit')"
+                    (viewTaskClicked)="openTaskDetails()">
+                </app-task-options>
+
+            }
+
+        </div>
+
+    </div>
+
+
+    <footer class="container-footer">
+
+        <p class="footer-text">
+            Mostrando {{ tasks().length }}
+            de {{ pagedResponse()?.totalCount ?? 0 }} tarefas
+        </p>
+
+        <div class="pagination">
+
+            <span class="pagination-label">
+                Páginas:
+            </span>
+
+            <button
+                type="button"
+                class="btn-page"
+                [disabled]="currentPage() === 1"
+                (click)="changePage(1)">
+                <<
+            </button>
+
+            <button
+                type="button"
+                class="btn-page"
+                [disabled]="currentPage() === 1"
+                (click)="changePage(currentPage() - 1)">
+                <
+            </button>
+
+            @for (page of visiblePages(); track page) {
+
+                <button
+                    type="button"
+                    class="btn-page"
+                    [class.active]="currentPage() === page"
+                    (click)="changePage(page)">
+                    {{ page }}
+                </button>
+
+            }
+
+            <input
+                #pageInputElement
+                class="page-input"
+                type="number"
+                placeholder="__"
+                min="1"
+                [max]="pagedResponse()?.totalPages ?? 1"
+                [formControl]="pageInput"
+                (keydown.enter)="goToPage(pageInputElement)"
+                (blur)="pageInput.reset()">
+
+            <button
+                type="button"
+                class="btn-page"
+                [disabled]="currentPage() === (pagedResponse()?.totalPages ?? 1)"
+                (click)="changePage(currentPage() + 1)">
+                >
+            </button>
+
+            <button
+                type="button"
+                class="btn-page"
+                [disabled]="currentPage() === (pagedResponse()?.totalPages ?? 1)"
+                (click)="changePage(pagedResponse()?.totalPages ?? 1)">
+                >>
             </button>
 
         </div>
 
-    </div>
+    </footer>
 
-    <div class="task-container">
+    @if (activeModal() === 'view' && selectedTask()) {
 
-        <label class="checkbox">
-            <input 
-                class="checkbox-input" 
-                type="checkbox" 
-                [formControl]="allTasksControl">
-        </label>
-
-        <p class="prop-task">Tarefas</p>
-        <p class="prop-align prop-task" (click)="orderTasks(TaskSort.CreatedAt)">Data de Criação</p>
-        <p class="prop-align prop-task" (click)="orderTasks(TaskSort.TaskPriority)">Prioridade</p>
-        <p class="prop-align prop-task" (click)="orderTasks(TaskSort.TaskStatus)">Status</p>
-        <div empty-column></div>
-
-    </div>
-
-    <div class="tasks-wrapper">
-        @for (task of tasks(); track task.id) {
-            <app-task 
-                [task]="task" 
-                (optionsClicked)="openTaskOptions(task.id, $event)">
-            </app-task>
-        }
-
-        @if (selectedTaskId() && selectedTaskPosition()) {
-            <app-task-options 
-                [position]="selectedTaskPosition()!" 
-                (closeOptions)="closeTaskOptions()"
-                (deleteTaskClicked)="openDeleteConfirmation()"
-                (editTaskClicked)="openTaskForm('edit')"
-                (viewTaskClicked)="openTaskDetails()">
-            </app-task-options>
-        }
-
-        @if (activeModal() === 'delete'){
-            <app-confirmation-modal
-                title="Excluir tarefa?"
-                description="Essa ação não poderá ser desfeita."
-                confirmText="Excluir"
-                (confirm)="deleteTask()"
-                (cancel)="closeModal()">
-
-            </app-confirmation-modal>
-        }
-
-        @if (activeModal() === 'view' && selectedTask()) {
-            <app-task-view 
-                [task]="selectedTask()!"> 
-            </app-task-view>
-        }
-         
-    </div>
-
-</div>
-
-<footer class="container-footer">
-    <p class="footer-text">Mostrando {{ tasks().length }} de {{ pagedResponse()?.totalCount ?? 0 }} tarefas</p>
-
-    <div class="footer-buttons">
-
-        <p>Páginas: </p>
-
-        <button class="first-page btn-pages" (click)="changePage(1)"> << </button>
-        <button class="previous-page btn-pages" (click)="changePage(currentPage() - 1)"> < </button>
-
-        @for (page of visiblePages(); track page) 
-        {
-            <button class="btn-pages" [class.active]="currentPage() === page" (click)=" changePage(page)"> {{ page }} </button> 
-        }
-
-        <input 
-            #pageInputElement 
-            class="choose-page btn-pages" 
-            type="number" placeholder="__" 
-            [formControl]="pageInput" min="1" [max]="pagedResponse()?.totalPages ?? 1"
-            (keydown.enter)="goToPage(pageInputElement)" 
-            (blur)="pageInput.reset()">
-
-    <button class="next-page btn-pages" (click)="changePage(currentPage() + 1)"> > </button>
-    <button class="last-page btn-pages" (click)="changePage(pagedResponse()?.totalPages ?? 1)"> >> </button>
-
-    </div>
-</footer>
-
-@if ((activeModal() === 'create' || activeModal() === 'edit') && (activeModal() === 'create' || selectedTask())) {
-    <div class="modal-overlay" (click)="closeModal()">
-
-        <div class="modal-content" (click)="$event.stopPropagation()">
-            <app-task-form 
-                [mode]="taskFormMode()"
-                [task]="selectedTask()"
-                [priorityOptions]="priorityFormOptions()"
-                [statusOptions]="statusFormOptions()"
-                (submitClicked)="saveTask($event)"
-                (cancelClicked)="closeModal()"> 
-            </app-task-form>
+        <div
+            class="sidebar-backdrop"
+            (click)="closeModal()">
         </div>
 
-    </div>
-}
+        <aside 
+            class="task-details-sidebar"
+            [class.closing]="isClosingTaskDetails()">
 
+            <app-task-view
+                [task]="selectedTask()!"
+                (closeClicked)="closeTaskDetails()"
+                (deleteTaskClicked)="openDeleteConfirmation()"
+                (editTaskClicked)="openTaskForm('edit')"
+                >
+            </app-task-view>
 
-          
+        </aside>
+    }
+
+    @if (activeModal() === 'delete') {
+
+        <app-confirmation-modal
+            title="Excluir tarefa?"
+            description="Essa ação não poderá ser desfeita."
+            confirmText="Excluir"
+            (confirm)="deleteTask()"
+            (cancel)="closeModal()">
+        </app-confirmation-modal>
+
+    }
+
+    @if (
+        (activeModal() === 'create' || activeModal() === 'edit') &&
+        (activeModal() === 'create' || selectedTask())
+    ) {
+
+        <div
+            class="modal-overlay"
+            (click)="closeModal()">
+
+            <div
+                class="modal-content"
+                (click)="$event.stopPropagation()">
+
+                <app-task-form
+                    [mode]="taskFormMode()"
+                    [task]="selectedTask()"
+                    [priorityOptions]="priorityFormOptions()"
+                    [statusOptions]="statusFormOptions()"
+                    (submitClicked)="saveTask($event)"
+                    (cancelClicked)="closeModal()">
+                </app-task-form>
+
+            </div>
+
+        </div>
+
+    }
+
+</div>

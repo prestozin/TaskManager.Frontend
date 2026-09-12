@@ -2,202 +2,370 @@
 
 :host {
     --task-columns: 40px 1fr 200px 200px 200px 20px;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
 }
 
+
+.task-page {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+}
+
+
 .container {
+    width: 100%;
+
+    box-sizing: border-box;
+
     border: 1px solid $grey-text-color;
     border-radius: 30px;
 
-    .container-header {
+    overflow: hidden;
+}
 
-        .header-top {
-            display: flex;
-            flex-direction: column;
-            margin-left: 50px;
-            padding-top: 20px;
 
-            .header-title {
-                font-size: 28px;
-                font-weight: 400;
-                color: $primary-text-color;
-            }
+.container-header {
+    padding: 20px 50px 30px;
 
-        }
+    .header-title {
+        margin: 0;
 
-        .container-filter-new-task {
-            display: flex;
-            margin-bottom: 10px;
+        font-size: 28px;
+        font-weight: 400;
 
-            .btn-newtask {
-                display: flex;
-                margin-left: auto;
-                margin-right: 60px;
-                border: none;
-                width: 150px;
-                height: 40px;
-                font-size: 16px;
-                justify-content: center;
-                align-items: center;
-                color: $secondary-text-color;
-                border-radius: 10px;
-                background-color: $hover-button;
-                gap: 6px;
-
-                &:active {
-                    scale: 0.95;
-                }
-            }
-        }
-
-        .task-filters {
-            display: flex;
-            gap: 40px;
-            margin-left: 50px;
-            padding: 15px 0px 20px 0px;
-
-            .filter-field {
-                display: flex;
-                flex-direction: column;
-                font-size: 18px;
-                color: $grey-text-color;
-
-                .filter-label {
-                    margin: 0px 0px 5px 10px;
-                }
-            }
-
-            .search-container {
-                position: relative;
-                display: flex;
-                align-items: center;
-
-                .search-input {
-                    padding: 10px 15px 10px 40px;
-                    width: 270px;
-                    height: 40px;
-                    border-radius: 10px;
-                    border: 1px solid #7e8391;
-                    font-size: 16px;
-                }
-
-                .icon-search {
-                    position: absolute;
-                    left: 15px;
-                }
-            }
-
-        }
+        color: $primary-text-color;
     }
 
-    .task-container {
-        display: grid;
-        grid-template-columns: var(--task-columns);
-        padding: 25px 60px;
-        border-top: 1px solid $grey-text-color;
-        align-items: center;
-        color: $primary-color;
-        font-weight: 600;
+    .header-actions {
+        display: flex;
+        align-items: flex-end;
 
-        .prop-task {
-            font-size: 18px;
+        gap: 40px;
 
-            &:hover {
-                cursor: pointer;
-            }
-        }
+        margin-top: 15px;
+    }
+}
 
-        .prop-align {
-            justify-self: center;
-        }
+.task-filters {
+    display: flex;
+    align-items: flex-end;
+
+    gap: 40px;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.filter-label {
+    margin-left: 10px;
+
+    font-size: 18px;
+
+    color: $grey-text-color;
+}
+
+.search-container {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    .icon-search {
+        position: absolute;
+
+        left: 15px;
+
+        pointer-events: none;
     }
 
-    .tasks-wrapper{
-       position: relative;
+    .search-input {
+        width: 270px;
+        height: 40px;
+
+        box-sizing: border-box;
+
+        padding: 10px 15px 10px 40px;
+
+        border: 1px solid #7e8391;
+        border-radius: 10px;
+
+        font-size: 16px;
+
+        outline: none;
+
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
+}
+
+.btn-new-task {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 150px;
+    height: 40px;
+
+    margin-left: auto;
+
+    gap: 6px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    color: $secondary-text-color;
+    background-color: $hover-button;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+
+    &:hover {
+        filter: brightness(0.95);
     }
 
+    &:active {
+        transform: scale(0.96);
+    }
+}
+
+.task-list-header {
+    display: grid;
+
+    grid-template-columns: var(--task-columns);
+
+    align-items: center;
+
+    padding: 25px 60px;
+
+    border-top: 1px solid $grey-text-color;
+
+    color: $primary-color;
+    font-weight: 600;
+}
+
+.column-title {
+    margin: 0;
+
+    font: inherit;
+
+    font-size: 18px;
+
+    color: inherit;
+}
+
+.column-sortable {
+    justify-self: center;
+
+    padding: 0;
+
+    border: none;
+
+    background-color: transparent;
+
+    cursor: pointer;
+}
+
+.tasks-wrapper {
+    position: relative;
 }
 
 .container-footer {
     display: flex;
-    padding: 10px;
-    color: #7e8391;
+    align-items: center;
 
-    .footer-text {
-        margin-left: 20px;
+    padding: 10px 30px;
+
+    color: #7e8391;
+}
+
+.footer-text {
+    margin: 0;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+
+    margin-left: auto;
+
+    gap: 14px;
+}
+
+.pagination-label {
+    font-size: 14px;
+}
+
+.btn-page {
+    min-width: 24px;
+    height: 24px;
+
+    padding: 0 5px;
+
+    border: 1px solid transparent;
+    border-radius: 6px;
+
+    color: $primary-text-color;
+    background-color: transparent;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.1s ease;
+
+    &:hover:not(:disabled),
+    &.active {
+        border-color: $grey-text-color;
+
+        color: $secondary-text-color;
+        background-color: $hover-button;
     }
 
-    .footer-buttons {
-        display: flex;
-        margin-left: auto;
-        gap: 14px;
-        margin-right: 80px;
+    &:active:not(:disabled) {
+        transform: scale(0.95);
+    }
 
-        button {
-            padding: 0px 5px;
-            border: 1px solid transparent;
-            border-radius: 6px;
-            font-size: 14px;
-            color: $primary-text-color;
+    &:disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+}
 
-            &:active {
-                scale: 0.95;
-            }
+.page-input {
+    appearance: textfield;
 
-            &:hover,
-            &.active {
-                border-color: $grey-text-color;
-                color: $secondary-text-color;
-                background-color: $hover-button;
-            }
-        }
+    width: 28px;
+    height: 24px;
 
-        .btn-pages {
-            padding: 0px 5px;
-            border: 1px solid transparent;
-            border-radius: 6px;
-            font-size: 14px;
-            color: $primary-text-color;
-        }
+    box-sizing: border-box;
 
-        input[type="number"] {
-            appearance: textfield;
-            width: 20px;
-            height: 20px;
-            padding: 4px;
-            text-align: center;
-            box-sizing: border-box;
-        }
+    padding: 4px;
 
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            appearance: none;
-            margin: 0;
-        }
+    border: 1px solid $grey-text-color;
+    border-radius: 6px;
+
+    text-align: center;
+
+    color: $primary-text-color;
+    background-color: transparent;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        appearance: none;
+        margin: 0;
+    }
+}
+
+.task-details-sidebar {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: 400px;
+    height: 100vh;
+
+    background-color: white;
+
+    overflow-y: auto;
+
+    z-index: 10;
+
+    animation: slide-in 0.25s ease;
+}
+
+.task-details-sidebar.closing {
+    animation: slide-out 0.25s ease forwards;
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+
+    background-color: rgba(24, 44, 78, 0.18);
+
+    z-index: 9;
+
+    animation: fade-in 0.2s ease;
+}
+
+.sidebar-backdrop.closing {
+    animation: fade-out 0.25s ease forwards;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-out {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
     }
 }
 
 .modal-overlay {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     position: fixed;
-    display: flex;
 
+    inset: 0;
+
+    display: flex;
     align-items: center;
     justify-content: center;
 
     background-color: rgba(40, 70, 120, 0.35);
-    backdrop-filter: blur(8px);
 
-    z-index: 5;
+    z-index: 20;
+}
 
-    .modal-content {
-        position: relative;
+.modal-content {
+    position: relative;
 
-        z-index: 5;
-
-        scale: 1;
-    }
-
+    z-index: 1;
 }
