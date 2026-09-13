@@ -60,6 +60,12 @@ export class TaskService {
         if (params.search)
             httpParams = httpParams.set('Search', params.search);
 
+        if (params.startDate)
+            httpParams = httpParams.set('StartDate', params.startDate);
+
+        if (params.endDate)
+            httpParams = httpParams.set('EndDate', params.endDate);
+
         return httpParams;
     }
 

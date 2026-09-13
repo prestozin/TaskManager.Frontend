@@ -31,6 +31,7 @@
 
 
 .container-header {
+    position: relative;
     padding: 20px 50px 30px;
 
     .header-title {
@@ -114,7 +115,13 @@
 }
 
 .btn-new-task {
+    position: absolute;
+
+    top: 25px;
+    right: 30px;
     display: flex;
+
+    margin-top: 5px;
     align-items: center;
     justify-content: center;
 
@@ -155,8 +162,6 @@
 
     width: 140px;
     height: 40px;
-
-    margin-left: auto;
 
     gap: 6px;
 
