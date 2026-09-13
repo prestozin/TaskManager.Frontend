@@ -4,9 +4,23 @@
 
         <header class="container-header">
 
-            <h2 class="header-title">
-                Minhas Tarefas
-            </h2>
+            <div class="header-top">
+
+                <h2 class="header-title">
+                    Minhas Tarefas
+                </h2>
+    
+                <button 
+                    class="btn-new-task"
+                    type="button"
+                    (click)="openTaskForm('create')">
+    
+                    <svg lucidePlus class="icon-new-task"></svg>
+                    <span>Nova Tarefa</span>
+    
+                </button>
+
+            </div>
 
             <div class="header-actions">
 
@@ -22,7 +36,7 @@
 
                         <div class="search-container">
 
-                            <img class="icon-search" src="icons/search-icon.svg" alt="">
+                            <svg lucideSearch class="icon-search"></svg>
 
                             <input
                                 id="task-search"
@@ -70,20 +84,8 @@
                     class="btn-clear-filters"
                     (click)="clearFilters()">
 
-                    <img src="icons/plus-icon.svg" alt="">
-
+                    <svg lucideRotateCcw class="icon-clear-filters"></svg>
                     <span>Limpar filtros</span>
-
-                </button>
-
-                <button
-                    type="button"
-                    class="btn-new-task"
-                    (click)="openTaskForm('create')">
-
-                    <img src="icons/plus-icon.svg" alt="">
-
-                    <span>Nova Tarefa</span>
 
                 </button>
 

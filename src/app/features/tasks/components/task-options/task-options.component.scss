@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
 
-    gap: 5px;
+    gap: 6px;
 
     min-width: 150px;
 
@@ -22,24 +22,39 @@
     button {
         display: flex;
         padding: 10px 14px;
+        gap: 7px;
 
         background: transparent;
         border: none;
-
-        text-align: left;
-        cursor: pointer;
         align-items: center;
-        gap: 5px;
-        font-size: 15px;
-        color: $primary-color;
+
+        cursor: pointer;
+
+        span {
+            font-size: 15px;
+            color: $primary-color;
+            text-align: left;
+        }
+
 
         &:hover {
             background: $hover-button;
             color: white;
+
+            svg, span {
+                color: white;
+            }
         }
 
         &:active {
             scale: 0.95;
         }
     }
+}
+
+
+svg {
+    width: 18px;
+    height: 18px;
+    color: $hover-button;
 }

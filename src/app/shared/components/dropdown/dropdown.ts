@@ -1,9 +1,12 @@
 import { Component, HostListener, input, output } from '@angular/core';
+import { LucideChevronDown } from '@lucide/angular';
 import { SelectableOption } from '@shared/models/selectables.models';
 
 @Component({
   selector: 'app-dropdown',
-  imports: [],
+  imports: [
+    LucideChevronDown
+  ],
   templateUrl: './dropdown.html',
   styleUrl: './dropdown.scss',
 })

@@ -31,16 +31,59 @@
 
 
 .container-header {
-    position: relative;
     padding: 20px 50px 30px;
 
-    .header-title {
-        margin: 0;
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-        font-size: 28px;
-        font-weight: 400;
+        .header-title {
+            margin: 0;
 
-        color: $primary-text-color;
+            font-size: 28px;
+            font-weight: 400;
+
+            color: $primary-text-color;
+        }
+
+        .btn-new-task {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 150px;
+            height: 40px;
+
+            gap: 6px;
+
+            border: none;
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            color: $secondary-text-color;
+            background-color: $hover-button;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.15s ease,
+                filter 0.15s ease;
+
+            &:hover {
+                filter: brightness(1.1);
+            }
+
+            &:active {
+                transform: scale(0.96);
+            }
+
+            .icon-new-task {
+                width: 20px;
+                height: 20px;
+            }
+        }
     }
 
     .header-actions {
@@ -91,6 +134,9 @@
         left: 15px;
 
         pointer-events: none;
+        width: 18px;
+        height: 18px;
+        color: gray;
     }
 
     .search-input {
@@ -111,47 +157,6 @@
         &:focus {
             border-color: $primary-color;
         }
-    }
-}
-
-.btn-new-task {
-    position: absolute;
-
-    top: 25px;
-    right: 30px;
-    display: flex;
-
-    margin-top: 5px;
-    align-items: center;
-    justify-content: center;
-
-    width: 150px;
-    height: 40px;
-
-    margin-left: auto;
-
-    gap: 6px;
-
-    border: none;
-    border-radius: 10px;
-
-    font-size: 16px;
-
-    color: $secondary-text-color;
-    background-color: $hover-button;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.15s ease,
-        filter 0.15s ease;
-
-    &:hover {
-        filter: brightness(1.1);
-    }
-
-    &:active {
-        transform: scale(0.96);
     }
 }
 
@@ -177,6 +182,11 @@
 
     &:active {
         transform: scale(0.96);
+    }
+
+    .icon-clear-filters {
+        width: 18px;
+        height: 18px;
     }
 }
 

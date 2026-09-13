@@ -1,18 +1,18 @@
 <div class="task-options" [style.top.px]="position().top" [style.right.px]="position().right">
 
     <button class="btn-view" (click)="viewTaskClicked.emit()">
-        <img class="icon" src="icons/search-icon.svg" alt="Visualizar" />
-        Visualizar
+        <svg lucideEye class="view-icon"></svg>
+        <span>Visualizar</span>
     </button>
 
     <button class="btn-edit" (click)="editTaskClicked.emit()">
-        <img class="icon" src="icons/search-icon.svg" alt="Editar" />
-        Editar
+        <svg lucidePencil class="edit-icon"></svg>
+        <span>Editar</span>
     </button>
 
     <button class="btn-delete" (click)="deleteTaskClicked.emit()">
-        <img class="icon" src="icons/search-icon.svg" alt="Excluir" />
-        Excluir
+        <svg lucideTrash class="delete-icon"></svg>
+        <span>Excluir</span>
     </button>
 
 </div>

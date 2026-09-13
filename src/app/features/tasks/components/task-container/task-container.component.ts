@@ -16,6 +16,7 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 import { TaskOptionsComponent } from '../task-options/task-options.component';
 import { TaskViewComponent } from '../task-view/task-view.component';
 import { TaskComponent } from '../task/task.component';
+import { LucideEye, LucidePencil, LucidePlus, LucideRotateCcw, LucideSearch, LucideTrash } from '@lucide/angular';
 
 
 @Component({
@@ -29,7 +30,12 @@ import { TaskComponent } from '../task/task.component';
     TaskOptionsComponent,
     ConfirmationModalComponent,
     TaskViewComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    LucideTrash,
+    LucidePlus,
+    LucideRotateCcw,
+    LucideSearch,
+    
   ],
   templateUrl: './task-container.component.html',
   styleUrl: './task-container.component.scss'
