@@ -1,7 +1,7 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { TaskResponse } from '@features/tasks/models/task.models';
-import { normalizeClass } from '@shared/helpers/string.helper';
+import { normalizeClass } from '@shared/utils/string.util';
 
 @Component({
   selector: 'app-task-view',

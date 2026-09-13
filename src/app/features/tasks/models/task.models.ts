@@ -34,5 +34,7 @@ export class TaskPagedParams extends PagedParams {
     taskStatusId: number | null = null;
     taskPriorityId: number | null = null;
     search: string | null = null;
+    startDate: string | null = null;
+    endDate: string | null = null;
 }
 

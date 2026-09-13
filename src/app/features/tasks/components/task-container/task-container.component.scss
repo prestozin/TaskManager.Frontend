@@ -49,6 +49,10 @@
         gap: 40px;
 
         margin-top: 15px;
+
+        .status-dropdown {
+            --dropdown-width: 160px;
+        }
     }
 }
 
@@ -136,8 +140,35 @@
         filter 0.15s ease;
 
     &:hover {
-        filter: brightness(0.95);
+        filter: brightness(1.1);
     }
+
+    &:active {
+        transform: scale(0.96);
+    }
+}
+
+.btn-clear-filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 140px;
+    height: 40px;
+
+    margin-left: auto;
+
+    gap: 6px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    color: $hover-button;
+    border: 1px solid $hover-button;
+
+    cursor: pointer;
 
     &:active {
         transform: scale(0.96);

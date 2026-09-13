@@ -5,17 +5,17 @@
     <div class="task-infos">
 
         <div class="task-title-wrapper">
-            <p class="field-label">Título</p>
+            <p class="field-label">Título:</p>
             <p class="task-title">{{ task().title }}</p>
         </div>
 
         <div class="task-date-wrapper">
-            <p class="field-label">Data de criação</p>
+            <p class="field-label">Data de criação:</p>
             <p class="task-date">{{ task().createdAt | date:'dd/MM/yyyy' }}</p>
         </div>
 
         <div class="task-priority-wrapper">
-            <p class="field-label">Prioridade</p>
+            <p class="field-label">Prioridade:</p>
 
             <p
                 class="task-priority priority"
@@ -25,7 +25,7 @@
         </div>
 
         <div class="task-status-wrapper">
-            <p class="field-label">Status</p>
+            <p class="field-label">Status:</p>
             
             <p
                 class="task-status status"
@@ -35,7 +35,7 @@
         </div>
 
         <div class="task-description-wrapper">
-            <p class="field-label">Descrição</p>
+            <p class="field-label">Descrição:</p>
             <p class="task-description">{{ task().description }}</p>
         </div>
 

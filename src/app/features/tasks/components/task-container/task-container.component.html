@@ -51,7 +51,30 @@
                         (optionSelected)="selectStatus($event)">
                     </app-dropdown>
 
+                    <app-date-picker
+                        label="Data inicial"
+                        [selectedDate]="selectedStartDate()"
+                        (dateSelected)="selectStartDate($event)">
+                    </app-date-picker>
+
+                     <app-date-picker
+                        label="Data final"
+                        [selectedDate]="selectedEndDate()"
+                        (dateSelected)="selectEndDate($event)">
+                    </app-date-picker>
+
                 </div>
+
+                <button
+                    type="button"
+                    class="btn-clear-filters"
+                    (click)="clearFilters()">
+
+                    <img src="icons/plus-icon.svg" alt="">
+
+                    <span>Limpar filtros</span>
+
+                </button>
 
                 <button
                     type="button"

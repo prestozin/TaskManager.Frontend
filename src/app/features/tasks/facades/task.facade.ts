@@ -4,6 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { FeedbackService } from '@core/services/feedback/feedback.service';
 
 import { TASK_MESSAGES } from '@shared/constants/messages';
+import { EFeedbackType } from '@shared/enums/feedback.enum';
 import { ResultResponse } from '@shared/models/response.models';
 import { SelectableOption } from '@shared/models/selectables.models';
 
@@ -11,7 +12,6 @@ import { TaskCreateRequest, TaskEditRequest } from '../models/task.models';
 
 import { TaskService } from '../services/task.service';
 import { TaskDataState } from '../states/task-data.state';
-import { EFeedbackType } from '@shared/enums/feedback.enum';
 
 
 @Injectable({
@@ -20,18 +20,10 @@ import { EFeedbackType } from '@shared/enums/feedback.enum';
 
 export class TaskFacade {
 
-    // =========================
-    // Dependencies
-    // =========================
-
     private readonly taskService = inject(TaskService);
     private readonly taskDataState = inject(TaskDataState);
     private readonly feedbackService = inject(FeedbackService);
 
-
-    // =========================
-    // State
-    // =========================
 
     get tasks() {
         return this.taskDataState.tasks;
@@ -61,6 +53,14 @@ export class TaskFacade {
         return this.taskDataState.selectedPriority;
     }
 
+    get selectedStartDate() {
+        return this.taskDataState.selectedStartDate;
+    }
+
+    get selectedEndDate() {
+        return this.taskDataState.selectedEndDate;
+    }
+
     get currentPage() {
         return this.taskDataState.currentPage;
     }
@@ -69,11 +69,6 @@ export class TaskFacade {
         return this.taskDataState.errorMessage;
     }
 
-
-
-    // =========================
-    // Data loading
-    // =========================
 
     getTasks(): void {
         this.taskService.getPaged(this.taskDataState.pagedParams).subscribe({
@@ -120,10 +115,6 @@ export class TaskFacade {
     }
 
 
-    // =========================
-    // Mutations
-    // =========================
-
     addTask(request: TaskCreateRequest): void {
         this.taskService.addTask(request).subscribe({
             next: response => {
@@ -151,7 +142,8 @@ export class TaskFacade {
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
 
-                this.feedbackService.showMessage(error.message, TASK_MESSAGES.EDITED_FAILED, EFeedbackType.Error);
+                this.feedbackService.showMessage(error.message, TASK_MESSAGES.EDITED_FAILED, EFeedbackType.Error
+                );
             }
         });
     }
@@ -173,10 +165,6 @@ export class TaskFacade {
     }
 
 
-    // =========================
-    // Search / filters / sorting
-    // =========================
-
     searchTasks(search: string): void {
         this.taskDataState.setSearch(search);
         this.getTasks();
@@ -192,34 +180,35 @@ export class TaskFacade {
         this.getTasks();
     }
 
+    selectStartDate(date: string | null): void {
+        this.taskDataState.setStartDate(date);
+        this.getTasks();
+    }
+
+    selectEndDate(date: string | null): void {
+        this.taskDataState.setEndDate(date);
+        this.getTasks();
+    }
+
+    clearFilters(): void {
+        this.taskDataState.clearFilters();
+        this.getTasks();
+    }
+
     orderTasks(sort: string): void {
         this.taskDataState.toggleSort(sort);
         this.getTasks();
     }
-
-
-    // =========================
-    // Pagination
-    // =========================
 
     changePage(page: number): void {
         this.taskDataState.setPage(page);
         this.getTasks();
     }
 
-
-    // =========================
-    // State actions
-    // =========================
-
     clearSelectedTask(): void {
         this.taskDataState.clearSelectedTask();
     }
 
-
-    // =========================
-    // Private helpers
-    // =========================
 
     private handleError(error: HttpErrorResponse): void {
         const response = error.error as ResultResponse<null>;
