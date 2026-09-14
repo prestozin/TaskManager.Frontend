@@ -268,18 +268,28 @@ export class TaskContainerComponent {
 
 
   openTaskOptions(taskId: string, element: HTMLElement): void {
-    const wrapper = element.closest('.tasks-wrapper') as HTMLElement | null;
+    const taskPage = element.closest('.task-page') as HTMLElement | null;
+    const container = element.closest('.container') as HTMLElement | null;
 
-    if (!wrapper) return;
+    if (!taskPage || !container) return;
 
     const rect = element.getBoundingClientRect();
-    const wrapperRect = wrapper.getBoundingClientRect();
+    const taskPageRect = taskPage.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    const optionsHeight = 60;
+    const spaceBelow = containerRect.bottom - rect.bottom;
+    const openUpward = spaceBelow < optionsHeight;
 
     this.taskUiState.setActiveTask(taskId);
 
     this.taskUiState.setTaskOptionsPosition({
-      top: rect.bottom - wrapperRect.top - 30,
-      right: wrapperRect.right - rect.right + 20
+      top: openUpward
+        ? rect.top - taskPageRect.top - optionsHeight
+        : rect.bottom - taskPageRect.top,
+
+      right: taskPageRect.right - rect.right + 15,
+      openUpward
     });
   }
 

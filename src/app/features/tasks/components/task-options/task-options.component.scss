@@ -1,5 +1,9 @@
 @use "variables" as *;
 
+:host {
+    display: contents;
+}
+
 .task-options {
     position: absolute;
 
@@ -49,6 +53,11 @@
         &:active {
             scale: 0.95;
         }
+    }
+
+    .task-options {
+        position: absolute;
+        z-index: 10;
     }
 }
 

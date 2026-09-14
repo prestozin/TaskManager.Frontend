@@ -1,4 +1,5 @@
 import { Component, input, output } from '@angular/core';
+import { TaskOptionsPosition } from '@features/tasks/models/task-ui-state.models';
 import { LucideEye, LucidePencil, LucideTrash } from '@lucide/angular';
 
 @Component({
@@ -14,7 +15,7 @@ import { LucideEye, LucidePencil, LucideTrash } from '@lucide/angular';
 
 export class TaskOptionsComponent {
 
-  position = input.required<{ top: number; right: number; }>();
+  position = input.required<TaskOptionsPosition>();
   
   deleteTaskClicked = output<void>();
   editTaskClicked = output<void>();

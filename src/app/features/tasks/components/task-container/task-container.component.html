@@ -154,19 +154,18 @@
 
             }
 
-            @if (activeTaskId() && selectedTaskPosition()) {
-
-                <app-task-options
-                    [position]="selectedTaskPosition()!"
-                    (closeOptions)="closeTaskOptions()"
-                    (deleteTaskClicked)="openDeleteConfirmation()"
-                    (editTaskClicked)="openTaskForm('edit')"
-                    (viewTaskClicked)="openTaskDetails()">
-                </app-task-options>
-
-            }
-
         </div>
+
+        @if (activeTaskId() && selectedTaskPosition()) {
+
+            <app-task-options
+                [position]="selectedTaskPosition()!"
+                (closeOptions)="closeTaskOptions()"
+                (deleteTaskClicked)="openDeleteConfirmation()"
+                (editTaskClicked)="openTaskForm('edit')"
+                (viewTaskClicked)="openTaskDetails()">
+            </app-task-options>
+        }
 
     </div>
 
