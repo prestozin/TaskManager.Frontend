@@ -8,7 +8,7 @@ import { EFeedbackType } from '@shared/enums/feedback.enum';
 import { ResultResponse } from '@shared/models/response.models';
 import { SelectableOption } from '@shared/models/selectables.models';
 
-import { TaskCreateRequest, TaskEditRequest } from '../models/task.models';
+import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest } from '../models/task.models';
 
 import { TaskService } from '../services/task.service';
 import { TaskDataState } from '../states/task-data.state';
@@ -148,8 +148,12 @@ export class TaskFacade {
         });
     }
 
-    deleteTask(taskId: string): void {
-        this.taskService.deleteTask(taskId).subscribe({
+    deleteTask(taskId: string[]): void {
+        const request: DeleteTaskRequest = {
+            taskId
+        };
+
+        this.taskService.deleteTask(request).subscribe({
             next: response => {
                 this.getTasks();
 

@@ -104,7 +104,7 @@
     display: flex;
     align-items: flex-end;
 
-    gap: 40px;
+    gap: 25px;
 }
 
 .filter-field {
@@ -165,10 +165,11 @@
     align-items: center;
     justify-content: center;
 
+    margin-left: -15px;
     width: 140px;
     height: 40px;
 
-    gap: 6px;
+    gap: 4px;
 
     border: none;
     border-radius: 10px;
@@ -197,12 +198,24 @@
 
     align-items: center;
 
-    padding: 25px 60px;
+    padding: 20px 60px;
 
     border-top: 1px solid $grey-text-color;
 
     color: $primary-color;
     font-weight: 600;
+
+    .icon-delete {
+        display: flex;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        color: red;
+
+        &:active {
+            scale: 0.95;
+        }
+    }
 }
 
 .column-title {
@@ -325,7 +338,7 @@
     top: 0;
     right: 0;
 
-    width: 400px;
+    width: 450px;
     height: 100vh;
 
     background-color: white;

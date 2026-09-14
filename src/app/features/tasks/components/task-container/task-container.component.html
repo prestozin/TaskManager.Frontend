@@ -96,9 +96,11 @@
 
         <div class="task-list-header">
 
-            <label class="checkbox">
+            <label class="checkbox-all-tasks">
                 <input
                     class="checkbox-input"
+                    [checked]="areVisibleTasksChecked()"
+                    (change)="toggleAllVisibleTasks()"
                     type="checkbox"
                     [formControl]="allTasksControl">
             </label>
@@ -128,7 +130,12 @@
                 Status
             </button>
 
-            <div class="actions-column"></div>
+           <button 
+                class="column-title column-sortable"
+                (click)="openDeleteCheckedConfirmation()">
+
+                <svg class="icon-delete" lucideTrash></svg>
+            </button>
 
         </div>
 
@@ -139,13 +146,15 @@
 
                 <app-task
                     [task]="task"
+                    [checked]="checkedTaskIds().has(task.id)"
+                    (checkedChange)="toggleCheckedTask($event)"
                     (optionsClicked)="openTaskOptions(task.id, $event)"
                     (taskClicked)="openTaskDetailsById($event)">
                 </app-task>
 
             }
 
-            @if (selectedTaskId() && selectedTaskPosition()) {
+            @if (activeTaskId() && selectedTaskPosition()) {
 
                 <app-task-options
                     [position]="selectedTaskPosition()!"
@@ -266,6 +275,16 @@
             (cancel)="closeModal()">
         </app-confirmation-modal>
 
+    }
+
+    @if (activeModal() === 'deleteChecked') {
+        <app-confirmation-modal
+            title="Excluir tarefas selecionadas?"
+            description="Essa ação não poderá ser desfeita."
+            confirmText="Excluir"
+            (confirm)="deleteCheckedTasks()"
+            (cancel)="closeModal()">
+        </app-confirmation-modal>
     }
 
     @if (

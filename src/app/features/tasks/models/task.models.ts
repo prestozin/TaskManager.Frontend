@@ -30,6 +30,10 @@ export interface TaskSelectablesResponse {
     priority: SelectableResponse[];
 }
 
+export interface DeleteTaskRequest {
+    taskId: string[];
+}
+
 export class TaskPagedParams extends PagedParams {
     taskStatusId: number | null = null;
     taskPriorityId: number | null = null;

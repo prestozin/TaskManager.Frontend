@@ -1,48 +1,81 @@
 import { Injectable, signal } from '@angular/core';
-import { TaskModal, TaskOptionsPosition } from '@features/tasks/models/task-ui-state.models';
 
+import {
+    TaskModal,
+    TaskOptionsPosition
+} from '@features/tasks/models/task-ui-state.models';
 
 @Injectable()
 export class TaskUiState {
 
-    private readonly _selectedTaskId = signal<string | null>(null);
-    readonly selectedTaskId = this._selectedTaskId.asReadonly();
+    readonly activeTaskId = signal<string | null>(null);
+    readonly checkedTaskIds = signal<Set<string>>(new Set());
 
-    private readonly _selectedTaskPosition = signal<TaskOptionsPosition | null>(null);
-    readonly selectedTaskPosition = this._selectedTaskPosition.asReadonly();
+    readonly selectedTaskPosition = signal<TaskOptionsPosition | null>(null);
 
-    private readonly _activeModal = signal<TaskModal>(null);
-    readonly activeModal = this._activeModal.asReadonly();
-
-    private readonly _isClosingTaskDetails = signal(false);
-    readonly isClosingTaskDetails = this._isClosingTaskDetails.asReadonly();
+    readonly activeModal = signal<TaskModal>(null);
+    readonly isClosingTaskDetails = signal(false);
 
 
-    selectTask(taskId: string): void {
-        this._selectedTaskId.set(taskId);
+    setActiveTask(taskId: string): void {
+        this.activeTaskId.set(taskId);
+    }
+
+    toggleCheckedTask(taskId: string): void {
+        const checkedTaskIds = new Set(this.checkedTaskIds());
+
+        if (checkedTaskIds.has(taskId)) {
+            checkedTaskIds.delete(taskId);
+        }
+        else {
+            checkedTaskIds.add(taskId);
+        }
+
+        this.checkedTaskIds.set(checkedTaskIds);
+
+        console.log(checkedTaskIds)
+    }
+
+    toggleAllCheckedTasks(taskIds: string[]): void {
+        const allChecked = taskIds.every(taskId =>
+            this.checkedTaskIds().has(taskId)
+        );
+
+        if (allChecked) {
+            this.checkedTaskIds.set(new Set());
+        }
+        else {
+            this.checkedTaskIds.set(new Set(taskIds));
+        }
+    }
+
+    clearCheckedTasks(): void {
+        this.checkedTaskIds.set(new Set());
     }
 
     setTaskOptionsPosition(position: TaskOptionsPosition): void {
-        this._selectedTaskPosition.set(position);
+        this.selectedTaskPosition.set(position);
     }
 
     closeTaskOptions(): void {
-        this._selectedTaskPosition.set(null);
+        this.selectedTaskPosition.set(null);
     }
 
+
     openModal(modal: TaskModal): void {
-        this._activeModal.set(modal);
+        this.activeModal.set(modal);
     }
 
     closeModal(): void {
-        this._activeModal.set(null);
+        this.activeModal.set(null);
     }
 
+
     startClosingTaskDetails(): void {
-        this._isClosingTaskDetails.set(true);
+        this.isClosingTaskDetails.set(true);
     }
 
     finishClosingTaskDetails(): void {
-        this._isClosingTaskDetails.set(false);
+        this.isClosingTaskDetails.set(false);
     }
 }

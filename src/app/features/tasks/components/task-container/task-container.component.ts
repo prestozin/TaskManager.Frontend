@@ -16,7 +16,7 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 import { TaskOptionsComponent } from '../task-options/task-options.component';
 import { TaskViewComponent } from '../task-view/task-view.component';
 import { TaskComponent } from '../task/task.component';
-import { LucideEye, LucidePencil, LucidePlus, LucideRotateCcw, LucideSearch, LucideTrash } from '@lucide/angular';
+import { LucidePlus, LucideRotateCcw, LucideSearch, LucideTrash } from '@lucide/angular';
 
 
 @Component({
@@ -35,7 +35,7 @@ import { LucideEye, LucidePencil, LucidePlus, LucideRotateCcw, LucideSearch, Luc
     LucidePlus,
     LucideRotateCcw,
     LucideSearch,
-    
+
   ],
   templateUrl: './task-container.component.html',
   styleUrl: './task-container.component.scss'
@@ -62,7 +62,8 @@ export class TaskContainerComponent {
   readonly currentPage = this.taskFacade.currentPage;
 
 
-  readonly selectedTaskId = this.taskUiState.selectedTaskId;
+  readonly activeTaskId = this.taskUiState.activeTaskId;
+  readonly checkedTaskIds = this.taskUiState.checkedTaskIds;
   readonly selectedTaskPosition = this.taskUiState.selectedTaskPosition;
   readonly activeModal = this.taskUiState.activeModal;
   readonly isClosingTaskDetails = this.taskUiState.isClosingTaskDetails;
@@ -123,6 +124,13 @@ export class TaskContainerComponent {
     return [currentPage - 1, currentPage, currentPage + 1];
   });
 
+  readonly areVisibleTasksChecked = computed(() => {
+
+    return this.tasks().length > 0 &&
+      this.tasks().every(task =>
+        this.checkedTaskIds().has(task.id)
+      );
+  });
 
   readonly TaskSort = ETaskSort;
 
@@ -165,6 +173,7 @@ export class TaskContainerComponent {
 
   orderTasks(sort: string): void {
     this.taskFacade.orderTasks(sort);
+    this.taskUiState.clearCheckedTasks();
   }
 
 
@@ -173,6 +182,7 @@ export class TaskContainerComponent {
 
     if (page === null || page < 1 || page > totalPages) return;
 
+    this.taskUiState.clearCheckedTasks();
     this.taskFacade.changePage(page);
   }
 
@@ -196,19 +206,27 @@ export class TaskContainerComponent {
   }
 
   deleteTask(): void {
-    const taskId = this.selectedTaskId();
+    const taskId = this.activeTaskId();
 
     if (!taskId) return;
 
-    this.taskFacade.deleteTask(taskId);
+    this.taskFacade.deleteTask([taskId]);
 
     this.closeModal();
   }
 
+  deleteCheckedTasks(): void {
+    if (this.checkedTaskIds().size === 0)
+      return;
+
+    this.taskFacade.deleteTask(Array.from(this.checkedTaskIds()));
+    this.taskUiState.clearCheckedTasks();
+    this.closeModal();
+  }
 
   openTaskForm(mode: 'create' | 'edit'): void {
     if (mode === 'edit') {
-      const taskId = this.selectedTaskId();
+      const taskId = this.activeTaskId();
 
       if (!taskId) return;
 
@@ -224,7 +242,7 @@ export class TaskContainerComponent {
 
 
   openTaskDetails(): void {
-    const taskId = this.selectedTaskId();
+    const taskId = this.activeTaskId();
 
     if (!taskId) return;
 
@@ -235,7 +253,7 @@ export class TaskContainerComponent {
   }
 
   openTaskDetailsById(taskId: string): void {
-    this.taskUiState.selectTask(taskId);
+    this.taskUiState.setActiveTask(taskId);
     this.openTaskDetails();
   }
 
@@ -257,7 +275,7 @@ export class TaskContainerComponent {
     const rect = element.getBoundingClientRect();
     const wrapperRect = wrapper.getBoundingClientRect();
 
-    this.taskUiState.selectTask(taskId);
+    this.taskUiState.setActiveTask(taskId);
 
     this.taskUiState.setTaskOptionsPosition({
       top: rect.bottom - wrapperRect.top - 30,
@@ -275,7 +293,7 @@ export class TaskContainerComponent {
   }
 
   openDeleteConfirmation(): void {
-    if (!this.selectedTaskId()) {
+    if (!this.activeTaskId()) {
       return;
     }
 
@@ -283,6 +301,24 @@ export class TaskContainerComponent {
     this.taskUiState.closeTaskOptions();
   }
 
+  openDeleteCheckedConfirmation(): void {
+    if (this.checkedTaskIds().size === 0) {
+      return;
+    }
+
+    this.taskUiState.openModal('deleteChecked');
+  }
+
+  toggleCheckedTask(taskId: string): void {
+    this.taskUiState.toggleCheckedTask(taskId);
+  }
+
+  toggleAllVisibleTasks(): void {
+    const taskIds = this.tasks()
+      .map(task => task.id);
+
+    this.taskUiState.toggleAllCheckedTasks(taskIds);
+  }
 
   @HostListener('document:click')
   onDocumentClick(): void {

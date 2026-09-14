@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
-import { TaskCreateRequest, TaskEditRequest, TaskPagedParams, TaskResponse, TaskSelectablesResponse } from '../models/task.models';
+import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest, TaskPagedParams, TaskResponse, TaskSelectablesResponse } from '../models/task.models';
 import { ResultResponse } from '../../../shared/models/response.models';
 import { PagedResponse } from '../../../shared/models/pagination.models';
 
@@ -32,9 +32,13 @@ export class TaskService {
             (`${this.apiUrl}/EditTask`, request);
     }
 
-    deleteTask(taskId: string): Observable<ResultResponse<string>> {
-        return this.httpClient.delete<ResultResponse<string>>
-            (`${this.apiUrl}/${taskId}`);
+    deleteTask(request: DeleteTaskRequest): Observable<ResultResponse<string>> {
+        return this.httpClient.delete<ResultResponse<string>>(
+            `${this.apiUrl}/DeleteTask`,
+            {
+                body: request
+            }
+        );
     }
 
     getPaged(params: TaskPagedParams): Observable<ResultResponse<PagedResponse<TaskResponse>>> {

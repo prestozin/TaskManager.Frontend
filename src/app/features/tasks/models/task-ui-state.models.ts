@@ -1,4 +1,4 @@
-export type TaskModal = | 'create' | 'edit' | 'view' | 'delete' | null;
+export type TaskModal = | 'create' | 'edit' | 'view' | 'delete' | 'deleteChecked' | null;
 
 export interface TaskOptionsPosition {
   top: number;

@@ -2,7 +2,11 @@
 <div class="task">
 
     <label class="checkbox">
-        <input type="checkbox" [formControl]="taskForm.controls.completed"> 
+        <input 
+            type="checkbox" 
+            [checked]="checked()"
+            (change)="checkedChange.emit(task().id)"
+            [formControl]="taskForm.controls.completed"> 
     </label>
 
     <div class="task-info">
@@ -18,6 +22,7 @@
     <p class="task-details date">{{ task().createdAt | date:'dd/MM/yyyy' }}</p>
     <p class="task-details priority" [ngClass]="'priority-' + normalizeClass(task().priority)">{{ capitalizeFirst(task().priority) }}</p>
     <p class="task-details status" [ngClass]="'status-' + normalizeClass(task().status)"> {{ capitalizeFirst(task().status) }} </p>
+
     <img class=
         "btn-options 
         "src="icons/task-dots.svg" 

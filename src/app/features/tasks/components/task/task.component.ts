@@ -19,8 +19,12 @@ export class TaskComponent {
   readonly normalizeClass = normalizeClass;
 
   task = input.required<TaskResponse>();
+  
   optionsClicked = output<HTMLElement>();
   taskClicked = output<string>();
+
+  checked = input(false);
+  checkedChange = output<string>();
 
   taskForm = new FormGroup({
     title: new FormControl('', { nonNullable: true }),
