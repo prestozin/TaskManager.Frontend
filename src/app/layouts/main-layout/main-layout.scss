@@ -1,20 +1,23 @@
 @use "variables" as *;
 
-
 .layout {
     display: flex;
+
     height: 100vh;
+
     overflow: hidden;
 
     .sidebar {
-        background-color: $primary-color;
         position: relative;
-        padding-top: 60px;
 
         display: flex;
         flex-direction: column;
 
         width: 300px;
+
+        padding-top: 60px;
+
+        background-color: $primary-color;
 
         .sidebar-header {
             display: flex;
@@ -22,13 +25,15 @@
             align-items: center;
             justify-content: center;
 
-            margin: 0;
             gap: 30px;
+
+            margin: 0;
 
             z-index: 1;
 
             h2 {
                 font-size: 30px;
+
                 color: $secondary-text-color;
             }
 
@@ -41,10 +46,10 @@
             display: flex;
             flex-direction: column;
 
+            gap: 5px;
+
             margin: 40px 10px 0;
             padding: 10px;
-
-            gap: 5px;
         }
 
         .sidebar-footer {
@@ -56,20 +61,22 @@
             margin-top: auto;
             padding: 30px 10px;
 
-            z-index: 1;
-
             border-top: 1px solid $grey-text-color;
 
+            z-index: 1;
+
             .btn-logout {
-                background: transparent;
+                margin: 0 10px;
+
                 border: none;
                 border-radius: 10px;
 
-                margin: 0 10px;
+                background: transparent;
 
                 &:hover {
-                    filter: brightness(1.1);
                     background-color: $hover-button;
+
+                    filter: brightness(1.1);
                 }
             }
         }
@@ -78,9 +85,9 @@
             display: flex;
             align-items: center;
 
-            padding: 15px;
-
             gap: 10px;
+
+            padding: 15px;
 
             border-radius: 10px;
 
@@ -96,8 +103,9 @@
             }
 
             &:hover {
-                filter: brightness(1.1);
                 background-color: $hover-button;
+
+                filter: brightness(1.1);
             }
 
             &:active {
@@ -105,35 +113,35 @@
             }
 
             &.active {
-                background-color: $hover-button;
                 color: $secondary-text-color;
+                background-color: $hover-button;
             }
         }
 
         .sidebar-shapes {
             position: absolute;
 
+            top: 0;
+
             width: 100%;
             height: 100%;
-
-            top: 0;
 
             z-index: 0;
 
             pointer-events: none;
 
             .shape-top {
-
                 position: absolute;
+
                 top: -4%;
                 right: -28.2%;
-
-                scale: 0.6;
 
                 width: 250px;
                 height: 150px;
 
                 background-color: $shape-color;
+
+                scale: 0.6;
 
                 mask: url('/shapes/main-layout/shape-top.svg') no-repeat center;
                 mask-size: contain;
@@ -145,17 +153,16 @@
             .shape-bottom {
                 position: absolute;
 
-                scale: 1.4;
+                top: 53%;
+                right: 53%;
 
                 width: 250px;
                 height: 250px;
 
-                right: 53%;
-                top: 53%;
-
-                transform: scale(0.6);
-
                 background-color: $shape-color;
+
+                scale: 1.4;
+                transform: scale(0.6);
 
                 mask: url('/shapes/main-layout/shape-bottom.svg') no-repeat center;
                 mask-size: contain;
@@ -164,22 +171,19 @@
                 -webkit-mask-size: contain;
             }
 
-
             .shape-right {
                 position: absolute;
 
-                scale: 0.7; 
+                top: 50%;
+                right: -32.7%;
 
                 width: 250px;
                 height: 250px;
 
-                right: -32.7%;
-                top: 50%;
-                
-
-                transform: scale(0.8);
-
                 background-color: $shape-color;
+
+                scale: 0.7;
+                transform: scale(0.8);
 
                 mask: url('/shapes/main-layout/shape-right.svg') no-repeat center;
                 mask-size: contain;
@@ -188,18 +192,18 @@
                 -webkit-mask-size: contain;
             }
 
-
             .shape-left {
                 position: absolute;
 
-                scale: 0.45;
+                top: 6%;
+                left: -35%;
+
                 width: 250px;
                 height: 250px;
 
-                left: -35%;
-                top: 6%;
-
                 background-color: $shape-color;
+
+                scale: 0.45;
 
                 mask: url('/shapes/main-layout/shape-left.svg') no-repeat center;
                 mask-size: contain;
@@ -208,21 +212,19 @@
                 -webkit-mask-size: contain;
             }
 
-
             .shape-circle {
                 position: absolute;
-
-                scale: 0.3;
-
-                width: 250px;
-                height: 250px;
 
                 top: 65%;
                 left: 15%;
 
-                transform: scale(0.8);
+                width: 250px;
+                height: 250px;
 
                 background-color: $shape-color;
+
+                scale: 0.3;
+                transform: scale(0.8);
 
                 mask: url('/shapes/main-layout/shape-circle.svg') no-repeat center;
                 mask-size: contain;
@@ -234,16 +236,17 @@
     }
 
     .content {
-        flex: 1;
-
         display: flex;
+        flex: 1;
         flex-direction: column;
 
         .header-content {
-            
             display: flex;
+
             width: 100%;
+
             padding: 10px 25px;
+
             border-bottom: 1px solid $grey-text-color;
 
             .header-title {
@@ -272,8 +275,8 @@
                 display: flex;
                 align-items: center;
 
-                margin-left: auto;
                 margin-right: 60px;
+                margin-left: auto;
 
                 .user-trigger {
                     position: relative;
@@ -297,22 +300,20 @@
 
                         .user-icon {
                             display: flex;
+                            align-items: center;
+                            justify-content: center;
 
                             width: 38px;
                             height: 38px;
 
-                            align-items: center;
-                            justify-content: center;
-
                             margin: 0;
-
-                            color: $secondary-text-color;
-
-                            font-size: 22px;
 
                             border-radius: 50%;
 
+                            color: $secondary-text-color;
                             background-color: $hover-button;
+
+                            font-size: 22px;
                         }
                     }
 
@@ -329,21 +330,17 @@
                         z-index: 3;
 
                         transition: color 0.2s ease;
-
-                        &.active {
-                            color: $secondary-text-color;
-                        }
                     }
 
                     .user-arrow {
-                        width: 20px;
-                        height: 20px;
-
                         position: relative;
 
                         top: 2px;
 
-                        transform: rotate(-90deg);
+                        width: 20px;
+                        height: 20px;
+
+                        color: $hover-button;
 
                         z-index: 3;
 
@@ -352,7 +349,7 @@
                             filter 0.2s ease;
 
                         &.active {
-                            transform: rotate(0deg);
+                            transform: rotate(90deg);
                         }
                     }
 
@@ -363,20 +360,21 @@
                         left: 50%;
 
                         width: 180px;
-
-                        min-height: 260px;
+                        min-height: 200px;
 
                         padding: 15px;
 
                         box-sizing: border-box;
 
-                        transform: translateX(-50%);
-
-                        background-color: $primary-color;
-
                         border-radius: 10px;
 
+                        background-color: white;
+
+                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.225);
+
                         z-index: 2;
+
+                        transform: translateX(-50%);
 
                         animation: dropdown-open 0.25s ease;
 
@@ -384,8 +382,8 @@
                             position: absolute;
 
                             top: 65px;
-                            left: 15px;
                             right: 15px;
+                            left: 15px;
 
                             height: 1px;
 
@@ -416,18 +414,16 @@
                             border: 1px solid transparent;
                             border-radius: 6px;
 
+                            color: $hover-button;
                             background-color: transparent;
 
-                            color: $secondary-text-color;
-
                             font-size: 14px;
+                            text-align: left;
 
                             cursor: pointer;
 
-                            text-align: left;
-
-
                             &:hover {
+                                color: white;
                                 background-color: $hover-button;
                             }
 
@@ -436,13 +432,14 @@
                             }
 
                             .dropdown-img {
+                                flex-shrink: 0;
+
                                 width: 20px;
                                 height: 20px;
-
-                                flex-shrink: 0;
                             }
 
                             span {
+                                font-size: 16px;
                                 white-space: nowrap;
                             }
                         }
@@ -453,26 +450,27 @@
             @keyframes dropdown-open {
                 from {
                     opacity: 0;
+
                     transform: translateX(-50%) translateY(-8px);
                 }
 
                 to {
                     opacity: 1;
+
                     transform: translateX(-50%) translateY(0);
                 }
             }
         }
 
         main {
-            flex: 1;
-
             display: flex;
+            flex: 1;
 
             min-height: 0;
 
-            overflow: hidden;
-
             padding: 15px 20px 0;
+
+            overflow: hidden;
 
             background-color: $grey-bg;
 
@@ -490,12 +488,12 @@
             align-items: center;
 
             margin-left: 30px;
-
             padding: 8px 0;
 
             .footer-text {
-                font-size: 14px;
                 color: $grey-text-color;
+
+                font-size: 14px;
             }
         }
     }

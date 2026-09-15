@@ -284,12 +284,9 @@ export class TaskContainerComponent {
     this.taskUiState.setActiveTask(taskId);
 
     this.taskUiState.setTaskOptionsPosition({
-      top: openUpward
-        ? rect.top - taskPageRect.top - optionsHeight
-        : rect.bottom - taskPageRect.top,
+      top: openUpward? rect.top - taskPageRect.top - optionsHeight : rect.bottom - taskPageRect.top,
 
-      right: taskPageRect.right - rect.right + 15,
-      openUpward
+      right: taskPageRect.right - rect.right + 15, openUpward
     });
   }
 

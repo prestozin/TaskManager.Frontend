@@ -3,6 +3,7 @@
 
     <label class="checkbox">
         <input 
+            class="checkbox-input"
             type="checkbox" 
             [checked]="checked()"
             (change)="checkedChange.emit(task().id)"
@@ -13,9 +14,9 @@
         <p 
             class="task-title"
             (click)="taskClicked.emit(task().id)">
-            {{ truncateText(capitalizeFirst(task().title)) }}
+            {{ title() }}
         </p>
-        <p class="description">{{  truncateText(capitalizeFirst(task().description)) }}</p>
+        <p class="description">{{ description() }}</p>
     </div>
 
                

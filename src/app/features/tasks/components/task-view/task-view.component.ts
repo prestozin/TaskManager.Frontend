@@ -1,7 +1,7 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { TaskResponse } from '@features/tasks/models/task.models';
-import { normalizeClass } from '@shared/utils/string.util';
+import { normalizeClass, capitalizeFirst, truncateText } from '@shared/utils/string.util';
 
 @Component({
   selector: 'app-task-view',
@@ -15,10 +15,14 @@ import { normalizeClass } from '@shared/utils/string.util';
 export class TaskViewComponent {
 
   readonly normalizeClass = normalizeClass;
+  readonly capitalizeFirst = capitalizeFirst;
+  readonly truncateText = truncateText;
 
   task = input.required<TaskResponse>();
 
   deleteTaskClicked = output<void>();
   editTaskClicked = output<void>();
   closeClicked = output<void>();
+
+
 }

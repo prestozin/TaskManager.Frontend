@@ -65,10 +65,15 @@ export class TaskService {
             httpParams = httpParams.set('Search', params.search);
 
         if (params.startDate)
-            httpParams = httpParams.set('StartDate', params.startDate);
+            httpParams = httpParams.set(
+                'StartDate', this.convertLocalDateToUtc(params.startDate)
+            );
+
 
         if (params.endDate)
-            httpParams = httpParams.set('EndDate', params.endDate);
+            httpParams = httpParams.set(
+                'EndDate', this.convertLocalDateToUtc(params.endDate, true)
+            );
 
         return httpParams;
     }
@@ -76,5 +81,14 @@ export class TaskService {
     getSelectables(): Observable<ResultResponse<TaskSelectablesResponse>> {
         return this.httpClient.get<ResultResponse<TaskSelectablesResponse>>
             (`${this.apiUrl}/GetSelectables`);
+    }
+
+
+    private convertLocalDateToUtc(date: string, endOfDay = false): string {
+        const [year, month, day] = date.split('-').map(Number);
+
+        const localDate = new Date(year, month - 1, endOfDay ? day + 1 : day);
+
+        return localDate.toISOString();
     }
 }

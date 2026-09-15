@@ -6,7 +6,7 @@
 
         <div class="task-title-wrapper">
             <p class="field-label">Título:</p>
-            <p class="task-title">{{ task().title }}</p>
+            <p class="task-title">{{ capitalizeFirst(task().title) }}</p>
         </div>
 
         <div class="task-date-wrapper">
@@ -36,7 +36,7 @@
 
         <div class="task-description-wrapper">
             <p class="field-label">Descrição:</p>
-            <p class="task-description">{{ task().description }}</p>
+            <p class="task-description">{{ capitalizeFirst(task().description) }}</p>
         </div>
 
     </div>

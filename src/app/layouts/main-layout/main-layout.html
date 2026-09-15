@@ -71,7 +71,10 @@
                         {{ userName }}
                     </p>
 
-                    <img class="user-arrow" [class.active]="isUserMenuOpen" src="icons/arrow-icon.svg">
+                    <svg lucideChevronRight 
+                        class="user-arrow" 
+                        [class.active]="isUserMenuOpen"> 
+                    </svg>
 
                     @if (isUserMenuOpen) {
 
@@ -82,22 +85,17 @@
                         <div class="container-dropdown-buttons">
 
                             <button class="btn-dropdown">
-                                <img class="dropdown-img" src="icons/theme-icon.svg">
-                                <span>Tema</span>
-                            </button>
-
-                            <button class="btn-dropdown">
-                                <img class="dropdown-img" src="icons/profile-icon.svg">
+                                <svg lucideUserRoundCog class="dropdown-img"></svg>
                                 <span>Perfil</span>
                             </button>
 
                             <button class="btn-dropdown">
-                                <img class="dropdown-img" src="icons/settings-icon.svg">
+                                <svg lucideSettings class="dropdown-img"></svg>
                                 <span>Configurações</span>
                             </button>
 
                             <button class="btn-dropdown">
-                                <img class="dropdown-img" src="icons/logout-icon.svg">
+                                <svg lucideLogOut class="dropdown-img"></svg>
                                 <span>Sair</span>
                             </button>
 

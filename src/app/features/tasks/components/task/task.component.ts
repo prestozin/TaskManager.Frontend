@@ -1,8 +1,9 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgClass } from '@angular/common';
 import { TaskResponse } from '../../models/task.models';
-import { normalizeClass } from '@shared/utils/string.util';
+import { normalizeClass, capitalizeFirst, truncateText } from '@shared/utils/string.util';
+import { TASK_DESCRIPTION_PREVIEW_LENGTH } from '@shared/constants/constants';
 
 @Component({
   selector: 'app-task',
@@ -17,9 +18,11 @@ import { normalizeClass } from '@shared/utils/string.util';
 export class TaskComponent {
 
   readonly normalizeClass = normalizeClass;
+  readonly capitalizeFirst = capitalizeFirst;
+  readonly truncateText = truncateText;
 
   task = input.required<TaskResponse>();
-  
+
   optionsClicked = output<HTMLElement>();
   taskClicked = output<string>();
 
@@ -31,20 +34,14 @@ export class TaskComponent {
     completed: new FormControl(false, { nonNullable: true })
   });
 
-  capitalizeFirst(value: string): string {
-    if (!value) return '';
+  readonly title = computed(() =>
+    capitalizeFirst(this.task().title)
+  );
 
-    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-  }
-
-  truncateText(value: string, maxLength: number = 80): string {
-    if (!value) return '';
-
-    if (value.length <= maxLength) {
-      return value;
-    }
-
-    return value.substring(0, maxLength) + '...';
-  }
-
+  readonly description = computed(() =>
+    truncateText(
+      capitalizeFirst(this.task().description),
+      TASK_DESCRIPTION_PREVIEW_LENGTH
+    )
+  );
 }
