@@ -2,48 +2,104 @@
 
 form {
     width: 100%;
+
     display: flex;
     flex-direction: column;
-    gap: 24px;
     align-items: center;
+
+    gap: 24px;
+
     padding-top: 35px;
-    padding-bottom: 24px;
+
+    // InputForms
+    --input-width: 380px;
+    --input-height: 66px;
+    --input-padding: 0 40px;
+
+    --input-border: 2px solid grey;
+    --input-radius: 380px;
+
+    --input-background: transparent;
+
+    --input-text-color: black;
+    --input-font-size: 18px;
+    --input-placeholder-color: grey;
+
+    --input-focus-border: 2px solid #{$primary-text-color};
+
+    --error-message-margin: 3px 0 0 40px;
+}
+
+.confirm-password-field {
+    width: 380px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.password-message {
+    width: 100%;
+    height: 16px;
+
+    display: flex;
+    align-items: center;
+
+    .password-error-message {
+        margin: 0 0 0 40px;
+
+        color: red;
+
+        font-size: 13px;
+    }
+}
+
+.form-message {
+    width: 380px;
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: -20px;
+
+    .error-message,
+    .success-message {
+        margin: 0;
+
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .error-message {
+        color: red;
+    }
+
+    .success-message {
+        color: green;
+    }
 }
 
 .auth-footer {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
     gap: 6px;
+
     margin-top: 12px;
+
     font-size: 16px;
-}
 
-.footer-text {
-    color: black;
-}
+    .login-text {
+        color: black;
+    }
 
-.textLink {
-    color: $primary-text-color;
-    text-decoration: underline;
-    cursor: pointer;
-}
+    .login-link {
+        color: $primary-text-color;
 
-.password-error-message {
-    position: relative;
-    align-self: flex-start;
-    margin-left: 40px;
-    bottom: 18px;
-    color: red;
-    font-size: 13px;
-}
+        text-decoration: underline;
 
-.error-message{
-    color: red;
-    font-size: 16px;
-}
-
-.success-message{
-    color: green;
-    font-size: 16px;
+        cursor: pointer;
+    }
 }

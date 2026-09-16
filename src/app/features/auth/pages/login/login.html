@@ -1,27 +1,67 @@
-<app-auth-layout 
-title="Bem-vindo(a)!" 
-primaryButtonText="LOGIN" 
-(submitClicked)="submit()"
-[isLoading]="isLoading">
+<app-auth-layout
+    title="Bem-vindo(a)!"
+    primaryButtonText="ENTRAR"
+    [isLoading]="isLoading"
+    (submitClicked)="submit()">
 
-    <form auth-form [formGroup]="loginForm">
+    <form
+        auth-form
+        [formGroup]="loginForm">
 
-        <app-input-forms type="email" placeholder="Endereço de email" [control]="loginForm.controls.email">
+        <app-input-forms
+            type="email"
+            placeholder="Endereço de e-mail"
+            [control]="loginForm.controls.email">
         </app-input-forms>
 
-        <app-input-forms type="password" placeholder="Senha" [control]="loginForm.controls.password">
-        </app-input-forms>
+        <div class="password-field">
 
-        <a class="forgot-password" routerLink="/forgot-password"> Esqueceu sua senha? </a>
+            <app-input-forms
+                type="password"
+                placeholder="Senha"
+                [control]="loginForm.controls.password">
+            </app-input-forms>
 
-        @if (errorMessage) { <p class="error-message"> {{ errorMessage }} </p> }
-        @if (successMessage) { <p class="success-message"> {{ successMessage }} </p> }
+            <a
+                class="forgot-password-link"
+                routerLink="/forgot-password">
+                Esqueceu sua senha?
+            </a>
+
+        </div>
+
+        <div class="form-message">
+
+            @if (errorMessage) {
+                <p class="error-message">
+                    {{ errorMessage }}
+                </p>
+            }
+
+            @if (successMessage) {
+                <p class="success-message">
+                    {{ successMessage }}
+                </p>
+            }
+
+        </div>
 
     </form>
 
-    <div auth-footer class="auth-footer">
-        <span class="footer-text">Não possui uma conta?</span>
-        <a class="textLink" routerLink="/register">Criar conta</a>
+    <div
+        auth-footer
+        class="auth-footer">
+
+        <span class="register-text">
+            Não possui uma conta?
+        </span>
+
+        <a
+            class="register-link"
+            routerLink="/register">
+            Criar conta
+        </a>
+
     </div>
 
 </app-auth-layout>

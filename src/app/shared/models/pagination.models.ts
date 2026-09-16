@@ -2,7 +2,7 @@ export class PagedParams {
   pageNumber: number = 1;
   pageSize: number = 10;
   sort: string = 'CreatedAt';
-  order: string = 'asc';
+  order: string = 'desc';
 }
 
 export interface PagedResponse<T> {
