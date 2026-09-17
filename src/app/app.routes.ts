@@ -4,7 +4,7 @@ import { DashboardComponent } from "@features/dashboard/pages/dashboard/dashboar
 import { Login } from "@features/auth/pages/login/login";
 import { Register } from "@features/auth/pages/register/register";
 import { Tasks } from "@features/tasks/pages/tasks/tasks";
-import { Profile } from "@features/profile/pages/profile/profile";
+import { Profile } from "@features/auth/pages/profile/profile";
 import { Settings } from "@features/settings/pages/settings/settings";
 
 

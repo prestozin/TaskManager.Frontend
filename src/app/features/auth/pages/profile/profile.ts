@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
+import { LoadingButtonComponent } from '@shared/components/loading-button/loading-button.component';
 
 
 @Component({
@@ -9,7 +10,8 @@ import { InputFormsComponent } from '@shared/components/input-forms/input-forms'
   imports: [
     MainLayoutComponent,
     InputFormsComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoadingButtonComponent
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
@@ -23,4 +25,12 @@ export class Profile {
     about: new FormControl('', { nonNullable: true })
   });
 
+  readonly isLoading = signal(false);
+
+  saveProfile(): void {
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+  }
 }

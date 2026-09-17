@@ -1,60 +1,96 @@
-<main>
-    <div class="main-content">
+<main class="auth-page">
+
+    <div class="auth-content">
 
         <section class="form-section">
 
             <div class="form-card">
 
-                <h2>{{ title() }}</h2>
+                <h2 class="form-title">
+                    {{ title() }}
+                </h2>
 
                 <div class="form-container">
                     <ng-content select="[auth-form]"></ng-content>
                 </div>
 
-                <button class="primary-button" [disabled]="isLoading()" (click)="submit()">
-                    @if (isLoading()) 
-                    {
-                        <span class="spinner"></span>
-                    } 
-                    @else {
-                        {{ primaryButtonText() }}
-                    }
-                </button>
+                <app-loading-button
+                    [text]="primaryButtonText()"
+                    [isLoading]="isLoading()"
+                    (submitClicked)="submit()">
+                </app-loading-button>
 
-                <ng-content select="[auth-footer]"></ng-content>
+                <div class="form-footer">
+                    <ng-content select="[auth-footer]"></ng-content>
+                </div>
 
             </div>
 
         </section>
 
-        <section class="logo-section">
+        <section class="brand-section">
 
-            <div class="shapes">
-                <img class="shape-left" src="shapes/auth/shape-auth-left.svg" />
-                <img class="shape-bottom" src="shapes/auth/shape-auth-bottom.svg" />
-                <img class="shape-top-left" src="shapes/auth/shape-auth-top.svg" />
+            <div class="brand-shapes">
 
-                <img class="shape-dots-top" src="shapes/auth/shape-auth-dots.svg" />
-                <img class="shape-dots-bottom" src="shapes/auth/shape-auth-dots.svg" />
+                <img
+                    class="shape-left"
+                    src="shapes/auth/shape-auth-left.svg"
+                    alt="">
+
+                <img
+                    class="shape-bottom"
+                    src="shapes/auth/shape-auth-bottom.svg"
+                    alt="">
+
+                <img
+                    class="shape-top-left"
+                    src="shapes/auth/shape-auth-top.svg"
+                    alt="">
+
+                <img
+                    class="shape-dots-top"
+                    src="shapes/auth/shape-auth-dots.svg"
+                    alt="">
+
+                <img
+                    class="shape-dots-bottom"
+                    src="shapes/auth/shape-auth-dots.svg"
+                    alt="">
+
             </div>
 
-            <div class="features">
+            <div class="brand-features">
 
-                <h2>Task Manager</h2>
+                <h2 class="brand-title">
+                    Task Manager
+                </h2>
 
-                <div class="icons-text">
+                <div class="feature-list">
+
                     <div class="feature">
-                        <img class="checkmark-icon" src="checkmark_icon.svg" />
+                        <svg
+                            class="feature-icon"
+                            lucideListChecks>
+                        </svg>
+
                         <p>Organize</p>
                     </div>
 
                     <div class="feature">
-                        <img class="clock-icon" src="clock_icon.svg" />
+                        <svg
+                            class="feature-icon"
+                            lucideClock3>
+                        </svg>
+
                         <p>Priorize</p>
                     </div>
 
                     <div class="feature">
-                        <img class="graphic-icon" src="graphic_icon.svg" />
+                        <svg
+                            class="feature-icon"
+                            lucideChartNoAxesColumnIncreasing>
+                        </svg>
+
                         <p>Acompanhe</p>
                     </div>
 
@@ -62,12 +98,22 @@
 
             </div>
 
-            <div class="logo">
-                <img class="logo-img" src="logo.svg" />
-                <img class="shape-logo" src="shapes/auth/shape-auth-circle.svg" />
+            <div class="brand-logo">
+
+                <img
+                    class="logo-shape"
+                    src="shapes/auth/shape-auth-circle.svg"
+                    alt="">
+
+                <img
+                    class="logo-img"
+                    src="logo.svg"
+                    alt="Task Manager">
+
             </div>
 
         </section>
 
     </div>
+
 </main>

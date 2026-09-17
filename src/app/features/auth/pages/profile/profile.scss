@@ -104,7 +104,7 @@
 
     border-radius: 50%;
 
-    background-color: $primary-color;
+    background-color: $hover-button;
     color: white;
 
     font-size: 60px;
@@ -284,34 +284,14 @@
     justify-content: flex-end;
 
     margin-top: 30px;
-}
 
+    --button-container-width: auto;
+    --button-container-max-width: none;
 
-.btn-save {
-    height: 45px;
+    --button-height: 45px;
+    --button-padding: 0 24px;
+    --button-radius: 9px;
 
-    padding: 0 24px;
-
-    border: none;
-    border-radius: 9px;
-
-    background-color: $primary-color;
-    color: white;
-
-    font-size: 17px;
-    font-weight: 500;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.15s ease,
-        transform 0.1s ease;
-
-    &:hover {
-        background-color: $hover-button;
-    }
-
-    &:active {
-        transform: scale(0.97);
-    }
+    --button-font-size: 17px;
+    --button-font-weight: 500;
 }

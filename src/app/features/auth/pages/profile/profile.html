@@ -3,8 +3,13 @@
     <div body-content class="profile-page">
 
         <header class="profile-header">
+
             <h2>Meu Perfil</h2>
-            <p>Gerencie suas informações pessoais.</p>
+
+            <p>
+                Gerencie suas informações pessoais.
+            </p>
+
         </header>
 
         <div class="profile-content">
@@ -13,11 +18,20 @@
 
                 <div class="user-identification">
 
-                    <p class="user-icon">M</p>
+                    <p class="user-icon">
+                        M
+                    </p>
 
                     <div class="user-text">
-                        <h3 class="user-name">Mateus</h3>
-                        <p class="user-role">Desenvolvedor</p>
+
+                        <h3 class="user-name">
+                            Mateus
+                        </h3>
+
+                        <p class="user-role">
+                            Desenvolvedor
+                        </p>
+
                     </div>
 
                 </div>
@@ -26,19 +40,25 @@
 
                     <div class="user-detail">
 
-                        <div class="detail-text">
-                            <p class="detail-label">E-mail</p>
-                            <p class="detail-value">mateus@example.com</p>
-                        </div>
+                        <p class="detail-label">
+                            E-mail
+                        </p>
+
+                        <p class="detail-value">
+                            mateus@example.com
+                        </p>
 
                     </div>
 
                     <div class="user-detail">
 
-                        <div class="detail-text">
-                            <p class="detail-label">Membro desde</p>
-                            <p class="detail-value">15/08/2026</p>
-                        </div>
+                        <p class="detail-label">
+                            Membro desde
+                        </p>
+
+                        <p class="detail-value">
+                            15/08/2026
+                        </p>
 
                     </div>
 
@@ -53,8 +73,15 @@
                     <svg class="account-info-icon"></svg>
 
                     <div class="header-texts">
-                        <h2>Informações pessoais</h2>
-                        <p>Atualize seus dados abaixo.</p>
+
+                        <h2>
+                            Informações pessoais
+                        </h2>
+
+                        <p>
+                            Atualize seus dados abaixo.
+                        </p>
+
                     </div>
 
                 </header>
@@ -63,7 +90,9 @@
 
                     <div class="form-field">
 
-                        <label>Nome completo</label>
+                        <label>
+                            Nome completo
+                        </label>
 
                         <app-input-forms
                             [control]="profileForm.controls.name"
@@ -74,7 +103,9 @@
 
                     <div class="form-field">
 
-                        <label>E-mail</label>
+                        <label>
+                            E-mail
+                        </label>
 
                         <div class="email-field">
                             mateus@example.com
@@ -88,7 +119,9 @@
 
                     <div class="form-field">
 
-                        <label>Cargo (opcional)</label>
+                        <label>
+                            Cargo (opcional)
+                        </label>
 
                         <app-input-forms
                             [control]="profileForm.controls.role"
@@ -99,7 +132,9 @@
 
                     <div class="form-field">
 
-                        <label>Área de atuação (opcional)</label>
+                        <label>
+                            Área de atuação (opcional)
+                        </label>
 
                         <app-input-forms
                             [control]="profileForm.controls.area"
@@ -110,11 +145,13 @@
 
                     <div class="form-field form-about">
 
-                        <label>Sobre mim (opcional)</label>
+                        <label>
+                            Sobre mim (opcional)
+                        </label>
 
                         <app-input-forms
-                            [control]="profileForm.controls.about"
                             type="textarea"
+                            [control]="profileForm.controls.about"
                             placeholder="Conte um pouco sobre você"
                             [maxLength]="250">
                         </app-input-forms>
@@ -129,9 +166,11 @@
 
                 <div class="account-info-footer">
 
-                    <button class="btn-save">
-                        Salvar alterações
-                    </button>
+                    <app-loading-button
+                        text="Salvar alterações"
+                        [isLoading]="isLoading()"
+                        (clicked)="saveProfile()">
+                    </app-loading-button>
 
                 </div>
 
