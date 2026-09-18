@@ -34,7 +34,6 @@ export class TaskDataState {
         name: 'Todas as prioridades'
     });
 
-    readonly errorMessage = signal<string | null>(null);
 
     readonly currentPage = computed(
         () => this.pagedResponse()?.pageNumber ?? 1
@@ -139,10 +138,6 @@ export class TaskDataState {
             this.pagedParams.order === ESortOrder.Asc ? ESortOrder.Desc : ESortOrder.Asc;
 
         this.pagedParams.sort = sort;
-    }
-
-    setError(message: string): void {
-        this.errorMessage.set(message);
     }
 
     private resetPage(): void {

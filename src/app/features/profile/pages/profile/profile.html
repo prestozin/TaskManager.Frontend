@@ -1,0 +1,187 @@
+<app-main-layout>
+
+    <div body-content class="profile-page">
+
+        <header class="profile-header">
+
+            <h2>Meu Perfil</h2>
+
+            <p>
+                Gerencie suas informações pessoais.
+            </p>
+
+        </header>
+
+        <div class="profile-content">
+
+            @if (profile(); as user) {
+
+                <section class="profile-user">
+
+                    <div class="user-identification">
+
+                        <p class="user-icon">
+                            {{ user.name.charAt(0).toUpperCase() }}
+                        </p>
+
+                        <div class="user-text">
+
+                            <h3 class="user-name">
+                                {{ user.name }}
+                            </h3>
+
+                            <p class="user-role">
+                                {{ user.role || 'Cargo não informado' }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="user-details">
+
+                        <div class="user-detail">
+
+                            <p class="detail-label">
+                                E-mail
+                            </p>
+
+                            <p class="detail-value">
+                                {{ user.email }}
+                            </p>
+
+                        </div>
+
+                        <div class="user-detail">
+
+                            <p class="detail-label">
+                                Membro desde
+                            </p>
+
+                            <p class="detail-value">
+                                {{ user.createdAt | date:'dd/MM/yyyy' }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section class="account-info">
+
+                    <header class="account-info-header">
+
+                        <svg class="account-info-icon"></svg>
+
+                        <div class="header-texts">
+
+                            <h2>
+                                Informações pessoais
+                            </h2>
+
+                            <p>
+                                Atualize seus dados abaixo.
+                            </p>
+
+                        </div>
+
+                    </header>
+
+                    <div class="account-info-data">
+
+                        <div class="form-field">
+
+                            <label>
+                                Nome completo
+                            </label>
+
+                            <app-input-forms
+                                [control]="profileForm.controls.name"
+                                placeholder="Nome completo">
+                            </app-input-forms>
+
+                        </div>
+
+                        <div class="form-field">
+
+                            <label>
+                                E-mail
+                            </label>
+
+                            <div class="email-field">
+                                {{ user.email }}
+                            </div>
+
+                            <p class="field-helper">
+                                O e-mail é usado para login e não pode ser alterado.
+                            </p>
+
+                        </div>
+
+                        <div class="form-field">
+
+                            <label>
+                                Cargo (opcional)
+                            </label>
+
+                            <app-input-forms
+                                [control]="profileForm.controls.role"
+                                placeholder="Seu cargo">
+                            </app-input-forms>
+
+                        </div>
+
+                        <div class="form-field">
+
+                            <label>
+                                Área de atuação (opcional)
+                            </label>
+
+                            <app-input-forms
+                                [control]="profileForm.controls.area"
+                                placeholder="Sua área de atuação">
+                            </app-input-forms>
+
+                        </div>
+
+                        <div class="form-field form-about">
+
+                            <label>
+                                Sobre mim (opcional)
+                            </label>
+
+                            <app-input-forms
+                                type="textarea"
+                                [control]="profileForm.controls.about"
+                                placeholder="Conte um pouco sobre você"
+                                [maxLength]="250">
+                            </app-input-forms>
+
+                            <span class="character-count">
+                                {{ profileForm.controls.about.value.length }}/250
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="account-info-footer">
+
+                        <app-loading-button
+                            text="Salvar alterações"
+                            [isLoading]="isLoading()"
+                            (clicked)="saveProfile()">
+                        </app-loading-button>
+
+                    </div>
+
+                </section>
+
+            }
+
+        </div>
+
+    </div>
+
+</app-main-layout>

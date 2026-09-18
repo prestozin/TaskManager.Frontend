@@ -12,6 +12,7 @@ import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest } from '../models
 
 import { TaskService } from '../services/task.service';
 import { TaskDataState } from '../states/task-data.state';
+import { getHttpErrorMessage } from '@shared/utils/http-error.util';
 
 
 @Injectable({
@@ -23,6 +24,8 @@ export class TaskFacade {
     private readonly taskService = inject(TaskService);
     private readonly taskDataState = inject(TaskDataState);
     private readonly feedbackService = inject(FeedbackService);
+
+    readonly handleError = getHttpErrorMessage;
 
 
     get tasks() {
@@ -63,10 +66,6 @@ export class TaskFacade {
 
     get currentPage() {
         return this.taskDataState.currentPage;
-    }
-
-    get errorMessage() {
-        return this.taskDataState.errorMessage;
     }
 
 
@@ -211,12 +210,5 @@ export class TaskFacade {
 
     clearSelectedTask(): void {
         this.taskDataState.clearSelectedTask();
-    }
-
-
-    private handleError(error: HttpErrorResponse): void {
-        const response = error.error as ResultResponse<null>;
-
-        this.taskDataState.setError(response?.message ?? 'Ocorreu um erro inesperado.');
     }
 }

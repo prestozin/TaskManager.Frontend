@@ -9,9 +9,9 @@ export type FeedbackType = 'success' | 'error' | 'warning' | 'alert';
 
 export class FeedbackService {
 
-    messageTitle = signal<string | null>(null);
-    messageDescription = signal<string | null>(null);
-    messageType = signal<FeedbackType | null>(null);
+    readonly messageTitle = signal<string | null>(null);
+    readonly messageDescription = signal<string | null>(null);
+    readonly messageType = signal<FeedbackType | null>(null);
 
     isClosing = signal(false);
 
