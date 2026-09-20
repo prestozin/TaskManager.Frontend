@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { ProfileService } from "../services/profile.service";
 import { ResultResponse } from "@shared/models/response.models";
 import { finalize, Observable } from "rxjs";
-import { ProfileResponse } from "../models/profile.models";
+import { EditProfileRequest, ProfileResponse } from "../models/profile.models";
 import { ProfileState } from "../states/profile.state";
 import { FeedbackService } from "@core/services/feedback/feedback.service";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -46,5 +46,18 @@ export class ProfileFacade {
                     this.feedbackService.showMessage(error.message, '', EFeedbackType.Error);
                 }
             });
+    }
+
+    editProfile(request: EditProfileRequest): void {
+        this.profileService.editProfile(request).subscribe({
+            next: response => {
+                this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
+                this.loadProfile();
+            },
+            error: (error: HttpErrorResponse) => {
+                this.feedbackService.showMessage(this.handleError(error), '', EFeedbackType.Error);
+            }
+        })
+
     }
 }

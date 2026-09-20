@@ -3,7 +3,7 @@ import { inject, Injectable, Service } from '@angular/core';
 import { environment } from '@env/environment.development';
 import { ResultResponse } from '@shared/models/response.models';
 import { Observable } from 'rxjs';
-import { ProfileResponse } from '../models/profile.models';
+import { EditProfileRequest, ProfileResponse } from '../models/profile.models';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,12 @@ export class ProfileService {
 
     getProfile(): Observable<ResultResponse<ProfileResponse>> {
         return this.httpClient.get<ResultResponse<ProfileResponse>>
-            (`${this.apiUrl}`);
+            (`${this.apiUrl}/GetUser`);
+    }
+
+    editProfile(request: EditProfileRequest): Observable<ResultResponse<string>> {
+        return this.httpClient.put<ResultResponse<string>>
+            (`${this.apiUrl}/EditUser`, request);
     }
 }
 

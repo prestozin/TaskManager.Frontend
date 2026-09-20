@@ -5,6 +5,7 @@ import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
 import { LoadingButtonComponent } from '@shared/components/loading-button/loading-button.component';
 import { DatePipe } from '@angular/common';
+import { EditProfileRequest } from '@features/profile/models/profile.models';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { DatePipe } from '@angular/common';
   styleUrl: './profile.scss'
 })
 export class Profile {
-
+ 
   private readonly profileFacade = inject(ProfileFacade)
 
   readonly profile = this.profileFacade.profile;
@@ -47,17 +48,14 @@ export class Profile {
     });
   });
 
-  
 
-  ngOnInit(): void {
-    this.profileFacade.loadProfile();
-  }
-
-
-  saveProfile(): void {
+  editProfile(): void {
     if (this.profileForm.invalid) {
       this.profileForm.markAllAsTouched();
       return;
     }
+    const request: EditProfileRequest = this.profileForm.getRawValue();
+
+    this.profileFacade.editProfile(request);
   }
 }

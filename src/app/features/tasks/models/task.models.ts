@@ -1,5 +1,6 @@
 import { PagedParams } from "../../../shared/models/pagination.models";
 import { SelectableResponse } from "../../../shared/models/selectables.models";
+import { ETaskSort } from "../enums/task.enum";
 
 export interface TaskResponse {
     id: string;
@@ -35,6 +36,8 @@ export interface DeleteTaskRequest {
 }
 
 export class TaskPagedParams extends PagedParams {
+    override sort: string = ETaskSort.CreatedAt;
+    override order: string = 'desc';
     taskStatusId: number | null = null;
     taskPriorityId: number | null = null;
     search: string | null = null;

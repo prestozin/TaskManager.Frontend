@@ -1,6 +1,7 @@
-import { Component, HostListener, inject, input } from '@angular/core';
+import { Component, computed, HostListener, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TokenService } from '@core/services/token/token.service';
+import { ProfileFacade } from '@features/profile/facades/profile.facade';
 import { LucideChevronRight, LucideLogOut, LucideSettings, LucideUserRoundCog } from '@lucide/angular';
 import { FeedbackMessageComponent } from '@shared/components/feedback-message/feedback-message.component';
 
@@ -23,29 +24,39 @@ import { FeedbackMessageComponent } from '@shared/components/feedback-message/fe
 export class MainLayoutComponent {
 
   private tokenService = inject(TokenService);
+  private readonly profileFacade = inject(ProfileFacade);
 
-  userName = '';
-  userIcon = '';
   isUserMenuOpen = false;
 
-  ngOnInit(){
-    const name =  this.tokenService.getName() ?? '';
-    this.userName = name.trim().split(' ')[0].toLowerCase();
-    this.userName = this.userName.charAt(0).toUpperCase() + this.userName.slice(1);
-    this.userIcon = this.userName.charAt(0);
+  readonly userName = computed(() => {
+    const name = this.profileFacade.profile()?.name ?? '';
+
+    if (!name) return '';
+
+    const firstName = name.trim().split(' ')[0];
+
+    return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+  });
+
+  readonly userIcon = computed(() => {
+    return this.userName().charAt(0);
+  });
+
+  ngOnInit() {
+    this.profileFacade.loadProfile();
   }
 
   toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
-  logoutUser(){
+  logoutUser() {
     this.tokenService.clear()
   }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent){
-    
+  onDocumentClick(event: MouseEvent) {
+
     const target = event.target as HTMLElement;
 
     if (!target.closest('.user-container')) {

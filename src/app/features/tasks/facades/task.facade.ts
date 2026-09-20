@@ -5,7 +5,6 @@ import { FeedbackService } from '@core/services/feedback/feedback.service';
 
 import { TASK_MESSAGES } from '@shared/constants/messages';
 import { EFeedbackType } from '@shared/enums/feedback.enum';
-import { ResultResponse } from '@shared/models/response.models';
 import { SelectableOption } from '@shared/models/selectables.models';
 
 import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest } from '../models/task.models';
@@ -13,6 +12,7 @@ import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest } from '../models
 import { TaskService } from '../services/task.service';
 import { TaskDataState } from '../states/task-data.state';
 import { getHttpErrorMessage } from '@shared/utils/http-error.util';
+import { ETaskSort } from '../enums/task.enum';
 
 
 @Injectable({
@@ -117,15 +117,18 @@ export class TaskFacade {
     addTask(request: TaskCreateRequest): void {
         this.taskService.addTask(request).subscribe({
             next: response => {
+                this.taskDataState.pagedParams.pageNumber = 1;
+                this.taskDataState.pagedParams.sort = ETaskSort.CreatedAt;
+                this.taskDataState.pagedParams.order = 'desc';
                 this.getTasks();
 
                 this.feedbackService.showMessage(response.message, TASK_MESSAGES.CREATED_SUCCESSFULLY, EFeedbackType.Success);
             },
 
             error: (error: HttpErrorResponse) => {
-                this.handleError(error);
+                const message = this.handleError(error);
 
-                this.feedbackService.showMessage(error.message, TASK_MESSAGES.CREATED_FAILED, EFeedbackType.Error);
+                this.feedbackService.showMessage(message, TASK_MESSAGES.CREATED_FAILED, EFeedbackType.Error);
             }
         });
     }
