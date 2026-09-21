@@ -10,9 +10,8 @@ import { LoginRequest, LoginResponse, RegisterRequest } from '../models/auth.mod
 })
 export class AuthService {
 
-    private httpClient = inject(HttpClient);
-
-    private apiUrl = `${environment.apiUrl}/Auth`;
+    private readonly httpClient = inject(HttpClient);
+    private readonly apiUrl = `${environment.apiUrl}/Auth`;
 
     login(request: LoginRequest) {
 
@@ -24,6 +23,5 @@ export class AuthService {
 
         return this.httpClient
             .post<ResultResponse<null>>(`${this.apiUrl}/register`, request);
-
     }
 }

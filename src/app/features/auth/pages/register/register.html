@@ -1,7 +1,7 @@
 <app-auth-layout
     title="Crie sua conta"
     primaryButtonText="REGISTRAR"
-    [isLoading]="isLoading"
+    [isLoading]="isLoading()"
     (submitClicked)="submit()">
 
     <form auth-form [formGroup]="registerForm">
@@ -51,15 +51,15 @@
 
         <div class="form-message">
 
-            @if (errorMessage) {
+            @if (errorMessage()) {
                 <p class="error-message">
-                    {{ errorMessage }}
+                    {{ errorMessage() }}
                 </p>
             }
 
-            @if (successMessage) {
+            @if (successMessage()) {
                 <p class="success-message">
-                    {{ successMessage }}
+                    {{ successMessage() }}
                 </p>
             }
 

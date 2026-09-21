@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { AuthLayoutComponent } from '../../../../layouts/auth-layout/auth-layout';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputFormsComponent } from '../../../../shared/components/input-forms/input-forms';
-import { RouterLink, Router } from '@angular/router';
-import { AuthFacade } from '../../facades/auth.facade';
-import { LoginRequest } from '../../models/auth.models';
+import { RouterLink } from '@angular/router';
 
+import { AuthLayoutComponent } from '../../../../layouts/auth-layout/auth-layout';
+import { InputFormsComponent } from '../../../../shared/components/input-forms/input-forms';
+
+import { LoginRequest } from '../../models/auth.models';
+import { AuthFacade } from '@features/auth/facades/auth.facade';
 
 @Component({
   selector: 'app-login',
@@ -18,56 +19,34 @@ import { LoginRequest } from '../../models/auth.models';
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
-
 export class Login {
 
-  private authFacade = inject(AuthFacade);
-  private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly authFacade = inject(AuthFacade);
 
-  errorMessage = '';
-  successMessage = '';
-  isLoading = false;
+  readonly isLoading = this.authFacade.isLoading;
+  readonly successMessage = this.authFacade.successMessage;
+  readonly errorMessage = this.authFacade.errorMessage;
 
   loginForm = new FormGroup({
-    email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
-    password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] })
+    email: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required,Validators.email]
+    }),
+    password: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required,Validators.minLength(6)]
+    })
   });
 
   submit(): void {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
 
-    if (this.loginForm.invalid)
       return;
-
-    this.isLoading = true;
+    }
 
     const request: LoginRequest = this.loginForm.getRawValue();
 
-    this.authFacade.login(request).subscribe({
-      next: (response) => {
-
-        this.errorMessage = '';
-        this.successMessage = response.message;
-
-        setTimeout(() => {
-          this.isLoading = false;
-          this.router.navigate(['/dashboard']);
-        }, 1500);
-
-        this.cdr.detectChanges();
-      },
-
-      error: (error) => {
-
-        this.isLoading = false;
-        this.successMessage = '';
-
-        this.errorMessage = error.error?.message ?? 'Erro ao realizar login.';
-
-        this.cdr.detectChanges();
-      }
-    });
+    this.authFacade.login(request);
   }
 }
-
-

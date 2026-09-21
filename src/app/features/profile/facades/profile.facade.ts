@@ -1,13 +1,13 @@
 import { inject, Injectable } from "@angular/core";
 import { ProfileService } from "../services/profile.service";
-import { ResultResponse } from "@shared/models/response.models";
-import { finalize, Observable } from "rxjs";
-import { EditProfileRequest, ProfileResponse } from "../models/profile.models";
+import { finalize } from "rxjs";
+import { EditProfileRequest } from "../models/profile.models";
 import { ProfileState } from "../states/profile.state";
 import { FeedbackService } from "@core/services/feedback/feedback.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { EFeedbackType } from "@shared/enums/feedback.enum";
 import { getHttpErrorMessage } from "@shared/utils/http-error.util";
+import { AuthFacade } from "@features/auth/facades/auth.facade";
 
 
 @Injectable({
@@ -16,6 +16,7 @@ import { getHttpErrorMessage } from "@shared/utils/http-error.util";
 
 export class ProfileFacade {
 
+    private readonly authFacade = inject(AuthFacade);
     private readonly profileService = inject(ProfileService);
     private readonly profileState = inject(ProfileState);
     private readonly feedbackService = inject(FeedbackService);
@@ -58,6 +59,22 @@ export class ProfileFacade {
                 this.feedbackService.showMessage(this.handleError(error), '', EFeedbackType.Error);
             }
         })
+    }
 
+    deleteProfile(password: string): void {
+        this.profileService.deleteProfile(password).subscribe({
+            next: response => {
+                if (!response.isSuccess) {
+                    this.feedbackService.showMessage(response.message, '', EFeedbackType.Error);
+                    return;
+                }
+
+                this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
+                this.authFacade.logout();
+            },
+            error: (error: HttpErrorResponse) => {
+                this.feedbackService.showMessage(this.handleError(error), '', EFeedbackType.Error)
+            }
+        })
     }
 }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, Service } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '@env/environment.development';
 import { ResultResponse } from '@shared/models/response.models';
 import { Observable } from 'rxjs';
@@ -10,8 +10,8 @@ import { EditProfileRequest, ProfileResponse } from '../models/profile.models';
 })
 
 export class ProfileService {
+    
     private httpClient = inject(HttpClient);
-
     private apiUrl = `${environment.apiUrl}/User`
 
     getProfile(): Observable<ResultResponse<ProfileResponse>> {
@@ -23,5 +23,15 @@ export class ProfileService {
         return this.httpClient.put<ResultResponse<string>>
             (`${this.apiUrl}/EditUser`, request);
     }
+
+    deleteProfile(password: string): Observable<ResultResponse<string>> {
+        return this.httpClient.delete<ResultResponse<string>>
+            (`${this.apiUrl}/DeleteUser`,
+                {
+                    body: password
+                }
+            );
+    }
+
 }
 

@@ -24,7 +24,7 @@ export class TaskService {
 
     addTask(request: TaskCreateRequest): Observable<ResultResponse<string>> {
         return this.httpClient.post<ResultResponse<string>>
-            (`${this.apiUrl}/AddTask`, request);
+            (`${this.apiUrl}/CreateTask`, request);
     }
 
     editTask(request: TaskEditRequest): Observable<ResultResponse<string>> {

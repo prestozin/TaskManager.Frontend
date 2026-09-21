@@ -1,7 +1,7 @@
 <app-auth-layout
     title="Bem-vindo(a)!"
     primaryButtonText="ENTRAR"
-    [isLoading]="isLoading"
+    [isLoading]="isLoading()"
     (submitClicked)="submit()">
 
     <form auth-form [formGroup]="loginForm">
@@ -30,15 +30,15 @@
 
         <div class="form-message">
 
-            @if (errorMessage) {
+            @if (errorMessage()) {
                 <p class="error-message">
-                    {{ errorMessage }}
+                    {{ errorMessage() }}
                 </p>
             }
 
-            @if (successMessage) {
+            @if (successMessage()) {
                 <p class="success-message">
-                    {{ successMessage }}
+                    {{ successMessage() }}
                 </p>
             }
 
