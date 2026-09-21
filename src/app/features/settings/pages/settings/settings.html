@@ -1,3 +1,295 @@
-<app-main-layout> 
+<app-main-layout>
+
+    <div body-content class="settings-page">
+
+        <header class="settings-header">
+            <h2>Configurações</h2>
+
+            <p>
+                Gerencie suas preferências e informações da sua conta.
+            </p>
+        </header>
+
+
+        <div class="settings-content">
+
+            <section class="settings-card">
+
+                <header class="card-header">
+
+                    <div class="card-icon">
+                        <span
+                            nz-icon
+                            nzType="user"
+                            nzTheme="outline">
+                        </span>
+                    </div>
+
+                    <div class="card-header-text">
+                        <h3>Conta</h3>
+                        <p>Configurações da sua conta.</p>
+                    </div>
+
+                </header>
+
+
+                <div class="settings-option">
+
+                    <div class="option-content">
+
+                        <div class="option-icon">
+                            <span
+                                nz-icon
+                                nzType="edit"
+                                nzTheme="outline">
+                            </span>
+                        </div>
+
+                        <div class="option-text">
+                            <h4>Informações pessoais</h4>
+
+                            <p>
+                                Atualize seu nome, cargo e outras informações.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-option"
+                        routerLink="/profile">
+                        Editar informações
+                    </button>
+
+                </div>
+
+
+                <div class="settings-option">
+
+                    <div class="option-content">
+
+                        <div class="option-icon">
+                            <span
+                                nz-icon
+                                nzType="lock"
+                                nzTheme="outline">
+                            </span>
+                        </div>
+
+                        <div class="option-text">
+                            <h4>Alterar senha</h4>
+
+                            <p>
+                                Atualize a senha utilizada para acessar sua conta.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-option">
+                        Alterar senha
+                    </button>
+
+                </div>
+
+            </section>
+
+            <section class="settings-card">
+
+                <header class="card-header">
+
+                    <div class="card-icon">
+                        <span
+                            nz-icon
+                            nzType="unordered-list"
+                            nzTheme="outline">
+                        </span>
+                    </div>
+
+                    <div class="card-header-text">
+                        <h3>Tarefas</h3>
+                        <p>Preferências das suas tarefas.</p>
+                    </div>
+
+                </header>
+
+
+                <div class="settings-option">
+
+                    <div class="option-content">
+
+                        <div class="option-icon">
+                            <span
+                                nz-icon
+                                nzType="check-circle"
+                                nzTheme="outline">
+                            </span>
+                        </div>
+
+                        <div class="option-text">
+                            <h4>Confirmar antes de excluir</h4>
+
+                            <p>
+                                Exibe uma confirmação antes de excluir uma tarefa.
+                            </p>
+                        </div>
+
+                    </div>
+
+                   <div class="zorro-scope">
+                        <nz-switch
+                        [(ngModel)]="confirmTaskDelete">
+                        </nz-switch>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-option">
+
+                    <div class="option-content">
+
+                        <div class="option-icon">
+                            <span
+                                nz-icon
+                                nzType="ordered-list"
+                                nzTheme="outline">
+                            </span>
+                        </div>
+
+                        <div class="option-text">
+                            <h4>Tarefas por página</h4>
+
+                            <p>
+                                Define quantas tarefas são exibidas por página.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="zorro-scope">
+
+                        <nz-select
+
+                            class="page-size-select"
+                            [(ngModel)]="taskPageSize">
+    
+                            <nz-option
+                                [nzValue]="10"
+                                nzLabel="10">
+                            </nz-option>
+    
+                            <nz-option
+                                [nzValue]="20"
+                                nzLabel="20">
+                            </nz-option>
+    
+                            <nz-option
+                                [nzValue]="30"
+                                nzLabel="30">
+                            </nz-option>
+
+                        </nz-select>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+            <section class="settings-card">
+
+                <header class="card-header">
+
+                    <div class="card-icon danger-header-icon">
+                        <span
+                            nz-icon
+                            nzType="delete"
+                            nzTheme="outline">
+                        </span>
+                    </div>
+
+                    <div class="card-header-text">
+                        <h3>Dados</h3>
+                        <p>Gerencie seus dados no sistema.</p>
+                    </div>
+
+                </header>
+
+
+                <div class="settings-option">
+
+                    <div class="option-content">
+
+                        <div class="option-icon danger-option-icon">
+                            <span
+                                nz-icon
+                                nzType="delete"
+                                nzTheme="outline">
+                            </span>
+                        </div>
+
+                        <div class="option-text">
+                            <h4>Excluir minha conta</h4>
+
+                            <p>
+                                Esta ação é permanente e não pode ser desfeita.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-danger">
+                        Excluir conta
+                    </button>
+
+                </div>
+
+            </section>
+
+            <section class="settings-card">
+
+                <header class="card-header">
+
+                    <div class="card-icon">
+                        <span
+                            nz-icon
+                            nzType="info-circle"
+                            nzTheme="outline">
+                        </span>
+                    </div>
+
+                    <div class="card-header-text">
+                        <h3>Sobre</h3>
+                        <p>Informações sobre o Task Manager.</p>
+                    </div>
+
+                </header>
+
+
+                <div class="about-content">
+
+                    <p class="app-version">
+                        Versão 1.0.0
+                    </p>
+
+                    <p class="app-description">
+                        Um gerenciador de tarefas simples e eficiente,
+                        desenvolvido para ajudar na organização das suas atividades.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
 
 </app-main-layout>

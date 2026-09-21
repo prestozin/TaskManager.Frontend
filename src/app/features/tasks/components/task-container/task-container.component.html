@@ -9,18 +9,27 @@
                 <h2 class="header-title">
                     Minhas Tarefas
                 </h2>
-    
-                <button 
+
+                <button
                     class="btn-new-task"
                     type="button"
                     (click)="openTaskForm('create')">
-    
-                    <svg lucidePlus class="icon-new-task"></svg>
-                    <span>Nova Tarefa</span>
-    
+
+                    <span
+                        nz-icon
+                        nzType="plus"
+                        nzTheme="outline"
+                        class="icon-new-task">
+                    </span>
+
+                    <span>
+                        Nova Tarefa
+                    </span>
+
                 </button>
 
             </div>
+
 
             <div class="header-actions">
 
@@ -36,7 +45,12 @@
 
                         <div class="search-container">
 
-                            <svg lucideSearch class="icon-search"></svg>
+                            <span
+                                nz-icon
+                                nzType="search"
+                                nzTheme="outline"
+                                class="icon-search">
+                            </span>
 
                             <input
                                 id="task-search"
@@ -65,17 +79,47 @@
                         (optionSelected)="selectStatus($event)">
                     </app-dropdown>
 
-                    <app-date-picker
-                        label="Data inicial"
-                        [selectedDate]="selectedStartDate()"
-                        (dateSelected)="selectStartDate($event)">
-                    </app-date-picker>
+                    <div class="filter-field">
 
-                     <app-date-picker
-                        label="Data final"
-                        [selectedDate]="selectedEndDate()"
-                        (dateSelected)="selectEndDate($event)">
-                    </app-date-picker>
+                        <label class="filter-label">
+                            Data inicial
+                        </label>
+
+                        <div class="zorro-scope">
+
+                            <nz-date-picker
+                                class="task-date-picker"
+                                nzFormat="dd/MM/yyyy"
+                                nzPlaceHolder="Data inicial"
+                                [nzAllowClear]="false"
+                                [ngModel]="startDate()"
+                                (ngModelChange)="selectStartDate($event)">
+                            </nz-date-picker>
+
+                        </div>
+
+                    </div>
+
+                    <div class="filter-field">
+
+                        <label class="filter-label">
+                            Data final
+                        </label>
+
+                        <div class="zorro-scope">
+
+                            <nz-date-picker
+                                class="task-date-picker"
+                                nzFormat="dd/MM/yyyy"
+                                nzPlaceHolder="Data final"
+                                [nzAllowClear]="false"
+                                [ngModel]="endDate()"
+                                (ngModelChange)="selectEndDate($event)">
+                            </nz-date-picker>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -84,8 +128,16 @@
                     class="btn-clear-filters"
                     (click)="clearFilters()">
 
-                    <svg lucideRotateCcw class="icon-clear-filters"></svg>
-                    <span>Limpar filtros</span>
+                    <span
+                        nz-icon
+                        nzType="reload"
+                        nzTheme="outline"
+                        class="icon-clear-filters">
+                    </span>
+
+                    <span>
+                        Limpar filtros
+                    </span>
 
                 </button>
 
@@ -93,52 +145,70 @@
 
         </header>
 
-
         <div class="task-list-header">
 
             <label class="checkbox-all-tasks">
+
                 <input
                     class="checkbox-input"
-                    [checked]="areVisibleTasksChecked()"
-                    (change)="toggleAllVisibleTasks()"
                     type="checkbox"
-                    [formControl]="allTasksControl">
+                    [checked]="areVisibleTasksChecked()"
+                    [formControl]="allTasksControl"
+                    (change)="toggleAllVisibleTasks()">
+
             </label>
+
 
             <p class="column-title">
                 Tarefas
             </p>
 
+
             <button
                 type="button"
                 class="column-title column-sortable"
                 (click)="orderTasks(TaskSort.CreatedAt)">
+
                 Data de Criação
+
             </button>
+
 
             <button
                 type="button"
                 class="column-title column-sortable"
                 (click)="orderTasks(TaskSort.TaskPriority)">
+
                 Prioridade
+
             </button>
+
 
             <button
                 type="button"
                 class="column-title column-sortable"
                 (click)="orderTasks(TaskSort.TaskStatus)">
+
                 Status
+
             </button>
 
-           <button 
+
+            <button
+                type="button"
                 class="column-title column-sortable"
                 (click)="openDeleteCheckedConfirmation()">
 
-                <svg class="icon-delete" lucideTrash></svg>
+                <span
+                    nz-icon
+                    nzType="delete"
+                    nzTheme="outline"
+                    class="icon-delete">
+                </span>
+
             </button>
 
         </div>
-
 
         <div class="tasks-wrapper">
 
@@ -165,23 +235,27 @@
                 (editTaskClicked)="openTaskForm('edit')"
                 (viewTaskClicked)="openTaskDetails()">
             </app-task-options>
+
         }
 
     </div>
 
-
     <footer class="container-footer">
 
         <p class="footer-text">
+
             Mostrando {{ tasks().length }}
             de {{ pagedResponse()?.totalCount ?? 0 }} tarefas
+
         </p>
+
 
         <div class="pagination">
 
             <span class="pagination-label">
                 Páginas:
             </span>
+
 
             <button
                 type="button"
@@ -191,6 +265,7 @@
                 <<
             </button>
 
+
             <button
                 type="button"
                 class="btn-page"
@@ -199,6 +274,7 @@
                 <
             </button>
 
+
             @for (page of visiblePages(); track page) {
 
                 <button
@@ -206,10 +282,13 @@
                     class="btn-page"
                     [class.active]="currentPage() === page"
                     (click)="changePage(page)">
+
                     {{ page }}
+
                 </button>
 
             }
+
 
             <input
                 #pageInputElement
@@ -222,6 +301,7 @@
                 (keydown.enter)="goToPage(pageInputElement)"
                 (blur)="pageInput.reset()">
 
+
             <button
                 type="button"
                 class="btn-page"
@@ -229,6 +309,7 @@
                 (click)="changePage(currentPage() + 1)">
                 >
             </button>
+
 
             <button
                 type="button"
@@ -249,7 +330,8 @@
             (click)="closeModal()">
         </div>
 
-        <aside 
+
+        <aside
             class="task-details-sidebar"
             [class.closing]="isClosingTaskDetails()">
 
@@ -257,11 +339,11 @@
                 [task]="selectedTask()!"
                 (closeClicked)="closeTaskDetails()"
                 (deleteTaskClicked)="openDeleteConfirmation()"
-                (editTaskClicked)="openTaskForm('edit')"
-                >
+                (editTaskClicked)="openTaskForm('edit')">
             </app-task-view>
 
         </aside>
+
     }
 
     @if (activeModal() === 'delete') {
@@ -277,6 +359,7 @@
     }
 
     @if (activeModal() === 'deleteChecked') {
+
         <app-confirmation-modal
             title="Excluir tarefas selecionadas?"
             description="Essa ação não poderá ser desfeita."
@@ -284,7 +367,9 @@
             (confirm)="deleteCheckedTasks()"
             (cancel)="closeModal()">
         </app-confirmation-modal>
+
     }
+
 
     @if (
         (activeModal() === 'create' || activeModal() === 'edit') &&

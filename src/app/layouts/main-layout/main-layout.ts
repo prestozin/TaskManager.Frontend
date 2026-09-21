@@ -21,6 +21,8 @@ import { FeedbackMessageComponent } from '@shared/components/feedback-message/fe
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })
+
+
 export class MainLayoutComponent {
 
   private tokenService = inject(TokenService);
