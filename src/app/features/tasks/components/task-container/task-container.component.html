@@ -22,14 +22,11 @@
                         class="icon-new-task">
                     </span>
 
-                    <span>
-                        Nova Tarefa
-                    </span>
+                    <span>Nova Tarefa</span>
 
                 </button>
 
             </div>
-
 
             <div class="header-actions">
 
@@ -63,21 +60,65 @@
 
                     </div>
 
-                    <app-dropdown
-                        class="priority-dropdown"
-                        label="Prioridade"
-                        [options]="priorityOptions()"
-                        [selectedOption]="selectedPriority()"
-                        (optionSelected)="selectPriority($event)">
-                    </app-dropdown>
+                    <div class="filter-field">
 
-                    <app-dropdown
-                        class="status-dropdown"
-                        label="Status"
-                        [options]="statusOptions()"
-                        [selectedOption]="selectedStatus()"
-                        (optionSelected)="selectStatus($event)">
-                    </app-dropdown>
+                        <label class="filter-label">
+                            Prioridade
+                        </label>
+
+                        <div class="zorro-scope">
+
+                            <nz-select
+                                class="task-select priority-select"
+                                nzDropdownClassName="task-select-dropdown"
+                                [nzDropdownMatchSelectWidth]="true"
+                                [ngModel]="selectedPriorityId()"
+                                (ngModelChange)="selectPriorityById($event)">
+
+                                @for (priority of priorityOptions(); track priority.id) {
+
+                                    <nz-option
+                                        [nzValue]="priority.id ?? 0"
+                                        [nzLabel]="priority.name">
+                                    </nz-option>
+
+                                }
+
+                            </nz-select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="filter-field">
+
+                        <label class="filter-label">
+                            Status
+                        </label>
+
+                        <div class="zorro-scope">
+
+                            <nz-select
+                                class="task-select status-select"
+                                nzDropdownClassName="task-select-dropdown"
+                                [nzDropdownMatchSelectWidth]="true"
+                                [ngModel]="selectedStatusId()"
+                                (ngModelChange)="selectStatusById($event)">
+
+                                @for (status of statusOptions(); track status.id) {
+
+                                    <nz-option
+                                        [nzValue]="status.id ?? 0"
+                                        [nzLabel]="status.name">
+                                    </nz-option>
+
+                                }
+
+                            </nz-select>
+
+                        </div>
+
+                    </div>
 
                     <div class="filter-field">
 
@@ -135,9 +176,7 @@
                         class="icon-clear-filters">
                     </span>
 
-                    <span>
-                        Limpar filtros
-                    </span>
+                    <span>Limpar filtros</span>
 
                 </button>
 
@@ -158,41 +197,30 @@
 
             </label>
 
-
             <p class="column-title">
                 Tarefas
             </p>
-
 
             <button
                 type="button"
                 class="column-title column-sortable"
                 (click)="orderTasks(TaskSort.CreatedAt)">
-
                 Data de Criação
-
             </button>
-
 
             <button
                 type="button"
                 class="column-title column-sortable"
                 (click)="orderTasks(TaskSort.TaskPriority)">
-
                 Prioridade
-
             </button>
-
 
             <button
                 type="button"
                 class="column-title column-sortable"
                 (click)="orderTasks(TaskSort.TaskStatus)">
-
                 Status
-
             </button>
-
 
             <button
                 type="button"
@@ -243,19 +271,15 @@
     <footer class="container-footer">
 
         <p class="footer-text">
-
             Mostrando {{ tasks().length }}
             de {{ pagedResponse()?.totalCount ?? 0 }} tarefas
-
         </p>
-
 
         <div class="pagination">
 
             <span class="pagination-label">
                 Páginas:
             </span>
-
 
             <button
                 type="button"
@@ -265,7 +289,6 @@
                 <<
             </button>
 
-
             <button
                 type="button"
                 class="btn-page"
@@ -274,7 +297,6 @@
                 <
             </button>
 
-
             @for (page of visiblePages(); track page) {
 
                 <button
@@ -282,13 +304,10 @@
                     class="btn-page"
                     [class.active]="currentPage() === page"
                     (click)="changePage(page)">
-
                     {{ page }}
-
                 </button>
 
             }
-
 
             <input
                 #pageInputElement
@@ -301,7 +320,6 @@
                 (keydown.enter)="goToPage(pageInputElement)"
                 (blur)="pageInput.reset()">
 
-
             <button
                 type="button"
                 class="btn-page"
@@ -309,7 +327,6 @@
                 (click)="changePage(currentPage() + 1)">
                 >
             </button>
-
 
             <button
                 type="button"
@@ -329,7 +346,6 @@
             class="sidebar-backdrop"
             (click)="closeModal()">
         </div>
-
 
         <aside
             class="task-details-sidebar"
@@ -369,7 +385,6 @@
         </app-confirmation-modal>
 
     }
-
 
     @if (
         (activeModal() === 'create' || activeModal() === 'edit') &&

@@ -1,0 +1,29 @@
+@use "variables" as *;
+
+.task-select-dropdown {
+
+    .ant-select-item-option {
+        transition:
+            color 0.15s ease,
+            background-color 0.15s ease;
+
+        &:hover {
+            color: white !important;
+            background-color: $hover-button !important;
+        }
+
+        .ant-select-item-option-content {
+            font-size: 16px;
+        }
+    }
+
+    .ant-select-item-option-active:not(.ant-select-item-option-disabled),
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+        color: white !important;
+        background-color: $hover-button !important;
+    }
+
+    .ant-select-item-option-content {
+        color: inherit;
+    }
+}

@@ -1,0 +1,335 @@
+@use "variables" as *;
+
+$filter-height: 40px;
+$filter-border: #7e8391;
+$filter-radius: 10px;
+$filter-font-size: 16px;
+
+@mixin filter-control {
+    height: $filter-height;
+
+    box-sizing: border-box;
+
+    border: 1px solid $filter-border;
+    border-radius: $filter-radius;
+
+    background-color: white;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.container-header {
+    padding: 20px 50px 30px;
+
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .header-title {
+            margin: 0;
+
+            font-size: 28px;
+            font-weight: 400;
+
+            color: $primary-text-color;
+        }
+
+        .btn-new-task {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 150px;
+            height: $filter-height;
+
+            gap: 6px;
+
+            border: none;
+            border-radius: $filter-radius;
+
+            font-size: 16px;
+
+            color: $secondary-text-color;
+            background-color: $hover-button;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.15s ease,
+                filter 0.15s ease;
+
+            &:hover {
+                filter: brightness(1.1);
+            }
+
+            &:active {
+                transform: scale(0.96);
+            }
+
+            .icon-new-task {
+                display: flex;
+
+                font-size: 20px;
+            }
+        }
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: flex-end;
+
+        margin-top: 15px;
+
+        gap: 40px;
+    }
+}
+
+.task-filters {
+    display: flex;
+    align-items: flex-end;
+
+    gap: 25px;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    .zorro-scope {
+        display: flex;
+        align-items: center;
+
+        height: $filter-height;
+    }
+}
+
+.filter-label {
+    margin-left: 10px;
+
+    font-size: 18px;
+
+    color: $grey-text-color;
+}
+
+.search-container {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    .icon-search {
+        position: absolute;
+
+        left: 15px;
+
+        display: flex;
+
+        font-size: 18px;
+
+        color: gray;
+
+        pointer-events: none;
+
+        z-index: 1;
+    }
+
+    .search-input {
+        width: 270px;
+        height: $filter-height;
+
+        padding: 10px 15px 10px 40px;
+
+        border: 1px solid $filter-border;
+        border-radius: $filter-radius;
+
+        font-size: 16px;
+
+        outline: none;
+
+        transition: border-color 0.15s ease;
+
+        &:hover,
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
+}
+
+.task-select {
+    height: $filter-height;
+}
+
+.priority-select {
+    width: 190px;
+}
+
+.status-select {
+    width: 150px;
+}
+
+.task-date-picker {
+    width: 150px;
+}
+
+:host ::ng-deep .zorro-scope {
+
+    .task-select.ant-select {
+        height: $filter-height;
+
+        .ant-select-selector {
+            @include filter-control;
+
+            width: 100%;
+
+            padding: 0 32px 0 12px;
+        }
+
+        &:hover .ant-select-selector,
+        &.ant-select-focused .ant-select-selector {
+            border-color: $primary-color;
+        }
+    }
+
+    .task-select {
+
+        .ant-select-selection-item,
+        .ant-select-selection-placeholder {
+            height: 38px;
+
+            padding: 0;
+
+            line-height: 38px !important;
+
+            font-size: $filter-font-size;
+
+            color: $primary-text-color;
+
+            overflow: visible;
+            text-overflow: clip;
+            white-space: nowrap;
+        }
+
+        .ant-select-selection-search,
+        .ant-select-selection-search-input {
+            height: 38px;
+        }
+
+        .ant-select-selection-search-input {
+            font-size: $filter-font-size;
+        }
+
+        .ant-select-arrow {
+            top: 50%;
+            right: 12px;
+
+            margin-top: 0;
+
+            color: $primary-text-color;
+
+            transform: translateY(-50%);
+        }
+    }
+
+    .task-date-picker.ant-picker {
+        @include filter-control;
+
+        width: 150px;
+
+        padding: 0 12px;
+
+        &:hover,
+        &.ant-picker-focused {
+            border-color: $primary-color;
+        }
+    }
+
+    .task-date-picker {
+
+        .ant-picker-input {
+            display: flex;
+            align-items: center;
+
+            height: 100%;
+
+            > input {
+                height: 100%;
+
+                padding: 0;
+
+                border: none;
+
+                font-size: 16px;
+
+                color: $primary-text-color;
+                background-color: transparent;
+
+                outline: none;
+
+                &::placeholder {
+                    color: $filter-border;
+                }
+            }
+        }
+
+        .ant-picker-suffix {
+            display: flex;
+            align-items: center;
+
+            margin-left: 8px;
+
+            font-size: 16px;
+
+            color: $primary-text-color;
+        }
+    }
+}
+
+.btn-clear-filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 140px;
+    height: $filter-height;
+
+    margin-left: -15px;
+
+    gap: 4px;
+
+    border: 1px solid $hover-button;
+    border-radius: $filter-radius;
+
+    font-size: 16px;
+
+    color: $hover-button;
+    background-color: transparent;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+
+    &:hover {
+        color: $secondary-text-color;
+        background-color: $hover-button;
+    }
+
+    &:active {
+        transform: scale(0.96);
+    }
+
+    .icon-clear-filters {
+        display: flex;
+
+        font-size: 16px;
+    }
+}
