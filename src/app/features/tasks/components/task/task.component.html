@@ -1,39 +1,47 @@
-
 <div class="task">
 
-    <label class="checkbox">
-        <input 
-            class="checkbox-input"
-            type="checkbox" 
-            [checked]="checked()"
-            (change)="checkedChange.emit(task().id)"
-            [formControl]="taskForm.controls.completed"> 
+    <label
+        nz-checkbox
+        class="task-checkbox"
+        [nzChecked]="checked()"
+        (nzCheckedChange)="checkedChange.emit(task().id)">
     </label>
 
     <div class="task-info">
-        <p 
+
+        <p
             class="task-title"
             (click)="taskClicked.emit(task().id)">
             {{ title() }}
         </p>
-        <p class="description">{{ description() }}</p>
+
+        <p class="description">
+            {{ description() }}
+        </p>
+
     </div>
 
-               
-    <p class="task-details date">{{ task().createdAt | date:'dd/MM/yyyy' }}</p>
-    <p class="task-details priority" [ngClass]="'priority-' + normalizeClass(task().priority)">{{ capitalizeFirst(task().priority) }}</p>
-    <p class="task-details status" [ngClass]="'status-' + normalizeClass(task().status)"> {{ capitalizeFirst(task().status) }} </p>
+    <p class="task-details date">
+        {{ task().createdAt | date:'dd/MM/yyyy' }}
+    </p>
 
-    <img class=
-        "btn-options 
-        "src="icons/task-dots.svg" 
-        #optionsButton 
-        (click)="$event.stopPropagation(); 
-        optionsClicked.emit(optionsButton)" 
-        alt="Task Options"> 
-    
+    <p
+        class="task-details priority"
+        [ngClass]="'priority-' + normalizeClass(task().priority)">
+        {{ capitalizeFirst(task().priority) }}
+    </p>
+
+    <p
+        class="task-details status"
+        [ngClass]="'status-' + normalizeClass(task().status)">
+        {{ capitalizeFirst(task().status) }}
+    </p>
+
+    <img
+        class="btn-options"
+        src="icons/task-dots.svg"
+        #optionsButton
+        (click)="$event.stopPropagation(); optionsClicked.emit(optionsButton)"
+        alt="Task Options">
+
 </div>
-
-     
-              
-  

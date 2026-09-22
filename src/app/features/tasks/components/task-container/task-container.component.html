@@ -28,6 +28,7 @@
 
             </div>
 
+
             <div class="header-actions">
 
                 <div class="task-filters">
@@ -60,35 +61,33 @@
 
                     </div>
 
+
                     <div class="filter-field">
 
                         <label class="filter-label">
                             Prioridade
                         </label>
 
-                        <div class="zorro-scope">
+                        <nz-select
+                            class="task-select priority-select"
+                            nzDropdownClassName="task-select-dropdown"
+                            [nzDropdownMatchSelectWidth]="true"
+                            [ngModel]="selectedPriorityId()"
+                            (ngModelChange)="selectPriorityById($event)">
 
-                            <nz-select
-                                class="task-select priority-select"
-                                nzDropdownClassName="task-select-dropdown"
-                                [nzDropdownMatchSelectWidth]="true"
-                                [ngModel]="selectedPriorityId()"
-                                (ngModelChange)="selectPriorityById($event)">
+                            @for (priority of priorityOptions(); track priority.id) {
 
-                                @for (priority of priorityOptions(); track priority.id) {
+                                <nz-option
+                                    [nzValue]="priority.id ?? 0"
+                                    [nzLabel]="priority.name">
+                                </nz-option>
 
-                                    <nz-option
-                                        [nzValue]="priority.id ?? 0"
-                                        [nzLabel]="priority.name">
-                                    </nz-option>
+                            }
 
-                                }
-
-                            </nz-select>
-
-                        </div>
+                        </nz-select>
 
                     </div>
+
 
                     <div class="filter-field">
 
@@ -96,29 +95,26 @@
                             Status
                         </label>
 
-                        <div class="zorro-scope">
+                        <nz-select
+                            class="task-select status-select"
+                            nzDropdownClassName="task-select-dropdown"
+                            [nzDropdownMatchSelectWidth]="true"
+                            [ngModel]="selectedStatusId()"
+                            (ngModelChange)="selectStatusById($event)">
 
-                            <nz-select
-                                class="task-select status-select"
-                                nzDropdownClassName="task-select-dropdown"
-                                [nzDropdownMatchSelectWidth]="true"
-                                [ngModel]="selectedStatusId()"
-                                (ngModelChange)="selectStatusById($event)">
+                            @for (status of statusOptions(); track status.id) {
 
-                                @for (status of statusOptions(); track status.id) {
+                                <nz-option
+                                    [nzValue]="status.id ?? 0"
+                                    [nzLabel]="status.name">
+                                </nz-option>
 
-                                    <nz-option
-                                        [nzValue]="status.id ?? 0"
-                                        [nzLabel]="status.name">
-                                    </nz-option>
+                            }
 
-                                }
-
-                            </nz-select>
-
-                        </div>
+                        </nz-select>
 
                     </div>
+
 
                     <div class="filter-field">
 
@@ -126,20 +122,17 @@
                             Data inicial
                         </label>
 
-                        <div class="zorro-scope">
-
-                            <nz-date-picker
-                                class="task-date-picker"
-                                nzFormat="dd/MM/yyyy"
-                                nzPlaceHolder="Data inicial"
-                                [nzAllowClear]="false"
-                                [ngModel]="startDate()"
-                                (ngModelChange)="selectStartDate($event)">
-                            </nz-date-picker>
-
-                        </div>
+                        <nz-date-picker
+                            class="task-date-picker"
+                            nzFormat="dd/MM/yyyy"
+                            nzPlaceHolder="Data inicial"
+                            [nzAllowClear]="false"
+                            [ngModel]="startDate()"
+                            (ngModelChange)="selectStartDate($event)">
+                        </nz-date-picker>
 
                     </div>
+
 
                     <div class="filter-field">
 
@@ -147,59 +140,55 @@
                             Data final
                         </label>
 
-                        <div class="zorro-scope">
-
-                            <nz-date-picker
-                                class="task-date-picker"
-                                nzFormat="dd/MM/yyyy"
-                                nzPlaceHolder="Data final"
-                                [nzAllowClear]="false"
-                                [ngModel]="endDate()"
-                                (ngModelChange)="selectEndDate($event)">
-                            </nz-date-picker>
-
-                        </div>
+                        <nz-date-picker
+                            class="task-date-picker"
+                            nzFormat="dd/MM/yyyy"
+                            nzPlaceHolder="Data final"
+                            [nzAllowClear]="false"
+                            [ngModel]="endDate()"
+                            (ngModelChange)="selectEndDate($event)">
+                        </nz-date-picker>
 
                     </div>
 
+
+                    <button
+                        type="button"
+                        class="btn-clear-filters"
+                        (click)="clearFilters()">
+
+                        <span
+                            nz-icon
+                            nzType="reload"
+                            nzTheme="outline"
+                            class="icon-clear-filters">
+                        </span>
+
+                        <span>Limpar filtros</span>
+
+                    </button>
+
                 </div>
-
-                <button
-                    type="button"
-                    class="btn-clear-filters"
-                    (click)="clearFilters()">
-
-                    <span
-                        nz-icon
-                        nzType="reload"
-                        nzTheme="outline"
-                        class="icon-clear-filters">
-                    </span>
-
-                    <span>Limpar filtros</span>
-
-                </button>
 
             </div>
 
         </header>
 
+
         <div class="task-list-header">
 
-            <label class="checkbox-all-tasks">
-
-                <input
-                    class="checkbox-input"
-                    type="checkbox"
-                    [checked]="areVisibleTasksChecked()"
-                    [formControl]="allTasksControl"
-                    (change)="toggleAllVisibleTasks()">
-
+            <label
+                nz-checkbox
+                class="task-checkbox"
+                [nzChecked]="areVisibleTasksChecked()"
+                (nzCheckedChange)="toggleAllVisibleTasks()">
             </label>
+
 
             <p class="column-title">
                 Tarefas
             </p>
+
 
             <button
                 type="button"
@@ -208,6 +197,7 @@
                 Data de Criação
             </button>
 
+
             <button
                 type="button"
                 class="column-title column-sortable"
@@ -215,12 +205,14 @@
                 Prioridade
             </button>
 
+
             <button
                 type="button"
                 class="column-title column-sortable"
                 (click)="orderTasks(TaskSort.TaskStatus)">
                 Status
             </button>
+
 
             <button
                 type="button"
@@ -238,6 +230,7 @@
 
         </div>
 
+
         <div class="tasks-wrapper">
 
             @for (task of tasks(); track task.id) {
@@ -254,6 +247,7 @@
 
         </div>
 
+
         @if (activeTaskId() && selectedTaskPosition()) {
 
             <app-task-options
@@ -268,6 +262,7 @@
 
     </div>
 
+
     <footer class="container-footer">
 
         <p class="footer-text">
@@ -275,27 +270,31 @@
             de {{ pagedResponse()?.totalCount ?? 0 }} tarefas
         </p>
 
+
         <div class="pagination">
 
             <span class="pagination-label">
                 Páginas:
             </span>
 
+
             <button
                 type="button"
                 class="btn-page"
                 [disabled]="currentPage() === 1"
                 (click)="changePage(1)">
-                <<
+                &lt;&lt;
             </button>
+
 
             <button
                 type="button"
                 class="btn-page"
                 [disabled]="currentPage() === 1"
                 (click)="changePage(currentPage() - 1)">
-                <
+                &lt;
             </button>
+
 
             @for (page of visiblePages(); track page) {
 
@@ -309,6 +308,7 @@
 
             }
 
+
             <input
                 #pageInputElement
                 class="page-input"
@@ -320,25 +320,28 @@
                 (keydown.enter)="goToPage(pageInputElement)"
                 (blur)="pageInput.reset()">
 
+
             <button
                 type="button"
                 class="btn-page"
                 [disabled]="currentPage() === (pagedResponse()?.totalPages ?? 1)"
                 (click)="changePage(currentPage() + 1)">
-                >
+                &gt;
             </button>
+
 
             <button
                 type="button"
                 class="btn-page"
                 [disabled]="currentPage() === (pagedResponse()?.totalPages ?? 1)"
                 (click)="changePage(pagedResponse()?.totalPages ?? 1)">
-                >>
+                &gt;&gt;
             </button>
 
         </div>
 
     </footer>
+
 
     @if (activeModal() === 'view' && selectedTask()) {
 
@@ -362,6 +365,7 @@
 
     }
 
+
     @if (activeModal() === 'delete') {
 
         <app-confirmation-modal
@@ -374,6 +378,7 @@
 
     }
 
+
     @if (activeModal() === 'deleteChecked') {
 
         <app-confirmation-modal
@@ -385,6 +390,7 @@
         </app-confirmation-modal>
 
     }
+
 
     @if (
         (activeModal() === 'create' || activeModal() === 'edit') &&

@@ -2,6 +2,7 @@ import { Component, computed, HostListener, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -32,6 +33,7 @@ import { TaskComponent } from '../task/task.component';
         TaskOptionsComponent,
         ConfirmationModalComponent,
         TaskViewComponent,
+        NzCheckboxModule,
         NzDatePickerModule,
         NzIconModule,
         NzSelectModule
@@ -80,7 +82,6 @@ export class TaskContainerComponent {
     readonly activeModal = this.taskUiState.activeModal;
     readonly isClosingTaskDetails = this.taskUiState.isClosingTaskDetails;
 
-    readonly allTasksControl = new FormControl(false, { nonNullable: true });
     readonly searchControl = new FormControl('', { nonNullable: true });
     readonly pageInput = new FormControl<number | null>(null);
 
@@ -154,9 +155,8 @@ export class TaskContainerComponent {
         const priority = this.priorityOptions()
             .find(option => (option.id ?? 0) === selectedId);
 
-        if (!priority) {
+        if (!priority)
             return;
-        }
 
         this.taskFacade.selectPriority(priority);
     }
@@ -167,9 +167,8 @@ export class TaskContainerComponent {
         const status = this.statusOptions()
             .find(option => (option.id ?? 0) === selectedId);
 
-        if (!status) {
+        if (!status)
             return;
-        }
 
         this.taskFacade.selectStatus(status);
     }
@@ -196,9 +195,8 @@ export class TaskContainerComponent {
     changePage(page: number | null): void {
         const totalPages = this.pagedResponse()?.totalPages ?? 0;
 
-        if (page === null || page < 1 || page > totalPages) {
+        if (page === null || page < 1 || page > totalPages)
             return;
-        }
 
         this.taskUiState.clearCheckedTasks();
         this.taskFacade.changePage(page);
@@ -224,9 +222,8 @@ export class TaskContainerComponent {
     deleteTask(): void {
         const taskId = this.activeTaskId();
 
-        if (!taskId) {
+        if (!taskId)
             return;
-        }
 
         this.taskFacade.deleteTask([taskId]);
 
@@ -234,9 +231,8 @@ export class TaskContainerComponent {
     }
 
     deleteCheckedTasks(): void {
-        if (this.checkedTaskIds().size === 0) {
+        if (this.checkedTaskIds().size === 0)
             return;
-        }
 
         this.taskFacade.deleteTask(Array.from(this.checkedTaskIds()));
 
@@ -248,9 +244,8 @@ export class TaskContainerComponent {
         if (mode === 'edit') {
             const taskId = this.activeTaskId();
 
-            if (!taskId) {
+            if (!taskId)
                 return;
-            }
 
             this.taskFacade.getTaskById(taskId);
         }
@@ -265,9 +260,8 @@ export class TaskContainerComponent {
     openTaskDetails(): void {
         const taskId = this.activeTaskId();
 
-        if (!taskId) {
+        if (!taskId)
             return;
-        }
 
         this.taskFacade.getTaskById(taskId);
 
@@ -294,9 +288,8 @@ export class TaskContainerComponent {
         const taskPage = element.closest('.task-page') as HTMLElement | null;
         const container = element.closest('.container') as HTMLElement | null;
 
-        if (!taskPage || !container) {
+        if (!taskPage || !container)
             return;
-        }
 
         const rect = element.getBoundingClientRect();
         const taskPageRect = taskPage.getBoundingClientRect();
@@ -324,18 +317,16 @@ export class TaskContainerComponent {
     }
 
     openDeleteConfirmation(): void {
-        if (!this.activeTaskId()) {
+        if (!this.activeTaskId())
             return;
-        }
 
         this.taskUiState.openModal('delete');
         this.taskUiState.closeTaskOptions();
     }
 
     openDeleteCheckedConfirmation(): void {
-        if (this.checkedTaskIds().size === 0) {
+        if (this.checkedTaskIds().size === 0)
             return;
-        }
 
         this.taskUiState.openModal('deleteChecked');
     }
@@ -354,7 +345,6 @@ export class TaskContainerComponent {
         if (!date) {
             return null;
         }
-
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
@@ -366,7 +356,6 @@ export class TaskContainerComponent {
         if (!date) {
             return null;
         }
-
         const [year, month, day] = date.split('-').map(Number);
 
         return new Date(year, month - 1, day);

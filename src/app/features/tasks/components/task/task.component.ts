@@ -1,16 +1,19 @@
-import { Component, computed, input, output } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgClass } from '@angular/common';
-import { TaskResponse } from '../../models/task.models';
-import { normalizeClass, capitalizeFirst, truncateText } from '@shared/utils/string.util';
+import { Component, computed, input, output } from '@angular/core';
+
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+
 import { TASK_DESCRIPTION_PREVIEW_LENGTH } from '@shared/constants/constants';
+import { capitalizeFirst, normalizeClass, truncateText } from '@shared/utils/string.util';
+
+import { TaskResponse } from '../../models/task.models';
 
 @Component({
   selector: 'app-task',
   imports: [
-    ReactiveFormsModule,
     DatePipe,
-    NgClass
+    NgClass,
+    NzCheckboxModule
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss',
@@ -23,25 +26,17 @@ export class TaskComponent {
 
   task = input.required<TaskResponse>();
 
+  checked = input(false);
+
   optionsClicked = output<HTMLElement>();
   taskClicked = output<string>();
-
-  checked = input(false);
   checkedChange = output<string>();
-
-  taskForm = new FormGroup({
-    title: new FormControl('', { nonNullable: true }),
-    completed: new FormControl(false, { nonNullable: true })
-  });
 
   readonly title = computed(() =>
     capitalizeFirst(this.task().title)
   );
 
   readonly description = computed(() =>
-    truncateText(
-      capitalizeFirst(this.task().description),
-      TASK_DESCRIPTION_PREVIEW_LENGTH
-    )
+    truncateText(capitalizeFirst(this.task().description),TASK_DESCRIPTION_PREVIEW_LENGTH)
   );
 }

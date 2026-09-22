@@ -68,13 +68,12 @@ export class ProfileFacade {
                     this.feedbackService.showMessage(response.message, '', EFeedbackType.Error);
                     return;
                 }
-
                 this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
                 this.authFacade.logout();
             },
             error: (error: HttpErrorResponse) => {
-                this.feedbackService.showMessage(this.handleError(error), '', EFeedbackType.Error)
+                this.feedbackService.showMessage(this.handleError(error), '', EFeedbackType.Error);
             }
-        })
+        });
     }
 }

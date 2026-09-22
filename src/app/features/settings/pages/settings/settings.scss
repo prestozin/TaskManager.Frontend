@@ -7,14 +7,16 @@ $danger-color: #ff4d4f;
 
 .settings-page {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+
+    box-sizing: border-box;
 }
 
 .settings-header {
     width: 100%;
     max-width: 1200px;
 
-    margin: 0 auto 15px;
+    margin: 0 auto 25px;
 
     h2 {
         margin: 0;
@@ -28,7 +30,7 @@ $danger-color: #ff4d4f;
     p {
         margin: 6px 0 0;
 
-        font-size: 15px;
+        font-size: 16px;
 
         color: $settings-secondary-text;
     }
@@ -42,6 +44,7 @@ $danger-color: #ff4d4f;
     max-width: 1200px;
 
     margin: 0 auto;
+    padding-bottom: 50px;
 
     gap: 12px;
 }
@@ -87,7 +90,7 @@ $danger-color: #ff4d4f;
     color: $primary-color;
 
     [nz-icon] {
-        font-size: 24px;
+        font-size: 26px;
     }
 }
 
@@ -97,7 +100,7 @@ $danger-color: #ff4d4f;
     h3 {
         margin: 0;
 
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 600;
 
         color: $primary-text-color;
@@ -106,7 +109,7 @@ $danger-color: #ff4d4f;
     p {
         margin: 3px 0 0;
 
-        font-size: 14px;
+        font-size: 16px;
 
         color: $settings-secondary-text;
     }
@@ -152,7 +155,7 @@ $danger-color: #ff4d4f;
     color: $primary-color;
 
     [nz-icon] {
-        font-size: 22px;
+        font-size: 24px;
     }
 }
 
@@ -162,7 +165,7 @@ $danger-color: #ff4d4f;
     h4 {
         margin: 0;
 
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
 
         color: $primary-text-color;
@@ -171,12 +174,11 @@ $danger-color: #ff4d4f;
     p {
         margin: 3px 0 0;
 
-        font-size: 14px;
+        font-size: 15px;
 
         color: $settings-secondary-text;
     }
 }
-
 
 .btn-option,
 .btn-danger {
@@ -192,7 +194,7 @@ $danger-color: #ff4d4f;
 
     background-color: white;
 
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
 
     cursor: pointer;
@@ -230,14 +232,13 @@ $danger-color: #ff4d4f;
     }
 }
 
-
 nz-switch {
     flex-shrink: 0;
 }
 
-
 .page-size-select {
-    width: 145px;
+    width: 170px;
+    height: 42px;
 
     flex-shrink: 0;
 }
@@ -252,6 +253,160 @@ nz-switch {
     color: $danger-color;
 }
 
+.delete-account-option {
+
+    &.open {
+
+        .settings-option {
+            border-bottom: 1px solid $settings-divider-color;
+        }
+    }
+}
+
+.delete-account-content {
+    display: flex;
+    flex-direction: column;
+
+    padding: 15px 5px 5px;
+
+    gap: 15px;
+
+    --input-width: 100%;
+    --input-height: 42px;
+    --input-padding: 0 15px;
+    --input-border: 1px solid #{$settings-border-color};
+    --input-radius: 8px;
+    --input-background: white;
+    --input-text-color: #{$primary-text-color};
+    --input-font-size: 15px;
+    --input-placeholder-color: #{$settings-secondary-text};
+    --input-focus-border: 1px solid #{$danger-color};
+    --error-message-margin: 4px 0 0;
+}
+
+.delete-warning {
+    display: flex;
+    align-items: flex-start;
+
+    padding: 12px 15px;
+
+    gap: 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba($danger-color, 0.3);
+    border-radius: 8px;
+
+    background-color: rgba($danger-color, 0.05);
+
+    color: $danger-color;
+
+    [nz-icon] {
+        flex-shrink: 0;
+
+        margin-top: 2px;
+
+        font-size: 20px;
+    }
+
+    strong {
+        display: block;
+
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    p {
+        margin: 3px 0 0;
+
+        font-size: 14px;
+
+        color: $settings-secondary-text;
+    }
+}
+
+.delete-password-field {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    gap: 7px;
+
+    label {
+        font-size: 15px;
+        font-weight: 500;
+
+        color: $primary-text-color;
+    }
+
+    app-input-forms {
+        display: block;
+
+        width: 100%;
+    }
+}
+
+.delete-account-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+}
+
+.btn-cancel,
+.btn-confirm-delete {
+    min-width: 110px;
+    height: 36px;
+
+    padding: 0 15px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.btn-cancel {
+    border: 1px solid $settings-border-color;
+
+    background-color: white;
+
+    color: $primary-text-color;
+
+    &:hover {
+        background-color: $settings-divider-color;
+        border-color: darken($settings-border-color, 5%);
+    }
+}
+
+.btn-confirm-delete {
+    border: 1px solid $danger-color;
+
+    background-color: $danger-color;
+
+    color: white;
+
+    &:hover {
+        background-color: darken($danger-color, 6%);
+        border-color: darken($danger-color, 6%);
+
+        box-shadow: 0 4px 10px rgba($danger-color, 0.2);
+    }
+}
 
 .about-content {
     padding: 12px 5px 2px;
@@ -259,7 +414,7 @@ nz-switch {
     h4 {
         margin: 0;
 
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
 
         color: $primary-text-color;
@@ -268,7 +423,7 @@ nz-switch {
     .app-version {
         margin: 3px 0 0;
 
-        font-size: 12px;
+        font-size: 15px;
 
         color: $settings-secondary-text;
     }
@@ -276,26 +431,56 @@ nz-switch {
     .app-description {
         margin: 5px 0 0;
 
-        font-size: 12px;
+        font-size: 14px;
         line-height: 1.5;
 
         color: $settings-secondary-text;
     }
 }
 
+:host ::ng-deep {
+
+    .page-size-select {
+
+        .ant-select-selector {
+            display: flex;
+            align-items: center;
+
+            height: 42px !important;
+
+            padding: 0 14px !important;
+
+            border-radius: 8px !important;
+
+            font-size: 18px !important;
+        }
+
+        .ant-select-selection-item,
+        .ant-select-selection-placeholder {
+            display: flex;
+            align-items: center;
+
+            font-size: 18px !important;
+            font-weight: 400 !important;
+        }
+
+        .ant-select-arrow {
+            font-size: 13px;
+        }
+    }
+}
 
 @media (max-width: 900px) {
 
     .settings-page {
-        padding: 20px 25px 30px;
+        padding: 20px 25px 40px;
     }
 }
-
 
 @media (max-width: 650px) {
 
     .settings-page {
-        padding: 20px 15px 30px;
+        padding: 20px 15px 40px;
     }
 
     .settings-header {
@@ -320,5 +505,14 @@ nz-switch {
         width: 100%;
 
         margin-left: 0;
+    }
+
+    .delete-account-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancel,
+    .btn-confirm-delete {
+        width: 100%;
     }
 }

@@ -54,6 +54,7 @@
             overflow: hidden;
 
             font-size: 15px;
+            font-weight: 400;
 
             color: $grey-text-color;
         }
@@ -86,55 +87,62 @@
     .date {
         color: $black-gray;
     }
+}
 
-    .checkbox-input {
-        appearance: none;
+:host ::ng-deep {
 
-        width: 15px;
-        height: 15px;
+    .task-checkbox {
 
-        margin: 0;
+        .ant-checkbox-inner {
+            width: 16px;
+            height: 16px;
 
-        border: 1.5px solid $grey-text-color;
-        border-radius: 4px;
+            border: 1.5px solid $grey-text-color;
+            border-radius: 4px;
 
-        background-color: white;
+            background-color: white;
 
-        cursor: pointer;
+            transition:
+                background-color 0.15s ease,
+                border-color 0.15s ease,
+                transform 0.1s ease;
+        }
 
-        transition:
-            background-color 0.15s ease,
-            border-color 0.15s ease,
-            transform 0.1s ease;
+        .ant-checkbox:hover {
 
-        &:hover {
+            .ant-checkbox-inner {
+                border-color: $hover-button;
+                background-color: #eef3fb;
+            }
+        }
+
+        .ant-checkbox-checked {
+
+            .ant-checkbox-inner {
+                border-color: $hover-button;
+                background-color: $hover-button;
+            }
+
+            &::after {
+                border-color: $hover-button;
+            }
+        }
+
+        .ant-checkbox-checked .ant-checkbox-inner::after {
+            border-color: white;
+        }
+
+        .ant-checkbox-input:focus + .ant-checkbox-inner {
             border-color: $hover-button;
-            background-color: #eef3fb;
+
+            box-shadow: 0 0 0 2px rgba($hover-button, 0.1);
         }
 
-        &:checked {
-            border-color: $hover-button;
-            background-color: $hover-button;
-        }
+        .ant-checkbox:active {
 
-        &:checked::after {
-            content: '';
-
-            display: block;
-
-            width: 3px;
-            height: 7px;
-
-            margin: 1px 0 0 4.4px;
-
-            border: solid white;
-            border-width: 0 2px 2px 0;
-
-            transform: rotate(45deg);
-        }
-
-        &:active {
-            transform: scale(0.9);
+            .ant-checkbox-inner {
+                transform: scale(0.9);
+            }
         }
     }
 }

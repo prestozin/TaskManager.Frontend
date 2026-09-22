@@ -1,0 +1,43 @@
+@use "variables" as *;
+
+.cdk-overlay-container {
+
+    .page-size-dropdown {
+
+        .ant-select-item-option,
+        .ant-select-item-option-content {
+            font-size: 18px !important;
+            font-weight: 400 !important;
+        }
+    }
+
+    .task-select-dropdown {
+
+        .ant-select-item-option {
+            font-size: 18px !important;
+            font-weight: 400 !important;
+
+            transition:
+                color 0.15s ease,
+                background-color 0.15s ease;
+
+            &:hover {
+                color: white !important;
+                background-color: $hover-button !important;
+            }
+        }
+
+        .ant-select-item-option-content {
+            color: inherit;
+
+            font-size: 18px !important;
+            font-weight: 400 !important;
+        }
+
+        .ant-select-item-option-active:not(.ant-select-item-option-disabled),
+        .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+            color: white !important;
+            background-color: $hover-button !important;
+        }
+    }
+}

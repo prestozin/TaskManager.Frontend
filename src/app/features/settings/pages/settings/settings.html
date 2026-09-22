@@ -3,11 +3,13 @@
     <div body-content class="settings-page">
 
         <header class="settings-header">
+
             <h2>Configurações</h2>
 
             <p>
                 Gerencie suas preferências e informações da sua conta.
             </p>
+
         </header>
 
 
@@ -18,16 +20,23 @@
                 <header class="card-header">
 
                     <div class="card-icon">
+
                         <span
                             nz-icon
                             nzType="user"
                             nzTheme="outline">
                         </span>
+
                     </div>
 
                     <div class="card-header-text">
+
                         <h3>Conta</h3>
-                        <p>Configurações da sua conta.</p>
+
+                        <p>
+                            Configurações da sua conta.
+                        </p>
+
                     </div>
 
                 </header>
@@ -38,19 +47,23 @@
                     <div class="option-content">
 
                         <div class="option-icon">
+
                             <span
                                 nz-icon
                                 nzType="edit"
                                 nzTheme="outline">
                             </span>
+
                         </div>
 
                         <div class="option-text">
+
                             <h4>Informações pessoais</h4>
 
                             <p>
                                 Atualize seu nome, cargo e outras informações.
                             </p>
+
                         </div>
 
                     </div>
@@ -70,19 +83,23 @@
                     <div class="option-content">
 
                         <div class="option-icon">
+
                             <span
                                 nz-icon
                                 nzType="lock"
                                 nzTheme="outline">
                             </span>
+
                         </div>
 
                         <div class="option-text">
+
                             <h4>Alterar senha</h4>
 
                             <p>
                                 Atualize a senha utilizada para acessar sua conta.
                             </p>
+
                         </div>
 
                     </div>
@@ -97,21 +114,29 @@
 
             </section>
 
+
             <section class="settings-card">
 
                 <header class="card-header">
 
                     <div class="card-icon">
+
                         <span
                             nz-icon
                             nzType="unordered-list"
                             nzTheme="outline">
                         </span>
+
                     </div>
 
                     <div class="card-header-text">
+
                         <h3>Tarefas</h3>
-                        <p>Preferências das suas tarefas.</p>
+
+                        <p>
+                            Preferências das suas tarefas.
+                        </p>
+
                     </div>
 
                 </header>
@@ -122,28 +147,30 @@
                     <div class="option-content">
 
                         <div class="option-icon">
+
                             <span
                                 nz-icon
                                 nzType="check-circle"
                                 nzTheme="outline">
                             </span>
+
                         </div>
 
                         <div class="option-text">
+
                             <h4>Confirmar antes de excluir</h4>
 
                             <p>
                                 Exibe uma confirmação antes de excluir uma tarefa.
                             </p>
+
                         </div>
 
                     </div>
 
-                   <div class="zorro-scope">
-                        <nz-switch
+                    <nz-switch
                         [(ngModel)]="confirmTaskDelete">
-                        </nz-switch>
-                    </div>
+                    </nz-switch>
 
                 </div>
 
@@ -153,121 +180,214 @@
                     <div class="option-content">
 
                         <div class="option-icon">
+
                             <span
                                 nz-icon
                                 nzType="ordered-list"
                                 nzTheme="outline">
                             </span>
+
                         </div>
 
                         <div class="option-text">
+
                             <h4>Tarefas por página</h4>
 
                             <p>
                                 Define quantas tarefas são exibidas por página.
                             </p>
+
                         </div>
 
                     </div>
 
-                    <div class="zorro-scope">
+                    <nz-select
+                        class="page-size-select"
+                        nzDropdownClassName="page-size-dropdown"
+                        [nzOpen]="isPageSizeSelectOpen()"
+                        (nzOpenChange)="isPageSizeSelectOpen.set($event)"
+                        [(ngModel)]="taskPageSize">
 
-                        <nz-select
+                        <nz-option
+                            [nzValue]="10"
+                            nzLabel="10">
+                        </nz-option>
 
-                            class="page-size-select"
-                            [(ngModel)]="taskPageSize">
-    
-                            <nz-option
-                                [nzValue]="10"
-                                nzLabel="10">
-                            </nz-option>
-    
-                            <nz-option
-                                [nzValue]="20"
-                                nzLabel="20">
-                            </nz-option>
-    
-                            <nz-option
-                                [nzValue]="30"
-                                nzLabel="30">
-                            </nz-option>
+                        <nz-option
+                            [nzValue]="20"
+                            nzLabel="20">
+                        </nz-option>
 
-                        </nz-select>
+                        <nz-option
+                            [nzValue]="30"
+                            nzLabel="30">
+                        </nz-option>
 
-                    </div>
-
+                    </nz-select>
 
                 </div>
 
             </section>
+
 
             <section class="settings-card">
 
                 <header class="card-header">
 
                     <div class="card-icon danger-header-icon">
+
                         <span
                             nz-icon
                             nzType="delete"
                             nzTheme="outline">
                         </span>
+
                     </div>
 
                     <div class="card-header-text">
+
                         <h3>Dados</h3>
-                        <p>Gerencie seus dados no sistema.</p>
+
+                        <p>
+                            Gerencie seus dados no sistema.
+                        </p>
+
                     </div>
 
                 </header>
 
 
-                <div class="settings-option">
+                <div
+                    class="delete-account-option"
+                    [class.open]="isDeleteAccountOpen()">
 
-                    <div class="option-content">
+                    <div class="settings-option">
 
-                        <div class="option-icon danger-option-icon">
-                            <span
-                                nz-icon
-                                nzType="delete"
-                                nzTheme="outline">
-                            </span>
+                        <div class="option-content">
+
+                            <div class="option-icon danger-option-icon">
+
+                                <span
+                                    nz-icon
+                                    nzType="delete"
+                                    nzTheme="outline">
+                                </span>
+
+                            </div>
+
+                            <div class="option-text">
+
+                                <h4>Excluir minha conta</h4>
+
+                                <p>
+                                    Esta ação é permanente e não pode ser desfeita.
+                                </p>
+
+                            </div>
+
                         </div>
 
-                        <div class="option-text">
-                            <h4>Excluir minha conta</h4>
-
-                            <p>
-                                Esta ação é permanente e não pode ser desfeita.
-                            </p>
-                        </div>
+                        <button
+                            type="button"
+                            class="btn-danger"
+                            (click)="toggleDeleteAccount()">
+                            Excluir conta
+                        </button>
 
                     </div>
 
-                    <button
-                        type="button"
-                        class="btn-danger">
-                        Excluir conta
-                    </button>
+
+                    @if (isDeleteAccountOpen()) {
+
+                        <div class="delete-account-content">
+
+                            <div class="delete-warning">
+
+                                <span
+                                    nz-icon
+                                    nzType="exclamation-circle"
+                                    nzTheme="outline">
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        Atenção: esta ação é permanente.
+                                    </strong>
+
+                                    <p>
+                                        Todos os seus dados serão excluídos e não poderão ser recuperados.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="delete-password-field">
+
+                                <label>
+                                    Digite sua senha para continuar
+                                </label>
+
+                                <app-input-forms
+                                    type="password"
+                                    placeholder="Sua senha"
+                                    [control]="deletePassword">
+                                </app-input-forms>
+
+                            </div>
+
+
+                            <div class="delete-account-actions">
+
+                                <button
+                                    type="button"
+                                    class="btn-cancel"
+                                    (click)="closeDeleteAccount()">
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-confirm-delete"
+                                    (click)="openDeleteConfirmation()">
+                                    Confirmar
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    }
 
                 </div>
 
             </section>
+
 
             <section class="settings-card">
 
                 <header class="card-header">
 
                     <div class="card-icon">
+
                         <span
                             nz-icon
                             nzType="info-circle"
                             nzTheme="outline">
                         </span>
+
                     </div>
 
                     <div class="card-header-text">
+
                         <h3>Sobre</h3>
-                        <p>Informações sobre o Task Manager.</p>
+
+                        <p>
+                            Informações sobre o Task Manager.
+                        </p>
+
                     </div>
 
                 </header>
