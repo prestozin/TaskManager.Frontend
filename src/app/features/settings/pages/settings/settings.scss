@@ -47,6 +47,8 @@ $danger-color: #ff4d4f;
     padding-bottom: 50px;
 
     gap: 12px;
+
+    box-sizing: border-box;
 }
 
 .settings-card {
@@ -243,6 +245,161 @@ nz-switch {
     flex-shrink: 0;
 }
 
+.change-password-option {
+
+    &.open {
+
+        .settings-option {
+            border-bottom: 1px solid $settings-divider-color;
+        }
+    }
+}
+
+.change-password-content {
+    display: flex;
+    flex-direction: column;
+
+    padding: 15px 5px 5px;
+
+    gap: 15px;
+}
+
+.password-field,
+.delete-password-field {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    gap: 7px;
+
+    label {
+        font-size: 15px;
+        font-weight: 500;
+
+        color: $primary-text-color;
+    }
+}
+
+.password-input-container {
+    position: relative;
+
+    width: 100%;
+
+    input {
+        width: 100%;
+        height: 42px;
+
+        padding: 0 45px 0 15px;
+
+        box-sizing: border-box;
+
+        border: 1px solid $settings-border-color;
+        border-radius: 8px;
+
+        background-color: white;
+        color: $primary-text-color;
+
+        font-size: 15px;
+        font-weight: 400;
+
+        outline: none;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+
+        &::placeholder {
+            color: $settings-secondary-text;
+        }
+
+        &:focus {
+            border-color: $primary-color;
+
+            box-shadow: 0 0 0 2px rgba($primary-color, 0.08);
+        }
+    }
+}
+
+.btn-password-visibility {
+    position: absolute;
+
+    top: 50%;
+    right: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    background-color: transparent;
+    color: $settings-secondary-text;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transform: translateY(-50%);
+
+    transition: color 0.15s ease;
+
+    &:hover {
+        color: $primary-color;
+    }
+}
+
+.password-error {
+    margin: 0;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    color: $danger-color;
+}
+
+.change-password-actions,
+.delete-account-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+}
+
+.btn-confirm-password {
+    min-width: 110px;
+    height: 36px;
+
+    padding: 0 15px;
+
+    border: 1px solid $primary-color;
+    border-radius: 8px;
+
+    background-color: $primary-color;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
+
+    &:hover {
+        background-color: $hover-button;
+        border-color: $hover-button;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
 .danger-header-icon {
     background-color: rgba($danger-color, 0.1);
 
@@ -270,18 +427,6 @@ nz-switch {
     padding: 15px 5px 5px;
 
     gap: 15px;
-
-    --input-width: 100%;
-    --input-height: 42px;
-    --input-padding: 0 15px;
-    --input-border: 1px solid #{$settings-border-color};
-    --input-radius: 8px;
-    --input-background: white;
-    --input-text-color: #{$primary-text-color};
-    --input-font-size: 15px;
-    --input-placeholder-color: #{$settings-secondary-text};
-    --input-focus-border: 1px solid #{$danger-color};
-    --error-message-margin: 4px 0 0;
 }
 
 .delete-warning {
@@ -323,35 +468,6 @@ nz-switch {
 
         color: $settings-secondary-text;
     }
-}
-
-.delete-password-field {
-    display: flex;
-    flex-direction: column;
-
-    width: 100%;
-
-    gap: 7px;
-
-    label {
-        font-size: 15px;
-        font-weight: 500;
-
-        color: $primary-text-color;
-    }
-
-    app-input-forms {
-        display: block;
-
-        width: 100%;
-    }
-}
-
-.delete-account-actions {
-    display: flex;
-    justify-content: flex-end;
-
-    gap: 10px;
 }
 
 .btn-cancel,
@@ -410,15 +526,6 @@ nz-switch {
 
 .about-content {
     padding: 12px 5px 2px;
-
-    h4 {
-        margin: 0;
-
-        font-size: 16px;
-        font-weight: 600;
-
-        color: $primary-text-color;
-    }
 
     .app-version {
         margin: 3px 0 0;
@@ -507,11 +614,13 @@ nz-switch {
         margin-left: 0;
     }
 
+    .change-password-actions,
     .delete-account-actions {
         flex-direction: column;
     }
 
     .btn-cancel,
+    .btn-confirm-password,
     .btn-confirm-delete {
         width: 100%;
     }

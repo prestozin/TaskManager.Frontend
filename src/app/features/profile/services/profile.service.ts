@@ -10,7 +10,7 @@ import { EditProfileRequest, ProfileResponse } from '../models/profile.models';
 })
 
 export class ProfileService {
-    
+
     private httpClient = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/User`
 
@@ -28,10 +28,12 @@ export class ProfileService {
         return this.httpClient.delete<ResultResponse<string>>
             (`${this.apiUrl}/DeleteUser`,
                 {
-                    body: password
+                    params: {
+                        password
+                    }
+
                 }
             );
     }
-
 }
 

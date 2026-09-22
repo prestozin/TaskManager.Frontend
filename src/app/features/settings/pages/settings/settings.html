@@ -78,37 +78,204 @@
                 </div>
 
 
-                <div class="settings-option">
+                <div
+                    class="change-password-option"
+                    [class.open]="isChangePasswordOpen()">
 
-                    <div class="option-content">
+                    <div class="settings-option">
 
-                        <div class="option-icon">
+                        <div class="option-content">
 
-                            <span
-                                nz-icon
-                                nzType="lock"
-                                nzTheme="outline">
-                            </span>
+                            <div class="option-icon">
+
+                                <span
+                                    nz-icon
+                                    nzType="lock"
+                                    nzTheme="outline">
+                                </span>
+
+                            </div>
+
+                            <div class="option-text">
+
+                                <h4>Alterar senha</h4>
+
+                                <p>
+                                    Atualize a senha utilizada para acessar sua conta.
+                                </p>
+
+                            </div>
 
                         </div>
 
-                        <div class="option-text">
-
-                            <h4>Alterar senha</h4>
-
-                            <p>
-                                Atualize a senha utilizada para acessar sua conta.
-                            </p>
-
-                        </div>
+                        <button
+                            type="button"
+                            class="btn-option"
+                            (click)="toggleChangePassword()">
+                            Alterar senha
+                        </button>
 
                     </div>
 
-                    <button
-                        type="button"
-                        class="btn-option">
-                        Alterar senha
-                    </button>
+
+                    @if (isChangePasswordOpen()) {
+
+                        <div class="change-password-content">
+
+                            <div class="password-field">
+
+                                <label>
+                                    Senha atual
+                                </label>
+
+                                <div class="password-input-container">
+
+                                    <input
+                                        [type]="showCurrentPassword() ? 'text' : 'password'"
+                                        [formControl]="currentPassword"
+                                        placeholder="Digite sua senha atual">
+
+                                    <button
+                                        type="button"
+                                        class="btn-password-visibility"
+                                        (click)="toggleCurrentPasswordVisibility()">
+
+                                        <span
+                                            nz-icon
+                                            [nzType]="showCurrentPassword() ? 'eye-invisible' : 'eye'"
+                                            nzTheme="outline">
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                                @if (currentPassword.invalid && currentPassword.touched) {
+
+                                    <p class="password-error">
+                                        Campo obrigatório.
+                                    </p>
+
+                                }
+
+                            </div>
+
+
+                            <div class="password-field">
+
+                                <label>
+                                    Nova senha
+                                </label>
+
+                                <div class="password-input-container">
+
+                                    <input
+                                        [type]="showNewPassword() ? 'text' : 'password'"
+                                        [formControl]="newPassword"
+                                        placeholder="Digite sua nova senha">
+
+                                    <button
+                                        type="button"
+                                        class="btn-password-visibility"
+                                        (click)="toggleNewPasswordVisibility()">
+
+                                        <span
+                                            nz-icon
+                                            [nzType]="showNewPassword() ? 'eye-invisible' : 'eye'"
+                                            nzTheme="outline">
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                                @if (newPassword.hasError('required') && newPassword.touched) {
+
+                                    <p class="password-error">
+                                        Campo obrigatório.
+                                    </p>
+
+                                }
+
+                                @if (newPassword.hasError('minlength') && newPassword.touched) {
+
+                                    <p class="password-error">
+                                        A senha deve ter pelo menos 6 caracteres.
+                                    </p>
+
+                                }
+
+                            </div>
+
+
+                            <div class="password-field">
+
+                                <label>
+                                    Confirmar nova senha
+                                </label>
+
+                                <div class="password-input-container">
+
+                                    <input
+                                        [type]="showConfirmPassword() ? 'text' : 'password'"
+                                        [formControl]="confirmNewPassword"
+                                        placeholder="Confirme sua nova senha">
+
+                                    <button
+                                        type="button"
+                                        class="btn-password-visibility"
+                                        (click)="toggleConfirmPasswordVisibility()">
+
+                                        <span
+                                            nz-icon
+                                            [nzType]="showConfirmPassword() ? 'eye-invisible' : 'eye'"
+                                            nzTheme="outline">
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                                @if (confirmNewPassword.invalid && confirmNewPassword.touched) {
+
+                                    <p class="password-error">
+                                        Campo obrigatório.
+                                    </p>
+
+                                }
+
+                                @if (passwordsMismatch()) {
+
+                                    <p class="password-error">
+                                        As senhas não coincidem.
+                                    </p>
+
+                                }
+
+                            </div>
+
+
+                            <div class="change-password-actions">
+
+                                <button
+                                    type="button"
+                                    class="btn-cancel"
+                                    (click)="closeChangePassword()">
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-confirm-password"
+                                    (click)="confirmChangePassword()">
+                                    Confirmar
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    }
 
                 </div>
 
@@ -330,11 +497,35 @@
                                     Digite sua senha para continuar
                                 </label>
 
-                                <app-input-forms
-                                    type="password"
-                                    placeholder="Sua senha"
-                                    [control]="deletePassword">
-                                </app-input-forms>
+                                <div class="password-input-container">
+
+                                    <input
+                                        [type]="showDeletePassword() ? 'text' : 'password'"
+                                        [formControl]="deletePassword"
+                                        placeholder="Sua senha">
+
+                                    <button
+                                        type="button"
+                                        class="btn-password-visibility"
+                                        (click)="toggleDeletePasswordVisibility()">
+
+                                        <span
+                                            nz-icon
+                                            [nzType]="showDeletePassword() ? 'eye-invisible' : 'eye'"
+                                            nzTheme="outline">
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                                @if (deletePassword.invalid && deletePassword.touched) {
+
+                                    <p class="password-error">
+                                        Campo obrigatório.
+                                    </p>
+
+                                }
 
                             </div>
 
