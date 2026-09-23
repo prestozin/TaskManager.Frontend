@@ -30,7 +30,6 @@
     scale: 1.05;
 }
 
-
 .form-section {
     width: 50%;
     height: 100%;
@@ -78,12 +77,30 @@
     width: 100%;
 }
 
-.form-card {
-    --button-width: 100%;
-    --button-max-width: 380px;
-    --button-padding: 20px 0;
-    --button-radius: 30px;
-    --button-font-size: 20px;
+.btn-submit {
+    width: 100%;
+    max-width: 380px;
+    height: 60px;
+
+    border-radius: 30px;
+
+    background-color: $primary-color;
+    color: white;
+
+    font-size: 20px;
+    font-weight: 400;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.1s ease;
+
+    &:hover {
+        background-color: $hover-button !important;
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
 }
 
 .brand-section {
@@ -96,7 +113,6 @@
 
     background-color: $primary-color;
 }
-
 
 .brand-features {
     position: relative;
@@ -155,7 +171,6 @@
     }
 }
 
-
 .brand-logo {
     position: absolute;
 
@@ -194,7 +209,6 @@
         z-index: 1;
     }
 }
-
 
 .brand-shapes {
     position: absolute;

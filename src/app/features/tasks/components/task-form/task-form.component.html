@@ -1,60 +1,141 @@
 <div class="container">
+
     <div class="container-header">
-        <img class="img-icon" src="icons/new-task-icon.svg">
+
+        <img
+            class="img-icon"
+            src="icons/new-task-icon.svg">
+
         <div class="header-texts">
-            <p class="header-title">{{ formTitle() }}</p>
-            <p class="header-subtitle">{{ formSubtitle() }}</p>
+
+            <p class="header-title">
+                {{ formTitle() }}
+            </p>
+
+            <p class="header-subtitle">
+                {{ formSubtitle() }}
+            </p>
+
         </div>
 
     </div>
+
 
     <div class="container-content">
 
         <div class="content-box">
-            <p class="task-title">Título</p>
-            <app-input-forms 
-                class="form-title" 
-                type="text" 
+
+            <p class="task-title">
+                Título
+            </p>
+
+            <app-input-forms
+                class="form-title"
+                type="text"
                 placeholder="Insira um título para a tarefa"
                 [control]="taskForm.controls.titulo">
             </app-input-forms>
+
         </div>
+
 
         <div class="dropdown-container">
 
-            <app-dropdown 
-                class="dropdown-priority" 
-                [options]="priorityOptions()" 
-                [selectedOption]="selectedPriority"
-                label="Prioridade" 
-                (optionSelected)="selectPriority($event)">
-            </app-dropdown>
+            <div class="select-field">
 
-            <app-dropdown 
-                class="dropdown-status" 
-                [options]="statusOptions()" 
-                [selectedOption]="selectedStatus"
-                label="Status" 
-                (optionSelected)="selectStatus($event)">
-            </app-dropdown>
+                <p class="task-title">
+                    Prioridade
+                </p>
+
+                <nz-select
+                    class="task-select"
+                    nzDropdownClassName="task-form-select-dropdown"
+                    [nzDropdownMatchSelectWidth]="true"
+                    [ngModel]="selectedPriorityId()"
+                    (ngModelChange)="selectPriorityById($event)">
+
+                    @for (priority of priorityOptions(); track priority.id) {
+
+                        <nz-option
+                            [nzValue]="priority.id"
+                            [nzLabel]="priority.name">
+                        </nz-option>
+
+                    }
+
+                </nz-select>
+
+            </div>
+
+
+            <div class="select-field">
+
+                <p class="task-title">
+                    Status
+                </p>
+
+                <nz-select
+                    class="task-select"
+                    nzDropdownClassName="task-form-select-dropdown"
+                    [nzDropdownMatchSelectWidth]="true"
+                    [ngModel]="selectedStatusId()"
+                    (ngModelChange)="selectStatusById($event)">
+
+                    @for (status of statusOptions(); track status.id) {
+
+                        <nz-option
+                            [nzValue]="status.id"
+                            [nzLabel]="status.name">
+                        </nz-option>
+
+                    }
+
+                </nz-select>
+
+            </div>
 
         </div>
 
+
         <div class="content-box">
-            <p class="task-title">Descrição</p>
-            <app-input-forms 
-                class="form-description" 
-                type="textarea" 
+
+            <p class="task-title">
+                Descrição
+            </p>
+
+            <app-input-forms
+                class="form-description"
+                type="textarea"
                 [maxLength]="500"
                 placeholder="Insira uma descrição para sua tarefa"
                 [control]="taskForm.controls.descricao">
             </app-input-forms>
+
         </div>
 
     </div>
 
+
     <div class="container-footer">
-        <button class="btn-cancel" (click)="cancelSubmit()">Cancelar</button>
-        <button class="btn-submit" (click)="submitTask()">{{ submitText() }}</button>
+
+        <button
+            nz-button
+            type="button"
+            class="btn-cancel"
+            (click)="cancelSubmit()">
+            Cancelar
+        </button>
+
+        <button
+            nz-button
+            nzType="primary"
+            type="button"
+            class="btn-submit"
+            [nzLoading]="isLoading()"
+            (click)="submitTask()">
+            {{ submitText() }}
+        </button>
+
     </div>
+
 </div>

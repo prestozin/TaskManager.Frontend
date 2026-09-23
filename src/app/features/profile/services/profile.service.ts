@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@env/environment.development';
 import { ResultResponse } from '@shared/models/response.models';
 import { Observable } from 'rxjs';
-import { EditProfileRequest, ProfileResponse } from '../models/profile.models';
+import { ChangePasswordRequest, EditProfileRequest, ProfileResponse } from '../models/profile.models';
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +34,11 @@ export class ProfileService {
 
                 }
             );
+    }
+
+    changePassword(request: ChangePasswordRequest): Observable<ResultResponse<string>> {
+        return this.httpClient.patch<ResultResponse<string>>
+            (`${this.apiUrl}/ChangePassword`, request)
     }
 }
 

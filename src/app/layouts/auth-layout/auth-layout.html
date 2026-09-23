@@ -14,11 +14,15 @@
                     <ng-content select="[auth-form]"></ng-content>
                 </div>
 
-                <app-loading-button
-                    [text]="primaryButtonText()"
-                    [isLoading]="isLoading()"
-                    (submitClicked)="submit()">
-                </app-loading-button>
+                <button
+                    nz-button
+                    nzType="primary"
+                    type="button"
+                    class="btn-submit"
+                    [nzLoading]="isLoading()"
+                    (click)="submit()">
+                    {{ primaryButtonText() }}
+                </button>
 
                 <div class="form-footer">
                     <ng-content select="[auth-footer]"></ng-content>

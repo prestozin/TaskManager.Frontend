@@ -24,8 +24,7 @@ import { InputFormsComponent } from '@shared/components/input-forms/input-forms'
         NzModalModule,
         NzSelectModule,
         NzSwitchModule,
-        MainLayoutComponent,
-        InputFormsComponent
+        MainLayoutComponent
     ],
     templateUrl: './settings.html',
     styleUrl: './settings.scss'
@@ -75,6 +74,7 @@ export class Settings implements AfterViewInit, OnDestroy {
 
     readonly passwordsMismatch = computed(() =>
         this.confirmNewPassword.touched &&
+        !!this.newPassword.value &&
         !!this.confirmNewPassword.value &&
         this.newPassword.value !== this.confirmNewPassword.value
     );
@@ -126,6 +126,7 @@ export class Settings implements AfterViewInit, OnDestroy {
     }
 
     confirmChangePassword(): void {
+        console.log('chamado')
         if (this.currentPassword.invalid || this.newPassword.invalid || this.confirmNewPassword.invalid) {
             this.currentPassword.markAsTouched();
             this.newPassword.markAsTouched();
@@ -138,6 +139,8 @@ export class Settings implements AfterViewInit, OnDestroy {
             this.confirmNewPassword.markAsTouched();
             return;
         }
+
+        this.changePassword();
     }
 
     toggleDeleteAccount(): void {
@@ -179,5 +182,10 @@ export class Settings implements AfterViewInit, OnDestroy {
         this.showDeletePassword.update(value => !value);
     }
 
-
+    private changePassword(): void {
+        this.profileFacade.changePassword({
+            oldPassword: this.currentPassword.value,
+            newPassword: this.newPassword.value
+        });
+    }
 }

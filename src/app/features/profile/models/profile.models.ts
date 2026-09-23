@@ -13,3 +13,8 @@ export interface EditProfileRequest {
     area: string | null;
     about: string | null;
 }
+
+export interface ChangePasswordRequest {
+    oldPassword: string;
+    newPassword: string;
+}

@@ -274,7 +274,7 @@ nz-switch {
     gap: 7px;
 
     label {
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 500;
 
         color: $primary-text-color;
@@ -354,7 +354,7 @@ nz-switch {
 .password-error {
     margin: 0;
 
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
 
     color: $danger-color;
@@ -457,14 +457,14 @@ nz-switch {
     strong {
         display: block;
 
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 600;
     }
 
     p {
         margin: 3px 0 0;
 
-        font-size: 14px;
+        font-size: 15px;
 
         color: $settings-secondary-text;
     }
@@ -538,7 +538,7 @@ nz-switch {
     .app-description {
         margin: 5px 0 0;
 
-        font-size: 14px;
+        font-size: 15px;
         line-height: 1.5;
 
         color: $settings-secondary-text;
@@ -573,6 +573,7 @@ nz-switch {
 
         .ant-select-arrow {
             font-size: 13px;
+            color: black;
         }
     }
 }

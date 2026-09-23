@@ -3,20 +3,26 @@
 .container {
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
+
     width: 600px;
     height: 730px;
+
     gap: 40px;
+
     justify-content: center;
     align-items: center;
+
+    border-radius: 15px;
+
     background-color: white;
 
     .container-header {
         display: flex;
-        color: $primary-color;
-        gap: 15px;
         align-items: center;
 
+        gap: 15px;
+
+        color: $primary-color;
 
         .header-texts {
             font-size: 24px;
@@ -24,6 +30,7 @@
 
             .header-subtitle {
                 font-size: 20px;
+
                 color: gray;
             }
         }
@@ -31,19 +38,21 @@
         .img-icon {
             width: 60px;
             height: 60px;
-
         }
     }
 
     .container-content {
         display: flex;
         flex-direction: column;
+
         gap: 20px;
 
         .content-box {
             display: flex;
             flex-direction: column;
+
             color: $primary-color;
+
             font-size: 20px;
             font-weight: 400;
 
@@ -51,26 +60,45 @@
                 margin-left: 20px;
                 margin-bottom: 10px;
             }
-   
         }
 
-        .dropdown-container{
+        .dropdown-container {
             display: flex;
+
             gap: 20px;
+        }
+
+        .select-field {
+            display: flex;
+            flex-direction: column;
+
+            width: 215px;
+
+            gap: 10px;
+
+            .task-title {
+                margin-left: 20px;
+
+                color: $primary-color;
+
+                font-size: 20px;
+                font-weight: 400;
+            }
         }
     }
 
     .container-footer {
         display: flex;
+
         gap: 30px;
 
         .btn-cancel,
         .btn-submit {
-            border-radius: 10px;
             width: 160px;
             height: 45px;
-            border: 1px solid $primary-color;
-            color: $primary-color;
+
+            border-radius: 10px;
+
             font-size: 20px;
             font-weight: 400;
 
@@ -79,27 +107,19 @@
             }
         }
 
+        .btn-cancel {
+            border: 1px solid $primary-color;
+
+            background-color: white;
+            color: $primary-color;
+        }
+
         .btn-submit {
+            border: 1px solid $primary-color;
+
             background-color: $primary-color;
             color: white;
-
         }
-    }
-
-    .dropdown-priority, .dropdown-status{
-        --option-padding: 15px;
-        --title-size: 20px;
-        --title-weight: 400;
-        --title-color: #0b2f6a;
-        --dropdown-width: 215px;
-        --main-text-size: 16px;
-        --dropdown-height: 59px;
-        --title-left-margin: 22px;
-        --main-text-margin-left: 10px;
-        --border-options: 1px solid grey;
-        --dropdown-border-width: calc(100% + 2px);
-        --dropdown-border-left: -1px;
-        --options-text-color: grey;
     }
 
     .form-title,
@@ -112,11 +132,70 @@
         --error-message-margin: 3px 0px 0px 20px;
     }
 
-    .form-title{
-        --input-height: 59px;    
+    .form-title {
+        --input-height: 59px;
     }
+
     .form-description {
-        --input-height: 180px;    
+        --input-height: 180px;
     }
-    
+}
+
+.task-select {
+    width: 100%;
+    height: 59px;
+}
+
+:host ::ng-deep {
+
+    .task-select {
+
+        .ant-select-selector {
+            display: flex;
+            align-items: center;
+
+            height: 59px !important;
+
+            padding: 0 15px !important;
+
+            border: 1px solid grey !important;
+            border-radius: 10px !important;
+
+            font-size: 16px !important;
+            font-weight: 400 !important;
+
+            box-shadow: none !important;
+        }
+
+        .ant-select-selection-item,
+        .ant-select-selection-placeholder {
+            display: flex;
+            align-items: center;
+
+            font-size: 17px !important;
+            font-weight: 400 !important;
+        }
+
+        .ant-select-arrow {
+            color: $primary-color;
+
+            font-size: 13px;
+        }
+
+        &:hover {
+
+            .ant-select-selector {
+                border-color: $primary-color !important;
+            }
+        }
+
+        &.ant-select-focused {
+
+            .ant-select-selector {
+                border-color: $primary-color !important;
+
+                box-shadow: 0 0 0 2px rgba($primary-color, 0.08) !important;
+            }
+        }
+    }
 }

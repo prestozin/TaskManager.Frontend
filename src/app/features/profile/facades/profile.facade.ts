@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { ProfileService } from "../services/profile.service";
 import { finalize } from "rxjs";
-import { EditProfileRequest } from "../models/profile.models";
+import { ChangePasswordRequest, EditProfileRequest } from "../models/profile.models";
 import { ProfileState } from "../states/profile.state";
 import { FeedbackService } from "@core/services/feedback/feedback.service";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -70,6 +70,25 @@ export class ProfileFacade {
                 }
                 this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
                 this.authFacade.logout();
+            },
+            error: (error: HttpErrorResponse) => {
+                this.feedbackService.showMessage(this.handleError(error), '', EFeedbackType.Error);
+            }
+        });
+    }
+
+    changePassword(request: ChangePasswordRequest): void {
+        this.profileService.changePassword(request).subscribe({
+            next: response => {
+                if (!response.isSuccess) {
+                    this.feedbackService.showMessage(response.message, '', EFeedbackType.Error);
+                    return;
+                }
+                this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
+
+                setTimeout(() => {
+                    this.authFacade.logout();
+                }, 1500);
             },
             error: (error: HttpErrorResponse) => {
                 this.feedbackService.showMessage(this.handleError(error), '', EFeedbackType.Error);

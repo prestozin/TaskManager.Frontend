@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -19,7 +19,7 @@ import { AuthFacade } from '@features/auth/facades/auth.facade';
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
-export class Login {
+export class Login implements OnInit {
 
   private readonly authFacade = inject(AuthFacade);
 
@@ -30,18 +30,21 @@ export class Login {
   loginForm = new FormGroup({
     email: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required,Validators.email]
+      validators: [Validators.required, Validators.email]
     }),
     password: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required,Validators.minLength(6)]
+      validators: [Validators.required, Validators.minLength(6)]
     })
   });
+
+  ngOnInit(): void {
+    this.authFacade.clearMessages();
+  }
 
   submit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-
       return;
     }
 

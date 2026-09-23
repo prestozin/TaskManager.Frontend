@@ -3,13 +3,12 @@
 .profile-page {
     width: 100%;
 
-    padding: 0px 40px 45px;
+    padding: 0px 40px 5px;
 
     box-sizing: border-box;
 
     color: $primary-color;
 
-    // InputForms
     --input-width: 100%;
     --input-height: 50px;
     --input-padding: 0 18px;
@@ -32,9 +31,8 @@
     --error-message-margin: 5px 0 0;
 }
 
-
 .profile-header {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 
     h2 {
         margin: 0;
@@ -42,7 +40,6 @@
         color: $primary-color;
 
         font-size: 28px;
-        font-weight: 400;
     }
 
     p {
@@ -54,7 +51,6 @@
     }
 }
 
-
 .profile-content {
     display: grid;
     grid-template-columns: 350px minmax(0, 1fr);
@@ -63,8 +59,6 @@
 
     gap: 25px;
 }
-
-
 
 .profile-user,
 .account-info {
@@ -77,11 +71,15 @@
 }
 
 .profile-user {
-    padding: 35px 30px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    min-width: 0;
+
+    padding: 35px 30px;
+
+    overflow: hidden;
 }
 
 .user-identification {
@@ -90,6 +88,7 @@
     align-items: center;
 
     width: 100%;
+    min-width: 0;
 }
 
 .user-icon {
@@ -102,40 +101,56 @@
 
     margin: 0;
 
+    flex-shrink: 0;
+
     border-radius: 50%;
 
     background-color: $hover-button;
     color: white;
 
     font-size: 60px;
-    font-weight: 400;
 }
 
 .user-text {
+    width: 100%;
+    min-width: 0;
+
     margin-top: 18px;
 
     text-align: center;
 
     .user-name {
+        max-width: 100%;
+
         margin: 0;
 
         color: $primary-color;
 
         font-size: 26px;
-        font-weight: 600;
+        line-height: 1.25;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .user-role {
+        max-width: 100%;
+
         margin: 6px 0 0;
 
         color: $grey-text-color;
 
         font-size: 16px;
+        line-height: 1.4;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 }
 
 .user-details {
     width: 100%;
+    min-width: 0;
 
     margin-top: 35px;
     padding-top: 25px;
@@ -144,6 +159,8 @@
 }
 
 .user-detail {
+    min-width: 0;
+
     padding: 13px 5px;
 
     .detail-label {
@@ -156,11 +173,17 @@
     }
 
     .detail-value {
+        max-width: 100%;
+
         margin: 6px 0 0;
 
         color: $grey-text-color;
 
         font-size: 17px;
+        line-height: 1.4;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 }
 
@@ -191,7 +214,6 @@
             color: $primary-color;
 
             font-size: 24px;
-            font-weight: 600;
         }
 
         p {
@@ -203,7 +225,6 @@
         }
     }
 }
-
 
 .account-info-data {
     display: grid;
@@ -235,12 +256,12 @@
     }
 }
 
-
 .email-field {
     display: flex;
     align-items: center;
 
     width: 100%;
+    min-width: 0;
     height: 50px;
 
     padding: 0 18px;
@@ -255,6 +276,9 @@
     color: $grey-text-color;
 
     font-size: 17px;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .field-helper {
@@ -264,7 +288,6 @@
 
     font-size: 14px;
 }
-
 
 .form-about {
     grid-column: 1 / -1;
@@ -278,20 +301,35 @@
     }
 }
 
-
 .account-info-footer {
     display: flex;
     justify-content: flex-end;
 
     margin-top: 30px;
+}
 
-    --button-container-width: auto;
-    --button-container-max-width: none;
+.btn-save-profile {
+    min-width: 170px;
+    height: 45px;
 
-    --button-height: 45px;
-    --button-padding: 0 24px;
-    --button-radius: 9px;
+    padding: 0 24px;
 
-    --button-font-size: 17px;
-    --button-font-weight: 500;
+    border-radius: 9px;
+
+    background-color: $primary-color;
+    color: white;
+
+    font-size: 17px;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.1s ease;
+
+    &:hover {
+        background-color: $hover-button !important;
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
 }

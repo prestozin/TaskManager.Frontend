@@ -1,42 +1,33 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 export type FeedbackType = 'success' | 'error' | 'warning' | 'alert';
 
 @Injectable({
     providedIn: 'root'
 })
-
-
 export class FeedbackService {
 
-    readonly messageTitle = signal<string | null>(null);
-    readonly messageDescription = signal<string | null>(null);
-    readonly messageType = signal<FeedbackType | null>(null);
-
-    isClosing = signal(false);
+    private readonly notification = inject(NzNotificationService);
 
     showMessage(message: string, description: string, type: FeedbackType): void {
-        this.messageTitle.set(message);
-        this.messageDescription.set(description);
-        this.messageType.set(type);
+        switch (type) {
+            case 'success':
+                this.notification.success(message, description, { nzDuration: 5000 });
+                break;
 
-        setTimeout(() => {
-            this.closeMessage();
-        }, 5000);
-    }
+            case 'error':
+                this.notification.error(message, description, { nzDuration: 5000 });
+                break;
 
-    closeMessage(): void {
-        this.isClosing.set(true);
+            case 'warning':
+                this.notification.warning(message, description, { nzDuration: 5000 });
+                break;
 
-        setTimeout(() => {
-            this.clearMessage();
-            this.isClosing.set(false);
-        }, 300);
-    }
-
-    clearMessage(): void {
-        this.messageTitle.set(null);
-        this.messageDescription.set(null);
-        this.messageType.set(null);
+            case 'alert':
+                this.notification.info(message, description, { nzDuration: 5000 });
+                break;
+        }
     }
 }

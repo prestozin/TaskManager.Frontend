@@ -3,7 +3,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TokenService } from '@core/services/token/token.service';
 import { ProfileFacade } from '@features/profile/facades/profile.facade';
 import { LucideChevronRight, LucideLogOut, LucideSettings, LucideUserRoundCog } from '@lucide/angular';
-import { FeedbackMessageComponent } from '@shared/components/feedback-message/feedback-message.component';
 
 
 @Component({
@@ -11,7 +10,6 @@ import { FeedbackMessageComponent } from '@shared/components/feedback-message/fe
   imports: [
     RouterLink,
     RouterLinkActive,
-    FeedbackMessageComponent,
     LucideChevronRight,
     LucideLogOut,
     LucideSettings,

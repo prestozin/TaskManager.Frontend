@@ -27,11 +27,11 @@
                         <div class="user-text">
 
                             <h3 class="user-name">
-                                {{ user.name }}
+                                {{ displayName(user.name) }}
                             </h3>
 
                             <p class="user-role">
-                                {{ user.role || 'Cargo não informado' }}
+                                {{ user.role ? capitalizeFirst(user.role) : 'Cargo não informado' }}
                             </p>
 
                         </div>
@@ -127,7 +127,8 @@
 
                             <app-input-forms
                                 [control]="profileForm.controls.role"
-                                placeholder="Seu cargo">
+                                placeholder="Seu cargo"
+                                [maxLength]="50">
                             </app-input-forms>
 
                         </div>
@@ -168,11 +169,15 @@
 
                     <div class="account-info-footer">
 
-                        <app-loading-button
-                            text="Salvar alterações"
-                            [isLoading]="isLoading()"
-                            (submitClicked)="editProfile()">
-                        </app-loading-button>
+                        <button
+                            nz-button
+                            nzType="primary"
+                            type="button"
+                            class="btn-save-profile"
+                            [nzLoading]="isLoading()"
+                            (click)="editProfile()">
+                            Salvar alterações
+                        </button>
 
                     </div>
 

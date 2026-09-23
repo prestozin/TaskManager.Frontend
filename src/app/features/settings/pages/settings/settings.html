@@ -150,7 +150,7 @@
 
                                 </div>
 
-                                @if (currentPassword.invalid && currentPassword.touched) {
+                                @if (currentPassword.hasError('required') && currentPassword.touched) {
 
                                     <p class="password-error">
                                         Campo obrigatório.
@@ -236,7 +236,7 @@
 
                                 </div>
 
-                                @if (confirmNewPassword.invalid && confirmNewPassword.touched) {
+                                @if (confirmNewPassword.hasError('required') && confirmNewPassword.touched) {
 
                                     <p class="password-error">
                                         Campo obrigatório.
@@ -519,7 +519,7 @@
 
                                 </div>
 
-                                @if (deletePassword.invalid && deletePassword.touched) {
+                                @if (deletePassword.hasError('required') && deletePassword.touched) {
 
                                     <p class="password-error">
                                         Campo obrigatório.

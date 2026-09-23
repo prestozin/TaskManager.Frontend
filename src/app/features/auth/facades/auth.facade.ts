@@ -38,18 +38,17 @@ export class AuthFacade {
     }
 
     login(request: LoginRequest): void {
+        this.clearMessages();
         this.authState.isLoading.set(true);
-        this.authState.successMessage.set('');
-        this.authState.errorMessage.set('');
 
         this.authService.login(request).subscribe({
             next: response => {
                 if (!response.isSuccess || !response.data) {
                     this.authState.isLoading.set(false);
                     this.authState.errorMessage.set(response.message);
-
                     return;
-                } 
+                }
+
                 this.authState.successMessage.set(response.message);
                 this.tokenService.save(response.data);
 
@@ -91,7 +90,13 @@ export class AuthFacade {
     }
 
     logout(): void {
+        this.clearMessages();
         this.tokenService.clear();
         this.router.navigate(['/login']);
+    }
+
+    clearMessages(): void {
+        this.authState.successMessage.set('');
+        this.authState.errorMessage.set('');
     }
 }
