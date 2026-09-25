@@ -8,31 +8,31 @@ $danger-color: #ff4d4f;
 .settings-page {
     width: 100%;
     min-height: 100%;
+    padding: 0px 40px;
 
     box-sizing: border-box;
 }
 
 .settings-header {
     width: 100%;
-    max-width: 1200px;
 
-    margin: 0 auto 25px;
+    margin: 0 0 20px;
 
     h2 {
         margin: 0;
 
+        color: $primary-text-color;
+
         font-size: 28px;
         font-weight: 500;
-
-        color: $primary-text-color;
     }
 
     p {
         margin: 6px 0 0;
 
-        font-size: 16px;
-
         color: $settings-secondary-text;
+
+        font-size: 16px;
     }
 }
 
@@ -41,10 +41,8 @@ $danger-color: #ff4d4f;
     flex-direction: column;
 
     width: 100%;
-    max-width: 1200px;
 
-    margin: 0 auto;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
 
     gap: 12px;
 
@@ -58,19 +56,19 @@ $danger-color: #ff4d4f;
 
     box-sizing: border-box;
 
-    background-color: white;
-
     border: 1px solid $settings-border-color;
     border-radius: 16px;
+
+    background-color: white;
 }
 
 .card-header {
     display: flex;
     align-items: center;
 
-    gap: 10px;
-
     padding-bottom: 12px;
+
+    gap: 10px;
 
     border-bottom: 1px solid $settings-border-color;
 }
@@ -80,15 +78,14 @@ $danger-color: #ff4d4f;
     align-items: center;
     justify-content: center;
 
-    flex-shrink: 0;
-
     width: 44px;
     height: 44px;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
     background-color: rgba($primary-color, 0.1);
-
     color: $primary-color;
 
     [nz-icon] {
@@ -102,18 +99,18 @@ $danger-color: #ff4d4f;
     h3 {
         margin: 0;
 
+        color: $primary-text-color;
+
         font-size: 20px;
         font-weight: 600;
-
-        color: $primary-text-color;
     }
 
     p {
         margin: 3px 0 0;
 
-        font-size: 16px;
-
         color: $settings-secondary-text;
+
+        font-size: 16px;
     }
 }
 
@@ -125,7 +122,6 @@ $danger-color: #ff4d4f;
     min-height: 55px;
 
     padding: 10px 5px;
-
     box-sizing: border-box;
 
     gap: 20px;
@@ -149,10 +145,10 @@ $danger-color: #ff4d4f;
     align-items: center;
     justify-content: center;
 
-    flex-shrink: 0;
-
     width: 32px;
     height: 32px;
+
+    flex-shrink: 0;
 
     color: $primary-color;
 
@@ -167,18 +163,18 @@ $danger-color: #ff4d4f;
     h4 {
         margin: 0;
 
+        color: $primary-text-color;
+
         font-size: 16px;
         font-weight: 600;
-
-        color: $primary-text-color;
     }
 
     p {
         margin: 3px 0 0;
 
-        font-size: 15px;
-
         color: $settings-secondary-text;
+
+        font-size: 15px;
     }
 }
 
@@ -218,7 +214,7 @@ $danger-color: #ff4d4f;
     color: $primary-color;
 
     &:hover {
-        background-color: $primary-color;
+        background-color: $hover-button;
         color: white;
     }
 }
@@ -274,10 +270,10 @@ nz-switch {
     gap: 7px;
 
     label {
+        color: $primary-text-color;
+
         font-size: 16px;
         font-weight: 500;
-
-        color: $primary-text-color;
     }
 }
 
@@ -291,7 +287,6 @@ nz-switch {
         height: 42px;
 
         padding: 0 45px 0 15px;
-
         box-sizing: border-box;
 
         border: 1px solid $settings-border-color;
@@ -354,10 +349,10 @@ nz-switch {
 .password-error {
     margin: 0;
 
+    color: $danger-color;
+
     font-size: 14px;
     font-weight: 400;
-
-    color: $danger-color;
 }
 
 .change-password-actions,
@@ -434,22 +429,20 @@ nz-switch {
     align-items: flex-start;
 
     padding: 12px 15px;
+    box-sizing: border-box;
 
     gap: 10px;
-
-    box-sizing: border-box;
 
     border: 1px solid rgba($danger-color, 0.3);
     border-radius: 8px;
 
     background-color: rgba($danger-color, 0.05);
-
     color: $danger-color;
 
     [nz-icon] {
-        flex-shrink: 0;
-
         margin-top: 2px;
+
+        flex-shrink: 0;
 
         font-size: 20px;
     }
@@ -464,9 +457,9 @@ nz-switch {
     p {
         margin: 3px 0 0;
 
-        font-size: 15px;
-
         color: $settings-secondary-text;
+
+        font-size: 15px;
     }
 }
 
@@ -500,7 +493,6 @@ nz-switch {
     border: 1px solid $settings-border-color;
 
     background-color: white;
-
     color: $primary-text-color;
 
     &:hover {
@@ -513,7 +505,6 @@ nz-switch {
     border: 1px solid $danger-color;
 
     background-color: $danger-color;
-
     color: white;
 
     &:hover {
@@ -530,18 +521,18 @@ nz-switch {
     .app-version {
         margin: 3px 0 0;
 
-        font-size: 15px;
-
         color: $settings-secondary-text;
+
+        font-size: 15px;
     }
 
     .app-description {
         margin: 5px 0 0;
 
+        color: $settings-secondary-text;
+
         font-size: 15px;
         line-height: 1.5;
-
-        color: $settings-secondary-text;
     }
 }
 
@@ -572,8 +563,9 @@ nz-switch {
         }
 
         .ant-select-arrow {
-            font-size: 13px;
             color: black;
+
+            font-size: 13px;
         }
     }
 }
@@ -581,14 +573,14 @@ nz-switch {
 @media (max-width: 900px) {
 
     .settings-page {
-        padding: 20px 25px 40px;
+        padding: 0;
     }
 }
 
 @media (max-width: 650px) {
 
     .settings-page {
-        padding: 20px 15px 40px;
+        padding: 0;
     }
 
     .settings-header {

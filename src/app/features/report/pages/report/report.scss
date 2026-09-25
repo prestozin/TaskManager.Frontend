@@ -1,8 +1,17 @@
 @use "variables" as *;
 
+$status-blue: #4f8ee8;
+$status-green: #31b86b;
+$status-yellow: #f5aa2a;
+$status-red: #ef5350;
+$priority-yellow: #f5b52f;
+$priority-low: #22aeca;
+$card-border: #c7cad3;
+$divider: #d8dbe3;
+
 .report-page {
     width: 100%;
-    padding: 0 40px 40px;
+    padding: 0 40px 20px;
     box-sizing: border-box;
     color: $primary-color;
 }
@@ -11,7 +20,6 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-
     gap: 40px;
     margin-bottom: 20px;
 
@@ -20,18 +28,14 @@
 
         h2 {
             margin: 0;
-
             color: $primary-color;
-
             font-size: 28px;
             font-weight: 400;
         }
 
         p {
             margin: 6px 0 0;
-
             color: $grey-text-color;
-
             font-size: 15px;
         }
     }
@@ -41,25 +45,16 @@
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
-
     gap: 14px;
 
     .filter-field {
         display: flex;
         flex-direction: column;
-
-        min-width: 0;
         gap: 3px;
 
         label {
             color: $primary-color;
-
             font-size: 16px;
-            font-weight: 400;
-        }
-
-        &.filter-period {
-            width: 210px;
         }
     }
 }
@@ -74,38 +69,32 @@
     height: 40px;
 }
 
-
-
-:host ::ng-deep .report-select .ant-select-selection-item {
-    display: flex;
-    align-items: center;
-
-    font-size: 15px;
-}
-
-:host ::ng-deep .report-date {
-    height: 40px !important;
-
-    border-radius: 8px !important;
-
-    transition: border-color 0.15s ease;
-
-    &:hover {
-        border-color: $primary-color !important;
+:host ::ng-deep {
+    .report-select .ant-select-selection-item {
+        display: flex;
+        align-items: center;
+        font-size: 15px;
     }
 
-    input {
-        font-size: 16px;
+    .report-date {
+        border-radius: 8px;
 
-        &::placeholder {
+        &:hover {
+            border-color: $primary-color;
+        }
+
+        input {
             font-size: 16px;
+
+            &::placeholder {
+                font-size: 16px;
+            }
         }
     }
 }
 
 .btn-clear-filters {
     height: 40px;
-
     padding: 0 20px;
 
     border: 1px solid $primary-color;
@@ -119,28 +108,21 @@
 
     &:hover,
     &:focus {
+        background-color: $hover-button;
         border-color: $primary-color;
-
-        background-color: $primary-color;
         color: white;
     }
 }
 
 .report-card {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    border: 1px solid #c7cad3;
+    border: 1px solid $card-border;
     border-radius: 18px;
-
     background-color: white;
 }
 
 .card-header {
     display: flex;
     align-items: center;
-
     gap: 14px;
 
     .header-icon {
@@ -165,18 +147,14 @@
 
         h3 {
             margin: 0;
-
             color: $primary-color;
-
             font-size: 20px;
             font-weight: 600;
         }
 
         p {
             margin: 3px 0 0;
-
             color: $grey-text-color;
-
             font-size: 16px;
         }
     }
@@ -190,23 +168,19 @@
 .summary-list {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-
     margin-top: 22px;
 }
 
 .summary-item {
-    position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
 
     min-width: 0;
-
     padding: 4px 22px;
 
     &:not(:last-child) {
-        border-right: 1px solid #d8dbe3;
+        border-right: 1px solid $divider;
     }
 
     strong {
@@ -218,6 +192,11 @@
         font-weight: 600;
         line-height: 1;
     }
+
+    .summary-dot,
+    .summary-line {
+        background-color: var(--summary-color);
+    }
 }
 
 .summary-title {
@@ -226,7 +205,6 @@
     justify-content: center;
 
     width: 100%;
-
     gap: 10px;
 
     color: $primary-color;
@@ -245,8 +223,6 @@
 }
 
 .summary-line {
-    display: block;
-
     width: 42px;
     height: 2px;
 
@@ -255,44 +231,21 @@
     border-radius: 2px;
 }
 
-.summary-total {
-
-    .summary-dot,
-    .summary-line {
-        background-color: #4f8ee8;
-    }
+.summary-total,
+.summary-pending {
+    --summary-color: #{$status-blue};
 }
 
 .summary-completed {
-
-    .summary-dot,
-    .summary-line {
-        background-color: #31b86b;
-    }
+    --summary-color: #{$status-green};
 }
 
 .summary-progress {
-
-    .summary-dot,
-    .summary-line {
-        background-color: #f5aa2a;
-    }
-}
-
-.summary-pending {
-
-    .summary-dot,
-    .summary-line {
-        background-color: #4f8ee8;
-    }
+    --summary-color: #{$status-yellow};
 }
 
 .summary-canceled {
-
-    .summary-dot,
-    .summary-line {
-        background-color: #ef5350;
-    }
+    --summary-color: #{$status-red};
 }
 
 .charts {
@@ -312,9 +265,10 @@
     grid-template-columns: 220px minmax(0, 1fr);
     align-items: center;
 
-    gap: 30px;
     min-height: 220px;
     margin-top: 12px;
+
+    gap: 30px;
 }
 
 .donut-chart {
@@ -331,7 +285,6 @@
         content: "";
 
         position: absolute;
-
         inset: 29px;
 
         border-radius: 50%;
@@ -342,36 +295,33 @@
 
 .status-chart {
     background: conic-gradient(
-        #31b86b 0% 33.3%,
-        #f5aa2a 33.3% 58.3%,
-        #4f8ee8 58.3% 87.5%,
-        #ef5350 87.5% 100%
+        $status-green 0% 33.3%,
+        $status-yellow 33.3% 58.3%,
+        $status-blue 58.3% 87.5%,
+        $status-red 87.5% 100%
     );
 }
 
 .priority-chart {
     background: conic-gradient(
-        #ef5350 0% 25%,
-        #f5b52f 25% 75%,
-        #22aeca 75% 100%
+        $status-red 0% 25%,
+        $priority-yellow 25% 75%,
+        $priority-low 75% 100%
     );
 }
 
 .donut-center {
     position: absolute;
-
     inset: 0;
+    z-index: 1;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    z-index: 1;
-
     strong {
         color: $primary-color;
-
         font-size: 26px;
         font-weight: 600;
         line-height: 1;
@@ -379,9 +329,7 @@
 
     span {
         margin-top: 6px;
-
         color: $grey-text-color;
-
         font-size: 15px;
     }
 }
@@ -389,7 +337,6 @@
 .chart-legend {
     display: flex;
     flex-direction: column;
-
     width: 100%;
 }
 
@@ -399,13 +346,11 @@
     align-items: center;
 
     min-height: 44px;
-
     gap: 10px;
 
     border-bottom: 1px solid #e1e3e8;
 
     color: $primary-color;
-
     font-size: 16px;
 
     &:last-child {
@@ -415,7 +360,6 @@
     strong {
         font-size: 16px;
         font-weight: 600;
-
         text-align: center;
     }
 }
@@ -423,7 +367,6 @@
 .legend-name {
     display: flex;
     align-items: center;
-
     gap: 10px;
 }
 
@@ -434,42 +377,41 @@
     flex-shrink: 0;
 
     border-radius: 50%;
+    background-color: var(--legend-color);
 }
 
 .legend-percentage {
     color: $grey-text-color;
-
     font-size: 15px;
-
     text-align: right;
 }
 
 .status-pending {
-    background-color: #4f8ee8;
+    --legend-color: #{$status-blue};
 }
 
 .status-progress {
-    background-color: #f5aa2a;
+    --legend-color: #{$status-yellow};
 }
 
 .status-completed {
-    background-color: #31b86b;
+    --legend-color: #{$status-green};
 }
 
 .status-canceled {
-    background-color: #ef5350;
+    --legend-color: #{$status-red};
 }
 
 .priority-low {
-    background-color: #22aeca;
+    --legend-color: #{$priority-low};
 }
 
 .priority-medium {
-    background-color: #f5b52f;
+    --legend-color: #{$priority-yellow};
 }
 
 .priority-high {
-    background-color: #ef5350;
+    --legend-color: #{$status-red};
 }
 
 .task-list-card {
@@ -478,12 +420,10 @@
 
 .task-list-header {
     padding: 16px 20px;
-
-    border-bottom: 1px solid #d8dbe3;
+    border-bottom: 1px solid $divider;
 }
 
 .task-list {
-    width: 100%;
 
     app-task {
         --task-title-size: 16px;
@@ -501,10 +441,7 @@
     align-items: center;
 
     min-height: 46px;
-
     padding: 0 60px;
-
-    box-sizing: border-box;
 
     background-color: #f1f2f7;
     color: $primary-color;
@@ -523,14 +460,11 @@
     justify-content: center;
 
     min-height: 90px;
-
     padding: 20px;
 
     p {
         margin: 0;
-
         color: $grey-text-color;
-
         font-size: 16px;
     }
 }
