@@ -70,49 +70,67 @@
             </header>
 
             <div class="summary-list">
-                <div class="summary-item">
-                    <div class="summary-icon total-icon">☷</div>
 
-                    <div class="summary-content">
-                        <p class="summary-label">Total de tarefas</p>
-                        <strong>{{ totalTasks() }}</strong>
-                        <span>no período</span>
+                <div class="summary-item summary-total">
+                    <div class="summary-title">
+                        <span class="summary-dot"></span>
+                        <span>Total de tarefas</span>
                     </div>
+
+                    <strong>{{ totalTasks() }}</strong>
+
+                    <span class="summary-line"></span>
                 </div>
 
-                <div class="summary-item">
-                    <div class="summary-icon completed-icon">✓</div>
-
-                    <div class="summary-content">
-                        <p class="summary-label">Concluídas</p>
-                        <strong>{{ completedCount() }}</strong>
-                        <span>{{ completedPercentage() }}% do total</span>
+                <div class="summary-item summary-completed">
+                    <div class="summary-title">
+                        <span class="summary-dot"></span>
+                        <span>Concluídas</span>
                     </div>
+
+                    <strong>{{ completedCount() }}</strong>
+
+                    <span class="summary-line"></span>
                 </div>
 
-                <div class="summary-item">
-                    <div class="summary-icon progress-icon">◷</div>
-
-                    <div class="summary-content">
-                        <p class="summary-label">Em progresso</p>
-                        <strong>{{ progressCount() }}</strong>
-                        <span>{{ progressPercentage() }}% do total</span>
+                <div class="summary-item summary-progress">
+                    <div class="summary-title">
+                        <span class="summary-dot"></span>
+                        <span>Em progresso</span>
                     </div>
+
+                    <strong>{{ progressCount() }}</strong>
+
+                    <span class="summary-line"></span>
                 </div>
 
-                <div class="summary-item">
-                    <div class="summary-icon pending-icon">•••</div>
-
-                    <div class="summary-content">
-                        <p class="summary-label">Pendentes e canceladas</p>
-                        <strong>{{ pendingCanceledCount() }}</strong>
-                        <span>{{ pendingCanceledPercentage() }}% do total</span>
+                <div class="summary-item summary-pending">
+                    <div class="summary-title">
+                        <span class="summary-dot"></span>
+                        <span>Pendentes</span>
                     </div>
+
+                    <strong>{{ pendingCount() }}</strong>
+
+                    <span class="summary-line"></span>
                 </div>
+
+                <div class="summary-item summary-canceled">
+                    <div class="summary-title">
+                        <span class="summary-dot"></span>
+                        <span>Canceladas</span>
+                    </div>
+
+                    <strong>{{ canceledCount() }}</strong>
+
+                    <span class="summary-line"></span>
+                </div>
+
             </div>
         </section>
 
         <div class="charts">
+
             <section class="report-card chart-card">
                 <header class="card-header">
                     <div class="header-icon">▥</div>
@@ -132,6 +150,7 @@
                     </div>
 
                     <div class="chart-legend">
+
                         <div class="legend-item">
                             <div class="legend-name">
                                 <span class="legend-dot status-completed"></span>
@@ -139,7 +158,9 @@
                             </div>
 
                             <strong>{{ completedCount() }}</strong>
-                            <span class="legend-percentage">{{ completedPercentage() }}%</span>
+                            <span class="legend-percentage">
+                                {{ completedPercentage() }}%
+                            </span>
                         </div>
 
                         <div class="legend-item">
@@ -149,7 +170,9 @@
                             </div>
 
                             <strong>{{ progressCount() }}</strong>
-                            <span class="legend-percentage">{{ progressPercentage() }}%</span>
+                            <span class="legend-percentage">
+                                {{ progressPercentage() }}%
+                            </span>
                         </div>
 
                         <div class="legend-item">
@@ -159,7 +182,9 @@
                             </div>
 
                             <strong>{{ pendingCount() }}</strong>
-                            <span class="legend-percentage">{{ pendingPercentage() }}%</span>
+                            <span class="legend-percentage">
+                                {{ pendingPercentage() }}%
+                            </span>
                         </div>
 
                         <div class="legend-item">
@@ -169,8 +194,11 @@
                             </div>
 
                             <strong>{{ canceledCount() }}</strong>
-                            <span class="legend-percentage">{{ canceledPercentage() }}%</span>
+                            <span class="legend-percentage">
+                                {{ canceledPercentage() }}%
+                            </span>
                         </div>
+
                     </div>
                 </div>
             </section>
@@ -194,6 +222,7 @@
                     </div>
 
                     <div class="chart-legend">
+
                         <div class="legend-item">
                             <div class="legend-name">
                                 <span class="legend-dot priority-high"></span>
@@ -201,7 +230,9 @@
                             </div>
 
                             <strong>{{ highPriorityCount() }}</strong>
-                            <span class="legend-percentage">{{ highPriorityPercentage() }}%</span>
+                            <span class="legend-percentage">
+                                {{ highPriorityPercentage() }}%
+                            </span>
                         </div>
 
                         <div class="legend-item">
@@ -211,7 +242,9 @@
                             </div>
 
                             <strong>{{ mediumPriorityCount() }}</strong>
-                            <span class="legend-percentage">{{ mediumPriorityPercentage() }}%</span>
+                            <span class="legend-percentage">
+                                {{ mediumPriorityPercentage() }}%
+                            </span>
                         </div>
 
                         <div class="legend-item">
@@ -221,11 +254,15 @@
                             </div>
 
                             <strong>{{ lowPriorityCount() }}</strong>
-                            <span class="legend-percentage">{{ lowPriorityPercentage() }}%</span>
+                            <span class="legend-percentage">
+                                {{ lowPriorityPercentage() }}%
+                            </span>
                         </div>
+
                     </div>
                 </div>
             </section>
+
         </div>
 
         <section class="report-card task-list-card">
@@ -234,7 +271,7 @@
 
                 <div class="header-text">
                     <h3>Últimas tarefas</h3>
-                    <p>Lista de últimas tarefas do periodo selecionado.</p>
+                    <p>Lista de últimas tarefas do período selecionado.</p>
                 </div>
             </header>
 

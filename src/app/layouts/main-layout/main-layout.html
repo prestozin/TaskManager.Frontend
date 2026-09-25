@@ -19,25 +19,41 @@
 
             <a
                 class="sidebar-link"
-                routerLink="/report"
+                routerLink="/tasks"
                 routerLinkActive="active">
-                <img class="icon-menu" src="icons/dashboard-icon.svg">
-                <p>Relatório</p>
+                
+                <nz-icon
+                    class="icon-menu"
+                    nzType="unordered-list"
+                    nzTheme="outline">
+                </nz-icon>
+
+                <p>Tarefas</p>
             </a>
 
             <a
                 class="sidebar-link"
-                routerLink="/tasks"
+                routerLink="/report"
                 routerLinkActive="active">
-                <img class="icon-menu" src="icons/tasks-icon.svg">
-                <p class="link-text">Tarefas</p>
+                <nz-icon
+                    class="icon-menu"
+                    nzType="bar-chart"
+                    nzTheme="outline">
+                </nz-icon>
+
+                <p>Relatório</p>
             </a>
 
             <a
                 class="sidebar-link"
                 routerLink="/profile"
                 routerLinkActive="active">
-                <img class="icon-menu" src="icons/profile-icon.svg">
+                <nz-icon
+                    class="icon-menu"
+                    nzType="user"
+                    nzTheme="outline">
+                </nz-icon>
+
                 <p>Perfil</p>
             </a>
 
@@ -45,20 +61,33 @@
                 class="sidebar-link"
                 routerLink="/settings"
                 routerLinkActive="active">
-                <img class="icon-menu" src="icons/settings-icon.svg">
+                <nz-icon
+                    class="icon-menu"
+                    nzType="setting"
+                    nzTheme="outline">
+                </nz-icon>
+
                 <p>Configurações</p>
             </a>
 
         </nav>
 
         <footer class="sidebar-footer">
+
             <button
                 class="sidebar-link btn-logout"
-                routerLink="/login"
+                type="button"
                 (click)="logoutUser()">
-                <img class="icon-menu" src="icons/logout-icon.svg">
+
+               <nz-icon
+                    class="icon-menu"
+                    nzType="logout"
+                    nzTheme="outline">
+                </nz-icon>
+
                 <p>Sair</p>
             </button>
+
         </footer>
 
     </aside>
@@ -84,31 +113,63 @@
                         {{ userName() }}
                     </p>
 
-                    <svg
+                    <nz-icon
                         class="user-arrow"
-                        lucideChevronRight
+                        nzType="right"
+                        nzTheme="outline"
                         [class.active]="isUserMenuOpen">
-                    </svg>
+                    </nz-icon>
 
                     @if (isUserMenuOpen) {
-                        <div class="user-dropdown" (click)="$event.stopPropagation()">
+                        <div
+                            class="user-dropdown"
+                            (click)="$event.stopPropagation()">
 
                             <div class="dropdown-line"></div>
 
                             <div class="container-dropdown-buttons">
 
-                                <button class="btn-dropdown">
-                                    <svg class="dropdown-img" lucideUserRoundCog></svg>
+                                <button
+                                    class="btn-dropdown"
+                                    type="button"
+                                    routerLink="/profile"
+                                    (click)="closeUserMenu()">
+
+                                    <nz-icon
+                                        class="dropdown-img"
+                                        nzType="user"
+                                        nzTheme="outline">
+                                    </nz-icon>
+
                                     <span>Perfil</span>
                                 </button>
 
-                                <button class="btn-dropdown">
-                                    <svg class="dropdown-img" lucideSettings></svg>
+                                <button
+                                    class="btn-dropdown"
+                                    type="button"
+                                    routerLink="/settings"
+                                    (click)="closeUserMenu()">
+
+                                    <nz-icon
+                                        class="dropdown-img"
+                                        nzType="setting"
+                                        nzTheme="outline">
+                                    </nz-icon>
+
                                     <span>Configurações</span>
                                 </button>
 
-                                <button class="btn-dropdown">
-                                    <svg class="dropdown-img" lucideLogOut></svg>
+                                <button
+                                    class="btn-dropdown"
+                                    type="button"
+                                    (click)="logoutUser()">
+
+                                    <nz-icon
+                                        class="dropdown-img"
+                                        nzType="logout"
+                                        nzTheme="outline">
+                                    </nz-icon>
+
                                     <span>Sair</span>
                                 </button>
 
@@ -124,7 +185,9 @@
         </header>
 
         <main>
-            <div class="body-content" (scroll)="contentScroll.emit()">
+            <div
+                class="body-content"
+                (scroll)="contentScroll.emit()">
                 <ng-content select="[body-content]"></ng-content>
             </div>
         </main>

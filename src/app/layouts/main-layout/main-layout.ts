@@ -1,8 +1,11 @@
 import { Component, computed, HostListener, inject, output } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+
 import { TokenService } from '@core/services/token/token.service';
+
 import { ProfileFacade } from '@features/profile/facades/profile.facade';
-import { LucideChevronRight, LucideLogOut, LucideSettings, LucideUserRoundCog } from '@lucide/angular';
+
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 @Component({
@@ -10,11 +13,7 @@ import { LucideChevronRight, LucideLogOut, LucideSettings, LucideUserRoundCog } 
   imports: [
     RouterLink,
     RouterLinkActive,
-    LucideChevronRight,
-    LucideLogOut,
-    LucideSettings,
-    LucideUserRoundCog
-
+    NzIconModule
   ],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
@@ -23,11 +22,14 @@ import { LucideChevronRight, LucideLogOut, LucideSettings, LucideUserRoundCog } 
 
 export class MainLayoutComponent {
 
-  private tokenService = inject(TokenService);
+  private readonly tokenService = inject(TokenService);
   private readonly profileFacade = inject(ProfileFacade);
+  private readonly router = inject(Router);
 
   isUserMenuOpen = false;
+
   readonly contentScroll = output<void>();
+
 
   readonly userName = computed(() => {
     const name = this.profileFacade.profile()?.name ?? '';
@@ -43,17 +45,25 @@ export class MainLayoutComponent {
     return this.userName().charAt(0);
   });
 
+
   ngOnInit() {
     this.profileFacade.loadProfile();
   }
+
 
   toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
-  logoutUser() {
-    this.tokenService.clear()
+  closeUserMenu() {
+    this.isUserMenuOpen = false;
   }
+
+  logoutUser() {
+    this.tokenService.clear();
+    this.router.navigate(['/login']);
+  }
+
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {

@@ -178,7 +178,7 @@
         font-weight: 400;
     }
 
-    &:focus {
+    &:focus, &:hover {
         border-color: $primary-color;
 
         box-shadow: 0 0 0 2px rgba($primary-color, 0.08);
@@ -259,9 +259,6 @@
     padding: 0 60px 0 60px;
 
     border-top: 1px solid #aeb4c0;
-    
-
-    background-color: #e9ebf2;
 
     color: $primary-color;
 
@@ -324,19 +321,16 @@
     display: flex;
     align-items: center;
 
-    padding: 10px 30px;
+    padding: 12px 30px;
 
-    border-top: 1px solid #d1d4dc;
-
+    font-size: 15px;
     background-color: white;
 
-    color: #7e8391;
+    color: $primary-color;
 }
 
 .footer-text {
     margin: 0;
-
-    font-weight: 400;
 }
 
 .pagination {
