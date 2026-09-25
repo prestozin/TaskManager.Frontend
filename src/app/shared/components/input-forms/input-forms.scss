@@ -2,24 +2,14 @@
 
 .form-control {
     width: var(--input-width, 380px);
+    max-width: 100%;
     height: var(--input-height, 66px);
-
-    box-sizing: border-box;
-
     padding: var(--input-padding, 0 40px);
-
-    border: var(--input-border, 2px solid grey);
+    border: var(--input-border, 2px solid #{$input-border-color});
     border-radius: var(--input-radius, 380px);
-
     background-color: var(--input-background, transparent);
-
     color: var(--input-text-color, black);
-
-    font-family: inherit;
-    font-size: var(--input-font-size, 18px);
-
-    text-align: var(--input-text-align, start);
-
+    font-size: var(--input-font-size, #{$large-text-font-size});
     outline: none;
 
     &::placeholder {
@@ -27,28 +17,23 @@
     }
 
     &:focus {
-        border: var(--input-focus-border, var(--input-border, 2px solid grey));
+        border: var(--input-focus-border,
+            var(--input-border, 2px solid #{$input-border-color}));
     }
 
     &.invalid {
-        border-color: var(--input-invalid-color, red);
+        border-color: var(--input-invalid-color, #{$error-color});
     }
 }
 
 textarea.form-control {
     min-height: var(--textarea-min-height, var(--input-height, 66px));
-
     padding: var(--textarea-padding, var(--input-padding, 12px 20px));
-
     resize: var(--textarea-resize, vertical);
 }
 
 .error-message {
-    position: relative;
-
     margin: var(--error-message-margin, 3px 0 0 40px);
-
-    color: var(--error-message-color, red);
-
+    color: var(--error-message-color, #{$error-color});
     font-size: var(--error-message-font-size, 13px);
 }

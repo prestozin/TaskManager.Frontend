@@ -1,103 +1,46 @@
 @use "variables" as *;
 
-.cdk-overlay-container {
+@mixin select-dropdown($font-size) {
+    .ant-select-item-option {
+        color: $primary-blue-color;
+        font-size: $font-size;
 
-    .page-size-dropdown {
-
-        .ant-select-item-option,
-        .ant-select-item-option-content {
-            font-size: 18px !important;
-            font-weight: 400 !important;
+        &:hover {
+            color: $white-color !important;
+            background-color: $secondary-blue-color !important;
         }
     }
 
-    .task-select-dropdown {
-
-        .ant-select-item-option {
-            font-size: 18px !important;
-            font-weight: 400 !important;
-
-            transition:
-                color 0.15s ease,
-                background-color 0.15s ease;
-
-            &:hover {
-                color: white !important;
-                background-color: $hover-button !important;
-            }
-        }
-
-        .ant-select-item-option-content {
-            color: inherit;
-
-            font-size: 18px !important;
-            font-weight: 400 !important;
-        }
-
-        .ant-select-item-option-active:not(.ant-select-item-option-disabled),
-        .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-            color: white !important;
-            background-color: $hover-button !important;
-        }
+    .ant-select-item-option-content {
+        color: inherit;
+        font-size: inherit;
     }
 
-    .task-form-select-dropdown {
-
-        .ant-select-item-option {
-            font-size: 18px !important;
-            font-weight: 400 !important;
-
-            transition:
-                color 0.15s ease,
-                background-color 0.15s ease;
-
-            &:hover {
-                color: white !important;
-                background-color: $hover-button !important;
-            }
-        }
-
-        .ant-select-item-option-content {
-            color: inherit;
-
-            font-size: 18px !important;
-            font-weight: 400 !important;
-        }
-
-        .ant-select-item-option-active:not(.ant-select-item-option-disabled),
-        .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-            color: white !important;
-            background-color: $hover-button !important;
-        }
+    .ant-select-item-option-active:not(.ant-select-item-option-disabled),
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+        color: $white-color !important;
+        background-color: $secondary-blue-color !important;
     }
+}
 
-    .report-select-dropdown {
+@mixin overlay-styles {
+    .cdk-overlay-container {
 
-        .ant-select-item-option {
-            font-size: 16px !important;
-            font-weight: 400 !important;
+        .task-select-dropdown,
+        .task-form-select-dropdown {
+            @include select-dropdown($large-text-font-size);
+        }
 
-            transition:
-                color 0.15s ease,
-                background-color 0.15s ease;
+        .report-select-dropdown {
+            @include select-dropdown($body-font-size);
+        }
 
-            &:hover {
-                color: white !important;
-                background-color: $hover-button !important;
+        .page-size-dropdown {
+
+            .ant-select-item-option,
+            .ant-select-item-option-content {
+                font-size: $large-text-font-size;
             }
-        }
-
-        .ant-select-item-option-content {
-            color: inherit;
-
-            font-size: 16px !important;
-            font-weight: 400 !important;
-        }
-
-        .ant-select-item-option-active:not(.ant-select-item-option-disabled),
-        .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-            color: white !important;
-            background-color: $hover-button !important;
         }
     }
 }

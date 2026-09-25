@@ -1,55 +1,19 @@
 @use "variables" as *;
+@use "auth-form" as auth;
 
-form {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    gap: 24px;
-
-    padding-top: 35px;
-
-    // InputForms
-    --input-width: 380px;
-    --input-height: 66px;
-    --input-padding: 0 40px;
-
-    --input-border: 2px solid grey;
-    --input-radius: 380px;
-
-    --input-background: transparent;
-
-    --input-text-color: black;
-    --input-font-size: 18px;
-    --input-placeholder-color: grey;
-
-    --input-focus-border: 2px solid #{$primary-text-color};
-
-    --error-message-margin: 3px 0 0 40px;
-}
+@include auth.auth-form-page();
 
 .password-field {
-    width: 380px;
-
     display: flex;
     flex-direction: column;
-
+    width: 380px;
     gap: 8px;
 
     .forgot-password-link {
         align-self: flex-start;
-
-        color: $primary-text-color;
-
         margin-left: 40px;
-        font-size: 16px;
-        font-weight: 400;
-
-        text-decoration: none;
-
-        cursor: pointer;
+        color: $primary-text-color;
+        font-size: $body-font-size;
 
         &:hover {
             text-decoration: underline;
@@ -57,54 +21,12 @@ form {
     }
 }
 
-.form-message {
-    width: 380px;
-    height: 20px;
+@media (max-width: 520px) {
+    .password-field {
+        width: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-top: -12px;
-
-    .error-message,
-    .success-message {
-        margin: 0;
-
-        font-size: 16px;
-        text-align: center;
-    }
-
-    .error-message {
-        color: red;
-    }
-
-    .success-message {
-        color: green;
-    }
-}
-
-
-.auth-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 6px;
-
-    margin-top: 12px;
-
-    font-size: 16px;
-
-    .register-text {
-        color: black;
-    }
-
-    .register-link {
-        color: $primary-text-color;
-
-        text-decoration: underline;
-
-        cursor: pointer;
+        .forgot-password-link {
+            margin-left: 24px;
+        }
     }
 }

@@ -1,11 +1,5 @@
 @mixin task-badges {
 
-    .priority,
-    .status {
-        padding: 8px 12px;
-        border-radius: 10px;
-    }
-
     .priority-baixa,
     .status-em-progresso {
         color: #2563eb;
@@ -32,7 +26,4 @@
         background-color: #dcfce7;
         border: 1px solid #34985797;
     }
-
-    
 }
-

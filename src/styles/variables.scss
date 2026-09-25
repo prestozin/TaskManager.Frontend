@@ -1,8 +1,51 @@
-$primary-color: #0b2f6a;
-$grey-text-color: #757b8d;
-$primary-text-color: #032070; 
-$secondary-text-color: white;
-$grey-bg: #ebebf3;
-$hover-button: #134cb7;
-$shape-color: #1a417f;
-$black-gray: #1d1e51;
+$primary-blue-color: #0b2f6a;
+$secondary-blue-color: #134cb7;
+
+$primary-text-color: #032070;
+$muted-text-color: #757b8d;
+$white-color: #ffffff;
+
+$page-background-color: #f1f2f7;
+$auth-background-color: #e5e5f5;
+$pale-blue-background-color: #eef1f7;
+$disabled-field-background-color: rgba(128, 128, 128, 0.27);
+
+$border-color: #d8dbe3;
+$input-border-color: #b5bac7;
+$strong-border-color: #aeb4c0;
+$divider-color: #e1e3e8;
+
+$error-color: #ef5350;
+$error-text-color: #d43434;
+$success-color: #31b86b;
+$warning-color: #f5aa2a;
+$info-color: #4f8ee8;
+
+$priority-low-color: #22aeca;
+$priority-medium-color: #f5b52f;
+
+$font-family: "Source Sans Pro", sans-serif;
+
+$large-title-font-size: 40px;
+$page-title-font-size: 28px;
+$section-title-large-font-size: 24px;
+$section-title-font-size: 20px;
+$large-text-font-size: 18px;
+$input-font-size: 17px;
+$body-font-size: 16px;
+$small-font-size: 15px;
+$caption-font-size: 14px;
+
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+$control-height: 40px;
+
+$small-border-radius: 6px;
+$medium-border-radius: 8px;
+$large-border-radius: 10px;
+$extra-large-border-radius: 16px;
+$card-border-radius: 18px;
+
+$focus-shadow: 0 0 0 2px rgba($primary-blue-color, 0.08);
+$modal-backdrop-color: rgba(40, 70, 120, 0.35);

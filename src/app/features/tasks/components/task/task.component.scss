@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "ng-zorro" as zorro;
 @use "task-badges" as *;
 
 :host {
@@ -11,26 +12,24 @@
     display: grid;
     grid-template-columns: var(--task-columns);
     align-items: center;
+    min-height: 58px;
+    padding: var(--task-row-padding, 6px 60px);
+    border-top: 1px solid $input-border-color;
 
     &.without-checkbox {
-        grid-template-columns: 1fr 200px 200px 200px 20px;
+        grid-template-columns: var(--task-columns-without-checkbox,
+                1fr 200px 200px 200px 20px);
     }
 
     &.without-options {
-        grid-template-columns: 40px 1fr 200px 200px 200px;
+        grid-template-columns: var(--task-columns-without-options,
+                40px 1fr 200px 200px 200px);
     }
 
     &.without-checkbox.without-options {
-        grid-template-columns: 1fr 200px 200px 200px;
+        grid-template-columns: var(--task-columns-without-checkbox-options,
+                1fr 200px 200px 200px);
     }
-
-    min-height: 58px;
-
-    padding: 6px 60px 6px 60px;
-
-    border-top: 1px solid #b7bcc7;
-
-    transition: background-color 0.15s ease;
 
     &:hover {
         background-color: #f6f7fa;
@@ -43,29 +42,22 @@
     .task-info {
         display: flex;
         flex-direction: column;
-
         min-width: 0;
-
         gap: 1px;
-
         color: $primary-text-color;
 
-        .task-title {
+        .task-title,
+        .description {
             display: -webkit-box;
-
-            margin: 0;
-
             overflow: hidden;
-
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 1;
             line-clamp: 1;
+        }
 
-            color: $primary-color;
-
-            font-size: var(--task-title-size, 18px);
-            font-weight: 400;
-
+        .task-title {
+            color: $primary-blue-color;
+            font-size: var(--task-title-size, #{$large-text-font-size});
             cursor: var(--task-title-cursor, pointer);
 
             &:hover {
@@ -74,82 +66,46 @@
         }
 
         .description {
-            display: -webkit-box;
-
-            margin: 0;
-
-            overflow: hidden;
-
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            line-clamp: 1;
-
-            color: $grey-text-color;
-
-            font-size: var(--task-description-size, 16px);
-            font-weight: 400;
+            color: $muted-text-color;
+            font-size: var(--task-description-size, #{$body-font-size});
         }
     }
 
     .task-details {
         justify-self: center;
-
-        margin: 0;
-
-        font-size: var(--task-details-size, 17px);
-        font-weight: 400;
-
+        font-size: var(--task-details-size, #{$input-font-size});
         text-align: center;
     }
 
     .date {
         width: 100%;
-
-        color: $primary-color;
-
+        color: $primary-blue-color;
         text-align: center;
     }
 
     .priority,
     .status {
         justify-self: center;
-
         display: inline-flex;
         align-items: center;
         justify-content: center;
-
-        width: auto;
         min-width: 90px;
         min-height: 36px;
-
         padding: 4px 12px;
-
-        border-radius: 8px;
-
-        font-size: var(--task-badge-size, 17px);
+        border-radius: $medium-border-radius;
+        font-size: var(--task-badge-size, #{$input-font-size});
         line-height: 1;
-
         text-align: center;
         white-space: nowrap;
     }
 
     .btn-options {
         justify-self: center;
-
         width: 30px;
         height: 30px;
-
         padding: 6px;
-
-        box-sizing: border-box;
-
+        border-radius: $small-border-radius;
         cursor: pointer;
-
-        border-radius: 6px;
-
-        transition:
-            background-color 0.15s ease,
-            transform 0.1s ease;
 
         &:hover {
             background-color: #e9ebf1;
@@ -162,54 +118,7 @@
 }
 
 :host ::ng-deep {
-
     .task-checkbox {
-
-        .ant-checkbox-inner {
-            width: 17px;
-            height: 17px;
-
-            border: 1.5px solid grey;
-            border-radius: 4px;
-
-            background-color: white;
-        }
-
-        .ant-checkbox:hover {
-
-            .ant-checkbox-inner {
-                border-color: $hover-button;
-                background-color: #eef3fb;
-            }
-        }
-
-        .ant-checkbox-checked {
-
-            .ant-checkbox-inner {
-                border-color: $hover-button;
-                background-color: $hover-button;
-            }
-
-            &::after {
-                border-color: $hover-button;
-            }
-        }
-
-        .ant-checkbox-checked .ant-checkbox-inner::after {
-            border-color: white;
-        }
-
-        .ant-checkbox-input:focus + .ant-checkbox-inner {
-            border-color: $hover-button;
-
-            box-shadow: 0 0 0 2px rgba($hover-button, 0.1);
-        }
-
-        .ant-checkbox:active {
-
-            .ant-checkbox-inner {
-                transform: scale(0.9);
-            }
-        }
+        @include zorro.task-checkbox(true);
     }
 }

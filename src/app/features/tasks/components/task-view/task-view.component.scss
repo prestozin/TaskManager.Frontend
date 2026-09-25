@@ -3,7 +3,6 @@
 
 :host {
     display: block;
-
     width: 100%;
     height: 100%;
 
@@ -13,32 +12,22 @@
 .container {
     display: flex;
     flex-direction: column;
-
     width: 100%;
-    height: 100%;;
-
-    box-sizing: border-box;
-
+    height: 100%;
     padding: 32px;
-
     background-color: rgb(245, 240, 240);
 
     .container-title {
-        margin-top: 0px;
-
-        font-size: 22px;
-        font-weight: 600;
-
         color: $primary-text-color;
+        font-size: 22px;
+        font-weight: $font-weight-semibold;
     }
 
     .task-infos {
         display: flex;
         flex-direction: column;
-
-        gap: 30px;
-
         margin-top: 65px;
+        gap: 30px;
     }
 
     .task-title-wrapper,
@@ -48,7 +37,6 @@
     .task-description-wrapper {
         display: flex;
         flex-direction: column;
-
         gap: 6px;
     }
 
@@ -56,125 +44,110 @@
     .task-description {
         white-space: normal;
         overflow-wrap: anywhere;
-        word-break: break-word;
     }
 
     .field-label {
-        margin: 0;
-
-        font-size: 17px;
-        font-weight: 500;
-
-        color: $primary-color;
+        color: $primary-blue-color;
+        font-size: $input-font-size;
+        font-weight: $font-weight-medium;
     }
 
     .task-title {
-        margin: 0;
-
-        font-size: 20px;
-        font-weight: 600;
-
         color: $primary-text-color;
+        font-size: $section-title-font-size;
+        font-weight: $font-weight-semibold;
     }
 
     .task-date {
-
-        font-size: 17px;
-
         color: $primary-text-color;
+        font-size: $input-font-size;
     }
 
-    .task-priority {
-        width: fit-content;
-
-        margin-left: 0px;
-        padding: 5px 12px;
-
-        border-radius: 8px;
-
-        font-size: 17px;
-
-    }
-
+    .task-priority,
     .task-status {
         width: fit-content;
-
-        margin: 0;
         padding: 5px 12px;
-
-        border-radius: 8px;
-
-        font-size: 17px;
+        border-radius: $medium-border-radius;
+        font-size: $input-font-size;
     }
 
     .task-description {
-        margin: 0;
-
-        font-size: 16px;
-        line-height: 1.5;
-
         color: $primary-text-color;
+        font-size: $body-font-size;
+        line-height: 1.5;
     }
 
     .buttons {
         display: flex;
         align-items: center;
-
-        gap: 12px;
-
         margin-top: auto;
-  
+        gap: 12px;
     }
 
     .delete-wrapper {
         display: flex;
         align-items: center;
-
-        gap: 6px;
-
         margin-right: auto;
+        gap: 6px;
     }
 
     .btn-delete,
     .btn-edit,
     .btn-close {
         height: 38px;
+        border-radius: $medium-border-radius;
+        font-size: $body-font-size;
 
-        border-radius: 8px;
-
-        font-size: 16px;
-
-        cursor: pointer;
-
-        &:active{
-            scale: 0.95;
+        &:active {
+            transform: scale(0.95);
         }
     }
 
     .btn-delete {
-        border: 1px solid #ff5c5c;
-
         padding: 0 14px;
-
-        color: #d43434;
+        border: 1px solid $error-color;
         background-color: transparent;
+        color: $error-text-color;
     }
 
     .btn-edit {
         min-width: 85px;
-
-        border: 1px solid $primary-color;
-
-        color: $primary-color;
-        background-color: white;
+        border: 1px solid $primary-blue-color;
+        background-color: $white-color;
+        color: $primary-blue-color;
     }
 
     .btn-close {
         min-width: 85px;
-
         border: none;
+        background-color: $secondary-blue-color;
+        color: $white-color;
+    }
+}
 
-        color: $secondary-text-color;
-        background-color: $hover-button;
+@media (max-width: 500px) {
+    .container {
+        padding: 24px 20px;
+
+        .task-infos {
+            margin-top: 40px;
+            gap: 24px;
+        }
+
+        .buttons {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .delete-wrapper {
+            width: 100%;
+            margin-right: 0;
+        }
+
+        .btn-delete,
+        .btn-edit,
+        .btn-close {
+            width: 100%;
+        }
     }
 }

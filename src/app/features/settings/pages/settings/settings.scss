@@ -1,92 +1,60 @@
-@import "variables";
-
-$settings-secondary-text: #6b7280;
-$settings-border-color: #d9d9d9;
-$settings-divider-color: #eeeeee;
-$danger-color: #ff4d4f;
+@use "variables" as *;
+@use "ng-zorro" as zorro;
 
 .settings-page {
     width: 100%;
     min-height: 100%;
-    padding: 0px 40px;
-
-    box-sizing: border-box;
+    padding: 0 40px;
 }
 
 .settings-header {
-    width: 100%;
-
-    margin: 0 0 20px;
+    margin-bottom: 20px;
 
     h2 {
-        margin: 0;
-
         color: $primary-text-color;
-
-        font-size: 28px;
-        font-weight: 500;
+        font-size: $page-title-font-size;
     }
 
     p {
-        margin: 6px 0 0;
-
-        color: $settings-secondary-text;
-
-        font-size: 16px;
+        margin-top: 6px;
+        color: $muted-text-color;
+        font-size: $body-font-size;
     }
 }
 
 .settings-content {
     display: flex;
     flex-direction: column;
-
-    width: 100%;
-
     padding-bottom: 20px;
-
     gap: 12px;
-
-    box-sizing: border-box;
 }
 
 .settings-card {
     width: 100%;
-
     padding: 16px 22px;
-
-    box-sizing: border-box;
-
-    border: 1px solid $settings-border-color;
-    border-radius: 16px;
-
-    background-color: white;
+    border: 1px solid $border-color;
+    border-radius: $extra-large-border-radius;
+    background-color: $white-color;
 }
 
 .card-header {
     display: flex;
     align-items: center;
-
     padding-bottom: 12px;
-
     gap: 10px;
-
-    border-bottom: 1px solid $settings-border-color;
+    border-bottom: 1px solid $border-color;
 }
 
 .card-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 44px;
     height: 44px;
-
     flex-shrink: 0;
-
     border-radius: 50%;
-
-    background-color: rgba($primary-color, 0.1);
-    color: $primary-color;
+    background-color: rgba($primary-blue-color, 0.1);
+    color: $primary-blue-color;
 
     [nz-icon] {
         font-size: 26px;
@@ -97,20 +65,15 @@ $danger-color: #ff4d4f;
     min-width: 0;
 
     h3 {
-        margin: 0;
-
         color: $primary-text-color;
-
-        font-size: 20px;
-        font-weight: 600;
+        font-size: $section-title-font-size;
+        font-weight: $font-weight-semibold;
     }
 
     p {
-        margin: 3px 0 0;
-
-        color: $settings-secondary-text;
-
-        font-size: 16px;
+        margin-top: 3px;
+        color: $muted-text-color;
+        font-size: $body-font-size;
     }
 }
 
@@ -118,25 +81,19 @@ $danger-color: #ff4d4f;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     min-height: 55px;
-
     padding: 10px 5px;
-    box-sizing: border-box;
-
     gap: 20px;
 
     &:not(:last-child) {
-        border-bottom: 1px solid $settings-divider-color;
+        border-bottom: 1px solid $divider-color;
     }
 }
 
 .option-content {
     display: flex;
     align-items: center;
-
     min-width: 0;
-
     gap: 15px;
 }
 
@@ -144,13 +101,10 @@ $danger-color: #ff4d4f;
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 32px;
     height: 32px;
-
     flex-shrink: 0;
-
-    color: $primary-color;
+    color: $primary-blue-color;
 
     [nz-icon] {
         font-size: 24px;
@@ -161,20 +115,15 @@ $danger-color: #ff4d4f;
     min-width: 0;
 
     h4 {
-        margin: 0;
-
         color: $primary-text-color;
-
-        font-size: 16px;
-        font-weight: 600;
+        font-size: $body-font-size;
+        font-weight: $font-weight-semibold;
     }
 
     p {
-        margin: 3px 0 0;
-
-        color: $settings-secondary-text;
-
-        font-size: 15px;
+        margin-top: 3px;
+        color: $muted-text-color;
+        font-size: $small-font-size;
     }
 }
 
@@ -182,26 +131,13 @@ $danger-color: #ff4d4f;
 .btn-danger {
     min-width: 145px;
     height: 36px;
-
     margin-left: 20px;
     padding: 0 15px;
-
     flex-shrink: 0;
-
-    border-radius: 8px;
-
-    background-color: white;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.1s ease;
+    border-radius: $medium-border-radius;
+    background-color: $white-color;
+    font-size: $small-font-size;
+    font-weight: $font-weight-semibold;
 
     &:active {
         transform: scale(0.95);
@@ -209,54 +145,40 @@ $danger-color: #ff4d4f;
 }
 
 .btn-option {
-    border: 1px solid $primary-color;
-
-    color: $primary-color;
+    border: 1px solid $primary-blue-color;
+    color: $primary-blue-color;
 
     &:hover {
-        background-color: $hover-button;
-        color: white;
+        background-color: $secondary-blue-color;
+        color: $white-color;
     }
 }
 
 .btn-danger {
-    border: 1px solid $danger-color;
-
-    color: $danger-color;
+    border: 1px solid $error-color;
+    color: $error-color;
 
     &:hover {
-        background-color: $danger-color;
-        color: white;
+        background-color: $error-color;
+        color: $white-color;
     }
 }
 
-nz-switch {
+nz-switch,
+.page-size-select {
     flex-shrink: 0;
 }
 
 .page-size-select {
     width: 170px;
     height: 42px;
-
-    flex-shrink: 0;
 }
 
-.change-password-option {
-
-    &.open {
-
-        .settings-option {
-            border-bottom: 1px solid $settings-divider-color;
-        }
-    }
-}
-
-.change-password-content {
+.change-password-content,
+.delete-account-content {
     display: flex;
     flex-direction: column;
-
     padding: 15px 5px 5px;
-
     gap: 15px;
 }
 
@@ -264,330 +186,186 @@ nz-switch {
 .delete-password-field {
     display: flex;
     flex-direction: column;
-
     width: 100%;
-
     gap: 7px;
 
     label {
         color: $primary-text-color;
-
-        font-size: 16px;
-        font-weight: 500;
+        font-size: $body-font-size;
+        font-weight: $font-weight-medium;
     }
 }
 
 .password-input-container {
     position: relative;
-
     width: 100%;
 
     input {
         width: 100%;
         height: 42px;
-
         padding: 0 45px 0 15px;
-        box-sizing: border-box;
-
-        border: 1px solid $settings-border-color;
-        border-radius: 8px;
-
-        background-color: white;
+        border: 1px solid $border-color;
+        border-radius: $medium-border-radius;
+        background-color: $white-color;
         color: $primary-text-color;
-
-        font-size: 15px;
-        font-weight: 400;
-
+        font-size: $small-font-size;
         outline: none;
 
-        transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
-
         &::placeholder {
-            color: $settings-secondary-text;
+            color: $muted-text-color;
         }
 
         &:focus {
-            border-color: $primary-color;
-
-            box-shadow: 0 0 0 2px rgba($primary-color, 0.08);
+            border-color: $primary-blue-color;
+            box-shadow: $focus-shadow;
         }
     }
 }
 
 .btn-password-visibility {
     position: absolute;
-
     top: 50%;
     right: 12px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 0;
-
     border: none;
-
     background-color: transparent;
-    color: $settings-secondary-text;
-
-    font-size: 18px;
-
-    cursor: pointer;
-
+    color: $muted-text-color;
+    font-size: $large-text-font-size;
     transform: translateY(-50%);
 
-    transition: color 0.15s ease;
-
     &:hover {
-        color: $primary-color;
+        color: $primary-blue-color;
     }
 }
 
 .password-error {
-    margin: 0;
-
-    color: $danger-color;
-
-    font-size: 14px;
-    font-weight: 400;
+    color: $error-color;
+    font-size: $caption-font-size;
 }
 
 .change-password-actions,
 .delete-account-actions {
     display: flex;
     justify-content: flex-end;
-
     gap: 10px;
 }
 
-.btn-confirm-password {
+.btn-confirm-password,
+.btn-cancel,
+.btn-confirm-delete {
     min-width: 110px;
     height: 36px;
-
     padding: 0 15px;
-
-    border: 1px solid $primary-color;
-    border-radius: 8px;
-
-    background-color: $primary-color;
-    color: white;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.1s ease;
-
-    &:hover {
-        background-color: $hover-button;
-        border-color: $hover-button;
-    }
+    border-radius: $medium-border-radius;
+    font-size: $small-font-size;
+    font-weight: $font-weight-semibold;
 
     &:active {
         transform: scale(0.95);
     }
 }
 
-.danger-header-icon {
-    background-color: rgba($danger-color, 0.1);
+.btn-confirm-password {
+    border: 1px solid $primary-blue-color;
+    background-color: $primary-blue-color;
+    color: $white-color;
 
-    color: $danger-color;
-}
-
-.danger-option-icon {
-    color: $danger-color;
-}
-
-.delete-account-option {
-
-    &.open {
-
-        .settings-option {
-            border-bottom: 1px solid $settings-divider-color;
-        }
+    &:hover {
+        border-color: $secondary-blue-color;
+        background-color: $secondary-blue-color;
     }
 }
 
-.delete-account-content {
-    display: flex;
-    flex-direction: column;
+.danger-header-icon {
+    background-color: rgba($error-color, 0.1);
+    color: $error-color;
+}
 
-    padding: 15px 5px 5px;
-
-    gap: 15px;
+.danger-option-icon {
+    color: $error-color;
 }
 
 .delete-warning {
     display: flex;
     align-items: flex-start;
-
     padding: 12px 15px;
-    box-sizing: border-box;
-
     gap: 10px;
-
-    border: 1px solid rgba($danger-color, 0.3);
-    border-radius: 8px;
-
-    background-color: rgba($danger-color, 0.05);
-    color: $danger-color;
+    border: 1px solid rgba($error-color, 0.3);
+    border-radius: $medium-border-radius;
+    background-color: rgba($error-color, 0.05);
+    color: $error-color;
 
     [nz-icon] {
         margin-top: 2px;
-
         flex-shrink: 0;
-
-        font-size: 20px;
+        font-size: $section-title-font-size;
     }
 
     strong {
         display: block;
-
-        font-size: 15px;
-        font-weight: 600;
+        font-size: $small-font-size;
+        font-weight: $font-weight-semibold;
     }
 
     p {
-        margin: 3px 0 0;
-
-        color: $settings-secondary-text;
-
-        font-size: 15px;
-    }
-}
-
-.btn-cancel,
-.btn-confirm-delete {
-    min-width: 110px;
-    height: 36px;
-
-    padding: 0 15px;
-
-    border-radius: 8px;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.1s ease,
-        box-shadow 0.2s ease;
-
-    &:active {
-        transform: scale(0.95);
+        margin-top: 3px;
+        color: $muted-text-color;
+        font-size: $small-font-size;
     }
 }
 
 .btn-cancel {
-    border: 1px solid $settings-border-color;
-
-    background-color: white;
+    border: 1px solid $border-color;
+    background-color: $white-color;
     color: $primary-text-color;
 
     &:hover {
-        background-color: $settings-divider-color;
-        border-color: darken($settings-border-color, 5%);
+        background-color: $pale-blue-background-color;
     }
 }
 
 .btn-confirm-delete {
-    border: 1px solid $danger-color;
-
-    background-color: $danger-color;
-    color: white;
+    border: 1px solid $error-color;
+    background-color: $error-color;
+    color: $white-color;
 
     &:hover {
-        background-color: darken($danger-color, 6%);
-        border-color: darken($danger-color, 6%);
-
-        box-shadow: 0 4px 10px rgba($danger-color, 0.2);
+        filter: brightness(0.94);
+        box-shadow: 0 4px 10px rgba($error-color, 0.2);
     }
 }
 
 .about-content {
     padding: 12px 5px 2px;
 
+    .app-version,
+    .app-description {
+        color: $muted-text-color;
+        font-size: $small-font-size;
+    }
+
     .app-version {
-        margin: 3px 0 0;
-
-        color: $settings-secondary-text;
-
-        font-size: 15px;
+        margin-top: 3px;
     }
 
     .app-description {
-        margin: 5px 0 0;
-
-        color: $settings-secondary-text;
-
-        font-size: 15px;
+        margin-top: 5px;
         line-height: 1.5;
     }
 }
 
-:host ::ng-deep {
-
-    .page-size-select {
-
-        .ant-select-selector {
-            display: flex;
-            align-items: center;
-
-            height: 42px !important;
-
-            padding: 0 14px !important;
-
-            border-radius: 8px !important;
-
-            font-size: 18px !important;
-        }
-
-        .ant-select-selection-item,
-        .ant-select-selection-placeholder {
-            display: flex;
-            align-items: center;
-
-            font-size: 18px !important;
-            font-weight: 400 !important;
-        }
-
-        .ant-select-arrow {
-            color: black;
-
-            font-size: 13px;
-        }
+@media (max-width: 1000px) {
+    .settings-page {
+        padding: 0 20px;
     }
 }
 
-@media (max-width: 900px) {
-
+@media (max-width: 700px) {
     .settings-page {
-        padding: 0;
-    }
-}
-
-@media (max-width: 650px) {
-
-    .settings-page {
-        padding: 0;
-    }
-
-    .settings-header {
-
-        h2 {
-            font-size: 26px;
-        }
+        padding: 0 10px;
     }
 
     .settings-card {
@@ -599,11 +377,14 @@ nz-switch {
         align-items: stretch;
     }
 
+    .option-content {
+        align-items: flex-start;
+    }
+
     .btn-option,
     .btn-danger,
     .page-size-select {
         width: 100%;
-
         margin-left: 0;
     }
 
@@ -616,5 +397,11 @@ nz-switch {
     .btn-confirm-password,
     .btn-confirm-delete {
         width: 100%;
+    }
+}
+
+:host ::ng-deep {
+    .page-size-select {
+        @include zorro.page-size-select;
     }
 }

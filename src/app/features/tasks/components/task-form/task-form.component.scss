@@ -1,144 +1,125 @@
 @use "variables" as *;
+@use "ng-zorro" as zorro;
 
 .container {
     display: flex;
     flex-direction: column;
-
-    width: 600px;
-    height: 730px;
-
-    gap: 40px;
-
-    justify-content: center;
     align-items: center;
-
+    justify-content: center;
+    width: min(600px, calc(100vw - 32px));
+    height: min(730px, calc(100vh - 32px));
+    padding: 30px;
+    gap: 40px;
+    overflow-y: auto;
     border-radius: 15px;
+    background-color: $white-color;
+}
 
-    background-color: white;
+.container-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: $primary-blue-color;
 
-    .container-header {
-        display: flex;
-        align-items: center;
+    .header-texts {
+        font-size: $section-title-large-font-size;
+        font-weight: $font-weight-semibold;
 
-        gap: 15px;
-
-        color: $primary-color;
-
-        .header-texts {
-            font-size: 24px;
-            font-weight: 600;
-
-            .header-subtitle {
-                font-size: 20px;
-
-                color: gray;
-            }
-        }
-
-        .img-icon {
-            width: 60px;
-            height: 60px;
+        .header-subtitle {
+            color: $muted-text-color;
+            font-size: $section-title-font-size;
         }
     }
 
-    .container-content {
+    .img-icon {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+.container-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+
+    .content-box {
         display: flex;
         flex-direction: column;
+        color: $primary-blue-color;
+        font-size: $section-title-font-size;
 
-        gap: 20px;
-
-        .content-box {
-            display: flex;
-            flex-direction: column;
-
-            color: $primary-color;
-
-            font-size: 20px;
-            font-weight: 400;
-
-            .task-title {
-                margin-left: 20px;
-                margin-bottom: 10px;
-            }
-        }
-
-        .dropdown-container {
-            display: flex;
-
-            gap: 20px;
-        }
-
-        .select-field {
-            display: flex;
-            flex-direction: column;
-
-            width: 215px;
-
-            gap: 10px;
-
-            .task-title {
-                margin-left: 20px;
-
-                color: $primary-color;
-
-                font-size: 20px;
-                font-weight: 400;
-            }
+        .task-title {
+            margin: 0 0 10px 20px;
         }
     }
 
-    .container-footer {
+    .dropdown-container {
         display: flex;
+        gap: 20px;
+    }
 
-        gap: 30px;
+    .select-field {
+        display: flex;
+        flex-direction: column;
+        width: 215px;
+        gap: 10px;
 
-        .btn-cancel,
-        .btn-submit {
-            width: 160px;
-            height: 45px;
-
-            border-radius: 10px;
-
-            font-size: 20px;
-            font-weight: 400;
-
-            &:active {
-                scale: 0.95;
-            }
-        }
-
-        .btn-cancel {
-            border: 1px solid $primary-color;
-
-            background-color: white;
-            color: $primary-color;
-        }
-
-        .btn-submit {
-            border: 1px solid $primary-color;
-
-            background-color: $primary-color;
-            color: white;
+        .task-title {
+            margin-left: 20px;
+            color: $primary-blue-color;
+            font-size: $section-title-font-size;
         }
     }
+}
 
-    .form-title,
-    .form-description {
-        --input-width: 450px;
-        --input-radius: 10px;
-        --input-padding: 15px 20px;
-        --input-border: 1px solid grey;
-        --input-text-placeholder: 16px;
-        --error-message-margin: 3px 0px 0px 20px;
+.container-footer {
+    display: flex;
+    gap: 30px;
+
+    .btn-cancel,
+    .btn-submit {
+        width: 160px;
+        height: 45px;
+        border: 1px solid $primary-blue-color;
+        border-radius: $large-border-radius;
+        font-size: $section-title-font-size;
+
+        &:active {
+            transform: scale(0.95);
+        }
     }
 
-    .form-title {
-        --input-height: 59px;
+    .btn-cancel {
+        background-color: $white-color;
+        color: $primary-blue-color;
     }
 
-    .form-description {
-        --input-height: 180px;
+    .btn-submit {
+        background-color: $primary-blue-color;
+        color: $white-color;
     }
+}
+
+.form-title,
+.form-description {
+    display: block;
+    width: 100%;
+
+    --input-width: 100%;
+    --input-radius: #{$large-border-radius};
+    --input-padding: 15px 20px;
+    --input-border: 1px solid grey;
+    --input-font-size: #{$body-font-size};
+    --error-message-margin: 3px 0 0 20px;
+}
+
+.form-title {
+    --input-height: 59px;
+}
+
+.form-description {
+    --input-height: 180px;
 }
 
 .task-select {
@@ -146,56 +127,44 @@
     height: 59px;
 }
 
+@media (max-width: 650px) {
+    .container {
+        height: auto;
+        max-height: calc(100vh - 32px);
+        padding: 24px 20px;
+        gap: 28px;
+    }
+
+    .container-header {
+        align-items: flex-start;
+
+        .img-icon {
+            width: 48px;
+            height: 48px;
+        }
+    }
+
+    .container-content .dropdown-container {
+        flex-direction: column;
+    }
+
+    .container-content .select-field {
+        width: 100%;
+    }
+
+    .container-footer {
+        width: 100%;
+        gap: 12px;
+
+        .btn-cancel,
+        .btn-submit {
+            width: 50%;
+        }
+    }
+}
+
 :host ::ng-deep {
-
     .task-select {
-
-        .ant-select-selector {
-            display: flex;
-            align-items: center;
-
-            height: 59px !important;
-
-            padding: 0 15px !important;
-
-            border: 1px solid grey !important;
-            border-radius: 10px !important;
-
-            font-size: 16px !important;
-            font-weight: 400 !important;
-
-            box-shadow: none !important;
-        }
-
-        .ant-select-selection-item,
-        .ant-select-selection-placeholder {
-            display: flex;
-            align-items: center;
-
-            font-size: 17px !important;
-            font-weight: 400 !important;
-        }
-
-        .ant-select-arrow {
-            color: $primary-color;
-
-            font-size: 13px;
-        }
-
-        &:hover {
-
-            .ant-select-selector {
-                border-color: $primary-color !important;
-            }
-        }
-
-        &.ant-select-focused {
-
-            .ant-select-selector {
-                border-color: $primary-color !important;
-
-                box-shadow: 0 0 0 2px rgba($primary-color, 0.08) !important;
-            }
-        }
+        @include zorro.task-form-select;
     }
 }

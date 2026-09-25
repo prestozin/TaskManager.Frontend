@@ -6,64 +6,48 @@
 
 .task-options {
     position: absolute;
-
     display: flex;
     flex-direction: column;
-
-    gap: 6px;
-
     min-width: 150px;
-
-    background: white;
-
-    border: 1px solid #ddd;
-    border-radius: 10px;
-
+    gap: 6px;
+    border: 1px solid #dddddd;
+    border-radius: $large-border-radius;
+    background-color: $white-color;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
     z-index: 1000;
 
     button {
         display: flex;
+        align-items: center;
         padding: 10px 14px;
         gap: 7px;
-
-        background: transparent;
         border: none;
-        align-items: center;
-
-        cursor: pointer;
+        background-color: transparent;
+        color: $primary-blue-color;
+        font-size: $small-font-size;
+        text-align: left;
 
         span {
-            font-size: 15px;
-            color: $primary-color;
-            text-align: left;
+            color: inherit;
         }
 
-
         &:hover {
-            background: $hover-button;
-            color: white;
+            background-color: $secondary-blue-color;
+            color: $white-color;
 
-            svg, span {
-                color: white;
+            svg {
+                color: $white-color;
             }
         }
 
         &:active {
-            scale: 0.95;
+            transform: scale(0.95);
         }
     }
-
-    .task-options {
-        position: absolute;
-        z-index: 10;
-    }
 }
-
 
 svg {
     width: 18px;
     height: 18px;
-    color: $hover-button;
+    color: $secondary-blue-color;
 }

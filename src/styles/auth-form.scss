@@ -1,0 +1,84 @@
+@use "variables" as *;
+
+@mixin auth-form-page($message-margin-top: -12px,
+    $message-font-size: $body-font-size) {
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding-top: 35px;
+        gap: 24px;
+
+        --input-width: 380px;
+        --input-height: 66px;
+        --input-padding: 0 40px;
+        --input-border: 2px solid grey;
+        --input-radius: 380px;
+        --input-background: transparent;
+        --input-text-color: black;
+        --input-font-size: #{$large-text-font-size};
+        --input-placeholder-color: grey;
+        --input-focus-border: 2px solid #{$primary-text-color};
+        --error-message-margin: 3px 0 0 40px;
+    }
+
+    .form-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 380px;
+        height: 20px;
+        margin-top: $message-margin-top;
+
+        .error-message,
+        .success-message {
+            font-size: $message-font-size;
+            text-align: center;
+        }
+
+        .error-message {
+            color: $error-color;
+        }
+
+        .success-message {
+            color: $success-color;
+        }
+    }
+
+    .auth-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 12px;
+        gap: 6px;
+        font-size: $body-font-size;
+
+        span {
+            color: black;
+        }
+
+        a {
+            color: $primary-text-color;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    @media (max-width: 520px) {
+        form {
+            --input-width: 100%;
+            --input-padding: 0 24px;
+            --error-message-margin: 3px 0 0 24px;
+        }
+
+        .form-message {
+            width: 100%;
+        }
+
+        .auth-footer {
+            flex-wrap: wrap;
+            text-align: center;
+        }
+    }
+}

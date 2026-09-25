@@ -1,42 +1,31 @@
 @use "variables" as *;
-
-$status-blue: #4f8ee8;
-$status-green: #31b86b;
-$status-yellow: #f5aa2a;
-$status-red: #ef5350;
-$priority-yellow: #f5b52f;
-$priority-low: #22aeca;
-$card-border: #c7cad3;
-$divider: #d8dbe3;
+@use "ng-zorro" as zorro;
 
 .report-page {
     width: 100%;
     padding: 0 40px 20px;
-    box-sizing: border-box;
-    color: $primary-color;
+    color: $primary-blue-color;
 }
 
 .report-header {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 40px;
     margin-bottom: 20px;
+    gap: 40px;
 
     .report-title {
         flex-shrink: 0;
 
         h2 {
-            margin: 0;
-            color: $primary-color;
-            font-size: 28px;
-            font-weight: 400;
+            color: $primary-blue-color;
+            font-size: $page-title-font-size;
         }
 
         p {
-            margin: 6px 0 0;
-            color: $grey-text-color;
-            font-size: 15px;
+            margin-top: 6px;
+            color: $muted-text-color;
+            font-size: $small-font-size;
         }
     }
 }
@@ -53,71 +42,42 @@ $divider: #d8dbe3;
         gap: 3px;
 
         label {
-            color: $primary-color;
-            font-size: 16px;
+            color: $primary-blue-color;
+            font-size: $body-font-size;
         }
     }
 }
 
 .report-select {
     width: 210px;
-    height: 40px;
+    height: $control-height;
 }
 
 .report-date {
     width: 170px;
-    height: 40px;
-}
-
-:host ::ng-deep {
-    .report-select .ant-select-selection-item {
-        display: flex;
-        align-items: center;
-        font-size: 15px;
-    }
-
-    .report-date {
-        border-radius: 8px;
-
-        &:hover {
-            border-color: $primary-color;
-        }
-
-        input {
-            font-size: 16px;
-
-            &::placeholder {
-                font-size: 16px;
-            }
-        }
-    }
+    height: $control-height;
 }
 
 .btn-clear-filters {
-    height: 40px;
+    height: $control-height;
     padding: 0 20px;
-
-    border: 1px solid $primary-color;
-    border-radius: 8px;
-
-    background-color: white;
-    color: $primary-color;
-
-    font-size: 16px;
-    font-weight: 400;
+    border: 1px solid $primary-blue-color;
+    border-radius: $medium-border-radius;
+    background-color: $white-color;
+    color: $primary-blue-color;
+    font-size: $body-font-size;
 
     &:hover,
     &:focus {
-        background-color: $hover-button;
-        border-color: $primary-color;
-        color: white;
+        background-color: $secondary-blue-color;
+        color: $white-color;
     }
 }
 
 .report-card {
-    border: 1px solid $card-border;
-    border-radius: 18px;
-    background-color: white;
+    border: 1px solid #c7cad3;
+    border-radius: $card-border-radius;
+    background-color: $white-color;
 }
 
 .card-header {
@@ -129,40 +89,33 @@ $divider: #d8dbe3;
         display: flex;
         align-items: center;
         justify-content: center;
-
         width: 42px;
         height: 42px;
-
         flex-shrink: 0;
-
         border-radius: 50%;
-
-        background-color: #eef1f7;
-        color: $primary-color;
-
-        font-size: 20px;
+        background-color: $pale-blue-background-color;
+        color: $primary-blue-color;
+        font-size: $section-title-font-size;
     }
 
     .header-text {
-
         h3 {
-            margin: 0;
-            color: $primary-color;
-            font-size: 20px;
-            font-weight: 600;
+            color: $primary-blue-color;
+            font-size: $section-title-font-size;
+            font-weight: $font-weight-semibold;
         }
 
         p {
-            margin: 3px 0 0;
-            color: $grey-text-color;
-            font-size: 16px;
+            margin-top: 3px;
+            color: $muted-text-color;
+            font-size: $body-font-size;
         }
     }
 }
 
 .summary-card {
-    padding: 18px 20px 20px;
     margin-bottom: 14px;
+    padding: 18px 20px 20px;
 }
 
 .summary-list {
@@ -175,21 +128,18 @@ $divider: #d8dbe3;
     display: flex;
     flex-direction: column;
     align-items: center;
-
     min-width: 0;
     padding: 4px 22px;
 
     &:not(:last-child) {
-        border-right: 1px solid $divider;
+        border-right: 1px solid $border-color;
     }
 
     strong {
         margin-top: 7px;
-
-        color: $primary-color;
-
-        font-size: 20px;
-        font-weight: 600;
+        color: $primary-blue-color;
+        font-size: $section-title-font-size;
+        font-weight: $font-weight-semibold;
         line-height: 1;
     }
 
@@ -203,57 +153,49 @@ $divider: #d8dbe3;
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 100%;
     gap: 10px;
-
-    color: $primary-color;
-
-    font-size: 17px;
-    font-weight: 500;
+    color: $primary-blue-color;
+    font-size: $input-font-size;
+    font-weight: $font-weight-medium;
 }
 
 .summary-dot {
     width: 10px;
     height: 10px;
-
     flex-shrink: 0;
-
     border-radius: 50%;
 }
 
 .summary-line {
     width: 42px;
     height: 2px;
-
     margin-top: 10px;
-
     border-radius: 2px;
 }
 
 .summary-total,
 .summary-pending {
-    --summary-color: #{$status-blue};
+    --summary-color: #{$info-color};
 }
 
 .summary-completed {
-    --summary-color: #{$status-green};
+    --summary-color: #{$success-color};
 }
 
 .summary-progress {
-    --summary-color: #{$status-yellow};
+    --summary-color: #{$warning-color};
 }
 
 .summary-canceled {
-    --summary-color: #{$status-red};
+    --summary-color: #{$error-color};
 }
 
 .charts {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 14px;
     margin-bottom: 14px;
+    gap: 14px;
 }
 
 .chart-card {
@@ -264,73 +206,60 @@ $divider: #d8dbe3;
     display: grid;
     grid-template-columns: 220px minmax(0, 1fr);
     align-items: center;
-
     min-height: 220px;
     margin-top: 12px;
-
     gap: 30px;
 }
 
 .donut-chart {
     position: relative;
-
     width: 160px;
     height: 160px;
-
     margin: auto;
-
     border-radius: 50%;
 
     &::after {
         content: "";
-
         position: absolute;
         inset: 29px;
-
         border-radius: 50%;
-
-        background-color: white;
+        background-color: $white-color;
     }
 }
 
 .status-chart {
-    background: conic-gradient(
-        $status-green 0% 33.3%,
-        $status-yellow 33.3% 58.3%,
-        $status-blue 58.3% 87.5%,
-        $status-red 87.5% 100%
-    );
+    background: conic-gradient($success-color 0% 33.3%,
+            $warning-color 33.3% 58.3%,
+            $info-color 58.3% 87.5%,
+            $error-color 87.5% 100%);
 }
 
 .priority-chart {
-    background: conic-gradient(
-        $status-red 0% 25%,
-        $priority-yellow 25% 75%,
-        $priority-low 75% 100%
-    );
+    background: conic-gradient($error-color 0% 25%,
+            $priority-medium-color 25% 75%,
+            $priority-low-color 75% 100%);
 }
 
 .donut-center {
     position: absolute;
     inset: 0;
-    z-index: 1;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 
     strong {
-        color: $primary-color;
+        color: $primary-blue-color;
         font-size: 26px;
-        font-weight: 600;
+        font-weight: $font-weight-semibold;
         line-height: 1;
     }
 
     span {
         margin-top: 6px;
-        color: $grey-text-color;
-        font-size: 15px;
+        color: $muted-text-color;
+        font-size: $small-font-size;
     }
 }
 
@@ -344,22 +273,19 @@ $divider: #d8dbe3;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 50px 65px;
     align-items: center;
-
     min-height: 44px;
     gap: 10px;
-
-    border-bottom: 1px solid #e1e3e8;
-
-    color: $primary-color;
-    font-size: 16px;
+    border-bottom: 1px solid $divider-color;
+    color: $primary-blue-color;
+    font-size: $body-font-size;
 
     &:last-child {
         border-bottom: none;
     }
 
     strong {
-        font-size: 16px;
-        font-weight: 600;
+        font-size: $body-font-size;
+        font-weight: $font-weight-semibold;
         text-align: center;
     }
 }
@@ -373,45 +299,43 @@ $divider: #d8dbe3;
 .legend-dot {
     width: 12px;
     height: 12px;
-
     flex-shrink: 0;
-
     border-radius: 50%;
     background-color: var(--legend-color);
 }
 
 .legend-percentage {
-    color: $grey-text-color;
-    font-size: 15px;
+    color: $muted-text-color;
+    font-size: $small-font-size;
     text-align: right;
 }
 
 .status-pending {
-    --legend-color: #{$status-blue};
+    --legend-color: #{$info-color};
 }
 
 .status-progress {
-    --legend-color: #{$status-yellow};
+    --legend-color: #{$warning-color};
 }
 
 .status-completed {
-    --legend-color: #{$status-green};
+    --legend-color: #{$success-color};
 }
 
 .status-canceled {
-    --legend-color: #{$status-red};
+    --legend-color: #{$error-color};
 }
 
 .priority-low {
-    --legend-color: #{$priority-low};
+    --legend-color: #{$priority-low-color};
 }
 
 .priority-medium {
-    --legend-color: #{$priority-yellow};
+    --legend-color: #{$priority-medium-color};
 }
 
 .priority-high {
-    --legend-color: #{$status-red};
+    --legend-color: #{$error-color};
 }
 
 .task-list-card {
@@ -420,16 +344,16 @@ $divider: #d8dbe3;
 
 .task-list-header {
     padding: 16px 20px;
-    border-bottom: 1px solid $divider;
+    border-bottom: 1px solid $border-color;
 }
 
 .task-list {
-
     app-task {
-        --task-title-size: 16px;
-        --task-description-size: 15px;
-        --task-details-size: 16px;
-        --task-badge-size: 16px;
+        --task-columns-without-checkbox-options: 1fr 200px 200px 200px;
+        --task-title-size: #{$body-font-size};
+        --task-description-size: #{$small-font-size};
+        --task-details-size: #{$body-font-size};
+        --task-badge-size: #{$body-font-size};
         --task-title-hover-decoration: none;
         --task-title-cursor: default;
     }
@@ -439,15 +363,12 @@ $divider: #d8dbe3;
     display: grid;
     grid-template-columns: 1fr 200px 200px 200px;
     align-items: center;
-
     min-height: 46px;
     padding: 0 60px;
-
-    background-color: #f1f2f7;
-    color: $primary-color;
-
-    font-size: 16px;
-    font-weight: 600;
+    background-color: $page-background-color;
+    color: $primary-blue-color;
+    font-size: $body-font-size;
+    font-weight: $font-weight-semibold;
 
     span:not(:first-child) {
         text-align: center;
@@ -458,13 +379,99 @@ $divider: #d8dbe3;
     display: flex;
     align-items: center;
     justify-content: center;
-
     min-height: 90px;
     padding: 20px;
 
     p {
-        margin: 0;
-        color: $grey-text-color;
-        font-size: 16px;
+        color: $muted-text-color;
+        font-size: $body-font-size;
+    }
+}
+
+@media (max-width: 1050px) {
+    .report-page {
+        padding: 0 20px 20px;
+    }
+
+    .report-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+    }
+
+    .filters {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 900px) {
+    .charts {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        row-gap: 20px;
+    }
+
+    .summary-item {
+        &:not(:last-child) {
+            border-right: none;
+        }
+    }
+
+    .task-list {
+        overflow-x: auto;
+
+        .task-list-columns,
+        app-task {
+            min-width: 820px;
+        }
+    }
+}
+
+@media (max-width: 650px) {
+    .report-page {
+        padding: 0 10px 20px;
+    }
+
+    .filters {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .filter-field,
+    .report-select,
+    .report-date,
+    .btn-clear-filters {
+        width: 100%;
+    }
+
+    .summary-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .summary-item {
+        padding: 8px 10px;
+    }
+
+    .chart-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .card-header {
+        align-items: flex-start;
+    }
+}
+
+:host ::ng-deep {
+    .report-select {
+        @include zorro.report-select;
+    }
+
+    .report-date {
+        @include zorro.report-date-picker;
     }
 }
