@@ -25,6 +25,8 @@
     border-radius: 30px;
 
     overflow: hidden;
+
+    background-color: white;
 }
 
 .container-header {
@@ -46,10 +48,10 @@
 .header-title {
     margin: 0;
 
+    color: $primary-color;
+
     font-size: 28px;
     font-weight: 400;
-
-    color: $primary-color;
 }
 
 .btn-new-task {
@@ -117,10 +119,11 @@
 }
 
 .filter-label {
-    font-size: 17px;
     margin-left: 10px;
 
     color: $primary-color;
+
+    font-size: 17px;
 }
 
 .search-container {
@@ -249,16 +252,54 @@
 .task-list-header {
     display: grid;
     grid-template-columns: var(--task-columns);
-
     align-items: center;
 
-    padding: 20px 60px;
+    min-height: 58px;
 
-    border-top: 1px solid $grey-text-color;
+    padding: 0 60px 0 60px;
+
+    border-top: 1px solid #aeb4c0;
+    
+
+    background-color: #e9ebf2;
 
     color: $primary-color;
 
+    .task-checkbox {
+        justify-self: center;
+    }
+
+    .column-title {
+        margin: 0;
+
+        color: inherit;
+
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .column-sortable {
+        justify-self: center;
+
+        padding: 0;
+
+        border: none;
+
+        background-color: transparent;
+        color: inherit;
+
+        font: inherit;
+        font-size: 18px;
+        font-weight: 600;
+
+        text-align: center;
+
+        cursor: pointer;
+    }
+
     .icon-delete {
+        justify-self: center;
+
         display: flex;
         align-items: center;
         justify-content: center;
@@ -275,28 +316,6 @@
     }
 }
 
-.column-title {
-    margin: 0;
-
-    font: inherit;
-    font-size: 18px;
-    font-weight: 600;
-
-    color: inherit;
-}
-
-.column-sortable {
-    justify-self: center;
-
-    padding: 0;
-
-    border: none;
-
-    background-color: transparent;
-
-    cursor: pointer;
-}
-
 .tasks-wrapper {
     position: relative;
 }
@@ -306,6 +325,10 @@
     align-items: center;
 
     padding: 10px 30px;
+
+    border-top: 1px solid #d1d4dc;
+
+    background-color: white;
 
     color: #7e8391;
 }
@@ -339,8 +362,8 @@
     border: 1px solid transparent;
     border-radius: 6px;
 
-    color: $primary-text-color;
     background-color: transparent;
+    color: $primary-text-color;
 
     font-weight: 400;
 
@@ -355,8 +378,8 @@
     &.active {
         border-color: $grey-text-color;
 
-        color: $secondary-text-color;
         background-color: $hover-button;
+        color: $secondary-text-color;
     }
 
     &:active:not(:disabled) {
@@ -383,10 +406,10 @@
     border: 1px solid $grey-text-color;
     border-radius: 6px;
 
-    text-align: center;
-
-    color: $primary-text-color;
     background-color: transparent;
+    color: $primary-text-color;
+
+    text-align: center;
 
     font-weight: 400;
 
@@ -484,11 +507,11 @@
             display: flex;
             align-items: center;
 
-            color: $primary-color;
-
             max-width: 100%;
 
             padding-right: 20px;
+
+            color: $primary-color;
 
             line-height: normal !important;
 
@@ -497,8 +520,9 @@
         }
 
         .ant-select-arrow {
-            font-size: 14px;
             color: $primary-color;
+
+            font-size: 14px;
         }
 
         &:hover {
@@ -556,8 +580,8 @@
     .task-checkbox {
 
         .ant-checkbox-inner {
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
 
             border: 1.5px solid $grey-text-color;
             border-radius: 4px;
@@ -584,10 +608,15 @@
                 border-color: $hover-button;
             }
         }
+
+        .ant-checkbox-checked .ant-checkbox-inner::after {
+            border-color: white;
+        }
     }
 }
 
 @keyframes slide-in {
+
     from {
         transform: translateX(100%);
     }
@@ -598,6 +627,7 @@
 }
 
 @keyframes slide-out {
+
     from {
         transform: translateX(0);
     }
@@ -608,6 +638,7 @@
 }
 
 @keyframes fade-in {
+
     from {
         opacity: 0;
     }
@@ -618,6 +649,7 @@
 }
 
 @keyframes fade-out {
+
     from {
         opacity: 1;
     }

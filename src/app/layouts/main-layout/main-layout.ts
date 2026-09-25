@@ -1,4 +1,4 @@
-import { Component, computed, HostListener, inject } from '@angular/core';
+import { Component, computed, HostListener, inject, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TokenService } from '@core/services/token/token.service';
 import { ProfileFacade } from '@features/profile/facades/profile.facade';
@@ -27,6 +27,7 @@ export class MainLayoutComponent {
   private readonly profileFacade = inject(ProfileFacade);
 
   isUserMenuOpen = false;
+  readonly contentScroll = output<void>();
 
   readonly userName = computed(() => {
     const name = this.profileFacade.profile()?.name ?? '';

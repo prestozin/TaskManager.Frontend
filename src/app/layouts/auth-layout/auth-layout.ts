@@ -23,9 +23,8 @@ export class AuthLayoutComponent {
   submitClicked = output<void>();
 
   submit(): void {
-    if (this.isLoading()) {
-      return;
-    }
+    if (this.isLoading()) 
+      return;    
 
     this.submitClicked.emit();
   }

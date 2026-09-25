@@ -1,0 +1,265 @@
+<app-main-layout (contentScroll)="closeOverlays()">
+    <div body-content class="report-page">
+
+        <header class="report-header">
+            <div class="report-title">
+                <h2>Relatórios</h2>
+                <p>Acompanhe o desempenho das suas tarefas.</p>
+            </div>
+
+            <div class="filters">
+                <div class="filter-field filter-period">
+                    <label>Período</label>
+
+                    <nz-select
+                        class="report-select"
+                        nzDropdownClassName="report-select-dropdown"
+                        nzPlaceHolder="Selecione o período"
+                        [nzOpen]="isPeriodOpen"
+                        [ngModel]="period()"
+                        (nzOpenChange)="isPeriodOpen = $event"
+                        (ngModelChange)="selectPeriod($event)">
+                        <nz-option nzValue="7" nzLabel="Últimos 7 dias"></nz-option>
+                        <nz-option nzValue="30" nzLabel="Últimos 30 dias"></nz-option>
+                        <nz-option nzValue="90" nzLabel="Últimos 90 dias"></nz-option>
+                    </nz-select>
+                </div>
+
+                <div class="filter-field">
+                    <label>Data inicial</label>
+
+                    <nz-date-picker
+                        class="report-date"
+                        nzFormat="dd/MM/yyyy"
+                        nzPlaceHolder="dd/mm/aaaa"
+                        [ngModel]="startDate()"
+                        (ngModelChange)="selectStartDate($event)">
+                    </nz-date-picker>
+                </div>
+
+                <div class="filter-field">
+                    <label>Data final</label>
+
+                    <nz-date-picker
+                        class="report-date"
+                        nzFormat="dd/MM/yyyy"
+                        nzPlaceHolder="dd/mm/aaaa"
+                        [ngModel]="endDate()"
+                        (ngModelChange)="selectEndDate($event)">
+                    </nz-date-picker>
+                </div>
+
+                <button
+                    class="btn-clear-filters"
+                    nz-button
+                    type="button"
+                    (click)="clearFilters()">
+                    Limpar filtros
+                </button>
+            </div>
+        </header>
+
+        <section class="report-card summary-card">
+            <header class="card-header">
+                <div class="header-icon">▥</div>
+
+                <div class="header-text">
+                    <h3>Resumo do período</h3>
+                    <p>Visão geral das suas tarefas no período selecionado.</p>
+                </div>
+            </header>
+
+            <div class="summary-list">
+                <div class="summary-item">
+                    <div class="summary-icon total-icon">☷</div>
+
+                    <div class="summary-content">
+                        <p class="summary-label">Total de tarefas</p>
+                        <strong>{{ totalTasks() }}</strong>
+                        <span>no período</span>
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-icon completed-icon">✓</div>
+
+                    <div class="summary-content">
+                        <p class="summary-label">Concluídas</p>
+                        <strong>{{ completedCount() }}</strong>
+                        <span>{{ completedPercentage() }}% do total</span>
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-icon progress-icon">◷</div>
+
+                    <div class="summary-content">
+                        <p class="summary-label">Em progresso</p>
+                        <strong>{{ progressCount() }}</strong>
+                        <span>{{ progressPercentage() }}% do total</span>
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-icon pending-icon">•••</div>
+
+                    <div class="summary-content">
+                        <p class="summary-label">Pendentes e canceladas</p>
+                        <strong>{{ pendingCanceledCount() }}</strong>
+                        <span>{{ pendingCanceledPercentage() }}% do total</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="charts">
+            <section class="report-card chart-card">
+                <header class="card-header">
+                    <div class="header-icon">▥</div>
+
+                    <div class="header-text">
+                        <h3>Status das tarefas</h3>
+                        <p>Distribuição das tarefas no período selecionado.</p>
+                    </div>
+                </header>
+
+                <div class="chart-content">
+                    <div class="donut-chart status-chart">
+                        <div class="donut-center">
+                            <strong>{{ totalTasks() }}</strong>
+                            <span>tarefas</span>
+                        </div>
+                    </div>
+
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-name">
+                                <span class="legend-dot status-completed"></span>
+                                Concluídas
+                            </div>
+
+                            <strong>{{ completedCount() }}</strong>
+                            <span class="legend-percentage">{{ completedPercentage() }}%</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-name">
+                                <span class="legend-dot status-progress"></span>
+                                Em progresso
+                            </div>
+
+                            <strong>{{ progressCount() }}</strong>
+                            <span class="legend-percentage">{{ progressPercentage() }}%</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-name">
+                                <span class="legend-dot status-pending"></span>
+                                Pendentes
+                            </div>
+
+                            <strong>{{ pendingCount() }}</strong>
+                            <span class="legend-percentage">{{ pendingPercentage() }}%</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-name">
+                                <span class="legend-dot status-canceled"></span>
+                                Canceladas
+                            </div>
+
+                            <strong>{{ canceledCount() }}</strong>
+                            <span class="legend-percentage">{{ canceledPercentage() }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="report-card chart-card">
+                <header class="card-header">
+                    <div class="header-icon">▥</div>
+
+                    <div class="header-text">
+                        <h3>Prioridade das tarefas</h3>
+                        <p>Distribuição das tarefas no período selecionado.</p>
+                    </div>
+                </header>
+
+                <div class="chart-content">
+                    <div class="donut-chart priority-chart">
+                        <div class="donut-center">
+                            <strong>{{ totalTasks() }}</strong>
+                            <span>tarefas</span>
+                        </div>
+                    </div>
+
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-name">
+                                <span class="legend-dot priority-high"></span>
+                                Alta
+                            </div>
+
+                            <strong>{{ highPriorityCount() }}</strong>
+                            <span class="legend-percentage">{{ highPriorityPercentage() }}%</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-name">
+                                <span class="legend-dot priority-medium"></span>
+                                Média
+                            </div>
+
+                            <strong>{{ mediumPriorityCount() }}</strong>
+                            <span class="legend-percentage">{{ mediumPriorityPercentage() }}%</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-name">
+                                <span class="legend-dot priority-low"></span>
+                                Baixa
+                            </div>
+
+                            <strong>{{ lowPriorityCount() }}</strong>
+                            <span class="legend-percentage">{{ lowPriorityPercentage() }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="report-card task-list-card">
+            <header class="card-header task-list-header">
+                <div class="header-icon">☷</div>
+
+                <div class="header-text">
+                    <h3>Últimas tarefas</h3>
+                    <p>Lista de últimas tarefas do periodo selecionado.</p>
+                </div>
+            </header>
+
+            <div class="task-list">
+                <div class="task-list-columns">
+                    <span>Tarefa</span>
+                    <span>Data de Criação</span>
+                    <span>Prioridade</span>
+                    <span>Status</span>
+                </div>
+
+                @for (task of report()?.tasks ?? []; track task.id) {
+                    <app-task
+                        [task]="task"
+                        [showCheckbox]="false"
+                        [showOptions]="false">
+                    </app-task>
+                }
+                @empty {
+                    <div class="task-empty">
+                        <p>Nenhuma tarefa encontrada no período selecionado.</p>
+                    </div>
+                }
+            </div>
+        </section>
+
+    </div>
+</app-main-layout>

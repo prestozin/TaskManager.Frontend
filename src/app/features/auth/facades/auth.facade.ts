@@ -54,7 +54,7 @@ export class AuthFacade {
 
                 setTimeout(() => {
                     this.authState.isLoading.set(false);
-                    this.router.navigate(['/dashboard']);
+                    this.router.navigate(['/tasks']);
                 }, 1500);
             },
             error: (error: HttpErrorResponse) => {

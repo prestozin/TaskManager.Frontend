@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
-import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest, TaskPagedParams, TaskResponse, TaskSelectablesResponse } from '../models/task.models';
+import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest, TaskPagedParams, TaskReportParams, TaskReportResponse, TaskResponse, TaskSelectablesResponse } from '../models/task.models';
 import { ResultResponse } from '../../../shared/models/response.models';
 import { PagedResponse } from '../../../shared/models/pagination.models';
 
@@ -83,6 +83,26 @@ export class TaskService {
             (`${this.apiUrl}/GetSelectables`);
     }
 
+    getReport(request: TaskReportParams): Observable<ResultResponse<TaskReportResponse>> {
+        let params = new HttpParams()
+            .set('PageNumber', request.pageNumber)
+            .set('PageSize', request.pageSize);
+
+        if (request.startDate)
+            params = params.set(
+                'StartDate', this.convertLocalDateToUtc(request.startDate)
+            );
+
+        if (request.endDate)
+            params = params.set(
+                'EndDate', this.convertLocalDateToUtc(request.endDate, true)
+            );
+
+        return this.httpClient.get<ResultResponse<TaskReportResponse>>(
+            `${this.apiUrl}/GetReport`,
+            { params }
+        );
+    }
 
     private convertLocalDateToUtc(date: string, endOfDay = false): string {
         const [year, month, day] = date.split('-').map(Number);

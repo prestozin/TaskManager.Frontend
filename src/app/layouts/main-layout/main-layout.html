@@ -17,22 +17,34 @@
 
         <nav class="sidebar-menu">
 
-            <a class="sidebar-link" routerLink="/dashboard" routerLinkActive="active">
+            <a
+                class="sidebar-link"
+                routerLink="/report"
+                routerLinkActive="active">
                 <img class="icon-menu" src="icons/dashboard-icon.svg">
-                <p>Dashboard</p>
+                <p>Relatório</p>
             </a>
 
-            <a class="sidebar-link" routerLink="/tasks" routerLinkActive="active">
+            <a
+                class="sidebar-link"
+                routerLink="/tasks"
+                routerLinkActive="active">
                 <img class="icon-menu" src="icons/tasks-icon.svg">
                 <p class="link-text">Tarefas</p>
             </a>
 
-            <a class="sidebar-link" routerLink="/profile" routerLinkActive="active">
+            <a
+                class="sidebar-link"
+                routerLink="/profile"
+                routerLinkActive="active">
                 <img class="icon-menu" src="icons/profile-icon.svg">
                 <p>Perfil</p>
             </a>
 
-            <a class="sidebar-link" routerLink="/settings" routerLinkActive="active">
+            <a
+                class="sidebar-link"
+                routerLink="/settings"
+                routerLinkActive="active">
                 <img class="icon-menu" src="icons/settings-icon.svg">
                 <p>Configurações</p>
             </a>
@@ -40,12 +52,13 @@
         </nav>
 
         <footer class="sidebar-footer">
-
-            <button class="sidebar-link btn-logout" routerLink="/login" (click)="logoutUser()">
+            <button
+                class="sidebar-link btn-logout"
+                routerLink="/login"
+                (click)="logoutUser()">
                 <img class="icon-menu" src="icons/logout-icon.svg">
                 <p>Sair</p>
             </button>
-
         </footer>
 
     </aside>
@@ -71,38 +84,37 @@
                         {{ userName() }}
                     </p>
 
-                    <svg lucideChevronRight 
-                        class="user-arrow" 
-                        [class.active]="isUserMenuOpen"> 
+                    <svg
+                        class="user-arrow"
+                        lucideChevronRight
+                        [class.active]="isUserMenuOpen">
                     </svg>
 
                     @if (isUserMenuOpen) {
+                        <div class="user-dropdown" (click)="$event.stopPropagation()">
 
-                    <div class="user-dropdown" (click)="$event.stopPropagation()">
+                            <div class="dropdown-line"></div>
 
-                        <div class="dropdown-line"></div>
+                            <div class="container-dropdown-buttons">
 
-                        <div class="container-dropdown-buttons">
+                                <button class="btn-dropdown">
+                                    <svg class="dropdown-img" lucideUserRoundCog></svg>
+                                    <span>Perfil</span>
+                                </button>
 
-                            <button class="btn-dropdown">
-                                <svg lucideUserRoundCog class="dropdown-img"></svg>
-                                <span>Perfil</span>
-                            </button>
+                                <button class="btn-dropdown">
+                                    <svg class="dropdown-img" lucideSettings></svg>
+                                    <span>Configurações</span>
+                                </button>
 
-                            <button class="btn-dropdown">
-                                <svg lucideSettings class="dropdown-img"></svg>
-                                <span>Configurações</span>
-                            </button>
+                                <button class="btn-dropdown">
+                                    <svg class="dropdown-img" lucideLogOut></svg>
+                                    <span>Sair</span>
+                                </button>
 
-                            <button class="btn-dropdown">
-                                <svg lucideLogOut class="dropdown-img"></svg>
-                                <span>Sair</span>
-                            </button>
+                            </div>
 
                         </div>
-
-                    </div>
-
                     }
 
                 </div>
@@ -112,7 +124,7 @@
         </header>
 
         <main>
-            <div class="body-content">
+            <div class="body-content" (scroll)="contentScroll.emit()">
                 <ng-content select="[body-content]"></ng-content>
             </div>
         </main>

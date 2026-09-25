@@ -45,3 +45,23 @@ export class TaskPagedParams extends PagedParams {
     endDate: string | null = null;
 }
 
+export class TaskReportParams {
+    startDate: string | null = null;
+    endDate: string | null = null;
+    pageNumber: number = 1;
+    pageSize: number = 4;
+}
+
+export interface TaskReportItemResponse {
+    id: number;
+    name: string;
+    count: number;
+    percentage: number;
+}
+
+export interface TaskReportResponse {
+    totalTasks: number;
+    status: TaskReportItemResponse[];
+    priority: TaskReportItemResponse[];
+    tasks: TaskResponse[];
+}

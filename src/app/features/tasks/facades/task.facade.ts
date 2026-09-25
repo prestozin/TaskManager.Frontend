@@ -6,13 +6,15 @@ import { FeedbackService } from '@core/services/feedback/feedback.service';
 import { TASK_MESSAGES } from '@shared/constants/messages';
 import { EFeedbackType } from '@shared/enums/feedback.enum';
 import { SelectableOption } from '@shared/models/selectables.models';
+import { getHttpErrorMessage } from '@shared/utils/http-error.util';
 
+import { ETaskSort } from '../enums/task.enum';
 import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest } from '../models/task.models';
 
 import { TaskService } from '../services/task.service';
+
 import { TaskDataState } from '../states/task-data.state';
-import { getHttpErrorMessage } from '@shared/utils/http-error.util';
-import { ETaskSort } from '../enums/task.enum';
+import { ReportState } from '@features/report/states/report.state';
 
 
 @Injectable({
@@ -23,6 +25,7 @@ export class TaskFacade {
 
     private readonly taskService = inject(TaskService);
     private readonly taskDataState = inject(TaskDataState);
+    private readonly reportState = inject(ReportState);
     private readonly feedbackService = inject(FeedbackService);
 
     readonly handleError = getHttpErrorMessage;
@@ -69,6 +72,19 @@ export class TaskFacade {
     }
 
 
+    get report() {
+        return this.reportState.report;
+    }
+
+    get reportStartDate() {
+        return this.reportState.selectedStartDate;
+    }
+
+    get reportEndDate() {
+        return this.reportState.selectedEndDate;
+    }
+
+
     getTasks(): void {
         this.taskService.getPaged(this.taskDataState.pagedParams).subscribe({
             next: response => {
@@ -109,6 +125,21 @@ export class TaskFacade {
 
             error: (error: HttpErrorResponse) => {
                 this.handleError(error);
+            }
+        });
+    }
+
+    getReport(): void {
+        this.taskService.getReport(this.reportState.reportParams).subscribe({
+            next: response => {
+                if (response.isSuccess) {
+                    this.reportState.setReport(response.data);
+                }
+            },
+
+            error: (error: HttpErrorResponse) => {
+                this.handleError(error);
+                this.reportState.clearReport();
             }
         });
     }
@@ -214,4 +245,19 @@ export class TaskFacade {
     clearSelectedTask(): void {
         this.taskDataState.clearSelectedTask();
     }
+
+
+    selectReportStartDate(date: string | null): void {
+        this.reportState.setStartDate(date);
+    }
+
+    selectReportEndDate(date: string | null): void {
+        this.reportState.setEndDate(date);
+    }
+
+    clearReportFilters(): void {
+        this.reportState.clearFilters();
+        this.getReport();
+    }
+
 }

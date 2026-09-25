@@ -1,11 +1,16 @@
-<div class="task">
+<div
+    class="task"
+    [class.without-checkbox]="!showCheckbox()"
+    [class.without-options]="!showOptions()">
 
-    <label
-        nz-checkbox
-        class="task-checkbox"
-        [nzChecked]="checked()"
-        (nzCheckedChange)="checkedChange.emit(task().id)">
-    </label>
+    @if (showCheckbox()) {
+        <label
+            nz-checkbox
+            class="task-checkbox"
+            [nzChecked]="checked()"
+            (nzCheckedChange)="checkedChange.emit(task().id)">
+        </label>
+    }
 
     <div class="task-info">
 
@@ -37,11 +42,13 @@
         {{ capitalizeFirst(task().status) }}
     </p>
 
-    <img
-        class="btn-options"
-        src="icons/task-dots.svg"
-        #optionsButton
-        (click)="$event.stopPropagation(); optionsClicked.emit(optionsButton)"
-        alt="Task Options">
+    @if (showOptions()) {
+        <img
+            class="btn-options"
+            src="icons/task-dots.svg"
+            #optionsButton
+            (click)="$event.stopPropagation(); optionsClicked.emit(optionsButton)"
+            alt="Task Options">
+    }
 
 </div>

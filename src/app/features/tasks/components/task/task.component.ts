@@ -28,6 +28,9 @@ export class TaskComponent {
 
   checked = input(false);
 
+  showCheckbox = input(true);
+  showOptions = input(true);
+
   optionsClicked = output<HTMLElement>();
   taskClicked = output<string>();
   checkedChange = output<string>();
@@ -37,6 +40,10 @@ export class TaskComponent {
   );
 
   readonly description = computed(() =>
-    truncateText(capitalizeFirst(this.task().description),TASK_DESCRIPTION_PREVIEW_LENGTH)
+    truncateText(
+      capitalizeFirst(this.task().description),
+      TASK_DESCRIPTION_PREVIEW_LENGTH
+    )
   );
+
 }

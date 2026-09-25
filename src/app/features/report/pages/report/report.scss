@@ -1,0 +1,498 @@
+@use "variables" as *;
+
+.report-page {
+    width: 100%;
+    padding: 0 40px 40px;
+    box-sizing: border-box;
+    color: $primary-color;
+}
+
+.report-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 40px;
+    margin-bottom: 20px;
+
+    .report-title {
+        flex-shrink: 0;
+
+        h2 {
+            margin: 0;
+            color: $primary-color;
+            font-size: 28px;
+            font-weight: 400;
+        }
+
+        p {
+            margin: 6px 0 0;
+            color: $grey-text-color;
+            font-size: 15px;
+        }
+    }
+}
+
+.filters {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    gap: 14px;
+
+    .filter-field {
+        display: flex;
+        flex-direction: column;
+
+        min-width: 0;
+        gap: 3px;
+
+        label {
+            color: $primary-color;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        &.filter-period {
+            width: 210px;
+        }
+    }
+}
+
+.report-select {
+    width: 210px;
+    height: 40px;
+}
+
+.report-date {
+    width: 170px;
+    height: 40px;
+}
+
+:host ::ng-deep .report-select {
+    .ant-select-selector {
+        transition: border-color 0.15s ease;
+    }
+
+    &:hover .ant-select-selector {
+        border-color: $primary-color !important;
+    }
+
+    .ant-select-selection-item,
+    .ant-select-selection-placeholder {
+        font-size: 16px;
+    }
+}
+
+:host ::ng-deep .report-select .ant-select-selection-item {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+:host ::ng-deep .report-date {
+    height: 40px !important;
+    border-radius: 8px !important;
+
+    transition: border-color 0.15s ease;
+
+    &:hover {
+        border-color: $primary-color !important;
+    }
+
+    input {
+        font-size: 16px;
+
+        &::placeholder {
+            font-size: 16px;
+        }
+    }
+}
+
+.btn-clear-filters {
+    height: 40px;
+    padding: 0 20px;
+
+    border: 1px solid $primary-color;
+    border-radius: 8px;
+
+    background-color: white;
+    color: $primary-color;
+
+    font-size: 16px;
+    font-weight: 400;
+    white-space: nowrap;
+
+    transition:
+        color 0.15s ease,
+        background-color 0.15s ease;
+
+    &:hover,
+    &:focus {
+        border-color: $primary-color;
+        background-color: $primary-color;
+        color: white;
+    }
+}
+
+.report-card {
+    width: 100%;
+    box-sizing: border-box;
+
+    border: 1px solid #c7cad3;
+    border-radius: 18px;
+
+    background-color: white;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    .header-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        background-color: #eef1f7;
+        color: $primary-color;
+
+        font-size: 20px;
+    }
+
+    .header-text {
+        h3 {
+            margin: 0;
+            color: $primary-color;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            margin: 3px 0 0;
+            color: $grey-text-color;
+            font-size: 16px;
+        }
+    }
+}
+
+.summary-card {
+    padding: 18px 20px;
+    margin-bottom: 14px;
+}
+
+.summary-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+    min-height: 92px;
+
+    padding: 14px 16px;
+    box-sizing: border-box;
+    gap: 16px;
+
+    border: 1px solid #d8dbe3;
+    border-radius: 12px;
+
+    background-color: white;
+}
+
+.summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    font-size: 27px;
+}
+
+.total-icon {
+    background-color: #eaf3ff;
+    color: #2081dd;
+}
+
+.completed-icon {
+    background-color: #e6f6ed;
+    color: #2bad66;
+}
+
+.progress-icon {
+    background-color: #fff3df;
+    color: #f3a41d;
+}
+
+.pending-icon {
+    background-color: #eef0f4;
+    color: #65758b;
+}
+
+.summary-content {
+    min-width: 0;
+
+    .summary-label {
+        margin: 0;
+        color: $primary-color;
+        font-size: 15px;
+    }
+
+    strong {
+        display: block;
+
+        margin-top: 2px;
+
+        color: $primary-color;
+
+        font-size: 27px;
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    span {
+        display: block;
+
+        margin-top: 5px;
+
+        color: $grey-text-color;
+        font-size: 14px;
+    }
+}
+
+.charts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.chart-card {
+    padding: 18px 20px;
+}
+
+.chart-content {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    align-items: center;
+
+    gap: 30px;
+    min-height: 220px;
+    margin-top: 12px;
+}
+
+.donut-chart {
+    position: relative;
+
+    width: 160px;
+    height: 160px;
+    margin: auto;
+
+    border-radius: 50%;
+
+    &::after {
+        content: "";
+
+        position: absolute;
+        inset: 29px;
+
+        border-radius: 50%;
+        background-color: white;
+    }
+}
+
+.status-chart {
+    background: conic-gradient(
+        #31b86b 0% 33.3%,
+        #f5aa2a 33.3% 58.3%,
+        #4f8ee8 58.3% 87.5%,
+        #ef5350 87.5% 100%
+    );
+}
+
+.priority-chart {
+    background: conic-gradient(
+        #ef5350 0% 25%,
+        #f5b52f 25% 75%,
+        #22aeca 75% 100%
+    );
+}
+
+.donut-center {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1;
+
+    strong {
+        color: $primary-color;
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    span {
+        margin-top: 6px;
+        color: $grey-text-color;
+        font-size: 15px;
+    }
+}
+
+.chart-legend {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.legend-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 50px 65px;
+    align-items: center;
+
+    min-height: 44px;
+    gap: 10px;
+
+    border-bottom: 1px solid #e1e3e8;
+
+    color: $primary-color;
+    font-size: 16px;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    strong {
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+    }
+}
+
+.legend-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+.legend-percentage {
+    color: $grey-text-color;
+    font-size: 15px;
+    text-align: right;
+}
+
+.status-pending {
+    background-color: #4f8ee8;
+}
+
+.status-progress {
+    background-color: #f5aa2a;
+}
+
+.status-completed {
+    background-color: #31b86b;
+}
+
+.status-canceled {
+    background-color: #ef5350;
+}
+
+.priority-low {
+    background-color: #22aeca;
+}
+
+.priority-medium {
+    background-color: #f5b52f;
+}
+
+.priority-high {
+    background-color: #ef5350;
+}
+
+.task-list-card {
+    overflow: hidden;
+}
+
+.task-list-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #d8dbe3;
+}
+
+.task-list {
+    width: 100%;
+
+    app-task {
+        --task-title-size: 16px;
+        --task-description-size: 15px;
+        --task-details-size: 16px;
+        --task-badge-size: 16px;
+        --task-title-hover-decoration: none;
+        --task-title-cursor: default;
+    }
+}
+
+.task-list-columns {
+    display: grid;
+    grid-template-columns: 1fr 200px 200px 200px;
+    align-items: center;
+
+    min-height: 46px;
+    padding: 0 60px;
+    box-sizing: border-box;
+
+    background-color: #f1f2f7;
+    color: $primary-color;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    span:not(:first-child) {
+        text-align: center;
+    }
+}
+
+.task-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 90px;
+    padding: 20px;
+
+    p {
+        margin: 0;
+        color: $grey-text-color;
+        font-size: 16px;
+    }
+}
