@@ -1,5 +1,13 @@
-import { Component, computed, HostListener, inject } from '@angular/core';
+import {
+    Component,
+    computed,
+    DestroyRef,
+    HostListener,
+    inject,
+    OnInit
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -8,31 +16,47 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
+import {
+    TASK_DETAILS_CLOSE_DELAY_MS
+} from '@shared/constants/constants';
+import { Messages } from '@shared/constants/messages';
 import { SelectableOption } from '@shared/models/selectables.models';
+import {
+    formatDateToApi,
+    parseApiDate
+} from '@shared/utils/date.util';
 
-import { ETaskSort } from '../../enums/task.enum';
+import {
+    ETaskFilter,
+    ETaskFormMode,
+    ETaskModal,
+    ETaskSort
+} from '../../enums/task.enum';
 import { TaskFacade } from '../../facades/task.facade';
-import { TaskCreateRequest, TaskEditRequest } from '../../models/task.models';
-import { TaskUiState } from '../../states/task-ui.state';
+import {
+    TaskCreateRequest,
+    TaskEditRequest
+} from '../../models/task.models';
+import { TaskState } from '../../states/task.state';
 
+import { TaskComponent } from '../task/task.component';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { TaskOptionsComponent } from '../task-options/task-options.component';
 import { TaskViewComponent } from '../task-view/task-view.component';
-import { TaskComponent } from '../task/task.component';
+
+const TASK_OPTIONS_HEIGHT = 60;
+const TASK_OPTIONS_RIGHT_OFFSET = 15;
 
 @Component({
     selector: 'app-task-container',
-    providers: [
-        TaskUiState
-    ],
     imports: [
         TaskComponent,
-        ReactiveFormsModule,
-        FormsModule,
         TaskFormComponent,
         TaskOptionsComponent,
-        ConfirmationModalComponent,
         TaskViewComponent,
+        ConfirmationModalComponent,
+        FormsModule,
+        ReactiveFormsModule,
         NzCheckboxModule,
         NzDatePickerModule,
         NzIconModule,
@@ -41,10 +65,11 @@ import { TaskComponent } from '../task/task.component';
     templateUrl: './task-container.component.html',
     styleUrl: './task-container.component.scss'
 })
-export class TaskContainerComponent {
+export class TaskContainerComponent implements OnInit {
 
     private readonly taskFacade = inject(TaskFacade);
-    private readonly taskUiState = inject(TaskUiState);
+    private readonly taskState = inject(TaskState);
+    private readonly destroyRef = inject(DestroyRef);
 
     readonly tasks = this.taskFacade.tasks;
     readonly pagedResponse = this.taskFacade.pagedResponse;
@@ -55,94 +80,166 @@ export class TaskContainerComponent {
     readonly selectedStartDate = this.taskFacade.selectedStartDate;
     readonly selectedEndDate = this.taskFacade.selectedEndDate;
 
-    readonly priorityFormOptions = this.taskFacade.priorityOptions;
     readonly statusFormOptions = this.taskFacade.statusOptions;
+    readonly priorityFormOptions = this.taskFacade.priorityOptions;
 
     readonly currentPage = this.taskFacade.currentPage;
+    readonly confirmBeforeDelete = this.taskFacade.confirmBeforeDelete;
 
-    readonly startDate = computed(() =>
-        this.parseDate(this.selectedStartDate())
-    );
-
-    readonly endDate = computed(() =>
-        this.parseDate(this.selectedEndDate())
-    );
-
-    readonly selectedPriorityId = computed(() =>
-        this.selectedPriority().id ?? 0
-    );
-
-    readonly selectedStatusId = computed(() =>
-        this.selectedStatus().id ?? 0
-    );
-
-    readonly activeTaskId = this.taskUiState.activeTaskId;
-    readonly checkedTaskIds = this.taskUiState.checkedTaskIds;
-    readonly selectedTaskPosition = this.taskUiState.selectedTaskPosition;
-    readonly activeModal = this.taskUiState.activeModal;
-    readonly isClosingTaskDetails = this.taskUiState.isClosingTaskDetails;
+    readonly activeTaskId = this.taskState.activeTaskId;
+    readonly checkedTaskIds = this.taskState.checkedTaskIds;
+    readonly taskOptionsPosition = this.taskState.taskOptionsPosition;
+    readonly activeModal = this.taskState.activeModal;
+    readonly isClosingTaskDetails = this.taskState.isClosingTaskDetails;
 
     readonly searchControl = new FormControl('', { nonNullable: true });
     readonly pageInput = new FormControl<number | null>(null);
 
+    readonly startDate = computed(() =>
+        parseApiDate(this.selectedStartDate())
+    );
+
+    readonly endDate = computed(() =>
+        parseApiDate(this.selectedEndDate())
+    );
+
+    readonly selectedPriorityId = computed(() =>
+        this.selectedPriority().id
+    );
+
+    readonly selectedStatusId = computed(() =>
+        this.selectedStatus().id
+    );
+
     readonly statusOptions = computed<SelectableOption[]>(() => [
         {
-            id: null,
+            id: ETaskFilter.All,
             name: 'Todos os status'
         },
-        ...this.taskFacade.statusOptions()
+        ...this.statusFormOptions()
     ]);
 
     readonly priorityOptions = computed<SelectableOption[]>(() => [
         {
-            id: null,
+            id: ETaskFilter.All,
             name: 'Todas as prioridades'
         },
-        ...this.taskFacade.priorityOptions()
+        ...this.priorityFormOptions()
     ]);
 
-    readonly taskFormMode = computed<'create' | 'edit'>(() =>
-        this.activeModal() === 'edit' ? 'edit' : 'create'
+    readonly taskRows = computed(() => {
+        const checkedTaskIds = this.checkedTaskIds();
+
+        return this.tasks().map(task => ({
+            task,
+            checked: checkedTaskIds.has(task.id)
+        }));
+    });
+
+    readonly displayedTaskCount = computed(() =>
+        this.tasks().length
     );
 
-    readonly visiblePages = computed(() => {
-        const totalPages = this.pagedResponse()?.totalPages ?? 0;
+    readonly totalTaskCount = computed(() =>
+        this.pagedResponse()?.totalCount ?? 0
+    );
+
+    readonly totalPages = computed(() =>
+        this.pagedResponse()?.totalPages ?? 0
+    );
+
+    readonly pageInputMax = computed(() =>
+        Math.max(this.totalPages(), 1)
+    );
+
+    readonly isFirstPage = computed(() =>
+        this.currentPage() === 1
+    );
+
+    readonly isLastPage = computed(() =>
+        this.totalPages() === 0 ||
+        this.currentPage() === this.totalPages()
+    );
+
+    readonly visiblePageButtons = computed(() => {
+        const totalPages = this.totalPages();
         const currentPage = this.currentPage();
 
-        if (totalPages === 0) {
-            return [];
-        }
+        let pages: number[];
 
-        if (totalPages <= 3) {
-            return Array.from({ length: totalPages }, (_, index) => index + 1);
-        }
+        if (totalPages === 0)
+            pages = [];
+        else if (totalPages <= 3)
+            pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+        else if (currentPage === 1)
+            pages = [1, 2, 3];
+        else if (currentPage === totalPages)
+            pages = [totalPages - 2, totalPages - 1, totalPages];
+        else
+            pages = [currentPage - 1, currentPage, currentPage + 1];
 
-        if (currentPage === 1) {
-            return [1, 2, 3];
-        }
-
-        if (currentPage === totalPages) {
-            return [totalPages - 2, totalPages - 1, totalPages];
-        }
-
-        return [currentPage - 1, currentPage, currentPage + 1];
+        return pages.map(page => ({
+            page,
+            active: page === currentPage
+        }));
     });
 
-    readonly areVisibleTasksChecked = computed(() => {
-        return this.tasks().length > 0 &&
-            this.tasks().every(task => this.checkedTaskIds().has(task.id));
-    });
+    readonly areVisibleTasksChecked = computed(() =>
+        this.tasks().length > 0 &&
+        this.tasks().every(task => this.checkedTaskIds().has(task.id))
+    );
 
-    readonly TaskSort = ETaskSort;
+    readonly taskFormMode = computed(() =>
+        this.activeModal() === ETaskModal.Edit
+            ? ETaskFormMode.Edit
+            : ETaskFormMode.Create
+    );
+
+    readonly taskFormTask = computed(() =>
+        this.activeModal() === ETaskModal.Edit
+            ? this.selectedTask()
+            : null
+    );
+
+    readonly showTaskForm = computed(() =>
+        this.activeModal() === ETaskModal.Create ||
+        (
+            this.activeModal() === ETaskModal.Edit &&
+            this.selectedTask() !== null
+        )
+    );
+
+    readonly taskDetails = computed(() =>
+        this.activeModal() === ETaskModal.View
+            ? this.selectedTask()
+            : null
+    );
+
+    readonly showDeleteConfirmation = computed(() =>
+        this.activeModal() === ETaskModal.Delete ||
+        this.activeModal() === ETaskModal.DeleteChecked
+    );
+
+    readonly deleteConfirmationTitle = computed(() =>
+        this.activeModal() === ETaskModal.DeleteChecked
+            ? Messages.DeleteTasksTitle
+            : Messages.DeleteTaskTitle
+    );
+
+    readonly deleteConfirmationDescription = Messages.IrreversibleAction;
+    readonly deleteConfirmationButton = Messages.DeleteButton;
 
     ngOnInit(): void {
+        this.taskState.resetUiState();
+
         this.taskFacade.loadSelectables();
         this.taskFacade.getTasks();
 
         this.searchControl.valueChanges
             .pipe(
                 debounceTime(300),
-                distinctUntilChanged()
+                distinctUntilChanged(),
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(search => {
                 this.taskFacade.searchTasks(search);
@@ -150,10 +247,10 @@ export class TaskContainerComponent {
     }
 
     selectPriorityById(id: number | null): void {
-        const selectedId = id ?? 0;
+        const selectedId = id ?? ETaskFilter.All;
 
         const priority = this.priorityOptions()
-            .find(option => (option.id ?? 0) === selectedId);
+            .find(option => option.id === selectedId);
 
         if (!priority)
             return;
@@ -162,10 +259,10 @@ export class TaskContainerComponent {
     }
 
     selectStatusById(id: number | null): void {
-        const selectedId = id ?? 0;
+        const selectedId = id ?? ETaskFilter.All;
 
         const status = this.statusOptions()
-            .find(option => (option.id ?? 0) === selectedId);
+            .find(option => option.id === selectedId);
 
         if (!status)
             return;
@@ -174,11 +271,11 @@ export class TaskContainerComponent {
     }
 
     selectStartDate(date: Date | null): void {
-        this.taskFacade.selectStartDate(this.formatDate(date));
+        this.taskFacade.selectStartDate(formatDateToApi(date));
     }
 
     selectEndDate(date: Date | null): void {
-        this.taskFacade.selectEndDate(this.formatDate(date));
+        this.taskFacade.selectEndDate(formatDateToApi(date));
     }
 
     clearFilters(): void {
@@ -187,19 +284,40 @@ export class TaskContainerComponent {
         this.taskFacade.clearFilters();
     }
 
-    orderTasks(sort: string): void {
-        this.taskFacade.orderTasks(sort);
-        this.taskUiState.clearCheckedTasks();
+    orderByCreatedAt(): void {
+        this.orderTasks(ETaskSort.CreatedAt);
+    }
+
+    orderByPriority(): void {
+        this.orderTasks(ETaskSort.TaskPriority);
+    }
+
+    orderByStatus(): void {
+        this.orderTasks(ETaskSort.TaskStatus);
     }
 
     changePage(page: number | null): void {
-        const totalPages = this.pagedResponse()?.totalPages ?? 0;
-
-        if (page === null || page < 1 || page > totalPages)
+        if (page === null || page < 1 || page > this.totalPages())
             return;
 
-        this.taskUiState.clearCheckedTasks();
+        this.taskState.clearCheckedTasks();
         this.taskFacade.changePage(page);
+    }
+
+    goToFirstPage(): void {
+        this.changePage(1);
+    }
+
+    goToPreviousPage(): void {
+        this.changePage(this.currentPage() - 1);
+    }
+
+    goToNextPage(): void {
+        this.changePage(this.currentPage() + 1);
+    }
+
+    goToLastPage(): void {
+        this.changePage(this.totalPages());
     }
 
     goToPage(input: HTMLInputElement): void {
@@ -209,52 +327,30 @@ export class TaskContainerComponent {
     }
 
     saveTask(request: TaskCreateRequest | TaskEditRequest): void {
-        if (this.taskFormMode() === 'create') {
-            this.taskFacade.addTask(request as TaskCreateRequest);
-        }
-        else {
-            this.taskFacade.editTask(request as TaskEditRequest);
-        }
+        if ('id' in request)
+            this.taskFacade.editTask(request);
+        else
+            this.taskFacade.addTask(request);
 
         this.closeModal();
     }
 
-    deleteTask(): void {
+    openCreateTaskForm(): void {
+        this.taskFacade.clearSelectedTask();
+        this.taskState.openModal(ETaskModal.Create);
+        this.taskState.closeTaskOptions();
+    }
+
+    openEditTaskForm(): void {
         const taskId = this.activeTaskId();
 
         if (!taskId)
             return;
 
-        this.taskFacade.deleteTask([taskId]);
+        this.taskFacade.getTaskById(taskId);
 
-        this.closeModal();
-    }
-
-    deleteCheckedTasks(): void {
-        if (this.checkedTaskIds().size === 0)
-            return;
-
-        this.taskFacade.deleteTask(Array.from(this.checkedTaskIds()));
-
-        this.taskUiState.clearCheckedTasks();
-        this.closeModal();
-    }
-
-    openTaskForm(mode: 'create' | 'edit'): void {
-        if (mode === 'edit') {
-            const taskId = this.activeTaskId();
-
-            if (!taskId)
-                return;
-
-            this.taskFacade.getTaskById(taskId);
-        }
-        else {
-            this.taskFacade.clearSelectedTask();
-        }
-
-        this.taskUiState.openModal(mode);
-        this.taskUiState.closeTaskOptions();
+        this.taskState.openModal(ETaskModal.Edit);
+        this.taskState.closeTaskOptions();
     }
 
     openTaskDetails(): void {
@@ -265,23 +361,23 @@ export class TaskContainerComponent {
 
         this.taskFacade.getTaskById(taskId);
 
-        this.taskUiState.openModal('view');
-        this.taskUiState.closeTaskOptions();
+        this.taskState.openModal(ETaskModal.View);
+        this.taskState.closeTaskOptions();
     }
 
     openTaskDetailsById(taskId: string): void {
-        this.taskUiState.setActiveTask(taskId);
+        this.taskState.setActiveTask(taskId);
 
         this.openTaskDetails();
     }
 
     closeTaskDetails(): void {
-        this.taskUiState.startClosingTaskDetails();
+        this.taskState.startClosingTaskDetails();
 
         setTimeout(() => {
-            this.taskUiState.closeModal();
-            this.taskUiState.finishClosingTaskDetails();
-        }, 250);
+            this.taskState.closeModal();
+            this.taskState.finishClosingTaskDetails();
+        }, TASK_DETAILS_CLOSE_DELAY_MS);
     }
 
     openTaskOptions(taskId: string, element: HTMLElement): void {
@@ -291,74 +387,105 @@ export class TaskContainerComponent {
         if (!taskPage || !container)
             return;
 
-        const rect = element.getBoundingClientRect();
+        const elementRect = element.getBoundingClientRect();
         const taskPageRect = taskPage.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
 
-        const optionsHeight = 60;
-        const spaceBelow = containerRect.bottom - rect.bottom;
-        const openUpward = spaceBelow < optionsHeight;
+        const spaceBelow = containerRect.bottom - elementRect.bottom;
+        const openUpward = spaceBelow < TASK_OPTIONS_HEIGHT;
 
-        this.taskUiState.setActiveTask(taskId);
+        this.taskState.setActiveTask(taskId);
 
-        this.taskUiState.setTaskOptionsPosition({
-            top: openUpward ? rect.top - taskPageRect.top - optionsHeight : rect.bottom - taskPageRect.top,
-            right: taskPageRect.right - rect.right + 15,
-            openUpward
+        this.taskState.setTaskOptionsPosition({
+            top: openUpward
+                ? elementRect.top - taskPageRect.top - TASK_OPTIONS_HEIGHT
+                : elementRect.bottom - taskPageRect.top,
+
+            right: taskPageRect.right - elementRect.right + TASK_OPTIONS_RIGHT_OFFSET
         });
     }
 
     closeTaskOptions(): void {
-        this.taskUiState.closeTaskOptions();
+        this.taskState.closeTaskOptions();
     }
 
     closeModal(): void {
-        this.taskUiState.closeModal();
+        this.taskState.closeModal();
     }
 
     openDeleteConfirmation(): void {
-        if (!this.activeTaskId())
+        const taskId = this.activeTaskId();
+
+        if (!taskId)
             return;
 
-        this.taskUiState.openModal('delete');
-        this.taskUiState.closeTaskOptions();
+        this.taskState.closeTaskOptions();
+
+        if (!this.confirmBeforeDelete()) {
+            this.deleteTask();
+            return;
+        }
+
+        this.taskState.openModal(ETaskModal.Delete);
     }
 
     openDeleteCheckedConfirmation(): void {
         if (this.checkedTaskIds().size === 0)
             return;
 
-        this.taskUiState.openModal('deleteChecked');
+        if (!this.confirmBeforeDelete()) {
+            this.deleteCheckedTasks();
+            return;
+        }
+
+        this.taskState.openModal(ETaskModal.DeleteChecked);
+    }
+
+    confirmDelete(): void {
+        if (this.activeModal() === ETaskModal.DeleteChecked) {
+            this.deleteCheckedTasks();
+            return;
+        }
+
+        this.deleteTask();
     }
 
     toggleCheckedTask(taskId: string): void {
-        this.taskUiState.toggleCheckedTask(taskId);
+        this.taskState.toggleCheckedTask(taskId);
     }
 
     toggleAllVisibleTasks(): void {
         const taskIds = this.tasks().map(task => task.id);
 
-        this.taskUiState.toggleAllCheckedTasks(taskIds);
+        this.taskState.toggleAllCheckedTasks(taskIds);
     }
 
-    private formatDate(date: Date | null): string | null {
-        if (!date) {
-            return null;
-        }
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-
-        return `${year}-${month}-${day}`;
+    private orderTasks(sort: ETaskSort): void {
+        this.taskFacade.orderTasks(sort);
+        this.taskState.clearCheckedTasks();
     }
 
-    private parseDate(date: string | null): Date | null {
-        if (!date) {
-            return null;
-        }
-        const [year, month, day] = date.split('-').map(Number);
+    private deleteTask(): void {
+        const taskId = this.activeTaskId();
 
-        return new Date(year, month - 1, day);
+        if (!taskId)
+            return;
+
+        this.taskFacade.deleteTask([taskId]);
+
+        this.closeModal();
+    }
+
+    private deleteCheckedTasks(): void {
+        const checkedTaskIds = this.checkedTaskIds();
+
+        if (checkedTaskIds.size === 0)
+            return;
+
+        this.taskFacade.deleteTask(Array.from(checkedTaskIds));
+
+        this.taskState.clearCheckedTasks();
+        this.closeModal();
     }
 
     @HostListener('document:click')

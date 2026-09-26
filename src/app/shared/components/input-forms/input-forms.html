@@ -1,50 +1,22 @@
-@if (type() === 'textarea') {
-
+@if (isTextarea()) {
     <textarea
         class="form-control"
         [formControl]="control()"
         [placeholder]="placeholder()"
         [maxlength]="maxLength()"
-        [class.invalid]="control().invalid && control().touched">
+        [class.invalid]="isInvalid">
     </textarea>
-
-} @else {
-
+}
+@else {
     <input
         class="form-control"
         [type]="type()"
         [formControl]="control()"
         [placeholder]="placeholder()"
         [maxlength]="maxLength()"
-        [class.invalid]="control().invalid && control().touched"
-    />
-
+        [class.invalid]="isInvalid">
 }
 
-@if (control().invalid && control().touched) {
-
-    @if (control().hasError('required')) {
-        <p class="error-message">Campo obrigatório</p>
-    }
-
-    @if (control().hasError('email')) {
-        <p class="error-message">Digite um e-mail válido</p>
-    }
-
-    @if (control().hasError('minlength')) {
-        <p class="error-message">
-            O campo deve ter pelo menos
-            {{ control().getError('minlength').requiredLength }}
-            caracteres.
-        </p>
-    }
-
-    @if (control().hasError('maxlength')) {
-        <p class="error-message">
-            O campo deve ter no máximo
-            {{ control().getError('maxlength').requiredLength }}
-            caracteres.
-        </p>
-    }
-
+@if (errorMessage; as message) {
+    <p class="error-message">{{ message }}</p>
 }

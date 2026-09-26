@@ -4,16 +4,16 @@ import { Component, input, output } from '@angular/core';
   selector: 'app-confirmation-modal',
   imports: [],
   templateUrl: './confirmation-modal.component.html',
-  styleUrl: './confirmation-modal.component.scss',
+  styleUrl: './confirmation-modal.component.scss'
 })
 export class ConfirmationModalComponent {
 
-  title = input.required<string>();
-  description = input.required<string>();
+  readonly title = input.required<string>();
+  readonly description = input.required<string>();
 
-  confirmText = input('Confirmar');
-  cancelText = input('Cancelar');
+  readonly confirmText = input('Confirmar');
+  readonly cancelText = input('Cancelar');
 
-  confirm = output<void>();
-  cancel = output<void>();
+  readonly confirm = output<void>();
+  readonly cancel = output<void>();
 }

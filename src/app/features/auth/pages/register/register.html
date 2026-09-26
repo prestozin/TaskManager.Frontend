@@ -25,7 +25,6 @@
         </app-input-forms>
 
         <div class="confirm-password-field">
-
             <app-input-forms
                 type="password"
                 placeholder="Confirmar senha"
@@ -33,54 +32,30 @@
             </app-input-forms>
 
             <div class="password-message">
-
-                @if (
-                    registerForm.controls.confirmPassword.value &&
-                    registerForm.controls.confirmPassword.touched &&
-                    registerForm.hasError('passwordsMismatch') &&
-                    !registerForm.controls.confirmPassword.hasError('minlength')
-                ) {
-                    <p class="password-error-message">
-                        As senhas não coincidem.
-                    </p>
+                @if (passwordMismatchMessage; as message) {
+                    <p class="password-error-message">{{ message }}</p>
                 }
-
             </div>
-
         </div>
 
         <div class="form-message">
-
             @if (errorMessage()) {
-                <p class="error-message">
-                    {{ errorMessage() }}
-                </p>
+                <p class="error-message">{{ errorMessage() }}</p>
             }
 
             @if (successMessage()) {
-                <p class="success-message">
-                    {{ successMessage() }}
-                </p>
+                <p class="success-message">{{ successMessage() }}</p>
             }
-
         </div>
 
     </form>
 
-    <div
-        auth-footer
-        class="auth-footer">
+    <div class="auth-footer" auth-footer>
+        <span class="login-text">Já tem uma conta?</span>
 
-        <span class="login-text">
-            Já tem uma conta?
-        </span>
-
-        <a
-            class="login-link"
-            routerLink="/login">
+        <a class="login-link" routerLink="/login">
             Faça login
         </a>
-
     </div>
 
 </app-auth-layout>

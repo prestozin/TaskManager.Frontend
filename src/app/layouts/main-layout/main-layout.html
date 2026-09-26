@@ -12,7 +12,10 @@
 
         <div class="sidebar-header">
             <h2>Task Manager</h2>
-            <img class="logo-img" src="logo.svg">
+            <img
+                class="logo-img"
+                src="logo.svg"
+                alt="Task Manager">
         </div>
 
         <nav class="sidebar-menu">
@@ -21,7 +24,7 @@
                 class="sidebar-link"
                 routerLink="/tasks"
                 routerLinkActive="active">
-                
+
                 <nz-icon
                     class="icon-menu"
                     nzType="unordered-list"
@@ -35,6 +38,7 @@
                 class="sidebar-link"
                 routerLink="/report"
                 routerLinkActive="active">
+
                 <nz-icon
                     class="icon-menu"
                     nzType="bar-chart"
@@ -48,6 +52,7 @@
                 class="sidebar-link"
                 routerLink="/profile"
                 routerLinkActive="active">
+
                 <nz-icon
                     class="icon-menu"
                     nzType="user"
@@ -61,6 +66,7 @@
                 class="sidebar-link"
                 routerLink="/settings"
                 routerLinkActive="active">
+
                 <nz-icon
                     class="icon-menu"
                     nzType="setting"
@@ -73,13 +79,12 @@
         </nav>
 
         <footer class="sidebar-footer">
-
             <button
                 class="sidebar-link btn-logout"
                 type="button"
                 (click)="logoutUser()">
 
-               <nz-icon
+                <nz-icon
                     class="icon-menu"
                     nzType="logout"
                     nzTheme="outline">
@@ -87,7 +92,6 @@
 
                 <p>Sair</p>
             </button>
-
         </footer>
 
     </aside>
@@ -121,9 +125,7 @@
                     </nz-icon>
 
                     @if (isUserMenuOpen) {
-                        <div
-                            class="user-dropdown"
-                            (click)="$event.stopPropagation()">
+                        <div class="user-dropdown" (click)="$event.stopPropagation()">
 
                             <div class="dropdown-line"></div>
 
@@ -185,9 +187,7 @@
         </header>
 
         <main>
-            <div
-                class="body-content"
-                (scroll)="contentScroll.emit()">
+            <div class="body-content" (scroll)="contentScroll.emit()">
                 <ng-content select="[body-content]"></ng-content>
             </div>
         </main>

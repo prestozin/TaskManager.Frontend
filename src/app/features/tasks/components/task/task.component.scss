@@ -31,11 +31,8 @@
                 1fr 200px 200px 200px);
     }
 
-    &:hover {
-        background-color: #f6f7fa;
-    }
-
     .task-checkbox {
+        align-self: center;
         justify-self: center;
     }
 
@@ -119,6 +116,6 @@
 
 :host ::ng-deep {
     .task-checkbox {
-        @include zorro.task-checkbox(true);
+        @include zorro.task-checkbox;
     }
 }

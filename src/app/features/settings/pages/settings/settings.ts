@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, computed, inject, OnDestroy, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -8,37 +7,41 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
-
 import { ProfileFacade } from '@features/profile/facades/profile.facade';
+import { TaskFacade } from '@features/tasks/facades/task.facade';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
-import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
+import {
+    PASSWORD_MIN_LENGTH,
+    TASK_PAGE_SIZE_OPTIONS
+} from '@shared/constants/constants';
+import { Messages } from '@shared/constants/messages';
+import { getFormControlErrorMessage } from '@shared/utils/form-error.util';
 
 @Component({
     selector: 'app-settings',
-    standalone: true,
     imports: [
+        MainLayoutComponent,
         FormsModule,
         ReactiveFormsModule,
         RouterLink,
         NzIconModule,
         NzModalModule,
         NzSelectModule,
-        NzSwitchModule,
-        MainLayoutComponent
+        NzSwitchModule
     ],
     templateUrl: './settings.html',
     styleUrl: './settings.scss'
 })
-export class Settings implements AfterViewInit, OnDestroy {
+export class Settings {
 
-    private readonly document = inject(DOCUMENT);
     private readonly modal = inject(NzModalService);
     private readonly profileFacade = inject(ProfileFacade);
+    private readonly taskFacade = inject(TaskFacade);
 
-    private scrollContainer: Element | null = null;
+    readonly confirmBeforeDelete = this.taskFacade.confirmBeforeDelete;
+    readonly taskPageSize = this.taskFacade.pageSize;
 
-    confirmTaskDelete = true;
-    taskPageSize = 10;
+    readonly pageSizeOptions = TASK_PAGE_SIZE_OPTIONS;
 
     readonly isDeleteAccountOpen = signal(false);
     readonly isChangePasswordOpen = signal(false);
@@ -63,7 +66,7 @@ export class Settings implements AfterViewInit, OnDestroy {
         nonNullable: true,
         validators: [
             Validators.required,
-            Validators.minLength(6)
+            Validators.minLength(PASSWORD_MIN_LENGTH)
         ]
     });
 
@@ -72,24 +75,62 @@ export class Settings implements AfterViewInit, OnDestroy {
         validators: [Validators.required]
     });
 
-    readonly passwordsMismatch = computed(() =>
-        this.confirmNewPassword.touched &&
-        !!this.newPassword.value &&
-        !!this.confirmNewPassword.value &&
-        this.newPassword.value !== this.confirmNewPassword.value
+    readonly currentPasswordView = computed(() =>
+        this.getPasswordFieldView(this.showCurrentPassword())
     );
 
-    private readonly closePageSizeSelect = () => {
-        this.isPageSizeSelectOpen.set(false);
-    };
+    readonly newPasswordView = computed(() =>
+        this.getPasswordFieldView(this.showNewPassword())
+    );
 
-    ngAfterViewInit(): void {
-        this.scrollContainer = this.document.querySelector('.body-content');
-        this.scrollContainer?.addEventListener('scroll', this.closePageSizeSelect);
+    readonly confirmPasswordView = computed(() =>
+        this.getPasswordFieldView(this.showConfirmPassword())
+    );
+
+    readonly deletePasswordView = computed(() =>
+        this.getPasswordFieldView(this.showDeletePassword())
+    );
+
+    get currentPasswordError(): string | null {
+        return getFormControlErrorMessage(this.currentPassword);
     }
 
-    ngOnDestroy(): void {
-        this.scrollContainer?.removeEventListener('scroll', this.closePageSizeSelect);
+    get newPasswordError(): string | null {
+        if (!this.newPassword.touched || !this.newPassword.invalid)
+            return null;
+
+        if (this.newPassword.hasError('required'))
+            return Messages.RequiredField;
+
+        if (this.newPassword.hasError('minlength'))
+            return Messages.passwordMinimumLength(PASSWORD_MIN_LENGTH);
+
+        return null;
+    }
+
+    get confirmPasswordError(): string | null {
+        const controlError = getFormControlErrorMessage(this.confirmNewPassword);
+
+        if (controlError)
+            return controlError;
+
+        if (this.passwordsMismatch)
+            return Messages.PasswordsDoNotMatch;
+
+        return null;
+    }
+
+    get deletePasswordError(): string | null {
+        return getFormControlErrorMessage(this.deletePassword);
+    }
+
+    get passwordsMismatch(): boolean {
+        return (
+            this.confirmNewPassword.touched &&
+            !!this.newPassword.value &&
+            !!this.confirmNewPassword.value &&
+            this.newPassword.value !== this.confirmNewPassword.value
+        );
     }
 
     toggleChangePassword(): void {
@@ -126,8 +167,11 @@ export class Settings implements AfterViewInit, OnDestroy {
     }
 
     confirmChangePassword(): void {
-        console.log('chamado')
-        if (this.currentPassword.invalid || this.newPassword.invalid || this.confirmNewPassword.invalid) {
+        if (
+            this.currentPassword.invalid ||
+            this.newPassword.invalid ||
+            this.confirmNewPassword.invalid
+        ) {
             this.currentPassword.markAsTouched();
             this.newPassword.markAsTouched();
             this.confirmNewPassword.markAsTouched();
@@ -135,12 +179,15 @@ export class Settings implements AfterViewInit, OnDestroy {
             return;
         }
 
-        if (this.newPassword.value !== this.confirmNewPassword.value) {
+        if (this.passwordsMismatch) {
             this.confirmNewPassword.markAsTouched();
             return;
         }
 
-        this.changePassword();
+        this.profileFacade.changePassword({
+            oldPassword: this.currentPassword.value,
+            newPassword: this.newPassword.value
+        });
     }
 
     toggleDeleteAccount(): void {
@@ -158,6 +205,10 @@ export class Settings implements AfterViewInit, OnDestroy {
         this.showDeletePassword.set(false);
     }
 
+    toggleDeletePasswordVisibility(): void {
+        this.showDeletePassword.update(value => !value);
+    }
+
     openDeleteConfirmation(): void {
         if (this.deletePassword.invalid) {
             this.deletePassword.markAsTouched();
@@ -165,27 +216,39 @@ export class Settings implements AfterViewInit, OnDestroy {
         }
 
         this.modal.confirm({
-            nzTitle: 'Excluir conta',
-            nzContent: 'Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.',
-            nzOkText: 'Excluir conta',
-            nzCancelText: 'Cancelar',
+            nzTitle: Messages.DeleteAccountTitle,
+            nzContent: Messages.DeleteAccountConfirmation,
+            nzOkText: Messages.DeleteAccountConfirmButton,
+            nzCancelText: Messages.CancelButton,
             nzOkDanger: true,
             nzOnOk: () => this.confirmDeleteAccount()
         });
+    }
+
+    setConfirmBeforeDelete(confirmBeforeDelete: boolean): void {
+        this.taskFacade.setConfirmBeforeDelete(confirmBeforeDelete);
+    }
+
+    selectTaskPageSize(pageSize: number): void {
+        this.taskFacade.setPageSize(pageSize);
+    }
+
+    setPageSizeSelectOpen(isOpen: boolean): void {
+        this.isPageSizeSelectOpen.set(isOpen);
+    }
+
+    closeOverlays(): void {
+        this.isPageSizeSelectOpen.set(false);
     }
 
     private confirmDeleteAccount(): void {
         this.profileFacade.deleteProfile(this.deletePassword.value);
     }
 
-    toggleDeletePasswordVisibility(): void {
-        this.showDeletePassword.update(value => !value);
-    }
-
-    private changePassword(): void {
-        this.profileFacade.changePassword({
-            oldPassword: this.currentPassword.value,
-            newPassword: this.newPassword.value
-        });
+    private getPasswordFieldView(isVisible: boolean) {
+        return {
+            type: isVisible ? 'text' : 'password',
+            icon: isVisible ? 'eye-invisible' : 'eye'
+        };
     }
 }

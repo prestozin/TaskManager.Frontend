@@ -1,8 +1,8 @@
 export class PagedParams {
-  pageNumber: number = 1;
-  pageSize: number = 10;
-  sort: string = '';
-  order: string = 'asc';
+  pageNumber = 1;
+  pageSize = 10;
+  sort = '';
+  order = 'asc';
 }
 
 export interface PagedResponse<T> {

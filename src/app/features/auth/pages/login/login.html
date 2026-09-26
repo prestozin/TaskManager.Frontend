@@ -13,53 +13,35 @@
         </app-input-forms>
 
         <div class="password-field">
-
             <app-input-forms
                 type="password"
                 placeholder="Senha"
                 [control]="loginForm.controls.password">
             </app-input-forms>
 
-            <a
-                class="forgot-password-link"
-                routerLink="/forgot-password">
+            <a class="forgot-password-link" routerLink="/forgot-password">
                 Esqueceu sua senha?
             </a>
-
         </div>
 
         <div class="form-message">
-
             @if (errorMessage()) {
-                <p class="error-message">
-                    {{ errorMessage() }}
-                </p>
+                <p class="error-message">{{ errorMessage() }}</p>
             }
 
             @if (successMessage()) {
-                <p class="success-message">
-                    {{ successMessage() }}
-                </p>
+                <p class="success-message">{{ successMessage() }}</p>
             }
-
         </div>
 
     </form>
 
-    <div
-        auth-footer
-        class="auth-footer">
+    <div class="auth-footer" auth-footer>
+        <span class="register-text">Não possui uma conta?</span>
 
-        <span class="register-text">
-            Não possui uma conta?
-        </span>
-
-        <a
-            class="register-link"
-            routerLink="/register">
+        <a class="register-link" routerLink="/register">
             Criar conta
         </a>
-
     </div>
 
 </app-auth-layout>

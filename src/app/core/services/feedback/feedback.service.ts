@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 
-export type FeedbackType = 'success' | 'error' | 'warning' | 'alert';
+import { EFeedbackType } from '@shared/enums/feedback.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -11,21 +11,21 @@ export class FeedbackService {
 
     private readonly notification = inject(NzNotificationService);
 
-    showMessage(message: string, description: string, type: FeedbackType): void {
+    showMessage(message: string, description: string, type: EFeedbackType): void {
         switch (type) {
-            case 'success':
+            case EFeedbackType.Success:
                 this.notification.success(message, description, { nzDuration: 5000 });
                 break;
 
-            case 'error':
+            case EFeedbackType.Error:
                 this.notification.error(message, description, { nzDuration: 5000 });
                 break;
 
-            case 'warning':
+            case EFeedbackType.Warning:
                 this.notification.warning(message, description, { nzDuration: 5000 });
                 break;
 
-            case 'alert':
+            case EFeedbackType.Info:
                 this.notification.info(message, description, { nzDuration: 5000 });
                 break;
         }

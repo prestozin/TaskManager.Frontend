@@ -6,7 +6,7 @@
 
         <div class="task-title-wrapper">
             <p class="field-label">Título:</p>
-            <p class="task-title">{{ capitalizeFirst(task().title) }}</p>
+            <p class="task-title">{{ title() }}</p>
         </div>
 
         <div class="task-date-wrapper">
@@ -17,38 +17,51 @@
         <div class="task-priority-wrapper">
             <p class="field-label">Prioridade:</p>
 
-            <p
-                class="task-priority priority"
-                [ngClass]="'priority-' + normalizeClass(task().priority)">
-                {{ task().priority }}
+            <p class="task-priority priority" [ngClass]="priorityClass()">
+                {{ priority() }}
             </p>
         </div>
 
         <div class="task-status-wrapper">
             <p class="field-label">Status:</p>
-            
-            <p
-                class="task-status status"
-                [ngClass]="'status-' + normalizeClass(task().status)">
-                {{ task().status }}
+
+            <p class="task-status status" [ngClass]="statusClass()">
+                {{ status() }}
             </p>
         </div>
 
         <div class="task-description-wrapper">
             <p class="field-label">Descrição:</p>
-            <p class="task-description">{{ capitalizeFirst(task().description) }}</p>
+            <p class="task-description">{{ description() }}</p>
         </div>
 
     </div>
 
     <div class="buttons">
+
         <div class="delete-wrapper">
-            <img src="">
-            <button class="btn-delete" (click)="deleteTaskClicked.emit()">Excluir tarefa</button>
+            <button
+                class="btn-delete"
+                type="button"
+                (click)="deleteTaskClicked.emit()">
+                Excluir tarefa
+            </button>
         </div>
 
-        <button class="btn-edit" (click)="editTaskClicked.emit()">Editar</button>
-        <button class="btn-close" (click)="closeClicked.emit()">Fechar</button>
+        <button
+            class="btn-edit"
+            type="button"
+            (click)="editTaskClicked.emit()">
+            Editar
+        </button>
+
+        <button
+            class="btn-close"
+            type="button"
+            (click)="closeClicked.emit()">
+            Fechar
+        </button>
+
     </div>
 
 </div>

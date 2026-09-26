@@ -1,30 +1,37 @@
-import { DatePipe } from '@angular/common';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TaskComponent } from '@features/tasks/components/task/task.component';
 
-import { TaskFacade } from '@features/tasks/facades/task.facade';
-
-import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
-
-import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
+import { EReportPeriod } from '@features/report/enums/report.enum';
+import {
+  ReportItemResponse,
+  ReportPeriodOption
+} from '@features/report/models/report.models';
+import { TaskComponent } from '@features/tasks/components/task/task.component';
+import {
+  ETaskPriority,
+  ETaskStatus
+} from '@features/tasks/enums/task.enum';
+import { TaskFacade } from '@features/tasks/facades/task.facade';
+import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
+import {
+  formatDateToApi,
+  parseApiDate
+} from '@shared/utils/date.util';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-report',
   imports: [
     MainLayoutComponent,
     TaskComponent,
     FormsModule,
-    DatePipe,
-    NzButtonModule,
     NzDatePickerModule,
     NzSelectModule
   ],
   templateUrl: './report.html',
-  styleUrl: './report.scss',
+  styleUrl: './report.scss'
 })
 export class Report implements OnInit {
 
@@ -32,170 +39,132 @@ export class Report implements OnInit {
 
   readonly report = this.taskFacade.report;
 
-  readonly selectedStartDate = this.taskFacade.reportStartDate;
-  readonly selectedEndDate = this.taskFacade.reportEndDate;
+  readonly selectedPeriod = this.taskFacade.selectedReportPeriod;
+  readonly selectedStartDate = this.taskFacade.selectedReportStartDate;
+  readonly selectedEndDate = this.taskFacade.selectedReportEndDate;
 
-  readonly period = signal<string>('30');
+  readonly periodOptions: ReportPeriodOption[] = [
+    {
+      value: EReportPeriod.SevenDays,
+      label: 'Últimos 7 dias'
+    },
+    {
+      value: EReportPeriod.ThirtyDays,
+      label: 'Últimos 30 dias'
+    },
+    {
+      value: EReportPeriod.NinetyDays,
+      label: 'Últimos 90 dias'
+    }
+  ];
 
   readonly startDate = computed(() =>
-    this.parseDate(this.selectedStartDate())
+    parseApiDate(this.selectedStartDate())
   );
 
   readonly endDate = computed(() =>
-    this.parseDate(this.selectedEndDate())
+    parseApiDate(this.selectedEndDate())
   );
-
 
   readonly totalTasks = computed(() =>
     this.report()?.totalTasks ?? 0
   );
 
+  readonly reportTasks = computed(() =>
+    this.report()?.tasks ?? []
+  );
 
   readonly pendingCount = computed(() =>
-    this.getStatus(1)?.count ?? 0
+    this.getStatus(ETaskStatus.Pending)?.count ?? 0
   );
 
   readonly pendingPercentage = computed(() =>
-    this.getStatus(1)?.percentage ?? 0
+    this.getStatus(ETaskStatus.Pending)?.percentage ?? 0
   );
 
   readonly progressCount = computed(() =>
-    this.getStatus(2)?.count ?? 0
+    this.getStatus(ETaskStatus.InProgress)?.count ?? 0
   );
 
   readonly progressPercentage = computed(() =>
-    this.getStatus(2)?.percentage ?? 0
+    this.getStatus(ETaskStatus.InProgress)?.percentage ?? 0
   );
 
   readonly completedCount = computed(() =>
-    this.getStatus(3)?.count ?? 0
+    this.getStatus(ETaskStatus.Completed)?.count ?? 0
   );
 
   readonly completedPercentage = computed(() =>
-    this.getStatus(3)?.percentage ?? 0
+    this.getStatus(ETaskStatus.Completed)?.percentage ?? 0
   );
 
   readonly canceledCount = computed(() =>
-    this.getStatus(4)?.count ?? 0
+    this.getStatus(ETaskStatus.Canceled)?.count ?? 0
   );
 
   readonly canceledPercentage = computed(() =>
-    this.getStatus(4)?.percentage ?? 0
+    this.getStatus(ETaskStatus.Canceled)?.percentage ?? 0
   );
-
-  readonly pendingCanceledCount = computed(() =>
-    this.pendingCount() + this.canceledCount()
-  );
-
-  readonly pendingCanceledPercentage = computed(() =>
-    this.pendingPercentage() + this.canceledPercentage()
-  );
-
 
   readonly lowPriorityCount = computed(() =>
-    this.getPriority(1)?.count ?? 0
+    this.getPriority(ETaskPriority.Low)?.count ?? 0
   );
 
   readonly lowPriorityPercentage = computed(() =>
-    this.getPriority(1)?.percentage ?? 0
+    this.getPriority(ETaskPriority.Low)?.percentage ?? 0
   );
 
   readonly mediumPriorityCount = computed(() =>
-    this.getPriority(2)?.count ?? 0
+    this.getPriority(ETaskPriority.Medium)?.count ?? 0
   );
 
   readonly mediumPriorityPercentage = computed(() =>
-    this.getPriority(2)?.percentage ?? 0
+    this.getPriority(ETaskPriority.Medium)?.percentage ?? 0
   );
 
   readonly highPriorityCount = computed(() =>
-    this.getPriority(3)?.count ?? 0
+    this.getPriority(ETaskPriority.High)?.count ?? 0
   );
 
   readonly highPriorityPercentage = computed(() =>
-    this.getPriority(3)?.percentage ?? 0
+    this.getPriority(ETaskPriority.High)?.percentage ?? 0
   );
-
 
   isPeriodOpen = false;
 
-
   ngOnInit(): void {
-    this.applyPeriod();
-    this.taskFacade.getReport();
+    this.taskFacade.initializeReport();
   }
 
-
-  selectPeriod(period: string): void {
-    this.period.set(period);
-    this.applyPeriod();
-    this.taskFacade.getReport();
+  selectPeriod(period: EReportPeriod): void {
+    this.taskFacade.selectReportPeriod(period);
   }
 
   selectStartDate(date: Date | null): void {
-    this.taskFacade.selectReportStartDate(this.formatDate(date));
-
-    this.taskFacade.getReport();
+    this.taskFacade.selectReportStartDate(formatDateToApi(date));
   }
 
   selectEndDate(date: Date | null): void {
-    this.taskFacade.selectReportEndDate(this.formatDate(date));
-
-    this.taskFacade.getReport();
-  }
-
-
-  applyPeriod(): void {
-    const endDate = new Date();
-    const startDate = new Date();
-
-    startDate.setDate(endDate.getDate() - Number(this.period()));
-
-    this.taskFacade.selectReportStartDate(this.formatDate(startDate));
-
-    this.taskFacade.selectReportEndDate(this.formatDate(endDate));
+    this.taskFacade.selectReportEndDate(formatDateToApi(date));
   }
 
   clearFilters(): void {
-    this.period.set('30');
-    this.applyPeriod();
-    this.taskFacade.getReport();
+    this.taskFacade.clearReportFilters();
   }
 
+  setPeriodOpen(isOpen: boolean): void {
+    this.isPeriodOpen = isOpen;
+  }
 
   closeOverlays(): void {
     this.isPeriodOpen = false;
   }
 
-
-  private getStatus(id: number) {
-    return this.report()?.status.find(status => status.id === id);
+  private getStatus(statusId: ETaskStatus): ReportItemResponse | undefined {
+    return this.report()?.status.find(status => status.id === statusId);
   }
 
-  private getPriority(id: number) {
-    return this.report()?.priority.find(priority =>priority.id === id);
+  private getPriority(priorityId: ETaskPriority): ReportItemResponse | undefined {
+    return this.report()?.priority.find(priority => priority.id === priorityId);
   }
-
-  private formatDate(date: Date | null): string | null {
-    if (!date) 
-      return null;
-    
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  }
-
-  private parseDate(date: string | null): Date | null {
-    if (!date) 
-      return null;
-    
-
-    const [year, month, day] = date.split('-').map(Number);
-
-    return new Date(year, month - 1, day);
-  }
-
 }

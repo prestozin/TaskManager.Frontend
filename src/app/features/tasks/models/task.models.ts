@@ -1,6 +1,6 @@
-import { PagedParams } from "../../../shared/models/pagination.models";
-import { SelectableResponse } from "../../../shared/models/selectables.models";
-import { ETaskSort } from "../enums/task.enum";
+import { ESortOrder, ETaskSort } from '@features/tasks/enums/task.enum';
+import { PagedParams } from '@shared/models/pagination.models';
+import { SelectableResponse } from '@shared/models/selectables.models';
 
 export interface TaskResponse {
     id: string;
@@ -35,33 +35,19 @@ export interface DeleteTaskRequest {
     taskId: string[];
 }
 
+export interface TaskOptionsPosition {
+    top: number;
+    right: number;
+}
+
 export class TaskPagedParams extends PagedParams {
     override sort: string = ETaskSort.CreatedAt;
-    override order: string = 'desc';
+    override order: string = ESortOrder.Desc;
+
     taskStatusId: number | null = null;
     taskPriorityId: number | null = null;
+
     search: string | null = null;
     startDate: string | null = null;
     endDate: string | null = null;
-}
-
-export class TaskReportParams {
-    startDate: string | null = null;
-    endDate: string | null = null;
-    pageNumber: number = 1;
-    pageSize: number = 4;
-}
-
-export interface TaskReportItemResponse {
-    id: number;
-    name: string;
-    count: number;
-    percentage: number;
-}
-
-export interface TaskReportResponse {
-    totalTasks: number;
-    status: TaskReportItemResponse[];
-    priority: TaskReportItemResponse[];
-    tasks: TaskResponse[];
 }

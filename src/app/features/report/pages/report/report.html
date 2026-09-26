@@ -1,13 +1,16 @@
 <app-main-layout (contentScroll)="closeOverlays()">
-    <div body-content class="report-page">
+
+    <div class="report-page" body-content>
 
         <header class="report-header">
+
             <div class="report-title">
                 <h2>Relatórios</h2>
                 <p>Acompanhe o desempenho das suas tarefas.</p>
             </div>
 
             <div class="filters">
+
                 <div class="filter-field filter-period">
                     <label>Período</label>
 
@@ -16,12 +19,14 @@
                         nzDropdownClassName="report-select-dropdown"
                         nzPlaceHolder="Selecione o período"
                         [nzOpen]="isPeriodOpen"
-                        [ngModel]="period()"
-                        (nzOpenChange)="isPeriodOpen = $event"
+                        [ngModel]="selectedPeriod()"
+                        (nzOpenChange)="setPeriodOpen($event)"
                         (ngModelChange)="selectPeriod($event)">
-                        <nz-option nzValue="7" nzLabel="Últimos 7 dias"></nz-option>
-                        <nz-option nzValue="30" nzLabel="Últimos 30 dias"></nz-option>
-                        <nz-option nzValue="90" nzLabel="Últimos 90 dias"></nz-option>
+
+                        @for (periodOption of periodOptions; track periodOption.value) {
+                            <nz-option [nzValue]="periodOption.value" [nzLabel]="periodOption.label"></nz-option>
+                        }
+
                     </nz-select>
                 </div>
 
@@ -51,15 +56,17 @@
 
                 <button
                     class="btn-clear-filters"
-                    nz-button
                     type="button"
                     (click)="clearFilters()">
                     Limpar filtros
                 </button>
+
             </div>
+
         </header>
 
         <section class="report-card summary-card">
+
             <header class="card-header">
                 <div class="header-icon">▥</div>
 
@@ -78,7 +85,6 @@
                     </div>
 
                     <strong>{{ totalTasks() }}</strong>
-
                     <span class="summary-line"></span>
                 </div>
 
@@ -89,7 +95,6 @@
                     </div>
 
                     <strong>{{ completedCount() }}</strong>
-
                     <span class="summary-line"></span>
                 </div>
 
@@ -100,7 +105,6 @@
                     </div>
 
                     <strong>{{ progressCount() }}</strong>
-
                     <span class="summary-line"></span>
                 </div>
 
@@ -111,7 +115,6 @@
                     </div>
 
                     <strong>{{ pendingCount() }}</strong>
-
                     <span class="summary-line"></span>
                 </div>
 
@@ -122,16 +125,17 @@
                     </div>
 
                     <strong>{{ canceledCount() }}</strong>
-
                     <span class="summary-line"></span>
                 </div>
 
             </div>
+
         </section>
 
         <div class="charts">
 
             <section class="report-card chart-card">
+
                 <header class="card-header">
                     <div class="header-icon">▥</div>
 
@@ -142,6 +146,7 @@
                 </header>
 
                 <div class="chart-content">
+
                     <div class="donut-chart status-chart">
                         <div class="donut-center">
                             <strong>{{ totalTasks() }}</strong>
@@ -158,9 +163,7 @@
                             </div>
 
                             <strong>{{ completedCount() }}</strong>
-                            <span class="legend-percentage">
-                                {{ completedPercentage() }}%
-                            </span>
+                            <span class="legend-percentage">{{ completedPercentage() }}%</span>
                         </div>
 
                         <div class="legend-item">
@@ -170,9 +173,7 @@
                             </div>
 
                             <strong>{{ progressCount() }}</strong>
-                            <span class="legend-percentage">
-                                {{ progressPercentage() }}%
-                            </span>
+                            <span class="legend-percentage">{{ progressPercentage() }}%</span>
                         </div>
 
                         <div class="legend-item">
@@ -182,9 +183,7 @@
                             </div>
 
                             <strong>{{ pendingCount() }}</strong>
-                            <span class="legend-percentage">
-                                {{ pendingPercentage() }}%
-                            </span>
+                            <span class="legend-percentage">{{ pendingPercentage() }}%</span>
                         </div>
 
                         <div class="legend-item">
@@ -194,16 +193,17 @@
                             </div>
 
                             <strong>{{ canceledCount() }}</strong>
-                            <span class="legend-percentage">
-                                {{ canceledPercentage() }}%
-                            </span>
+                            <span class="legend-percentage">{{ canceledPercentage() }}%</span>
                         </div>
 
                     </div>
+
                 </div>
+
             </section>
 
             <section class="report-card chart-card">
+
                 <header class="card-header">
                     <div class="header-icon">▥</div>
 
@@ -214,6 +214,7 @@
                 </header>
 
                 <div class="chart-content">
+
                     <div class="donut-chart priority-chart">
                         <div class="donut-center">
                             <strong>{{ totalTasks() }}</strong>
@@ -230,9 +231,7 @@
                             </div>
 
                             <strong>{{ highPriorityCount() }}</strong>
-                            <span class="legend-percentage">
-                                {{ highPriorityPercentage() }}%
-                            </span>
+                            <span class="legend-percentage">{{ highPriorityPercentage() }}%</span>
                         </div>
 
                         <div class="legend-item">
@@ -242,9 +241,7 @@
                             </div>
 
                             <strong>{{ mediumPriorityCount() }}</strong>
-                            <span class="legend-percentage">
-                                {{ mediumPriorityPercentage() }}%
-                            </span>
+                            <span class="legend-percentage">{{ mediumPriorityPercentage() }}%</span>
                         </div>
 
                         <div class="legend-item">
@@ -254,18 +251,19 @@
                             </div>
 
                             <strong>{{ lowPriorityCount() }}</strong>
-                            <span class="legend-percentage">
-                                {{ lowPriorityPercentage() }}%
-                            </span>
+                            <span class="legend-percentage">{{ lowPriorityPercentage() }}%</span>
                         </div>
 
                     </div>
+
                 </div>
+
             </section>
 
         </div>
 
         <section class="report-card task-list-card">
+
             <header class="card-header task-list-header">
                 <div class="header-icon">☷</div>
 
@@ -276,6 +274,7 @@
             </header>
 
             <div class="task-list">
+
                 <div class="task-list-columns">
                     <span>Tarefa</span>
                     <span>Data de Criação</span>
@@ -283,7 +282,7 @@
                     <span>Status</span>
                 </div>
 
-                @for (task of report()?.tasks ?? []; track task.id) {
+                @for (task of reportTasks(); track task.id) {
                     <app-task
                         [task]="task"
                         [showCheckbox]="false"
@@ -295,8 +294,11 @@
                         <p>Nenhuma tarefa encontrada no período selecionado.</p>
                     </div>
                 }
+
             </div>
+
         </section>
 
     </div>
+
 </app-main-layout>

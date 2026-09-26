@@ -2,22 +2,22 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-import { AuthLayoutComponent } from '../../../../layouts/auth-layout/auth-layout';
-import { InputFormsComponent } from '../../../../shared/components/input-forms/input-forms';
-
-import { LoginRequest } from '../../models/auth.models';
 import { AuthFacade } from '@features/auth/facades/auth.facade';
+import { LoginRequest } from '@features/auth/models/auth.models';
+import { AuthLayoutComponent } from '@layouts/auth-layout/auth-layout';
+import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
+import { PASSWORD_MIN_LENGTH } from '@shared/constants/constants';
 
 @Component({
   selector: 'app-login',
   imports: [
     AuthLayoutComponent,
-    ReactiveFormsModule,
     InputFormsComponent,
+    ReactiveFormsModule,
     RouterLink
   ],
   templateUrl: './login.html',
-  styleUrl: './login.scss',
+  styleUrl: './login.scss'
 })
 export class Login implements OnInit {
 
@@ -27,14 +27,21 @@ export class Login implements OnInit {
   readonly successMessage = this.authFacade.successMessage;
   readonly errorMessage = this.authFacade.errorMessage;
 
-  loginForm = new FormGroup({
-    email: new FormControl<string>('', {
+  readonly loginForm = new FormGroup({
+    email: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.email]
+      validators: [
+        Validators.required,
+        Validators.email
+      ]
     }),
-    password: new FormControl<string>('', {
+
+    password: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(6)]
+      validators: [
+        Validators.required,
+        Validators.minLength(PASSWORD_MIN_LENGTH)
+      ]
     })
   });
 

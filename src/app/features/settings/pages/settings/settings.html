@@ -1,17 +1,11 @@
-<app-main-layout>
+<app-main-layout (contentScroll)="closeOverlays()">
 
-    <div body-content class="settings-page">
+    <div class="settings-page" body-content>
 
         <header class="settings-header">
-
             <h2>Configurações</h2>
-
-            <p>
-                Gerencie suas preferências e informações da sua conta.
-            </p>
-
+            <p>Gerencie suas preferências e informações da sua conta.</p>
         </header>
-
 
         <div class="settings-content">
 
@@ -20,257 +14,153 @@
                 <header class="card-header">
 
                     <div class="card-icon">
-
-                        <span
-                            nz-icon
-                            nzType="user"
-                            nzTheme="outline">
-                        </span>
-
+                        <nz-icon nzType="user" nzTheme="outline"></nz-icon>
                     </div>
 
                     <div class="card-header-text">
-
                         <h3>Conta</h3>
-
-                        <p>
-                            Configurações da sua conta.
-                        </p>
-
+                        <p>Configurações da sua conta.</p>
                     </div>
 
                 </header>
-
 
                 <div class="settings-option">
 
                     <div class="option-content">
 
                         <div class="option-icon">
-
-                            <span
-                                nz-icon
-                                nzType="edit"
-                                nzTheme="outline">
-                            </span>
-
+                            <nz-icon nzType="edit" nzTheme="outline"></nz-icon>
                         </div>
 
                         <div class="option-text">
-
                             <h4>Informações pessoais</h4>
-
-                            <p>
-                                Atualize seu nome, cargo e outras informações.
-                            </p>
-
+                            <p>Atualize seu nome, cargo e outras informações.</p>
                         </div>
 
                     </div>
 
                     <button
-                        type="button"
                         class="btn-option"
+                        type="button"
                         routerLink="/profile">
                         Editar informações
                     </button>
 
                 </div>
 
-
-                <div
-                    class="change-password-option"
-                    [class.open]="isChangePasswordOpen()">
+                <div class="change-password-option" [class.open]="isChangePasswordOpen()">
 
                     <div class="settings-option">
 
                         <div class="option-content">
 
                             <div class="option-icon">
-
-                                <span
-                                    nz-icon
-                                    nzType="lock"
-                                    nzTheme="outline">
-                                </span>
-
+                                <nz-icon nzType="lock" nzTheme="outline"></nz-icon>
                             </div>
 
                             <div class="option-text">
-
                                 <h4>Alterar senha</h4>
-
-                                <p>
-                                    Atualize a senha utilizada para acessar sua conta.
-                                </p>
-
+                                <p>Atualize a senha utilizada para acessar sua conta.</p>
                             </div>
 
                         </div>
 
                         <button
-                            type="button"
                             class="btn-option"
+                            type="button"
                             (click)="toggleChangePassword()">
                             Alterar senha
                         </button>
 
                     </div>
 
-
                     @if (isChangePasswordOpen()) {
 
                         <div class="change-password-content">
 
                             <div class="password-field">
-
-                                <label>
-                                    Senha atual
-                                </label>
+                                <label>Senha atual</label>
 
                                 <div class="password-input-container">
-
                                     <input
-                                        [type]="showCurrentPassword() ? 'text' : 'password'"
+                                        [type]="currentPasswordView().type"
                                         [formControl]="currentPassword"
                                         placeholder="Digite sua senha atual">
 
                                     <button
-                                        type="button"
                                         class="btn-password-visibility"
+                                        type="button"
                                         (click)="toggleCurrentPasswordVisibility()">
 
-                                        <span
-                                            nz-icon
-                                            [nzType]="showCurrentPassword() ? 'eye-invisible' : 'eye'"
-                                            nzTheme="outline">
-                                        </span>
-
+                                        <nz-icon [nzType]="currentPasswordView().icon" nzTheme="outline"></nz-icon>
                                     </button>
-
                                 </div>
 
-                                @if (currentPassword.hasError('required') && currentPassword.touched) {
-
-                                    <p class="password-error">
-                                        Campo obrigatório.
-                                    </p>
-
+                                @if (currentPasswordError; as errorMessage) {
+                                    <p class="password-error">{{ errorMessage }}</p>
                                 }
-
                             </div>
 
-
                             <div class="password-field">
-
-                                <label>
-                                    Nova senha
-                                </label>
+                                <label>Nova senha</label>
 
                                 <div class="password-input-container">
-
                                     <input
-                                        [type]="showNewPassword() ? 'text' : 'password'"
+                                        [type]="newPasswordView().type"
                                         [formControl]="newPassword"
                                         placeholder="Digite sua nova senha">
 
                                     <button
-                                        type="button"
                                         class="btn-password-visibility"
+                                        type="button"
                                         (click)="toggleNewPasswordVisibility()">
 
-                                        <span
-                                            nz-icon
-                                            [nzType]="showNewPassword() ? 'eye-invisible' : 'eye'"
-                                            nzTheme="outline">
-                                        </span>
-
+                                        <nz-icon [nzType]="newPasswordView().icon" nzTheme="outline"></nz-icon>
                                     </button>
-
                                 </div>
 
-                                @if (newPassword.hasError('required') && newPassword.touched) {
-
-                                    <p class="password-error">
-                                        Campo obrigatório.
-                                    </p>
-
+                                @if (newPasswordError; as errorMessage) {
+                                    <p class="password-error">{{ errorMessage }}</p>
                                 }
-
-                                @if (newPassword.hasError('minlength') && newPassword.touched) {
-
-                                    <p class="password-error">
-                                        A senha deve ter pelo menos 6 caracteres.
-                                    </p>
-
-                                }
-
                             </div>
 
-
                             <div class="password-field">
-
-                                <label>
-                                    Confirmar nova senha
-                                </label>
+                                <label>Confirmar nova senha</label>
 
                                 <div class="password-input-container">
-
                                     <input
-                                        [type]="showConfirmPassword() ? 'text' : 'password'"
+                                        [type]="confirmPasswordView().type"
                                         [formControl]="confirmNewPassword"
                                         placeholder="Confirme sua nova senha">
 
                                     <button
-                                        type="button"
                                         class="btn-password-visibility"
+                                        type="button"
                                         (click)="toggleConfirmPasswordVisibility()">
 
-                                        <span
-                                            nz-icon
-                                            [nzType]="showConfirmPassword() ? 'eye-invisible' : 'eye'"
-                                            nzTheme="outline">
-                                        </span>
-
+                                        <nz-icon [nzType]="confirmPasswordView().icon" nzTheme="outline"></nz-icon>
                                     </button>
-
                                 </div>
 
-                                @if (confirmNewPassword.hasError('required') && confirmNewPassword.touched) {
-
-                                    <p class="password-error">
-                                        Campo obrigatório.
-                                    </p>
-
+                                @if (confirmPasswordError; as errorMessage) {
+                                    <p class="password-error">{{ errorMessage }}</p>
                                 }
-
-                                @if (passwordsMismatch()) {
-
-                                    <p class="password-error">
-                                        As senhas não coincidem.
-                                    </p>
-
-                                }
-
                             </div>
 
-
                             <div class="change-password-actions">
-
                                 <button
-                                    type="button"
                                     class="btn-cancel"
+                                    type="button"
                                     (click)="closeChangePassword()">
                                     Cancelar
                                 </button>
 
                                 <button
-                                    type="button"
                                     class="btn-confirm-password"
+                                    type="button"
                                     (click)="confirmChangePassword()">
                                     Confirmar
                                 </button>
-
                             </div>
 
                         </div>
@@ -281,89 +171,51 @@
 
             </section>
 
-
             <section class="settings-card">
 
                 <header class="card-header">
 
                     <div class="card-icon">
-
-                        <span
-                            nz-icon
-                            nzType="unordered-list"
-                            nzTheme="outline">
-                        </span>
-
+                        <nz-icon nzType="unordered-list" nzTheme="outline"></nz-icon>
                     </div>
 
                     <div class="card-header-text">
-
                         <h3>Tarefas</h3>
-
-                        <p>
-                            Preferências das suas tarefas.
-                        </p>
-
+                        <p>Preferências das suas tarefas.</p>
                     </div>
 
                 </header>
 
-
                 <div class="settings-option">
 
                     <div class="option-content">
 
                         <div class="option-icon">
-
-                            <span
-                                nz-icon
-                                nzType="check-circle"
-                                nzTheme="outline">
-                            </span>
-
+                            <nz-icon nzType="check-circle" nzTheme="outline"></nz-icon>
                         </div>
 
                         <div class="option-text">
-
                             <h4>Confirmar antes de excluir</h4>
-
-                            <p>
-                                Exibe uma confirmação antes de excluir uma tarefa.
-                            </p>
-
+                            <p>Exibe uma confirmação antes de excluir uma tarefa.</p>
                         </div>
 
                     </div>
 
-                    <nz-switch
-                        [(ngModel)]="confirmTaskDelete">
-                    </nz-switch>
+                    <nz-switch [ngModel]="confirmBeforeDelete()" (ngModelChange)="setConfirmBeforeDelete($event)"></nz-switch>
 
                 </div>
-
 
                 <div class="settings-option">
 
                     <div class="option-content">
 
                         <div class="option-icon">
-
-                            <span
-                                nz-icon
-                                nzType="ordered-list"
-                                nzTheme="outline">
-                            </span>
-
+                            <nz-icon nzType="ordered-list" nzTheme="outline"></nz-icon>
                         </div>
 
                         <div class="option-text">
-
                             <h4>Tarefas por página</h4>
-
-                            <p>
-                                Define quantas tarefas são exibidas por página.
-                            </p>
-
+                            <p>Define quantas tarefas são exibidas por página.</p>
                         </div>
 
                     </div>
@@ -372,23 +224,13 @@
                         class="page-size-select"
                         nzDropdownClassName="page-size-dropdown"
                         [nzOpen]="isPageSizeSelectOpen()"
-                        (nzOpenChange)="isPageSizeSelectOpen.set($event)"
-                        [(ngModel)]="taskPageSize">
+                        [ngModel]="taskPageSize()"
+                        (nzOpenChange)="setPageSizeSelectOpen($event)"
+                        (ngModelChange)="selectTaskPageSize($event)">
 
-                        <nz-option
-                            [nzValue]="10"
-                            nzLabel="10">
-                        </nz-option>
-
-                        <nz-option
-                            [nzValue]="20"
-                            nzLabel="20">
-                        </nz-option>
-
-                        <nz-option
-                            [nzValue]="30"
-                            nzLabel="30">
-                        </nz-option>
+                        @for (pageSizeOption of pageSizeOptions; track pageSizeOption.value) {
+                            <nz-option [nzValue]="pageSizeOption.value" [nzLabel]="pageSizeOption.label"></nz-option>
+                        }
 
                     </nz-select>
 
@@ -396,156 +238,100 @@
 
             </section>
 
-
             <section class="settings-card">
 
                 <header class="card-header">
 
                     <div class="card-icon danger-header-icon">
-
-                        <span
-                            nz-icon
-                            nzType="delete"
-                            nzTheme="outline">
-                        </span>
-
+                        <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
                     </div>
 
                     <div class="card-header-text">
-
                         <h3>Dados</h3>
-
-                        <p>
-                            Gerencie seus dados no sistema.
-                        </p>
-
+                        <p>Gerencie seus dados no sistema.</p>
                     </div>
 
                 </header>
 
-
-                <div
-                    class="delete-account-option"
-                    [class.open]="isDeleteAccountOpen()">
+                <div class="delete-account-option" [class.open]="isDeleteAccountOpen()">
 
                     <div class="settings-option">
 
                         <div class="option-content">
 
                             <div class="option-icon danger-option-icon">
-
-                                <span
-                                    nz-icon
-                                    nzType="delete"
-                                    nzTheme="outline">
-                                </span>
-
+                                <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
                             </div>
 
                             <div class="option-text">
-
                                 <h4>Excluir minha conta</h4>
-
-                                <p>
-                                    Esta ação é permanente e não pode ser desfeita.
-                                </p>
-
+                                <p>Esta ação é permanente e não pode ser desfeita.</p>
                             </div>
 
                         </div>
 
                         <button
-                            type="button"
                             class="btn-danger"
+                            type="button"
                             (click)="toggleDeleteAccount()">
                             Excluir conta
                         </button>
 
                     </div>
 
-
                     @if (isDeleteAccountOpen()) {
 
                         <div class="delete-account-content">
 
                             <div class="delete-warning">
-
-                                <span
-                                    nz-icon
-                                    nzType="exclamation-circle"
-                                    nzTheme="outline">
-                                </span>
+                                <nz-icon nzType="exclamation-circle" nzTheme="outline"></nz-icon>
 
                                 <div>
-
-                                    <strong>
-                                        Atenção: esta ação é permanente.
-                                    </strong>
+                                    <strong>Atenção: esta ação é permanente.</strong>
 
                                     <p>
                                         Todos os seus dados serão excluídos e não poderão ser recuperados.
                                     </p>
-
                                 </div>
-
                             </div>
 
-
                             <div class="delete-password-field">
-
-                                <label>
-                                    Digite sua senha para continuar
-                                </label>
+                                <label>Digite sua senha para continuar</label>
 
                                 <div class="password-input-container">
-
                                     <input
-                                        [type]="showDeletePassword() ? 'text' : 'password'"
+                                        [type]="deletePasswordView().type"
                                         [formControl]="deletePassword"
                                         placeholder="Sua senha">
 
                                     <button
-                                        type="button"
                                         class="btn-password-visibility"
+                                        type="button"
                                         (click)="toggleDeletePasswordVisibility()">
 
-                                        <span
-                                            nz-icon
-                                            [nzType]="showDeletePassword() ? 'eye-invisible' : 'eye'"
-                                            nzTheme="outline">
-                                        </span>
-
+                                        <nz-icon [nzType]="deletePasswordView().icon" nzTheme="outline"></nz-icon>
                                     </button>
-
                                 </div>
 
-                                @if (deletePassword.hasError('required') && deletePassword.touched) {
-
-                                    <p class="password-error">
-                                        Campo obrigatório.
-                                    </p>
-
+                                @if (deletePasswordError; as errorMessage) {
+                                    <p class="password-error">{{ errorMessage }}</p>
                                 }
-
                             </div>
 
-
                             <div class="delete-account-actions">
-
                                 <button
-                                    type="button"
                                     class="btn-cancel"
+                                    type="button"
                                     (click)="closeDeleteAccount()">
                                     Cancelar
                                 </button>
 
                                 <button
-                                    type="button"
                                     class="btn-confirm-delete"
+                                    type="button"
                                     (click)="openDeleteConfirmation()">
                                     Confirmar
                                 </button>
-
                             </div>
 
                         </div>
@@ -556,45 +342,28 @@
 
             </section>
 
-
             <section class="settings-card">
 
                 <header class="card-header">
 
                     <div class="card-icon">
-
-                        <span
-                            nz-icon
-                            nzType="info-circle"
-                            nzTheme="outline">
-                        </span>
-
+                        <nz-icon nzType="info-circle" nzTheme="outline"></nz-icon>
                     </div>
 
                     <div class="card-header-text">
-
                         <h3>Sobre</h3>
-
-                        <p>
-                            Informações sobre o Task Manager.
-                        </p>
-
+                        <p>Informações sobre o Task Manager.</p>
                     </div>
 
                 </header>
 
-
                 <div class="about-content">
-
-                    <p class="app-version">
-                        Versão 1.0.0
-                    </p>
+                    <p class="app-version">Versão 1.0.0</p>
 
                     <p class="app-description">
                         Um gerenciador de tarefas simples e eficiente,
                         desenvolvido para ajudar na organização das suas atividades.
                     </p>
-
                 </div>
 
             </section>

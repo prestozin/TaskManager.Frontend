@@ -5,20 +5,17 @@
         <section class="form-section">
 
             <div class="form-card">
-
-                <h2 class="form-title">
-                    {{ title() }}
-                </h2>
+                <h2 class="form-title">{{ title() }}</h2>
 
                 <div class="form-container">
                     <ng-content select="[auth-form]"></ng-content>
                 </div>
 
                 <button
+                    class="btn-submit"
                     nz-button
                     nzType="primary"
                     type="button"
-                    class="btn-submit"
                     [nzLoading]="isLoading()"
                     (click)="submit()">
                     {{ primaryButtonText() }}
@@ -27,7 +24,6 @@
                 <div class="form-footer">
                     <ng-content select="[auth-footer]"></ng-content>
                 </div>
-
             </div>
 
         </section>
@@ -35,75 +31,67 @@
         <section class="brand-section">
 
             <div class="brand-shapes">
-
                 <img
                     class="shape-left"
                     src="shapes/auth/shape-auth-left.svg"
                     alt="">
-
                 <img
                     class="shape-bottom"
                     src="shapes/auth/shape-auth-bottom.svg"
                     alt="">
-
                 <img
                     class="shape-top-left"
                     src="shapes/auth/shape-auth-top.svg"
                     alt="">
-
                 <img
                     class="shape-dots-top"
                     src="shapes/auth/shape-auth-dots.svg"
                     alt="">
-
                 <img
                     class="shape-dots-bottom"
                     src="shapes/auth/shape-auth-dots.svg"
                     alt="">
-
             </div>
 
             <div class="brand-features">
-
-                <h2 class="brand-title">
-                    Task Manager
-                </h2>
+                <h2 class="brand-title">Task Manager</h2>
 
                 <div class="feature-list">
 
                     <div class="feature">
-                        <svg
+                        <nz-icon
                             class="feature-icon"
-                            lucideListChecks>
-                        </svg>
+                            nzType="unordered-list"
+                            nzTheme="outline">
+                        </nz-icon>
 
                         <p>Organize</p>
                     </div>
 
                     <div class="feature">
-                        <svg
+                        <nz-icon
                             class="feature-icon"
-                            lucideClock3>
-                        </svg>
+                            nzType="clock-circle"
+                            nzTheme="outline">
+                        </nz-icon>
 
                         <p>Priorize</p>
                     </div>
 
                     <div class="feature">
-                        <svg
+                        <nz-icon
                             class="feature-icon"
-                            lucideChartNoAxesColumnIncreasing>
-                        </svg>
+                            nzType="bar-chart"
+                            nzTheme="outline">
+                        </nz-icon>
 
                         <p>Acompanhe</p>
                     </div>
 
                 </div>
-
             </div>
 
             <div class="brand-logo">
-
                 <img
                     class="logo-shape"
                     src="shapes/auth/shape-auth-circle.svg"
@@ -113,7 +101,6 @@
                     class="logo-img"
                     src="logo.svg"
                     alt="Task Manager">
-
             </div>
 
         </section>

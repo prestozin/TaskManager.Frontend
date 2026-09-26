@@ -1,54 +1,44 @@
 <div
     class="task"
-    [class.without-checkbox]="!showCheckbox()"
-    [class.without-options]="!showOptions()">
+    [class.without-checkbox]="withoutCheckbox()"
+    [class.without-options]="withoutOptions()">
 
     @if (showCheckbox()) {
         <label
-            nz-checkbox
             class="task-checkbox"
+            nz-checkbox
             [nzChecked]="checked()"
             (nzCheckedChange)="checkedChange.emit(task().id)">
         </label>
     }
 
     <div class="task-info">
-
-        <p
-            class="task-title"
-            (click)="taskClicked.emit(task().id)">
+        <p class="task-title" (click)="taskClicked.emit(task().id)">
             {{ title() }}
         </p>
 
-        <p class="description">
-            {{ description() }}
-        </p>
-
+        <p class="description">{{ description() }}</p>
     </div>
 
     <p class="task-details date">
         {{ task().createdAt | date:'dd/MM/yyyy' }}
     </p>
 
-    <p
-        class="task-details priority"
-        [ngClass]="'priority-' + normalizeClass(task().priority)">
-        {{ capitalizeFirst(task().priority) }}
+    <p class="task-details priority" [ngClass]="priorityClass()">
+        {{ priority() }}
     </p>
 
-    <p
-        class="task-details status"
-        [ngClass]="'status-' + normalizeClass(task().status)">
-        {{ capitalizeFirst(task().status) }}
+    <p class="task-details status" [ngClass]="statusClass()">
+        {{ status() }}
     </p>
 
     @if (showOptions()) {
         <img
             class="btn-options"
-            src="icons/task-dots.svg"
             #optionsButton
-            (click)="$event.stopPropagation(); optionsClicked.emit(optionsButton)"
-            alt="Task Options">
+            src="icons/task-dots.svg"
+            alt="Opções da tarefa"
+            (click)="$event.stopPropagation(); optionsClicked.emit(optionsButton)">
     }
 
 </div>

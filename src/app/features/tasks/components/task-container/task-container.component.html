@@ -5,68 +5,48 @@
         <header class="container-header">
 
             <div class="header-top">
-
-                <h2 class="header-title">
-                    Minhas Tarefas
-                </h2>
+                <h2 class="header-title">Minhas Tarefas</h2>
 
                 <button
                     class="btn-new-task"
                     type="button"
-                    (click)="openTaskForm('create')">
+                    (click)="openCreateTaskForm()">
 
-                    <span
-                        nz-icon
+                    <nz-icon
+                        class="icon-new-task"
                         nzType="plus"
-                        nzTheme="outline"
-                        class="icon-new-task">
-                    </span>
+                        nzTheme="outline">
+                    </nz-icon>
 
                     <span>Nova Tarefa</span>
-
                 </button>
-
             </div>
-
 
             <div class="header-actions">
 
                 <div class="task-filters">
 
                     <div class="filter-field">
-
-                        <label
-                            class="filter-label"
-                            for="task-search">
-                            Pesquisar
-                        </label>
+                        <label class="filter-label" for="task-search">Pesquisar</label>
 
                         <div class="search-container">
-
-                            <span
-                                nz-icon
+                            <nz-icon
+                                class="icon-search"
                                 nzType="search"
-                                nzTheme="outline"
-                                class="icon-search">
-                            </span>
+                                nzTheme="outline">
+                            </nz-icon>
 
                             <input
-                                id="task-search"
                                 class="search-input"
+                                id="task-search"
                                 type="search"
                                 placeholder="Pesquisar tarefas..."
                                 [formControl]="searchControl">
-
                         </div>
-
                     </div>
 
-
                     <div class="filter-field">
-
-                        <label class="filter-label">
-                            Prioridade
-                        </label>
+                        <label class="filter-label">Prioridade</label>
 
                         <nz-select
                             class="task-select priority-select"
@@ -76,24 +56,14 @@
                             (ngModelChange)="selectPriorityById($event)">
 
                             @for (priority of priorityOptions(); track priority.id) {
-
-                                <nz-option
-                                    [nzValue]="priority.id ?? 0"
-                                    [nzLabel]="priority.name">
-                                </nz-option>
-
+                                <nz-option [nzValue]="priority.id" [nzLabel]="priority.name"></nz-option>
                             }
 
                         </nz-select>
-
                     </div>
 
-
                     <div class="filter-field">
-
-                        <label class="filter-label">
-                            Status
-                        </label>
+                        <label class="filter-label">Status</label>
 
                         <nz-select
                             class="task-select status-select"
@@ -103,24 +73,14 @@
                             (ngModelChange)="selectStatusById($event)">
 
                             @for (status of statusOptions(); track status.id) {
-
-                                <nz-option
-                                    [nzValue]="status.id ?? 0"
-                                    [nzLabel]="status.name">
-                                </nz-option>
-
+                                <nz-option [nzValue]="status.id" [nzLabel]="status.name"></nz-option>
                             }
 
                         </nz-select>
-
                     </div>
 
-
                     <div class="filter-field">
-
-                        <label class="filter-label">
-                            Data inicial
-                        </label>
+                        <label class="filter-label">Data inicial</label>
 
                         <nz-date-picker
                             class="task-date-picker"
@@ -130,15 +90,10 @@
                             [ngModel]="startDate()"
                             (ngModelChange)="selectStartDate($event)">
                         </nz-date-picker>
-
                     </div>
 
-
                     <div class="filter-field">
-
-                        <label class="filter-label">
-                            Data final
-                        </label>
+                        <label class="filter-label">Data final</label>
 
                         <nz-date-picker
                             class="task-date-picker"
@@ -148,24 +103,20 @@
                             [ngModel]="endDate()"
                             (ngModelChange)="selectEndDate($event)">
                         </nz-date-picker>
-
                     </div>
 
-
                     <button
-                        type="button"
                         class="btn-clear-filters"
+                        type="button"
                         (click)="clearFilters()">
 
-                        <span
-                            nz-icon
+                        <nz-icon
+                            class="icon-clear-filters"
                             nzType="reload"
-                            nzTheme="outline"
-                            class="icon-clear-filters">
-                        </span>
+                            nzTheme="outline">
+                        </nz-icon>
 
                         <span>Limpar filtros</span>
-
                     </button>
 
                 </div>
@@ -174,250 +125,180 @@
 
         </header>
 
-
         <div class="task-list-header">
 
             <label
-                nz-checkbox
                 class="task-checkbox"
+                nz-checkbox
                 [nzChecked]="areVisibleTasksChecked()"
                 (nzCheckedChange)="toggleAllVisibleTasks()">
             </label>
 
-
-            <p class="column-title">
-                Tarefas
-            </p>
-
+            <p class="column-title">Tarefas</p>
 
             <button
-                type="button"
                 class="column-title column-sortable"
-                (click)="orderTasks(TaskSort.CreatedAt)">
+                type="button"
+                (click)="orderByCreatedAt()">
                 Data de Criação
             </button>
 
-
             <button
-                type="button"
                 class="column-title column-sortable"
-                (click)="orderTasks(TaskSort.TaskPriority)">
+                type="button"
+                (click)="orderByPriority()">
                 Prioridade
             </button>
 
-
             <button
-                type="button"
                 class="column-title column-sortable"
-                (click)="orderTasks(TaskSort.TaskStatus)">
+                type="button"
+                (click)="orderByStatus()">
                 Status
             </button>
 
-
             <button
-                type="button"
                 class="column-title column-sortable"
+                type="button"
                 (click)="openDeleteCheckedConfirmation()">
 
-                <span
-                    nz-icon
+                <nz-icon
+                    class="icon-delete"
                     nzType="delete"
-                    nzTheme="outline"
-                    class="icon-delete">
-                </span>
-
+                    nzTheme="outline">
+                </nz-icon>
             </button>
 
         </div>
 
-
         <div class="tasks-wrapper">
 
-            @for (task of tasks(); track task.id) {
-
+            @for (taskRow of taskRows(); track taskRow.task.id) {
                 <app-task
-                    [task]="task"
-                    [checked]="checkedTaskIds().has(task.id)"
+                    [task]="taskRow.task"
+                    [checked]="taskRow.checked"
                     (checkedChange)="toggleCheckedTask($event)"
-                    (optionsClicked)="openTaskOptions(task.id, $event)"
+                    (optionsClicked)="openTaskOptions(taskRow.task.id, $event)"
                     (taskClicked)="openTaskDetailsById($event)">
                 </app-task>
-
             }
 
         </div>
 
-
-        @if (activeTaskId() && selectedTaskPosition()) {
-
+        @if (taskOptionsPosition(); as position) {
             <app-task-options
-                [position]="selectedTaskPosition()!"
-                (closeOptions)="closeTaskOptions()"
+                [position]="position"
                 (deleteTaskClicked)="openDeleteConfirmation()"
-                (editTaskClicked)="openTaskForm('edit')"
+                (editTaskClicked)="openEditTaskForm()"
                 (viewTaskClicked)="openTaskDetails()">
             </app-task-options>
-
         }
 
     </div>
 
-
     <footer class="container-footer">
-
         <p class="footer-text">
-            Mostrando {{ tasks().length }}
-            de {{ pagedResponse()?.totalCount ?? 0 }} tarefas
+            Mostrando {{ displayedTaskCount() }} de {{ totalTaskCount() }} tarefas
         </p>
 
-
         <div class="pagination">
-
-            <span class="pagination-label">
-                Páginas:
-            </span>
-
+            <span class="pagination-label">Páginas:</span>
 
             <button
-                type="button"
                 class="btn-page"
-                [disabled]="currentPage() === 1"
-                (click)="changePage(1)">
+                type="button"
+                [disabled]="isFirstPage()"
+                (click)="goToFirstPage()">
                 &lt;&lt;
             </button>
 
-
             <button
-                type="button"
                 class="btn-page"
-                [disabled]="currentPage() === 1"
-                (click)="changePage(currentPage() - 1)">
+                type="button"
+                [disabled]="isFirstPage()"
+                (click)="goToPreviousPage()">
                 &lt;
             </button>
 
-
-            @for (page of visiblePages(); track page) {
-
+            @for (pageButton of visiblePageButtons(); track pageButton.page) {
                 <button
-                    type="button"
                     class="btn-page"
-                    [class.active]="currentPage() === page"
-                    (click)="changePage(page)">
-                    {{ page }}
+                    type="button"
+                    [class.active]="pageButton.active"
+                    (click)="changePage(pageButton.page)">
+                    {{ pageButton.page }}
                 </button>
-
             }
 
-
             <input
-                #pageInputElement
                 class="page-input"
+                #pageInputElement
                 type="number"
                 placeholder="__"
                 min="1"
-                [max]="pagedResponse()?.totalPages ?? 1"
+                [max]="pageInputMax()"
                 [formControl]="pageInput"
                 (keydown.enter)="goToPage(pageInputElement)"
                 (blur)="pageInput.reset()">
 
-
             <button
-                type="button"
                 class="btn-page"
-                [disabled]="currentPage() === (pagedResponse()?.totalPages ?? 1)"
-                (click)="changePage(currentPage() + 1)">
+                type="button"
+                [disabled]="isLastPage()"
+                (click)="goToNextPage()">
                 &gt;
             </button>
 
-
             <button
-                type="button"
                 class="btn-page"
-                [disabled]="currentPage() === (pagedResponse()?.totalPages ?? 1)"
-                (click)="changePage(pagedResponse()?.totalPages ?? 1)">
+                type="button"
+                [disabled]="isLastPage()"
+                (click)="goToLastPage()">
                 &gt;&gt;
             </button>
-
         </div>
-
     </footer>
 
+    @if (taskDetails(); as task) {
+        <div class="sidebar-backdrop" (click)="closeModal()"></div>
 
-    @if (activeModal() === 'view' && selectedTask()) {
-
-        <div
-            class="sidebar-backdrop"
-            (click)="closeModal()">
-        </div>
-
-        <aside
-            class="task-details-sidebar"
-            [class.closing]="isClosingTaskDetails()">
+        <aside class="task-details-sidebar" [class.closing]="isClosingTaskDetails()">
 
             <app-task-view
-                [task]="selectedTask()!"
+                [task]="task"
                 (closeClicked)="closeTaskDetails()"
                 (deleteTaskClicked)="openDeleteConfirmation()"
-                (editTaskClicked)="openTaskForm('edit')">
+                (editTaskClicked)="openEditTaskForm()">
             </app-task-view>
 
         </aside>
-
     }
 
-
-    @if (activeModal() === 'delete') {
-
+    @if (showDeleteConfirmation()) {
         <app-confirmation-modal
-            title="Excluir tarefa?"
-            description="Essa ação não poderá ser desfeita."
-            confirmText="Excluir"
-            (confirm)="deleteTask()"
+            [title]="deleteConfirmationTitle()"
+            [description]="deleteConfirmationDescription"
+            [confirmText]="deleteConfirmationButton"
+            (confirm)="confirmDelete()"
             (cancel)="closeModal()">
         </app-confirmation-modal>
-
     }
 
+    @if (showTaskForm()) {
+        <div class="modal-overlay" (click)="closeModal()">
 
-    @if (activeModal() === 'deleteChecked') {
-
-        <app-confirmation-modal
-            title="Excluir tarefas selecionadas?"
-            description="Essa ação não poderá ser desfeita."
-            confirmText="Excluir"
-            (confirm)="deleteCheckedTasks()"
-            (cancel)="closeModal()">
-        </app-confirmation-modal>
-
-    }
-
-
-    @if (
-        (activeModal() === 'create' || activeModal() === 'edit') &&
-        (activeModal() === 'create' || selectedTask())
-    ) {
-
-        <div
-            class="modal-overlay"
-            (click)="closeModal()">
-
-            <div
-                class="modal-content"
-                (click)="$event.stopPropagation()">
-
+            <div class="modal-content" (click)="$event.stopPropagation()">
                 <app-task-form
                     [mode]="taskFormMode()"
-                    [task]="selectedTask()"
+                    [task]="taskFormTask()"
                     [priorityOptions]="priorityFormOptions()"
                     [statusOptions]="statusFormOptions()"
                     (submitClicked)="saveTask($event)"
                     (cancelClicked)="closeModal()">
                 </app-task-form>
-
             </div>
 
         </div>
-
     }
 
 </div>

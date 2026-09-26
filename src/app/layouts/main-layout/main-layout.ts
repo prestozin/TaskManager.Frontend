@@ -1,12 +1,10 @@
-import { Component, computed, HostListener, inject, output } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-
-import { TokenService } from '@core/services/token/token.service';
-
-import { ProfileFacade } from '@features/profile/facades/profile.facade';
+import { Component, computed, HostListener, inject, OnInit, output } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
+import { AuthFacade } from '@features/auth/facades/auth.facade';
+import { ProfileFacade } from '@features/profile/facades/profile.facade';
 
 @Component({
   selector: 'app-main-layout',
@@ -16,63 +14,55 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzIconModule
   ],
   templateUrl: './main-layout.html',
-  styleUrl: './main-layout.scss',
+  styleUrl: './main-layout.scss'
 })
+export class MainLayoutComponent implements OnInit {
 
-
-export class MainLayoutComponent {
-
-  private readonly tokenService = inject(TokenService);
+  private readonly authFacade = inject(AuthFacade);
   private readonly profileFacade = inject(ProfileFacade);
-  private readonly router = inject(Router);
-
-  isUserMenuOpen = false;
 
   readonly contentScroll = output<void>();
 
+  isUserMenuOpen = false;
 
   readonly userName = computed(() => {
     const name = this.profileFacade.profile()?.name ?? '';
 
-    if (!name) return '';
+    if (!name)
+      return '';
 
     const firstName = name.trim().split(' ')[0];
 
-    return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    return firstName.charAt(0).toUpperCase() +
+      firstName.slice(1).toLowerCase();
   });
 
-  readonly userIcon = computed(() => {
-    return this.userName().charAt(0);
-  });
+  readonly userIcon = computed(() =>
+    this.userName().charAt(0)
+  );
 
-
-  ngOnInit() {
-    this.profileFacade.loadProfile();
+  ngOnInit(): void {
+    if (!this.profileFacade.profile())
+      this.profileFacade.loadProfile();
   }
 
-
-  toggleUserMenu() {
+  toggleUserMenu(): void {
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
-  closeUserMenu() {
+  closeUserMenu(): void {
     this.isUserMenuOpen = false;
   }
 
-  logoutUser() {
-    this.tokenService.clear();
-    this.router.navigate(['/login']);
+  logoutUser(): void {
+    this.authFacade.logout();
   }
-
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-
+  onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
 
-    if (!target.closest('.user-container')) {
-      this.isUserMenuOpen = false;
-    }
+    if (!target.closest('.user-container'))
+      this.closeUserMenu();
   }
-
 }

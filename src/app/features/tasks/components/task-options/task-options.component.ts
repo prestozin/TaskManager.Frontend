@@ -1,24 +1,22 @@
 import { Component, input, output } from '@angular/core';
-import { TaskOptionsPosition } from '@features/tasks/models/task-ui-state.models';
-import { LucideEye, LucidePencil, LucideTrash } from '@lucide/angular';
+
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
+import { TaskOptionsPosition } from '@features/tasks/models/task.models';
 
 @Component({
     selector: 'app-task-options',
-    templateUrl: './task-options.component.html',
-    styleUrl: './task-options.component.scss',
     imports: [
-        LucideEye,
-        LucidePencil,
-        LucideTrash
-    ]
+        NzIconModule
+    ],
+    templateUrl: './task-options.component.html',
+    styleUrl: './task-options.component.scss'
 })
-
 export class TaskOptionsComponent {
 
-  position = input.required<TaskOptionsPosition>();
-  
-  deleteTaskClicked = output<void>();
-  editTaskClicked = output<void>();
-  viewTaskClicked = output<void>();
-  closeClicked = output<void>();
+    readonly position = input.required<TaskOptionsPosition>();
+
+    readonly deleteTaskClicked = output<void>();
+    readonly editTaskClicked = output<void>();
+    readonly viewTaskClicked = output<void>();
 }

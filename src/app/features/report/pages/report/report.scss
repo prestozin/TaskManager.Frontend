@@ -67,10 +67,14 @@
     color: $primary-blue-color;
     font-size: $body-font-size;
 
-    &:hover,
-    &:focus {
+    &:hover {
         background-color: $secondary-blue-color;
         color: $white-color;
+    }
+
+    &:active {
+        scale: 0.95;
+        outline: none;
     }
 }
 

@@ -2,116 +2,127 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 import { FeedbackService } from '@core/services/feedback/feedback.service';
-
-import { TASK_MESSAGES } from '@shared/constants/messages';
+import { EReportPeriod } from '@features/report/enums/report.enum';
+import { ETaskSort } from '@features/tasks/enums/task.enum';
+import {
+    TaskCreateRequest,
+    TaskEditRequest
+} from '@features/tasks/models/task.models';
+import { TaskService } from '@features/tasks/services/task.service';
+import { TaskState } from '@features/tasks/states/task.state';
+import { Messages } from '@shared/constants/messages';
 import { EFeedbackType } from '@shared/enums/feedback.enum';
 import { SelectableOption } from '@shared/models/selectables.models';
+import { formatDateToApi } from '@shared/utils/date.util';
 import { getHttpErrorMessage } from '@shared/utils/http-error.util';
-
-import { ETaskSort } from '../enums/task.enum';
-import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest } from '../models/task.models';
-
-import { TaskService } from '../services/task.service';
-
-import { TaskDataState } from '../states/task-data.state';
-import { ReportState } from '@features/report/states/report.state';
-
 
 @Injectable({
     providedIn: 'root'
 })
-
 export class TaskFacade {
 
     private readonly taskService = inject(TaskService);
-    private readonly taskDataState = inject(TaskDataState);
-    private readonly reportState = inject(ReportState);
+    private readonly taskState = inject(TaskState);
     private readonly feedbackService = inject(FeedbackService);
 
-    readonly handleError = getHttpErrorMessage;
-
-
     get tasks() {
-        return this.taskDataState.tasks;
+        return this.taskState.tasks;
     }
 
     get pagedResponse() {
-        return this.taskDataState.pagedResponse;
+        return this.taskState.pagedResponse;
     }
 
     get selectedTask() {
-        return this.taskDataState.selectedTask;
+        return this.taskState.selectedTask;
     }
 
     get statusOptions() {
-        return this.taskDataState.statusOptions;
+        return this.taskState.statusOptions;
     }
 
     get priorityOptions() {
-        return this.taskDataState.priorityOptions;
+        return this.taskState.priorityOptions;
     }
 
     get selectedStatus() {
-        return this.taskDataState.selectedStatus;
+        return this.taskState.selectedStatus;
     }
 
     get selectedPriority() {
-        return this.taskDataState.selectedPriority;
+        return this.taskState.selectedPriority;
     }
 
     get selectedStartDate() {
-        return this.taskDataState.selectedStartDate;
+        return this.taskState.selectedStartDate;
     }
 
     get selectedEndDate() {
-        return this.taskDataState.selectedEndDate;
+        return this.taskState.selectedEndDate;
     }
 
     get currentPage() {
-        return this.taskDataState.currentPage;
+        return this.taskState.currentPage;
     }
 
+    get confirmBeforeDelete() {
+        return this.taskState.confirmBeforeDelete;
+    }
+
+    get pageSize() {
+        return this.taskState.pageSize;
+    }
 
     get report() {
-        return this.reportState.report;
+        return this.taskState.report;
     }
 
-    get reportStartDate() {
-        return this.reportState.selectedStartDate;
+    get selectedReportPeriod() {
+        return this.taskState.selectedReportPeriod;
     }
 
-    get reportEndDate() {
-        return this.reportState.selectedEndDate;
+    get selectedReportStartDate() {
+        return this.taskState.selectedReportStartDate;
     }
 
+    get selectedReportEndDate() {
+        return this.taskState.selectedReportEndDate;
+    }
 
     getTasks(): void {
-        this.taskService.getPaged(this.taskDataState.pagedParams).subscribe({
+        this.taskService.getPaged(this.taskState.pagedParams).subscribe({
             next: response => {
-                this.taskDataState.setTasks(response.data);
+                if (!response.isSuccess) {
+                    this.taskState.clearTasks();
+                    return;
+                }
+
+                this.taskState.setTasks(response.data);
             },
 
-            error: (error: HttpErrorResponse) => {
-                this.handleError(error);
-                this.taskDataState.clearTasks();
+            error: () => {
+                this.taskState.clearTasks();
             }
         });
     }
 
     getTaskById(taskId: string): void {
-        this.taskDataState.clearSelectedTask();
+        this.taskState.clearSelectedTask();
 
         this.taskService.getTaskById(taskId).subscribe({
             next: response => {
-                if (response.isSuccess) {
-                    this.taskDataState.setSelectedTask(response.data);
-                }
+                if (!response.isSuccess)
+                    return;
+
+                this.taskState.setSelectedTask(response.data);
             },
 
             error: (error: HttpErrorResponse) => {
-                this.handleError(error);
-
-                this.feedbackService.showMessage(error.message, '', EFeedbackType.Error);
+                this.feedbackService.showMessage(
+                    getHttpErrorMessage(error),
+                    '',
+                    EFeedbackType.Error
+                );
             }
         });
     }
@@ -119,47 +130,34 @@ export class TaskFacade {
     loadSelectables(): void {
         this.taskService.getSelectables().subscribe({
             next: response => {
-                this.taskDataState.setStatusOptions(response.data.status);
-                this.taskDataState.setPriorityOptions(response.data.priority);
-            },
+                if (!response.isSuccess)
+                    return;
 
-            error: (error: HttpErrorResponse) => {
-                this.handleError(error);
+                this.taskState.setStatusOptions(response.data.status);
+                this.taskState.setPriorityOptions(response.data.priority);
             }
         });
     }
-
-    getReport(): void {
-        this.taskService.getReport(this.reportState.reportParams).subscribe({
-            next: response => {
-                if (response.isSuccess) {
-                    this.reportState.setReport(response.data);
-                }
-            },
-
-            error: (error: HttpErrorResponse) => {
-                this.handleError(error);
-                this.reportState.clearReport();
-            }
-        });
-    }
-
 
     addTask(request: TaskCreateRequest): void {
         this.taskService.addTask(request).subscribe({
             next: response => {
-                this.taskDataState.pagedParams.pageNumber = 1;
-                this.taskDataState.pagedParams.sort = ETaskSort.CreatedAt;
-                this.taskDataState.pagedParams.order = 'desc';
+                this.taskState.resetAfterCreate();
                 this.getTasks();
 
-                this.feedbackService.showMessage(response.message, TASK_MESSAGES.CREATED_SUCCESSFULLY, EFeedbackType.Success);
+                this.feedbackService.showMessage(
+                    response.message,
+                    Messages.TaskCreatedSuccessfully,
+                    EFeedbackType.Success
+                );
             },
 
             error: (error: HttpErrorResponse) => {
-                const message = this.handleError(error);
-
-                this.feedbackService.showMessage(message, TASK_MESSAGES.CREATED_FAILED, EFeedbackType.Error);
+                this.feedbackService.showMessage(
+                    getHttpErrorMessage(error),
+                    Messages.TaskCreateFailed,
+                    EFeedbackType.Error
+                );
             }
         });
     }
@@ -169,95 +167,154 @@ export class TaskFacade {
             next: response => {
                 this.getTasks();
 
-                this.feedbackService.showMessage(response.message, TASK_MESSAGES.EDITED_SUCCESSFULLY, EFeedbackType.Success);
+                this.feedbackService.showMessage(
+                    response.message,
+                    Messages.TaskEditedSuccessfully,
+                    EFeedbackType.Success
+                );
             },
 
             error: (error: HttpErrorResponse) => {
-                this.handleError(error);
-
-                this.feedbackService.showMessage(error.message, TASK_MESSAGES.EDITED_FAILED, EFeedbackType.Error
+                this.feedbackService.showMessage(
+                    getHttpErrorMessage(error),
+                    Messages.TaskEditFailed,
+                    EFeedbackType.Error
                 );
             }
         });
     }
 
-    deleteTask(taskId: string[]): void {
-        const request: DeleteTaskRequest = {
-            taskId
-        };
-
-        this.taskService.deleteTask(request).subscribe({
+    deleteTask(taskIds: string[]): void {
+        this.taskService.deleteTask({ taskId: taskIds }).subscribe({
             next: response => {
                 this.getTasks();
 
-                this.feedbackService.showMessage(response.message, TASK_MESSAGES.DELETED_SUCCESSFULLY, EFeedbackType.Success);
+                this.feedbackService.showMessage(
+                    response.message,
+                    Messages.TaskDeletedSuccessfully,
+                    EFeedbackType.Success
+                );
             },
 
             error: (error: HttpErrorResponse) => {
-                this.handleError(error);
-
-                this.feedbackService.showMessage(error.message, TASK_MESSAGES.DELETED_FAILED, EFeedbackType.Error);
+                this.feedbackService.showMessage(
+                    getHttpErrorMessage(error),
+                    Messages.TaskDeleteFailed,
+                    EFeedbackType.Error
+                );
             }
         });
     }
 
-
     searchTasks(search: string): void {
-        this.taskDataState.setSearch(search);
+        this.taskState.setSearch(search);
         this.getTasks();
     }
 
     selectStatus(status: SelectableOption): void {
-        this.taskDataState.setStatus(status);
+        this.taskState.setStatus(status);
         this.getTasks();
     }
 
     selectPriority(priority: SelectableOption): void {
-        this.taskDataState.setPriority(priority);
+        this.taskState.setPriority(priority);
         this.getTasks();
     }
 
     selectStartDate(date: string | null): void {
-        this.taskDataState.setStartDate(date);
+        this.taskState.setStartDate(date);
         this.getTasks();
     }
 
     selectEndDate(date: string | null): void {
-        this.taskDataState.setEndDate(date);
+        this.taskState.setEndDate(date);
         this.getTasks();
     }
 
     clearFilters(): void {
-        this.taskDataState.clearFilters();
+        this.taskState.clearFilters();
         this.getTasks();
     }
 
-    orderTasks(sort: string): void {
-        this.taskDataState.toggleSort(sort);
+    orderTasks(sort: ETaskSort): void {
+        this.taskState.toggleSort(sort);
         this.getTasks();
     }
 
     changePage(page: number): void {
-        this.taskDataState.setPage(page);
+        this.taskState.setPage(page);
         this.getTasks();
     }
 
+    setPageSize(pageSize: number): void {
+        this.taskState.setPageSize(pageSize);
+    }
+
+    setConfirmBeforeDelete(confirmBeforeDelete: boolean): void {
+        this.taskState.setConfirmBeforeDelete(confirmBeforeDelete);
+    }
+
     clearSelectedTask(): void {
-        this.taskDataState.clearSelectedTask();
+        this.taskState.clearSelectedTask();
     }
 
-
-    selectReportStartDate(date: string | null): void {
-        this.reportState.setStartDate(date);
-    }
-
-    selectReportEndDate(date: string | null): void {
-        this.reportState.setEndDate(date);
-    }
-
-    clearReportFilters(): void {
-        this.reportState.clearFilters();
+    initializeReport(): void {
+        this.applyReportPeriod();
         this.getReport();
     }
 
+    selectReportPeriod(period: EReportPeriod): void {
+        this.taskState.setReportPeriod(period);
+
+        this.applyReportPeriod();
+        this.getReport();
+    }
+
+    selectReportStartDate(date: string | null): void {
+        this.taskState.setReportStartDate(date);
+        this.getReport();
+    }
+
+    selectReportEndDate(date: string | null): void {
+        this.taskState.setReportEndDate(date);
+        this.getReport();
+    }
+
+    clearReportFilters(): void {
+        this.taskState.setReportPeriod(EReportPeriod.ThirtyDays);
+
+        this.applyReportPeriod();
+        this.getReport();
+    }
+
+    getReport(): void {
+        this.taskService.getReport(this.taskState.reportParams).subscribe({
+            next: response => {
+                if (!response.isSuccess) {
+                    this.taskState.clearReport();
+                    return;
+                }
+
+                this.taskState.setReport(response.data);
+            },
+
+            error: () => {
+                this.taskState.clearReport();
+            }
+        });
+    }
+
+    private applyReportPeriod(): void {
+        const endDate = new Date();
+        const startDate = new Date();
+
+        startDate.setDate(
+            endDate.getDate() - this.taskState.selectedReportPeriod()
+        );
+
+        this.taskState.setReportDateRange(
+            formatDateToApi(startDate),
+            formatDateToApi(endDate)
+        );
+    }
 }

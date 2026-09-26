@@ -1,51 +1,35 @@
 <div class="container">
 
     <div class="container-header">
-
         <img
             class="img-icon"
-            src="icons/new-task-icon.svg">
+            src="icons/new-task-icon.svg"
+            alt="">
 
         <div class="header-texts">
-
-            <p class="header-title">
-                {{ formTitle() }}
-            </p>
-
-            <p class="header-subtitle">
-                {{ formSubtitle() }}
-            </p>
-
+            <p class="header-title">{{ formTitle() }}</p>
+            <p class="header-subtitle">{{ formSubtitle() }}</p>
         </div>
-
     </div>
-
 
     <div class="container-content">
 
         <div class="content-box">
-
-            <p class="task-title">
-                Título
-            </p>
+            <p class="task-title">Título</p>
 
             <app-input-forms
                 class="form-title"
                 type="text"
                 placeholder="Insira um título para a tarefa"
-                [control]="taskForm.controls.titulo">
+                [control]="taskForm.controls.title"
+                [maxLength]="titleMaxLength">
             </app-input-forms>
-
         </div>
-
 
         <div class="dropdown-container">
 
             <div class="select-field">
-
-                <p class="task-title">
-                    Prioridade
-                </p>
+                <p class="task-title">Prioridade</p>
 
                 <nz-select
                     class="task-select"
@@ -55,24 +39,14 @@
                     (ngModelChange)="selectPriorityById($event)">
 
                     @for (priority of priorityOptions(); track priority.id) {
-
-                        <nz-option
-                            [nzValue]="priority.id"
-                            [nzLabel]="priority.name">
-                        </nz-option>
-
+                        <nz-option [nzValue]="priority.id" [nzLabel]="priority.name"></nz-option>
                     }
 
                 </nz-select>
-
             </div>
 
-
             <div class="select-field">
-
-                <p class="task-title">
-                    Status
-                </p>
+                <p class="task-title">Status</p>
 
                 <nz-select
                     class="task-select"
@@ -82,55 +56,43 @@
                     (ngModelChange)="selectStatusById($event)">
 
                     @for (status of statusOptions(); track status.id) {
-
-                        <nz-option
-                            [nzValue]="status.id"
-                            [nzLabel]="status.name">
-                        </nz-option>
-
+                        <nz-option [nzValue]="status.id" [nzLabel]="status.name"></nz-option>
                     }
 
                 </nz-select>
-
             </div>
 
         </div>
 
-
         <div class="content-box">
-
-            <p class="task-title">
-                Descrição
-            </p>
+            <p class="task-title">Descrição</p>
 
             <app-input-forms
                 class="form-description"
                 type="textarea"
-                [maxLength]="500"
                 placeholder="Insira uma descrição para sua tarefa"
-                [control]="taskForm.controls.descricao">
+                [control]="taskForm.controls.description"
+                [maxLength]="descriptionMaxLength">
             </app-input-forms>
-
         </div>
 
     </div>
 
-
     <div class="container-footer">
 
         <button
+            class="btn-cancel"
             nz-button
             type="button"
-            class="btn-cancel"
             (click)="cancelSubmit()">
             Cancelar
         </button>
 
         <button
+            class="btn-submit"
             nz-button
             nzType="primary"
             type="button"
-            class="btn-submit"
             [nzLoading]="isLoading()"
             (click)="submitTask()">
             {{ submitText() }}

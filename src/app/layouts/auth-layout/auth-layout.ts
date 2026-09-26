@@ -1,30 +1,28 @@
 import { Component, input, output } from '@angular/core';
 
-import { LucideChartNoAxesColumnIncreasing, LucideClock3, LucideListChecks } from '@lucide/angular';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-auth-layout',
   imports: [
     NzButtonModule,
-    LucideChartNoAxesColumnIncreasing,
-    LucideListChecks,
-    LucideClock3
+    NzIconModule
   ],
   templateUrl: './auth-layout.html',
-  styleUrl: './auth-layout.scss',
+  styleUrl: './auth-layout.scss'
 })
 export class AuthLayoutComponent {
 
-  title = input('');
-  primaryButtonText = input('');
-  isLoading = input(false);
+  readonly title = input.required<string>();
+  readonly primaryButtonText = input.required<string>();
+  readonly isLoading = input(false);
 
-  submitClicked = output<void>();
+  readonly submitClicked = output<void>();
 
   submit(): void {
-    if (this.isLoading()) 
-      return;    
+    if (this.isLoading())
+      return;
 
     this.submitClicked.emit();
   }

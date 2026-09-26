@@ -7,17 +7,18 @@ export function normalizeClass(value: string): string {
 }
 
 export function capitalizeFirst(value: string): string {
-    if (!value) return '';
+    if (!value)
+        return '';
 
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
 }
 
 export function truncateText(value: string, maxLength: number): string {
-    if (!value) return '';
+    if (!value)
+        return '';
 
-    if (value.length <= maxLength) {
+    if (value.length <= maxLength)
         return value;
-    }
 
-    return value.substring(0, maxLength) + '...';
+    return `${value.slice(0, maxLength)}...`;
 }

@@ -1,4 +1,5 @@
 <div class="overlay">
+
     <div class="container">
 
         <div class="texts">
@@ -6,10 +7,20 @@
             <p class="modal-description">{{ description() }}</p>
         </div>
 
-
         <div class="buttons">
-            <button class="btn-cancel btn" (click)="cancel.emit()"> {{ cancelText() }}</button>
-            <button class="btn-confirm btn" (click)="confirm.emit()"> {{ confirmText() }}</button>
+            <button
+                class="btn-cancel btn"
+                type="button"
+                (click)="cancel.emit()">
+                {{ cancelText() }}
+            </button>
+
+            <button
+                class="btn-confirm btn"
+                type="button"
+                (click)="confirm.emit()">
+                {{ confirmText() }}
+            </button>
         </div>
 
     </div>

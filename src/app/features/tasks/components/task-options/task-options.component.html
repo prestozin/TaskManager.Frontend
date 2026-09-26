@@ -1,19 +1,41 @@
-<div class="task-options" 
-    [style.top.px]="position().top" 
+<div
+    class="task-options"
+    [style.top.px]="position().top"
     [style.right.px]="position().right">
 
-    <button class="btn-view" (click)="viewTaskClicked.emit()">
-        <svg lucideEye class="view-icon"></svg>
+    <button
+        class="btn-view"
+        type="button"
+        (click)="viewTaskClicked.emit()">
+        <nz-icon
+            class="option-icon"
+            nzType="eye"
+            nzTheme="outline">
+        </nz-icon>
         <span>Visualizar</span>
     </button>
 
-    <button class="btn-edit" (click)="editTaskClicked.emit()">
-        <svg lucidePencil class="edit-icon"></svg>
+    <button
+        class="btn-edit"
+        type="button"
+        (click)="editTaskClicked.emit()">
+        <nz-icon
+            class="option-icon"
+            nzType="edit"
+            nzTheme="outline">
+        </nz-icon>
         <span>Editar</span>
     </button>
 
-    <button class="btn-delete" (click)="deleteTaskClicked.emit()">
-        <svg lucideTrash class="delete-icon"></svg>
+    <button
+        class="btn-delete"
+        type="button"
+        (click)="deleteTaskClicked.emit()">
+        <nz-icon
+            class="option-icon"
+            nzType="delete"
+            nzTheme="outline">
+        </nz-icon>
         <span>Excluir</span>
     </button>
 

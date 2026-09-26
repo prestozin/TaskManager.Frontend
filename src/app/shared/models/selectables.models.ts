@@ -4,6 +4,6 @@ export interface SelectableResponse {
 }
 
 export interface SelectableOption {
-  id: number | null;
+  id: number;
   name: string;
 }

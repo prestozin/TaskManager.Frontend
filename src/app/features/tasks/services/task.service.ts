@@ -1,51 +1,95 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment.development';
-import { DeleteTaskRequest, TaskCreateRequest, TaskEditRequest, TaskPagedParams, TaskReportParams, TaskReportResponse, TaskResponse, TaskSelectablesResponse } from '../models/task.models';
-import { ResultResponse } from '../../../shared/models/response.models';
-import { PagedResponse } from '../../../shared/models/pagination.models';
 
-
+import { environment } from '@env/environment.development';
+import {
+    ReportParams,
+    ReportResponse
+} from '@features/report/models/report.models';
+import {
+    DeleteTaskRequest,
+    TaskCreateRequest,
+    TaskEditRequest,
+    TaskPagedParams,
+    TaskResponse,
+    TaskSelectablesResponse
+} from '@features/tasks/models/task.models';
+import { PagedResponse } from '@shared/models/pagination.models';
+import { ResultResponse } from '@shared/models/response.models';
+import { convertLocalDateToUtc } from '@shared/utils/date.util';
 
 @Injectable({
     providedIn: 'root'
 })
-
 export class TaskService {
-    private httpClient = inject(HttpClient);
 
-    private apiUrl = `${environment.apiUrl}/Task`
+    private readonly httpClient = inject(HttpClient);
+    private readonly apiUrl = `${environment.apiUrl}/Task`;
 
     getTaskById(taskId: string): Observable<ResultResponse<TaskResponse>> {
-        return this.httpClient.get<ResultResponse<TaskResponse>>
-            (`${this.apiUrl}/${taskId}`);
+        return this.httpClient.get<ResultResponse<TaskResponse>>(
+            `${this.apiUrl}/${taskId}`
+        );
     }
 
     addTask(request: TaskCreateRequest): Observable<ResultResponse<string>> {
-        return this.httpClient.post<ResultResponse<string>>
-            (`${this.apiUrl}/CreateTask`, request);
+        return this.httpClient.post<ResultResponse<string>>(
+            `${this.apiUrl}/CreateTask`,
+            request
+        );
     }
 
     editTask(request: TaskEditRequest): Observable<ResultResponse<string>> {
-        return this.httpClient.put<ResultResponse<string>>
-            (`${this.apiUrl}/EditTask`, request);
+        return this.httpClient.put<ResultResponse<string>>(
+            `${this.apiUrl}/EditTask`,
+            request
+        );
     }
 
     deleteTask(request: DeleteTaskRequest): Observable<ResultResponse<string>> {
         return this.httpClient.delete<ResultResponse<string>>(
             `${this.apiUrl}/DeleteTask`,
-            {
-                body: request
-            }
+            { body: request }
         );
     }
 
     getPaged(params: TaskPagedParams): Observable<ResultResponse<PagedResponse<TaskResponse>>> {
-        const httpParams = this.buildHttpParams(params);
+        return this.httpClient.get<ResultResponse<PagedResponse<TaskResponse>>>(
+            `${this.apiUrl}/GetPaged`,
+            { params: this.buildHttpParams(params) }
+        );
+    }
 
-        return this.httpClient.get<ResultResponse<PagedResponse<TaskResponse>>>
-            (`${this.apiUrl}/GetPaged`, { params: httpParams });
+    getSelectables(): Observable<ResultResponse<TaskSelectablesResponse>> {
+        return this.httpClient.get<ResultResponse<TaskSelectablesResponse>>(
+            `${this.apiUrl}/GetSelectables`
+        );
+    }
+
+    getReport(request: ReportParams): Observable<ResultResponse<ReportResponse>> {
+        let params = new HttpParams()
+            .set('PageNumber', request.pageNumber)
+            .set('PageSize', request.pageSize);
+
+        if (request.startDate) {
+            params = params.set(
+                'StartDate',
+                convertLocalDateToUtc(request.startDate)
+            );
+        }
+
+        if (request.endDate) {
+            params = params.set(
+                'EndDate',
+                convertLocalDateToUtc(request.endDate, true)
+            );
+        }
+
+        return this.httpClient.get<ResultResponse<ReportResponse>>(
+            `${this.apiUrl}/GetReport`,
+            { params }
+        );
     }
 
     private buildHttpParams(params: TaskPagedParams): HttpParams {
@@ -64,51 +108,20 @@ export class TaskService {
         if (params.search)
             httpParams = httpParams.set('Search', params.search);
 
-        if (params.startDate)
+        if (params.startDate) {
             httpParams = httpParams.set(
-                'StartDate', this.convertLocalDateToUtc(params.startDate)
+                'StartDate',
+                convertLocalDateToUtc(params.startDate)
             );
+        }
 
-
-        if (params.endDate)
+        if (params.endDate) {
             httpParams = httpParams.set(
-                'EndDate', this.convertLocalDateToUtc(params.endDate, true)
+                'EndDate',
+                convertLocalDateToUtc(params.endDate, true)
             );
+        }
 
         return httpParams;
-    }
-
-    getSelectables(): Observable<ResultResponse<TaskSelectablesResponse>> {
-        return this.httpClient.get<ResultResponse<TaskSelectablesResponse>>
-            (`${this.apiUrl}/GetSelectables`);
-    }
-
-    getReport(request: TaskReportParams): Observable<ResultResponse<TaskReportResponse>> {
-        let params = new HttpParams()
-            .set('PageNumber', request.pageNumber)
-            .set('PageSize', request.pageSize);
-
-        if (request.startDate)
-            params = params.set(
-                'StartDate', this.convertLocalDateToUtc(request.startDate)
-            );
-
-        if (request.endDate)
-            params = params.set(
-                'EndDate', this.convertLocalDateToUtc(request.endDate, true)
-            );
-
-        return this.httpClient.get<ResultResponse<TaskReportResponse>>(
-            `${this.apiUrl}/GetReport`,
-            { params }
-        );
-    }
-
-    private convertLocalDateToUtc(date: string, endOfDay = false): string {
-        const [year, month, day] = date.split('-').map(Number);
-
-        const localDate = new Date(year, month - 1, endOfDay ? day + 1 : day);
-
-        return localDate.toISOString();
     }
 }

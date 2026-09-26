@@ -73,20 +73,34 @@
 }
 
 @mixin task-date-picker {
-    height: 40px;
+    display: flex;
+    align-items: center;
+    height: $control-height;
     padding: 0 12px;
     border: 1px solid $muted-text-color;
-    border-radius: 10px;
+    border-radius: $large-border-radius;
     box-shadow: none;
 
-    input {
+    .ant-picker-input {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    .ant-picker-input>input {
+        height: 100%;
+        padding: 0;
         color: $primary-text-color;
         font-size: $input-font-size !important;
+        line-height: normal;
     }
 
     .ant-picker-suffix {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: $primary-blue-color;
-        font-size: 14px;
+        font-size: $caption-font-size;
     }
 
     &:hover,
@@ -145,20 +159,26 @@
 }
 
 @mixin task-checkbox($hover-background: false) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+
+    .ant-checkbox {
+        top: 4;
+    }
+
     .ant-checkbox-inner {
-        width: 17px;
-        height: 17px;
+        width: 15px;
+        height: 15px;
         border: 1.5px solid $muted-text-color;
         border-radius: 4px;
         background-color: $white-color;
+        transition: none !important;
     }
 
-    .ant-checkbox:hover .ant-checkbox-inner {
-        border-color: $secondary-blue-color;
-
-        @if $hover-background {
-            background-color: $pale-blue-background-color;
-        }
+    .ant-checkbox-inner::after {
+        transition: none !important;
     }
 
     .ant-checkbox-checked {
@@ -168,7 +188,7 @@
         }
 
         &::after {
-            border-color: $secondary-blue-color;
+            animation: none !important;
         }
     }
 
