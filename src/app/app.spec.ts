@@ -1,23 +1,32 @@
-import { TestBed } from '@angular/core/testing';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { App } from './app';
 
 describe('App', () => {
+  let fixture: ComponentFixture<App>;
+  let overlayContainer: OverlayContainer;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
-    }).compileComponents();
+      imports: [App]
+    })
+      .overrideComponent(App, { set: { template: '' } })
+      .compileComponents();
+
+    overlayContainer = TestBed.inject(OverlayContainer);
+    fixture = TestBed.createComponent(App);
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
   });
 
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, task-manager-frontend');
+  it('ShouldCreateApp_WhenComponentIsInstantiated', () => {
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('ShouldAddZorroScope_WhenAppIsCreated', () => {
+    expect(overlayContainer.getContainerElement().classList.contains('zorro-scope')).toBe(true);
   });
 });
