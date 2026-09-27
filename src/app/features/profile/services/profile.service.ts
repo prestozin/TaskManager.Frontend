@@ -35,7 +35,7 @@ export class ProfileService {
         return this.httpClient.delete<ResultResponse<string>>(
             `${this.apiUrl}/DeleteUser`,
             {
-                params: {
+                body: {
                     password
                 }
             }

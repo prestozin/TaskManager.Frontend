@@ -10,7 +10,6 @@ export class TokenService {
 
     save(login: LoginResponse) {
         sessionStorage.setItem("token", login.token);
-        sessionStorage.setItem('name', login.name);
     }
 
     getAccessToken() {

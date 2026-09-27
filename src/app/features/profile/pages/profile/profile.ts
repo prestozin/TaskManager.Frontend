@@ -10,7 +10,10 @@ import { EditProfileRequest } from '@features/profile/models/profile.models';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
 import {
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH,
   PROFILE_ABOUT_MAX_LENGTH,
+  PROFILE_AREA_MAX_LENGTH,
   PROFILE_ROLE_MAX_LENGTH
 } from '@shared/constants/constants';
 import { capitalizeFirst } from '@shared/utils/string.util';
@@ -40,7 +43,12 @@ export class Profile {
 
   readonly profileForm = new FormGroup({
     name: new FormControl('', {
-      nonNullable: true
+      nonNullable: true,
+      validators: [
+        Validators.required,
+        Validators.minLength(NAME_MIN_LENGTH),
+        Validators.maxLength(NAME_MAX_LENGTH)
+      ]
     }),
 
     role: new FormControl('', {
@@ -51,7 +59,10 @@ export class Profile {
     }),
 
     area: new FormControl('', {
-      nonNullable: true
+      nonNullable: true,
+      validators: [
+        Validators.maxLength(PROFILE_AREA_MAX_LENGTH)
+      ]
     }),
 
     about: new FormControl('', {
@@ -102,7 +113,14 @@ export class Profile {
       return;
     }
 
-    const request: EditProfileRequest = this.profileForm.getRawValue();
+    const formValue = this.profileForm.getRawValue();
+
+    const request: EditProfileRequest = {
+      name: formValue.name.trim(),
+      role: formValue.role.trim() || null,
+      area: formValue.area.trim() || null,
+      about: formValue.about.trim() || null
+    };
 
     this.profileFacade.editProfile(request);
   }

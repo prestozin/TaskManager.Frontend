@@ -11,8 +11,9 @@ import { ProfileFacade } from '@features/profile/facades/profile.facade';
 import { TaskFacade } from '@features/tasks/facades/task.facade';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
 import {
+    PASSWORD_MAX_LENGTH,
     PASSWORD_MIN_LENGTH,
-    TASK_PAGE_SIZE_OPTIONS
+    PASSWORD_PATTERN,
 } from '@shared/constants/constants';
 import { Messages } from '@shared/constants/messages';
 import { getFormControlErrorMessage } from '@shared/utils/form-error.util';
@@ -41,8 +42,6 @@ export class Settings {
     readonly confirmBeforeDelete = this.taskFacade.confirmBeforeDelete;
     readonly taskPageSize = this.taskFacade.pageSize;
 
-    readonly pageSizeOptions = TASK_PAGE_SIZE_OPTIONS;
-
     readonly isDeleteAccountOpen = signal(false);
     readonly isChangePasswordOpen = signal(false);
     readonly isPageSizeSelectOpen = signal(false);
@@ -54,19 +53,25 @@ export class Settings {
 
     readonly deletePassword = new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required]
-    });
+        validators: [
+            Validators.required,
+            Validators.maxLength(PASSWORD_MAX_LENGTH)
+        ]
+    });;
 
     readonly currentPassword = new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required]
+        validators: [
+            Validators.required,
+            Validators.maxLength(PASSWORD_MAX_LENGTH)
+        ]
     });
 
     readonly newPassword = new FormControl('', {
         nonNullable: true,
         validators: [
             Validators.required,
-            Validators.minLength(PASSWORD_MIN_LENGTH)
+            Validators.pattern(PASSWORD_PATTERN)
         ]
     });
 
@@ -96,16 +101,7 @@ export class Settings {
     }
 
     get newPasswordError(): string | null {
-        if (!this.newPassword.touched || !this.newPassword.invalid)
-            return null;
-
-        if (this.newPassword.hasError('required'))
-            return Messages.RequiredField;
-
-        if (this.newPassword.hasError('minlength'))
-            return Messages.passwordMinimumLength(PASSWORD_MIN_LENGTH);
-
-        return null;
+        return getFormControlErrorMessage(this.newPassword);
     }
 
     get confirmPasswordError(): string | null {

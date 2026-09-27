@@ -92,7 +92,7 @@ export class TaskFacade {
     getTasks(): void {
         this.taskService.getPaged(this.taskState.pagedParams).subscribe({
             next: response => {
-                if (!response.isSuccess) {
+                if (!response.isSuccess || !response.data) {
                     this.taskState.clearTasks();
                     return;
                 }
@@ -111,7 +111,7 @@ export class TaskFacade {
 
         this.taskService.getTaskById(taskId).subscribe({
             next: response => {
-                if (!response.isSuccess)
+                if (!response.isSuccess || !response.data)
                     return;
 
                 this.taskState.setSelectedTask(response.data);
@@ -130,7 +130,7 @@ export class TaskFacade {
     loadSelectables(): void {
         this.taskService.getSelectables().subscribe({
             next: response => {
-                if (!response.isSuccess)
+                if (!response.isSuccess || !response.data)
                     return;
 
                 this.taskState.setStatusOptions(response.data.status);
@@ -290,14 +290,13 @@ export class TaskFacade {
     getReport(): void {
         this.taskService.getReport(this.taskState.reportParams).subscribe({
             next: response => {
-                if (!response.isSuccess) {
+                if (!response.isSuccess || !response.data) {
                     this.taskState.clearReport();
                     return;
                 }
 
                 this.taskState.setReport(response.data);
             },
-
             error: () => {
                 this.taskState.clearReport();
             }
@@ -308,13 +307,8 @@ export class TaskFacade {
         const endDate = new Date();
         const startDate = new Date();
 
-        startDate.setDate(
-            endDate.getDate() - this.taskState.selectedReportPeriod()
-        );
+        startDate.setDate(endDate.getDate() - this.taskState.selectedReportPeriod());
 
-        this.taskState.setReportDateRange(
-            formatDateToApi(startDate),
-            formatDateToApi(endDate)
-        );
+        this.taskState.setReportDateRange(formatDateToApi(startDate), formatDateToApi(endDate));
     }
 }

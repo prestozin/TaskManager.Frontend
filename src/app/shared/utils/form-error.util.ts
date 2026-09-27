@@ -22,5 +22,8 @@ export function getFormControlErrorMessage(control: AbstractControl): string | n
     if (maxLength)
         return Messages.maximumLength(maxLength.requiredLength);
 
+    if (control.hasError('pattern'))
+        return Messages.PasswordRules;
+
     return null;
 }

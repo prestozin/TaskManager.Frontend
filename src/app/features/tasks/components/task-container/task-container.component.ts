@@ -17,7 +17,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
 import {
-    TASK_DETAILS_CLOSE_DELAY_MS
+    TASK_SEARCH_MAX_LENGTH
 } from '@shared/constants/constants';
 import { Messages } from '@shared/constants/messages';
 import { SelectableOption } from '@shared/models/selectables.models';
@@ -94,6 +94,8 @@ export class TaskContainerComponent implements OnInit {
 
     readonly searchControl = new FormControl('', { nonNullable: true });
     readonly pageInput = new FormControl<number | null>(null);
+
+    readonly taskSearchMaxLength = TASK_SEARCH_MAX_LENGTH;
 
     readonly startDate = computed(() =>
         parseApiDate(this.selectedStartDate())
@@ -377,7 +379,7 @@ export class TaskContainerComponent implements OnInit {
         setTimeout(() => {
             this.taskState.closeModal();
             this.taskState.finishClosingTaskDetails();
-        }, TASK_DETAILS_CLOSE_DELAY_MS);
+        }, 500);
     }
 
     openTaskOptions(taskId: string, element: HTMLElement): void {

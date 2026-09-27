@@ -13,7 +13,7 @@ import { AuthFacade } from '@features/auth/facades/auth.facade';
 import { RegisterRequest } from '@features/auth/models/auth.models';
 import { AuthLayoutComponent } from '@layouts/auth-layout/auth-layout';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
-import { PASSWORD_MIN_LENGTH } from '@shared/constants/constants';
+import { EMAIL_MAX_LENGTH, NAME_MAX_LENGTH, NAME_MIN_LENGTH, PASSWORD_MIN_LENGTH, PASSWORD_PATTERN } from '@shared/constants/constants';
 import { Messages } from '@shared/constants/messages';
 
 @Component({
@@ -39,14 +39,19 @@ export class Register implements OnInit {
     {
       name: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required]
+        validators: [
+          Validators.required,
+          Validators.minLength(NAME_MIN_LENGTH),
+          Validators.maxLength(NAME_MAX_LENGTH)
+        ]
       }),
 
       email: new FormControl('', {
         nonNullable: true,
         validators: [
           Validators.required,
-          Validators.email
+          Validators.email,
+          Validators.maxLength(EMAIL_MAX_LENGTH)
         ]
       }),
 
@@ -54,15 +59,14 @@ export class Register implements OnInit {
         nonNullable: true,
         validators: [
           Validators.required,
-          Validators.minLength(PASSWORD_MIN_LENGTH)
+          Validators.pattern(PASSWORD_PATTERN)
         ]
       }),
 
       confirmPassword: new FormControl('', {
         nonNullable: true,
         validators: [
-          Validators.required,
-          Validators.minLength(PASSWORD_MIN_LENGTH)
+          Validators.required
         ]
       })
     },
@@ -81,12 +85,7 @@ export class Register implements OnInit {
     if (!confirmPassword.value || !confirmPassword.touched)
       return null;
 
-    if (confirmPassword.hasError('minlength'))
-      return null;
-
-    return this.registerForm.hasError('passwordsMismatch')
-      ? Messages.PasswordsDoNotMatch
-      : null;
+    return this.registerForm.hasError('passwordsMismatch') ? Messages.PasswordsDoNotMatch : null;
   }
 
   submit(): void {
@@ -95,7 +94,13 @@ export class Register implements OnInit {
       return;
     }
 
-    const request: RegisterRequest = this.registerForm.getRawValue();
+    const formValue = this.registerForm.getRawValue();
+
+    const request: RegisterRequest = {
+      name: formValue.name.trim(),
+      email: formValue.email.trim(),
+      password: formValue.password
+    };
 
     this.authFacade.register(request);
   }

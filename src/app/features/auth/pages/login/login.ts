@@ -6,7 +6,7 @@ import { AuthFacade } from '@features/auth/facades/auth.facade';
 import { LoginRequest } from '@features/auth/models/auth.models';
 import { AuthLayoutComponent } from '@layouts/auth-layout/auth-layout';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
-import { PASSWORD_MIN_LENGTH } from '@shared/constants/constants';
+import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '@shared/constants/constants';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +32,8 @@ export class Login implements OnInit {
       nonNullable: true,
       validators: [
         Validators.required,
-        Validators.email
+        Validators.email,
+        Validators.maxLength(EMAIL_MAX_LENGTH)
       ]
     }),
 
@@ -40,7 +41,7 @@ export class Login implements OnInit {
       nonNullable: true,
       validators: [
         Validators.required,
-        Validators.minLength(PASSWORD_MIN_LENGTH)
+        Validators.maxLength(PASSWORD_MAX_LENGTH)
       ]
     })
   });

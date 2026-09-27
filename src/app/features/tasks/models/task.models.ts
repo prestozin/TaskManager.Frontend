@@ -5,7 +5,7 @@ import { SelectableResponse } from '@shared/models/selectables.models';
 export interface TaskResponse {
     id: string;
     title: string;
-    description: string;
+    description: string | null;
     createdAt: string;
     status: string;
     priority: string;
@@ -13,7 +13,7 @@ export interface TaskResponse {
 
 export interface TaskCreateRequest {
     title: string;
-    description: string;
+    description: string | null;
     statusId: number;
     priorityId: number;
 }
@@ -21,7 +21,7 @@ export interface TaskCreateRequest {
 export interface TaskEditRequest {
     id: string;
     title: string;
-    description: string;
+    description: string | null;
     statusId: number;
     priorityId: number;
 }

@@ -6,7 +6,7 @@ export function normalizeClass(value: string): string {
         .replace(/\s+/g, '-');
 }
 
-export function capitalizeFirst(value: string): string {
+export function capitalizeFirst(value: string | null | undefined): string {
     if (!value)
         return '';
 
