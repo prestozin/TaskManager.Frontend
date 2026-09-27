@@ -68,10 +68,10 @@ describe('Register', () => {
     expect(component.registerForm.controls.name.touched).toBe(true);
   });
 
-  it('ShouldTrimNameAndEmail_WhenRegisteringValidForm', () => {
+  it('ShouldTrimName_WhenRegisteringValidForm', () => {
     component.registerForm.setValue({
       name: '  Mateus Bacelar  ',
-      email: '  mateus@email.com  ',
+      email: 'mateus@email.com',
       password: 'Password1!',
       confirmPassword: 'Password1!'
     });

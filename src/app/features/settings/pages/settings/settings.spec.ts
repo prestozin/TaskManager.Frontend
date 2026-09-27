@@ -41,16 +41,18 @@ describe('Settings', () => {
       confirm: vi.fn()
     };
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [Settings],
       providers: [
         { provide: ProfileFacade, useValue: profileFacade },
-        { provide: TaskFacade, useValue: taskFacade },
-        { provide: NzModalService, useValue: modal }
+        { provide: TaskFacade, useValue: taskFacade }
       ]
-    })
-      .overrideComponent(Settings, { set: { template: '' } })
-      .compileComponents();
+    });
+
+    TestBed.overrideProvider(NzModalService, { useValue: modal });
+    TestBed.overrideComponent(Settings, { set: { template: '' } });
+
+    await TestBed.compileComponents();
 
     fixture = TestBed.createComponent(Settings);
     component = fixture.componentInstance;
