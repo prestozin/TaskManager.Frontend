@@ -10,7 +10,7 @@ import {
 } from '@shared/utils/string.util';
 
 import { TaskResponse } from '../../models/task.models';
-import { TASK_DESCRIPTION_MAX_LENGTH } from '@shared/constants/constants';
+import { TASK_DESCRIPTION_PREVIEW_LENGTH } from '@shared/constants/constants';
 
 @Component({
   selector: 'app-task',
@@ -47,7 +47,7 @@ export class TaskComponent {
   );
 
   readonly description = computed(() =>
-    truncateText(capitalizeFirst(this.task().description), TASK_DESCRIPTION_MAX_LENGTH)
+    truncateText(capitalizeFirst(this.task().description), TASK_DESCRIPTION_PREVIEW_LENGTH)
   );
 
   readonly priority = computed(() =>

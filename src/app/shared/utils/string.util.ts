@@ -13,7 +13,7 @@ export function capitalizeFirst(value: string | null | undefined): string {
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
 }
 
-export function truncateText(value: string, maxLength: number): string {
+export function truncateText(value: string | null | undefined, maxLength: number): string {
     if (!value)
         return '';
 

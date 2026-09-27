@@ -47,11 +47,7 @@ export class ProfileFacade {
                 },
 
                 error: (error: HttpErrorResponse) => {
-                    this.feedbackService.showMessage(
-                        getHttpErrorMessage(error),
-                        '',
-                        EFeedbackType.Error
-                    );
+                    this.feedbackService.showMessage(getHttpErrorMessage(error),'',EFeedbackType.Error);
                 }
             });
     }
@@ -61,11 +57,7 @@ export class ProfileFacade {
 
         this.profileService.editProfile(request).subscribe({
             next: response => {
-                this.feedbackService.showMessage(
-                    response.message,
-                    '',
-                    EFeedbackType.Success
-                );
+                this.feedbackService.showMessage(response.message, '',EFeedbackType.Success);
 
                 this.loadProfile();
             },
@@ -73,11 +65,7 @@ export class ProfileFacade {
             error: (error: HttpErrorResponse) => {
                 this.profileState.isLoading.set(false);
 
-                this.feedbackService.showMessage(
-                    getHttpErrorMessage(error),
-                    '',
-                    EFeedbackType.Error
-                );
+                this.feedbackService.showMessage(getHttpErrorMessage(error), '',EFeedbackType.Error);
             }
         });
     }
@@ -85,31 +73,19 @@ export class ProfileFacade {
     deleteProfile(password: string): void {
         this.profileService.deleteProfile(password).subscribe({
             next: response => {
-                if (!response.isSuccess) {
-                    this.feedbackService.showMessage(
-                        response.message,
-                        '',
-                        EFeedbackType.Error
-                    );
+                if (!response.isSuccess || !response.data) {
+                    this.feedbackService.showMessage(response.message, '',EFeedbackType.Error);
 
                     return;
                 }
 
-                this.feedbackService.showMessage(
-                    response.message,
-                    '',
-                    EFeedbackType.Success
-                );
+                this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
 
                 this.authFacade.logout();
             },
 
             error: (error: HttpErrorResponse) => {
-                this.feedbackService.showMessage(
-                    getHttpErrorMessage(error),
-                    '',
-                    EFeedbackType.Error
-                );
+                this.feedbackService.showMessage(getHttpErrorMessage(error), '', EFeedbackType.Error);
             }
         });
     }
@@ -117,21 +93,13 @@ export class ProfileFacade {
     changePassword(request: ChangePasswordRequest): void {
         this.profileService.changePassword(request).subscribe({
             next: response => {
-                if (!response.isSuccess) {
-                    this.feedbackService.showMessage(
-                        response.message,
-                        '',
-                        EFeedbackType.Error
-                    );
+                if (!response.isSuccess || !response.data) {
+                    this.feedbackService.showMessage(response.message, '', EFeedbackType.Error);
 
                     return;
                 }
 
-                this.feedbackService.showMessage(
-                    response.message,
-                    '',
-                    EFeedbackType.Success
-                );
+                this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
 
                 setTimeout(() => {
                     this.authFacade.logout();
@@ -139,11 +107,7 @@ export class ProfileFacade {
             },
 
             error: (error: HttpErrorResponse) => {
-                this.feedbackService.showMessage(
-                    getHttpErrorMessage(error),
-                    '',
-                    EFeedbackType.Error
-                );
+                this.feedbackService.showMessage(getHttpErrorMessage(error), '', EFeedbackType.Error);
             }
         });
     }

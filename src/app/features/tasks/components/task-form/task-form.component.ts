@@ -98,7 +98,7 @@ export class TaskFormComponent implements OnInit {
     if (this.mode() === ETaskFormMode.Edit && task) {
       this.taskForm.patchValue({
         title: task.title,
-        description: task.description
+        description: task.description ?? ''
       });
 
       this.selectedPriority.set(
@@ -130,10 +130,13 @@ export class TaskFormComponent implements OnInit {
 
     const formValue = this.taskForm.getRawValue();
 
+    const title = formValue.title.trim();
+    const description = formValue.description.trim() || null;
+
     if (this.mode() === ETaskFormMode.Create) {
       this.submitClicked.emit({
-        title: formValue.title,
-        description: formValue.description,
+        title,
+        description,
         statusId: selectedStatus.id,
         priorityId: selectedPriority.id
       });
@@ -148,8 +151,8 @@ export class TaskFormComponent implements OnInit {
 
     this.submitClicked.emit({
       id: currentTask.id,
-      title: formValue.title,
-      description: formValue.description,
+      title,
+      description,
       statusId: selectedStatus.id,
       priorityId: selectedPriority.id
     });

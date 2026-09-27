@@ -32,8 +32,4 @@ export class Messages {
   static maximumLength(requiredLength: number): string {
     return `O campo deve ter no máximo ${requiredLength} caracteres.`;
   }
-
-  static passwordMinimumLength(requiredLength: number): string {
-    return `A senha deve ter pelo menos ${requiredLength} caracteres.`;
-  }
 }

@@ -12,8 +12,8 @@ import { TaskFacade } from '@features/tasks/facades/task.facade';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
 import {
     PASSWORD_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH,
     PASSWORD_PATTERN,
+    TASK_PAGE_SIZE_OPTIONS,
 } from '@shared/constants/constants';
 import { Messages } from '@shared/constants/messages';
 import { getFormControlErrorMessage } from '@shared/utils/form-error.util';
@@ -41,6 +41,7 @@ export class Settings {
 
     readonly confirmBeforeDelete = this.taskFacade.confirmBeforeDelete;
     readonly taskPageSize = this.taskFacade.pageSize;
+    readonly pageSizeOptions = TASK_PAGE_SIZE_OPTIONS;
 
     readonly isDeleteAccountOpen = signal(false);
     readonly isChangePasswordOpen = signal(false);
@@ -57,7 +58,7 @@ export class Settings {
             Validators.required,
             Validators.maxLength(PASSWORD_MAX_LENGTH)
         ]
-    });;
+    });
 
     readonly currentPassword = new FormControl('', {
         nonNullable: true,

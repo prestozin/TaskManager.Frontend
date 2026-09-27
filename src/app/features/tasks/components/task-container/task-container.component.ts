@@ -6,6 +6,7 @@ import {
     inject,
     OnInit
 } from '@angular/core';
+
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
@@ -17,8 +18,10 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
 import {
+    TASK_DETAILS_CLOSE_DELAY_MS,
     TASK_SEARCH_MAX_LENGTH
 } from '@shared/constants/constants';
+
 import { Messages } from '@shared/constants/messages';
 import { SelectableOption } from '@shared/models/selectables.models';
 import {
@@ -32,11 +35,13 @@ import {
     ETaskModal,
     ETaskSort
 } from '../../enums/task.enum';
+
 import { TaskFacade } from '../../facades/task.facade';
 import {
     TaskCreateRequest,
     TaskEditRequest
 } from '../../models/task.models';
+
 import { TaskState } from '../../states/task.state';
 
 import { TaskComponent } from '../task/task.component';
@@ -379,7 +384,7 @@ export class TaskContainerComponent implements OnInit {
         setTimeout(() => {
             this.taskState.closeModal();
             this.taskState.finishClosingTaskDetails();
-        }, 500);
+        }, TASK_DETAILS_CLOSE_DELAY_MS);
     }
 
     openTaskOptions(taskId: string, element: HTMLElement): void {

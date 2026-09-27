@@ -58,7 +58,12 @@
                         <div class="form-field">
                             <label>Nome completo</label>
 
-                            <app-input-forms placeholder="Nome completo" [control]="profileForm.controls.name"></app-input-forms>
+                            <app-input-forms 
+                                placeholder="Nome completo" 
+                                [control]="profileForm.controls.name"
+                                [maxLength]="nameMaxLength">
+                            </app-input-forms>
+                            
                         </div>
 
                         <div class="form-field">

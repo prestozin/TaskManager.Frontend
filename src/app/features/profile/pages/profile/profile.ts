@@ -38,7 +38,9 @@ export class Profile {
   readonly profile = this.profileFacade.profile;
   readonly isLoading = this.profileFacade.isLoading;
 
+  readonly nameMaxLength = NAME_MAX_LENGTH;
   readonly roleMaxLength = PROFILE_ROLE_MAX_LENGTH;
+  readonly areaMaxLength = PROFILE_AREA_MAX_LENGTH;
   readonly aboutMaxLength = PROFILE_ABOUT_MAX_LENGTH;
 
   readonly profileForm = new FormGroup({

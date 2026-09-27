@@ -307,7 +307,7 @@ export class TaskFacade {
         const endDate = new Date();
         const startDate = new Date();
 
-        startDate.setDate(endDate.getDate() - this.taskState.selectedReportPeriod());
+        startDate.setDate(endDate.getDate() - (this.taskState.selectedReportPeriod() - 1));
 
         this.taskState.setReportDateRange(formatDateToApi(startDate), formatDateToApi(endDate));
     }
