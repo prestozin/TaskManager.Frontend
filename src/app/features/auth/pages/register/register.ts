@@ -14,11 +14,12 @@ import { RegisterRequest } from '@features/auth/models/auth.models';
 import { AuthLayoutComponent } from '@layouts/auth-layout/auth-layout';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
 
-import { 
-  EMAIL_MAX_LENGTH, 
-  NAME_MAX_LENGTH, 
-  NAME_MIN_LENGTH, 
-  PASSWORD_PATTERN } from '@shared/constants/constants';
+import {
+  EMAIL_MAX_LENGTH,
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+  PASSWORD_PATTERN
+} from '@shared/constants/constants';
 
 import { Messages } from '@shared/constants/messages';
 

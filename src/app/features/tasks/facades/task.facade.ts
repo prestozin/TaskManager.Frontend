@@ -92,12 +92,12 @@ export class TaskFacade {
     getTasks(): void {
         this.taskService.getPaged(this.taskState.pagedParams).subscribe({
             next: response => {
-                if (!response.isSuccess || !response.data) {
+                if (!response.isSuccess) {
                     this.taskState.clearTasks();
                     return;
                 }
 
-                this.taskState.setTasks(response.data);
+                this.taskState.setTasks(response.data!);
             },
 
             error: () => {
@@ -111,18 +111,14 @@ export class TaskFacade {
 
         this.taskService.getTaskById(taskId).subscribe({
             next: response => {
-                if (!response.isSuccess || !response.data)
+                if (!response.isSuccess)
                     return;
 
-                this.taskState.setSelectedTask(response.data);
+                this.taskState.setSelectedTask(response.data!);
             },
 
             error: (error: HttpErrorResponse) => {
-                this.feedbackService.showMessage(
-                    getHttpErrorMessage(error),
-                    '',
-                    EFeedbackType.Error
-                );
+                this.feedbackService.showMessage(getHttpErrorMessage(error), '', EFeedbackType.Error);
             }
         });
     }
@@ -130,11 +126,11 @@ export class TaskFacade {
     loadSelectables(): void {
         this.taskService.getSelectables().subscribe({
             next: response => {
-                if (!response.isSuccess || !response.data)
+                if (!response.isSuccess)
                     return;
 
-                this.taskState.setStatusOptions(response.data.status);
-                this.taskState.setPriorityOptions(response.data.priority);
+                this.taskState.setStatusOptions(response.data!.status);
+                this.taskState.setPriorityOptions(response.data!.priority);
             }
         });
     }
@@ -146,17 +142,13 @@ export class TaskFacade {
                 this.getTasks();
 
                 this.feedbackService.showMessage(
-                    response.message,
-                    Messages.TaskCreatedSuccessfully,
-                    EFeedbackType.Success
+                    response.message, Messages.TaskCreatedSuccessfully, EFeedbackType.Success
                 );
             },
 
             error: (error: HttpErrorResponse) => {
                 this.feedbackService.showMessage(
-                    getHttpErrorMessage(error),
-                    Messages.TaskCreateFailed,
-                    EFeedbackType.Error
+                    getHttpErrorMessage(error), Messages.TaskCreateFailed, EFeedbackType.Error
                 );
             }
         });
@@ -168,18 +160,12 @@ export class TaskFacade {
                 this.getTasks();
 
                 this.feedbackService.showMessage(
-                    response.message,
-                    Messages.TaskEditedSuccessfully,
-                    EFeedbackType.Success
-                );
+                    response.message, Messages.TaskEditedSuccessfully, EFeedbackType.Success);
             },
 
             error: (error: HttpErrorResponse) => {
                 this.feedbackService.showMessage(
-                    getHttpErrorMessage(error),
-                    Messages.TaskEditFailed,
-                    EFeedbackType.Error
-                );
+                    getHttpErrorMessage(error), Messages.TaskEditFailed, EFeedbackType.Error);
             }
         });
     }
@@ -190,18 +176,12 @@ export class TaskFacade {
                 this.getTasks();
 
                 this.feedbackService.showMessage(
-                    response.message,
-                    Messages.TaskDeletedSuccessfully,
-                    EFeedbackType.Success
-                );
+                    response.message, Messages.TaskDeletedSuccessfully, EFeedbackType.Success);
             },
 
             error: (error: HttpErrorResponse) => {
                 this.feedbackService.showMessage(
-                    getHttpErrorMessage(error),
-                    Messages.TaskDeleteFailed,
-                    EFeedbackType.Error
-                );
+                    getHttpErrorMessage(error), Messages.TaskDeleteFailed, EFeedbackType.Error);
             }
         });
     }
@@ -290,12 +270,12 @@ export class TaskFacade {
     getReport(): void {
         this.taskService.getReport(this.taskState.reportParams).subscribe({
             next: response => {
-                if (!response.isSuccess || !response.data) {
+                if (!response.isSuccess) {
                     this.taskState.clearReport();
                     return;
                 }
 
-                this.taskState.setReport(response.data);
+                this.taskState.setReport(response.data!);
             },
             error: () => {
                 this.taskState.clearReport();

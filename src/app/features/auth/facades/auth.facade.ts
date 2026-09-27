@@ -40,14 +40,14 @@ export class AuthFacade {
 
         this.authService.login(request).subscribe({
             next: response => {
-                if (!response.isSuccess || !response.data) {
+                if (!response.isSuccess) {
                     this.authState.isLoading.set(false);
                     this.authState.errorMessage.set(response.message);
                     return;
                 }
 
                 this.authState.successMessage.set(response.message);
-                this.tokenService.save(response.data);
+                this.tokenService.save(response.data!);
 
                 setTimeout(() => {
                     this.authState.isLoading.set(false);

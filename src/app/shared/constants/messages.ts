@@ -3,7 +3,7 @@ export class Messages {
   static readonly RequiredField = 'Campo obrigatório.';
   static readonly InvalidEmail = 'Digite um e-mail válido.';
   static readonly PasswordsDoNotMatch = 'As senhas não coincidem.';
-  static readonly PasswordRules ='A senha deve ter entre 8 e 100 caracteres e conter letra maiúscula, letra minúscula, número e caractere especial.';
+  static readonly PasswordRules = 'A senha deve ter entre 8 e 100 caracteres e conter letra maiúscula, letra minúscula, número e caractere especial.';
   static readonly UnexpectedError = 'Ocorreu um erro inesperado.';
 
   static readonly TaskCreatedSuccessfully = 'Tarefa criada com sucesso.';
@@ -22,8 +22,6 @@ export class Messages {
   static readonly DeleteAccountConfirmation = 'Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.';
   static readonly DeleteAccountConfirmButton = 'Excluir conta';
   static readonly CancelButton = 'Cancelar';
-
-  
 
   static minimumLength(requiredLength: number): string {
     return `O campo deve ter pelo menos ${requiredLength} caracteres.`;

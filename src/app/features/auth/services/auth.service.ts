@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { environment } from '@env/environment.development';
 import { ResultResponse } from '@shared/models/response.models';
+
 import { LoginRequest, LoginResponse, RegisterRequest } from '../models/auth.models';
-import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -19,6 +21,6 @@ export class AuthService {
     }
 
     register(request: RegisterRequest): Observable<ResultResponse<null>> {
-        return this.httpClient.post<ResultResponse<null>>(`${this.apiUrl}/register`, request);
+        return this.httpClient.post<ResultResponse<null>>(`${this.apiUrl}/Register`, request);
     }
 }
