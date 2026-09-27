@@ -289,4 +289,265 @@ describe('TaskFacade', () => {
     expect(state.reportParams.endDate).not.toBeNull();
     expect(taskService.getReport).toHaveBeenCalled();
   });
+  it('ShouldReloadTasksAndShowSuccess_WhenEditTaskSucceeds', () => {
+    taskService.editTask.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Edited',
+      data: null
+    }));
+
+    taskService.getPaged.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: pagedResponse
+    }));
+
+    facade.editTask({
+      id: 'task-1',
+      title: 'Updated task',
+      description: null,
+      statusId: 1,
+      priorityId: 3
+    });
+
+    expect(taskService.getPaged).toHaveBeenCalled();
+    expect(feedbackService.showMessage).toHaveBeenCalledWith(
+      'Edited',
+      Messages.TaskEditedSuccessfully,
+      EFeedbackType.Success
+    );
+  });
+
+  it('ShouldNotReloadTasks_WhenEditTaskResponseFails', () => {
+    taskService.editTask.mockReturnValue(of({
+      isSuccess: false,
+      message: 'Failed',
+      data: null
+    }));
+
+    facade.editTask({
+      id: 'task-1',
+      title: 'Updated task',
+      description: null,
+      statusId: 1,
+      priorityId: 3
+    });
+
+    expect(taskService.getPaged).not.toHaveBeenCalled();
+  });
+
+  it('ShouldShowError_WhenEditTaskRequestFails', () => {
+    const error = new HttpErrorResponse({
+      error: {
+        isSuccess: false,
+        message: 'Edit error',
+        data: null
+      }
+    });
+
+    taskService.editTask.mockReturnValue(throwError(() => error));
+
+    facade.editTask({
+      id: 'task-1',
+      title: 'Task',
+      description: null,
+      statusId: 1,
+      priorityId: 3
+    });
+
+    expect(feedbackService.showMessage).toHaveBeenCalledWith(
+      'Edit error',
+      Messages.TaskEditFailed,
+      EFeedbackType.Error
+    );
+  });
+
+  it('ShouldReloadTasksAndShowSuccess_WhenDeleteTaskSucceeds', () => {
+    taskService.deleteTask.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Deleted',
+      data: null
+    }));
+
+    taskService.getPaged.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: pagedResponse
+    }));
+
+    facade.deleteTask(['task-1']);
+
+    expect(taskService.deleteTask).toHaveBeenCalledWith({ taskId: ['task-1'] });
+    expect(taskService.getPaged).toHaveBeenCalled();
+    expect(feedbackService.showMessage).toHaveBeenCalledWith(
+      'Deleted',
+      Messages.TaskDeletedSuccessfully,
+      EFeedbackType.Success
+    );
+  });
+
+  it('ShouldNotReloadTasks_WhenDeleteTaskResponseFails', () => {
+    taskService.deleteTask.mockReturnValue(of({
+      isSuccess: false,
+      message: 'Failed',
+      data: null
+    }));
+
+    facade.deleteTask(['task-1']);
+
+    expect(taskService.getPaged).not.toHaveBeenCalled();
+  });
+
+  it('ShouldUpdateFiltersAndReloadTasks_WhenTaskFiltersChange', () => {
+    taskService.getPaged.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: pagedResponse
+    }));
+
+    const status = { id: 2, name: 'Em Progresso' };
+    const priority = { id: 3, name: 'Alta' };
+
+    facade.selectStatus(status);
+    facade.selectPriority(priority);
+    facade.selectStartDate('2026-09-01');
+    facade.selectEndDate('2026-09-27');
+
+    expect(state.selectedStatus()).toEqual(status);
+    expect(state.selectedPriority()).toEqual(priority);
+    expect(state.selectedStartDate()).toBe('2026-09-01');
+    expect(state.selectedEndDate()).toBe('2026-09-27');
+    expect(taskService.getPaged).toHaveBeenCalledTimes(4);
+  });
+
+  it('ShouldClearFiltersAndReloadTasks_WhenClearFiltersIsCalled', () => {
+    taskService.getPaged.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: pagedResponse
+    }));
+
+    state.setSearch('task');
+    facade.clearFilters();
+
+    expect(state.pagedParams.search).toBeNull();
+    expect(taskService.getPaged).toHaveBeenCalled();
+  });
+
+  it('ShouldSortAndReloadTasks_WhenOrderTasksIsCalled', () => {
+    taskService.getPaged.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: pagedResponse
+    }));
+
+    facade.orderTasks(ETaskSort.TaskStatus);
+
+    expect(state.pagedParams.sort).toBe(ETaskSort.TaskStatus);
+    expect(taskService.getPaged).toHaveBeenCalled();
+  });
+
+  it('ShouldChangePageAndReloadTasks_WhenPageChanges', () => {
+    taskService.getPaged.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: pagedResponse
+    }));
+
+    facade.changePage(3);
+
+    expect(state.pagedParams.pageNumber).toBe(3);
+    expect(taskService.getPaged).toHaveBeenCalled();
+  });
+
+  it('ShouldUpdateSettings_WhenTaskSettingsChange', () => {
+    facade.setPageSize(30);
+    facade.setConfirmBeforeDelete(false);
+
+    expect(state.pageSize()).toBe(30);
+    expect(state.confirmBeforeDelete()).toBe(false);
+  });
+
+  it('ShouldClearSelectedTask_WhenClearSelectedTaskIsCalled', () => {
+    state.setSelectedTask(task);
+
+    facade.clearSelectedTask();
+
+    expect(state.selectedTask()).toBeNull();
+  });
+
+  it('ShouldClearReport_WhenGetReportRequestFails', () => {
+    state.setReport({
+      totalTasks: 1,
+      status: [],
+      priority: [],
+      tasks: [task]
+    });
+
+    taskService.getReport.mockReturnValue(throwError(() => new Error('network')));
+
+    facade.getReport();
+
+    expect(state.report()).toBeNull();
+  });
+
+  it('ShouldUpdateReportDatesAndReload_WhenReportDatesChange', () => {
+    taskService.getReport.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: {
+        totalTasks: 0,
+        status: [],
+        priority: [],
+        tasks: []
+      }
+    }));
+
+    facade.selectReportStartDate('2026-09-01');
+    facade.selectReportEndDate('2026-09-27');
+
+    expect(state.reportParams.startDate).toBe('2026-09-01');
+    expect(state.reportParams.endDate).toBe('2026-09-27');
+    expect(taskService.getReport).toHaveBeenCalledTimes(2);
+  });
+
+  it('ShouldResetReportPeriodAndReload_WhenReportFiltersAreCleared', () => {
+    taskService.getReport.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: {
+        totalTasks: 0,
+        status: [],
+        priority: [],
+        tasks: []
+      }
+    }));
+
+    state.setReportPeriod(EReportPeriod.SevenDays);
+
+    facade.clearReportFilters();
+
+    expect(state.selectedReportPeriod()).toBe(EReportPeriod.ThirtyDays);
+    expect(taskService.getReport).toHaveBeenCalled();
+  });
+
+  it('ShouldInitializeDatesAndLoadReport_WhenReportInitializes', () => {
+    taskService.getReport.mockReturnValue(of({
+      isSuccess: true,
+      message: 'Success',
+      data: {
+        totalTasks: 0,
+        status: [],
+        priority: [],
+        tasks: []
+      }
+    }));
+
+    facade.initializeReport();
+
+    expect(state.reportParams.startDate).not.toBeNull();
+    expect(state.reportParams.endDate).not.toBeNull();
+    expect(taskService.getReport).toHaveBeenCalled();
+  });
+
 });
