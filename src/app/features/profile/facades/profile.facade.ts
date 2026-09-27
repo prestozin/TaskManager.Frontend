@@ -43,9 +43,9 @@ export class ProfileFacade {
                     if (!response.isSuccess)
                         return;
 
-                    this.profileState.profile.set(response.data);
+                    this.profileState.profile.set(response.data!);
                 },
-
+                
                 error: (error: HttpErrorResponse) => {
                     this.feedbackService.showMessage(getHttpErrorMessage(error), '', EFeedbackType.Error);
                 }
@@ -57,8 +57,10 @@ export class ProfileFacade {
 
         this.profileService.editProfile(request).subscribe({
             next: response => {
-                this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
+                if (!response.isSuccess)
+                    return;
 
+                this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
                 this.loadProfile();
             },
 
@@ -78,9 +80,7 @@ export class ProfileFacade {
 
                     return;
                 }
-
                 this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
-
                 this.authFacade.logout();
             },
 
@@ -98,7 +98,6 @@ export class ProfileFacade {
 
                     return;
                 }
-                
                 this.feedbackService.showMessage(response.message, '', EFeedbackType.Success);
 
                 setTimeout(() => {

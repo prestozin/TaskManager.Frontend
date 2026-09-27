@@ -138,18 +138,17 @@ export class TaskFacade {
     addTask(request: TaskCreateRequest): void {
         this.taskService.addTask(request).subscribe({
             next: response => {
+                if (!response.isSuccess)
+                    return;
+
                 this.taskState.resetAfterCreate();
                 this.getTasks();
 
-                this.feedbackService.showMessage(
-                    response.message, Messages.TaskCreatedSuccessfully, EFeedbackType.Success
-                );
+                this.feedbackService.showMessage(response.message, Messages.TaskCreatedSuccessfully, EFeedbackType.Success);
             },
 
             error: (error: HttpErrorResponse) => {
-                this.feedbackService.showMessage(
-                    getHttpErrorMessage(error), Messages.TaskCreateFailed, EFeedbackType.Error
-                );
+                this.feedbackService.showMessage(getHttpErrorMessage(error), Messages.TaskCreateFailed, EFeedbackType.Error);
             }
         });
     }
@@ -157,15 +156,16 @@ export class TaskFacade {
     editTask(request: TaskEditRequest): void {
         this.taskService.editTask(request).subscribe({
             next: response => {
+                if (!response.isSuccess)
+                    return;
+
                 this.getTasks();
 
-                this.feedbackService.showMessage(
-                    response.message, Messages.TaskEditedSuccessfully, EFeedbackType.Success);
+                this.feedbackService.showMessage(response.message, Messages.TaskEditedSuccessfully, EFeedbackType.Success);
             },
 
             error: (error: HttpErrorResponse) => {
-                this.feedbackService.showMessage(
-                    getHttpErrorMessage(error), Messages.TaskEditFailed, EFeedbackType.Error);
+                this.feedbackService.showMessage(getHttpErrorMessage(error), Messages.TaskEditFailed, EFeedbackType.Error);
             }
         });
     }
@@ -173,15 +173,16 @@ export class TaskFacade {
     deleteTask(taskIds: string[]): void {
         this.taskService.deleteTask({ taskId: taskIds }).subscribe({
             next: response => {
+                if (!response.isSuccess)
+                    return;
+
                 this.getTasks();
 
-                this.feedbackService.showMessage(
-                    response.message, Messages.TaskDeletedSuccessfully, EFeedbackType.Success);
+                this.feedbackService.showMessage(response.message, Messages.TaskDeletedSuccessfully, EFeedbackType.Success);
             },
 
             error: (error: HttpErrorResponse) => {
-                this.feedbackService.showMessage(
-                    getHttpErrorMessage(error), Messages.TaskDeleteFailed, EFeedbackType.Error);
+                this.feedbackService.showMessage(getHttpErrorMessage(error), Messages.TaskDeleteFailed, EFeedbackType.Error);
             }
         });
     }

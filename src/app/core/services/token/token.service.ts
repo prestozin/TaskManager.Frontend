@@ -1,26 +1,21 @@
-import { Injectable } from "@angular/core";
-import { LoginResponse } from "@features/auth/models/auth.models";
+import { Injectable } from '@angular/core';
 
+import { LoginResponse } from '@features/auth/models/auth.models';
 
 @Injectable({
     providedIn: 'root'
 })
-
 export class TokenService {
 
-    save(login: LoginResponse) {
-        sessionStorage.setItem("token", login.token);
+    save(login: LoginResponse): void {
+        sessionStorage.setItem('token', login.token);
     }
 
-    getAccessToken() {
-        return sessionStorage.getItem("token");
+    getAccessToken(): string | null {
+        return sessionStorage.getItem('token');
     }
 
-    getName() {
-        return sessionStorage.getItem("name");
-    }
-
-    clear() {
+    clear(): void {
         sessionStorage.clear();
     }
 }

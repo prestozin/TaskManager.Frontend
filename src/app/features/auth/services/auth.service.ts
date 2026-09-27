@@ -20,7 +20,7 @@ export class AuthService {
         return this.httpClient.post<ResultResponse<LoginResponse>>(`${this.apiUrl}/Login`, request);
     }
 
-    register(request: RegisterRequest): Observable<ResultResponse<null>> {
-        return this.httpClient.post<ResultResponse<null>>(`${this.apiUrl}/Register`, request);
+    register(request: RegisterRequest): Observable<ResultResponse<string>> {
+        return this.httpClient.post<ResultResponse<string>>(`${this.apiUrl}/Register`, request);
     }
 }
