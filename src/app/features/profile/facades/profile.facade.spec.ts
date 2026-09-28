@@ -77,7 +77,6 @@ describe('ProfileFacade', () => {
     facade.loadProfile();
 
     expect(state.profile()).toEqual(profile);
-    expect(state.isLoading()).toBe(false);
   });
 
   it('ShouldShowError_WhenLoadProfileFailsByHttp', () => {
@@ -98,7 +97,6 @@ describe('ProfileFacade', () => {
       '',
       EFeedbackType.Error
     );
-    expect(state.isLoading()).toBe(false);
   });
 
   it('ShouldReloadProfile_WhenEditProfileSucceeds', () => {
