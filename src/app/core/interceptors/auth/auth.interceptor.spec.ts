@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { TokenService } from '@core/services/token/token.service';
 
-import { authInterceptor } from '../auth.interceptor';
+import { authInterceptor } from './auth.interceptor';
 
 describe('authInterceptor', () => {
   let httpClient: HttpClient;
