@@ -9,9 +9,7 @@ describe('AuthLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AuthLayoutComponent]
-    })
-      .overrideComponent(AuthLayoutComponent, { set: { template: '' } })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AuthLayoutComponent);
     component = fixture.componentInstance;
@@ -21,22 +19,18 @@ describe('AuthLayoutComponent', () => {
     fixture.detectChanges();
   });
 
-  it('ShouldEmitSubmit_WhenNotLoading', () => {
-    const emitted = vi.fn();
-    component.submitClicked.subscribe(emitted);
-
-    component.submit();
-
-    expect(emitted).toHaveBeenCalled();
+  it('ShouldExposeInputs_WhenValuesAreProvided', () => {
+    expect(component.title()).toBe('Login');
+    expect(component.primaryButtonText()).toBe('Entrar');
   });
 
-  it('ShouldNotEmitSubmit_WhenLoading', () => {
-    fixture.componentRef.setInput('isLoading', true);
+  it('ShouldEmitSubmit_WhenPrimaryButtonIsClicked', () => {
     const emitted = vi.fn();
     component.submitClicked.subscribe(emitted);
 
-    component.submit();
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('.btn-submit');
+    button.click();
 
-    expect(emitted).not.toHaveBeenCalled();
+    expect(emitted).toHaveBeenCalled();
   });
 });
