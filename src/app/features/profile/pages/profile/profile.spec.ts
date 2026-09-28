@@ -11,7 +11,6 @@ describe('Profile', () => {
   let profileSignal: ReturnType<typeof signal<any>>;
   let profileFacade: {
     profile: ReturnType<typeof signal<any>>;
-    isLoading: ReturnType<typeof signal<boolean>>;
     editProfile: ReturnType<typeof vi.fn>;
   };
 
@@ -27,7 +26,6 @@ describe('Profile', () => {
 
     profileFacade = {
       profile: profileSignal,
-      isLoading: signal(false),
       editProfile: vi.fn()
     };
 
