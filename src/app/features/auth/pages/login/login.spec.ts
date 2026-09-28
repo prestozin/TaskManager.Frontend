@@ -9,7 +9,6 @@ describe('Login', () => {
   let component: Login;
   let fixture: ComponentFixture<Login>;
   let authFacade: {
-    isLoading: ReturnType<typeof signal<boolean>>;
     successMessage: ReturnType<typeof signal<string>>;
     errorMessage: ReturnType<typeof signal<string>>;
     clearMessages: ReturnType<typeof vi.fn>;
@@ -18,7 +17,6 @@ describe('Login', () => {
 
   beforeEach(async () => {
     authFacade = {
-      isLoading: signal(false),
       successMessage: signal(''),
       errorMessage: signal(''),
       clearMessages: vi.fn(),
