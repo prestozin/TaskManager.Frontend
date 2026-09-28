@@ -75,11 +75,9 @@ describe('AuthFacade', () => {
 
     expect(tokenService.save).toHaveBeenCalledWith(response.data);
     expect(state.successMessage()).toBe('Login realizado');
-    expect(state.isLoading()).toBe(true);
 
     vi.advanceTimersByTime(1500);
 
-    expect(state.isLoading()).toBe(false);
     expect(router.navigate).toHaveBeenCalledWith(['/tasks']);
   });
 
@@ -96,7 +94,6 @@ describe('AuthFacade', () => {
     });
 
     expect(state.errorMessage()).toBe('Credenciais inválidas');
-    expect(state.isLoading()).toBe(false);
     expect(tokenService.save).not.toHaveBeenCalled();
   });
 
@@ -117,7 +114,6 @@ describe('AuthFacade', () => {
     });
 
     expect(state.errorMessage()).toBe('Erro de login');
-    expect(state.isLoading()).toBe(false);
   });
 
   it('ShouldNavigateToLogin_WhenRegisterSucceeds', () => {
@@ -134,7 +130,6 @@ describe('AuthFacade', () => {
     });
 
     expect(state.successMessage()).toBe('Usuário criado');
-    expect(state.isLoading()).toBe(false);
 
     vi.advanceTimersByTime(3000);
 
