@@ -8,5 +8,4 @@ import { ProfileResponse } from '@features/profile/models/profile.models';
 export class ProfileState {
 
     readonly profile = signal<ProfileResponse | null>(null);
-    readonly isLoading = signal(false);
 }

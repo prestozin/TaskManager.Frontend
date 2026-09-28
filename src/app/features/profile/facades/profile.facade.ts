@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { finalize } from 'rxjs';
 
 import { FeedbackService } from '@core/services/feedback/feedback.service';
 import { AuthFacade } from '@features/auth/facades/auth.facade';
@@ -27,34 +26,22 @@ export class ProfileFacade {
         return this.profileState.profile;
     }
 
-    get isLoading() {
-        return this.profileState.isLoading;
-    }
-
     loadProfile(): void {
-        this.profileState.isLoading.set(true);
+        this.profileService.getProfile().subscribe({
+            next: response => {
+                if (!response.isSuccess)
+                    return;
 
-        this.profileService.getProfile()
-            .pipe(
-                finalize(() => this.profileState.isLoading.set(false))
-            )
-            .subscribe({
-                next: response => {
-                    if (!response.isSuccess)
-                        return;
+                this.profileState.profile.set(response.data!);
+            },
 
-                    this.profileState.profile.set(response.data!);
-                },
-                
-                error: (error: HttpErrorResponse) => {
-                    this.feedbackService.showMessage(getHttpErrorMessage(error), '', EFeedbackType.Error);
-                }
-            });
+            error: (error: HttpErrorResponse) => {
+                this.feedbackService.showMessage(getHttpErrorMessage(error), '', EFeedbackType.Error);
+            }
+        });
     }
 
     editProfile(request: EditProfileRequest): void {
-        this.profileState.isLoading.set(true);
-
         this.profileService.editProfile(request).subscribe({
             next: response => {
                 if (!response.isSuccess)
@@ -65,8 +52,6 @@ export class ProfileFacade {
             },
 
             error: (error: HttpErrorResponse) => {
-                this.profileState.isLoading.set(false);
-
                 this.feedbackService.showMessage(getHttpErrorMessage(error), '', EFeedbackType.Error);
             }
         });

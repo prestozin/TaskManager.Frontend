@@ -17,13 +17,18 @@ import { provideNzDateFnsAdapter } from 'ng-zorro-antd/core/time';
 
 import { routes } from './app.routes';
 
-import { authInterceptor } from '@core/interceptors/auth-interceptor';
+import { authInterceptor } from '@core/interceptors/auth/auth.interceptor';
+import { loadingInterceptor } from '@core/interceptors/loading/loading.interceptor';
 
 registerLocaleData(pt);
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors(
+      [ 
+        loadingInterceptor,
+        authInterceptor
+      ])),
 
     provideBrowserGlobalErrorListeners(),
 
