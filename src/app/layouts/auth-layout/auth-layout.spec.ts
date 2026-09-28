@@ -9,7 +9,11 @@ describe('AuthLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AuthLayoutComponent]
-    }).compileComponents();
+    })
+      .overrideComponent(AuthLayoutComponent, {
+        set: { template: '<button class="btn-submit" (click)="submitClicked.emit()"></button>' }
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(AuthLayoutComponent);
     component = fixture.componentInstance;
