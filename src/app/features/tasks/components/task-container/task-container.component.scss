@@ -3,26 +3,30 @@
 
 :host {
     display: block;
+
     width: 100%;
     height: 100%;
+
     --task-columns: 40px 1fr 200px 200px 200px 20px;
 }
 
 .task-page {
-    position: relative;
     width: 100%;
     height: 100%;
 }
 
 .container {
     overflow: hidden;
+
     border: 1px solid $muted-text-color;
-    border-radius: 30px;
+    border-radius: 20px;
+
     background-color: $white-color;
 }
 
 .container-header {
     padding: 20px 30px;
+
     background-color: $white-color;
 }
 
@@ -30,12 +34,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     margin-bottom: 20px;
+
     gap: 20px;
 }
 
 .header-title {
     color: $primary-blue-color;
+
     font-size: $page-title-font-size;
 }
 
@@ -43,15 +50,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     min-width: 150px;
     height: $control-height;
+
     padding: 0 18px;
+
     flex-shrink: 0;
+
     gap: 8px;
+
     border: none;
     border-radius: $large-border-radius;
+
     background-color: $secondary-blue-color;
     color: $white-color;
+
     font-size: $body-font-size;
 
     &:active {
@@ -69,46 +83,61 @@
     display: flex;
     align-items: flex-end;
     flex-wrap: wrap;
+
     gap: 16px;
 }
 
 .filter-field {
     display: flex;
     flex-direction: column;
+
     min-width: 0;
+
     gap: 2px;
 }
 
 .filter-label {
     margin-left: 10px;
+
     color: $primary-blue-color;
+
     font-size: $input-font-size;
 }
 
 .search-container {
     position: relative;
+
     display: flex;
     align-items: center;
+
     width: 270px;
     height: $control-height;
 }
 
 .icon-search {
     position: absolute;
+
     left: 13px;
+
     color: $muted-text-color;
+
     pointer-events: none;
 }
 
 .search-input {
     width: 100%;
     height: $control-height;
+
     padding: 0 14px 0 38px;
+
     border: 1px solid $muted-text-color;
     border-radius: $large-border-radius;
+
     background-color: $white-color;
     color: $primary-text-color;
+
     font-size: $body-font-size;
+
     outline: none;
 
     &::placeholder {
@@ -118,6 +147,7 @@
     &:focus,
     &:hover {
         border-color: $primary-blue-color;
+
         box-shadow: $focus-shadow;
     }
 }
@@ -143,19 +173,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     min-width: 145px;
     height: $control-height;
+
     padding: 0 14px;
+
     flex-shrink: 0;
+
     gap: 7px;
+
     border: 1px solid $muted-text-color;
     border-radius: $large-border-radius;
+
     background-color: $white-color;
     color: $primary-blue-color;
+
     font-size: $input-font-size;
 
     &:hover {
         border-color: $secondary-blue-color;
+
         background-color: $secondary-blue-color;
         color: $white-color;
     }
@@ -169,9 +207,13 @@
     display: grid;
     grid-template-columns: var(--task-columns);
     align-items: center;
+
     min-height: 58px;
+
     padding: 0 60px;
+
     border-top: 1px solid $strong-border-color;
+
     color: $primary-blue-color;
 
     .task-checkbox {
@@ -186,19 +228,26 @@
 
     .column-sortable {
         justify-self: center;
+
         padding: 0;
+
         border: none;
+
         background-color: transparent;
         color: inherit;
+
         text-align: center;
     }
 
     .icon-delete {
         justify-self: center;
+
         display: flex;
         align-items: center;
         justify-content: center;
+
         color: $error-color;
+
         font-size: 22px;
 
         &:active {
@@ -210,16 +259,21 @@
 .container-footer {
     display: flex;
     align-items: center;
+
     padding: 12px 30px;
+
     background-color: $white-color;
     color: $primary-blue-color;
+
     font-size: $small-font-size;
 }
 
 .pagination {
     display: flex;
     align-items: center;
+
     margin-left: auto;
+
     gap: 14px;
 }
 
@@ -230,15 +284,19 @@
 .btn-page {
     min-width: 24px;
     height: 24px;
+
     padding: 0 5px;
+
     border: 1px solid transparent;
     border-radius: $small-border-radius;
+
     background-color: transparent;
     color: $primary-text-color;
 
     &:hover:not(:disabled),
     &.active {
         border-color: $muted-text-color;
+
         background-color: $secondary-blue-color;
         color: $white-color;
     }
@@ -254,13 +312,18 @@
 
 .page-input {
     appearance: textfield;
+
     width: 28px;
     height: 24px;
+
     padding: 4px;
+
     border: 1px solid $muted-text-color;
     border-radius: $small-border-radius;
+
     background-color: transparent;
     color: $primary-text-color;
+
     text-align: center;
 
     &::-webkit-inner-spin-button,
@@ -269,41 +332,57 @@
     }
 }
 
-.task-details-sidebar {
+.task-details-dialog {
     position: fixed;
+
     inset: 0 0 0 auto;
+
     width: 450px;
-    height: 100vh;
-    overflow-y: auto;
+    height: 100dvh;
+    max-width: 100%;
+    max-height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    border: none;
+
     background-color: $white-color;
-    z-index: 10;
+
+    outline: none;
+
     animation: slide-in 0.25s ease;
 
-    &.closing {
-        animation: slide-out 0.25s ease forwards;
+    &::backdrop {
+        background-color: rgba(24, 44, 78, 0.18);
+
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+
+        animation: fade-in 0.2s ease;
     }
 }
 
-.sidebar-backdrop {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(24, 44, 78, 0.18);
-    z-index: 9;
-    animation: fade-in 0.2s ease;
-
-    &.closing {
-        animation: fade-out 0.25s ease forwards;
-    }
+.task-details-content {
+    width: 100%;
+    height: 100%;
 }
 
 .modal-overlay {
     position: fixed;
+
     inset: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 16px;
+
     background-color: $modal-backdrop-color;
+
     z-index: 20;
 }
 
@@ -333,11 +412,13 @@
     .container-footer {
         flex-direction: column;
         align-items: flex-start;
+
         gap: 12px;
     }
 
     .pagination {
         margin-left: 0;
+
         flex-wrap: wrap;
     }
 }
@@ -366,7 +447,7 @@
         width: 100%;
     }
 
-    .task-details-sidebar {
+    .task-details-dialog {
         width: 100%;
     }
 
@@ -390,16 +471,6 @@
     }
 }
 
-@keyframes slide-out {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(100%);
-    }
-}
-
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -407,16 +478,6 @@
 
     to {
         opacity: 1;
-    }
-}
-
-@keyframes fade-out {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
     }
 }
 

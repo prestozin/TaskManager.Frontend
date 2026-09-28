@@ -5,6 +5,7 @@
         <header class="container-header">
 
             <div class="header-top">
+
                 <h2 class="header-title">Minhas Tarefas</h2>
 
                 <button
@@ -19,7 +20,9 @@
                     </nz-icon>
 
                     <span>Nova Tarefa</span>
+
                 </button>
+
             </div>
 
             <div class="header-actions">
@@ -27,9 +30,15 @@
                 <div class="task-filters">
 
                     <div class="filter-field">
-                        <label class="filter-label" for="task-search">Pesquisar</label>
+
+                        <label
+                            class="filter-label"
+                            for="task-search">
+                            Pesquisar
+                        </label>
 
                         <div class="search-container">
+
                             <nz-icon
                                 class="icon-search"
                                 nzType="search"
@@ -43,11 +52,16 @@
                                 placeholder="Pesquisar tarefas..."
                                 [maxlength]="taskSearchMaxLength"
                                 [formControl]="searchControl">
+
                         </div>
+
                     </div>
 
                     <div class="filter-field">
-                        <label class="filter-label">Prioridade</label>
+
+                        <label class="filter-label">
+                            Prioridade
+                        </label>
 
                         <nz-select
                             class="task-select priority-select"
@@ -57,14 +71,21 @@
                             (ngModelChange)="selectPriorityById($event)">
 
                             @for (priority of priorityOptions(); track priority.id) {
-                                <nz-option [nzValue]="priority.id" [nzLabel]="priority.name"></nz-option>
+                                <nz-option
+                                    [nzValue]="priority.id"
+                                    [nzLabel]="priority.name">
+                                </nz-option>
                             }
 
                         </nz-select>
+
                     </div>
 
                     <div class="filter-field">
-                        <label class="filter-label">Status</label>
+
+                        <label class="filter-label">
+                            Status
+                        </label>
 
                         <nz-select
                             class="task-select status-select"
@@ -74,14 +95,21 @@
                             (ngModelChange)="selectStatusById($event)">
 
                             @for (status of statusOptions(); track status.id) {
-                                <nz-option [nzValue]="status.id" [nzLabel]="status.name"></nz-option>
+                                <nz-option
+                                    [nzValue]="status.id"
+                                    [nzLabel]="status.name">
+                                </nz-option>
                             }
 
                         </nz-select>
+
                     </div>
 
                     <div class="filter-field">
-                        <label class="filter-label">Data inicial</label>
+
+                        <label class="filter-label">
+                            Data inicial
+                        </label>
 
                         <nz-date-picker
                             class="task-date-picker"
@@ -91,10 +119,14 @@
                             [ngModel]="startDate()"
                             (ngModelChange)="selectStartDate($event)">
                         </nz-date-picker>
+
                     </div>
 
                     <div class="filter-field">
-                        <label class="filter-label">Data final</label>
+
+                        <label class="filter-label">
+                            Data final
+                        </label>
 
                         <nz-date-picker
                             class="task-date-picker"
@@ -104,6 +136,7 @@
                             [ngModel]="endDate()"
                             (ngModelChange)="selectEndDate($event)">
                         </nz-date-picker>
+
                     </div>
 
                     <button
@@ -118,6 +151,7 @@
                         </nz-icon>
 
                         <span>Limpar filtros</span>
+
                     </button>
 
                 </div>
@@ -135,7 +169,9 @@
                 (nzCheckedChange)="toggleAllVisibleTasks()">
             </label>
 
-            <p class="column-title">Tarefas</p>
+            <p class="column-title">
+                Tarefas
+            </p>
 
             <button
                 class="column-title column-sortable"
@@ -168,6 +204,7 @@
                     nzType="delete"
                     nzTheme="outline">
                 </nz-icon>
+
             </button>
 
         </div>
@@ -175,35 +212,43 @@
         <div class="tasks-wrapper">
 
             @for (taskRow of taskRows(); track taskRow.task.id) {
+
                 <app-task
                     [task]="taskRow.task"
                     [checked]="taskRow.checked"
                     (checkedChange)="toggleCheckedTask($event)"
                     (optionsClicked)="openTaskOptions(taskRow.task.id, $event)"
-                    (taskClicked)="openTaskDetailsById($event)">
+                    (taskClicked)="openTaskDetailsById($event); taskDetailsDialog.showModal()">
                 </app-task>
+
             }
 
         </div>
 
         @if (taskOptionsPosition(); as position) {
+
             <app-task-options
                 [position]="position"
                 (deleteTaskClicked)="openDeleteConfirmation()"
                 (editTaskClicked)="openEditTaskForm()"
-                (viewTaskClicked)="openTaskDetails()">
+                (viewTaskClicked)="openTaskDetails(); taskDetailsDialog.showModal()">
             </app-task-options>
+
         }
 
     </div>
 
     <footer class="container-footer">
+
         <p class="footer-text">
             Mostrando {{ displayedTaskCount() }} de {{ totalTaskCount() }} tarefas
         </p>
 
         <div class="pagination">
-            <span class="pagination-label">Páginas:</span>
+
+            <span class="pagination-label">
+                Páginas:
+            </span>
 
             <button
                 class="btn-page"
@@ -222,6 +267,7 @@
             </button>
 
             @for (pageButton of visiblePageButtons(); track pageButton.page) {
+
                 <button
                     class="btn-page"
                     type="button"
@@ -229,6 +275,7 @@
                     (click)="changePage(pageButton.page)">
                     {{ pageButton.page }}
                 </button>
+
             }
 
             <input
@@ -257,25 +304,38 @@
                 (click)="goToLastPage()">
                 &gt;&gt;
             </button>
+
         </div>
+
     </footer>
 
-    @if (taskDetails(); as task) {
-        <div class="sidebar-backdrop" (click)="closeModal()"></div>
+    <dialog
+        #taskDetailsDialog
+        class="task-details-dialog"
+        (click)="taskDetailsDialog.close(); closeTaskDetails()"
+        (cancel)="closeTaskDetails()">
 
-        <aside class="task-details-sidebar" [class.closing]="isClosingTaskDetails()">
+        <div
+            class="task-details-content"
+            (click)="$event.stopPropagation()">
 
-            <app-task-view
-                [task]="task"
-                (closeClicked)="closeTaskDetails()"
-                (deleteTaskClicked)="openDeleteConfirmation()"
-                (editTaskClicked)="openEditTaskForm()">
-            </app-task-view>
+            @if (taskDetails(); as task) {
 
-        </aside>
-    }
+                <app-task-view
+                    [task]="task"
+                    (closeClicked)="taskDetailsDialog.close(); closeTaskDetails()"
+                    (deleteTaskClicked)="taskDetailsDialog.close(); openDeleteConfirmation()"
+                    (editTaskClicked)="taskDetailsDialog.close(); openEditTaskForm()">
+                </app-task-view>
+
+            }
+
+        </div>
+
+    </dialog>
 
     @if (showDeleteConfirmation()) {
+
         <app-confirmation-modal
             [title]="deleteConfirmationTitle()"
             [description]="deleteConfirmationDescription"
@@ -283,12 +343,19 @@
             (confirm)="confirmDelete()"
             (cancel)="closeModal()">
         </app-confirmation-modal>
+
     }
 
     @if (showTaskForm()) {
-        <div class="modal-overlay" (click)="closeModal()">
 
-            <div class="modal-content" (click)="$event.stopPropagation()">
+        <div
+            class="modal-overlay"
+            (click)="closeModal()">
+
+            <div
+                class="modal-content"
+                (click)="$event.stopPropagation()">
+
                 <app-task-form
                     [mode]="taskFormMode()"
                     [task]="taskFormTask()"
@@ -297,9 +364,11 @@
                     (submitClicked)="saveTask($event)"
                     (cancelClicked)="closeModal()">
                 </app-task-form>
+
             </div>
 
         </div>
+
     }
 
 </div>

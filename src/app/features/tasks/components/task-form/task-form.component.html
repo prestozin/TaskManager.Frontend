@@ -4,7 +4,7 @@
         <img
             class="img-icon"
             src="icons/new-task-icon.svg"
-            alt="">
+            alt="Ícone de tarefa">
 
         <div class="header-texts">
             <p class="header-title">{{ formTitle() }}</p>
@@ -39,7 +39,10 @@
                     (ngModelChange)="selectPriorityById($event)">
 
                     @for (priority of priorityOptions(); track priority.id) {
-                        <nz-option [nzValue]="priority.id" [nzLabel]="priority.name"></nz-option>
+                        <nz-option
+                            [nzValue]="priority.id"
+                            [nzLabel]="priority.name">
+                        </nz-option>
                     }
 
                 </nz-select>
@@ -56,7 +59,10 @@
                     (ngModelChange)="selectStatusById($event)">
 
                     @for (status of statusOptions(); track status.id) {
-                        <nz-option [nzValue]="status.id" [nzLabel]="status.name"></nz-option>
+                        <nz-option
+                            [nzValue]="status.id"
+                            [nzLabel]="status.name">
+                        </nz-option>
                     }
 
                 </nz-select>
