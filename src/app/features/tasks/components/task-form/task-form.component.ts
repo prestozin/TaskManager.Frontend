@@ -37,7 +37,6 @@ export class TaskFormComponent implements OnInit {
 
   readonly mode = input<ETaskFormMode>(ETaskFormMode.Create);
   readonly task = input<TaskResponse | null>(null);
-  readonly isLoading = input(false);
 
   readonly cancelClicked = output<void>();
   readonly submitClicked = output<TaskCreateRequest | TaskEditRequest>();
