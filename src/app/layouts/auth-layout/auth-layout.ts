@@ -16,14 +16,6 @@ export class AuthLayoutComponent {
 
   readonly title = input.required<string>();
   readonly primaryButtonText = input.required<string>();
-  readonly isLoading = input(false);
 
   readonly submitClicked = output<void>();
-
-  submit(): void {
-    if (this.isLoading())
-      return;
-
-    this.submitClicked.emit();
-  }
 }

@@ -36,7 +36,6 @@ export class Profile {
   private readonly profileFacade = inject(ProfileFacade);
 
   readonly profile = this.profileFacade.profile;
-  readonly isLoading = this.profileFacade.isLoading;
 
   readonly nameMaxLength = NAME_MAX_LENGTH;
   readonly roleMaxLength = PROFILE_ROLE_MAX_LENGTH;

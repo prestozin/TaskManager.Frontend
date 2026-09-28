@@ -16,8 +16,7 @@
                     nz-button
                     nzType="primary"
                     type="button"
-                    [nzLoading]="isLoading()"
-                    (click)="submit()">
+                    (click)="submitClicked.emit()">
                     {{ primaryButtonText() }}
                 </button>
 

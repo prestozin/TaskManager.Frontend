@@ -23,7 +23,6 @@ export class Login implements OnInit {
 
   private readonly authFacade = inject(AuthFacade);
 
-  readonly isLoading = this.authFacade.isLoading;
   readonly successMessage = this.authFacade.successMessage;
   readonly errorMessage = this.authFacade.errorMessage;
 
