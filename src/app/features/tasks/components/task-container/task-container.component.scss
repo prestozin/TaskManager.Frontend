@@ -425,7 +425,7 @@
 
 @media (max-width: 650px) {
     :host {
-        --task-columns: 30px minmax(0, 1fr) 78px 88px 28px;
+        --task-columns: 30px minmax(0, 1fr) 90px 78px 88px 28px;
         --task-row-padding: 6px 8px;
         --task-title-size: #{$small-font-size};
         --task-description-size: #{$caption-font-size};
@@ -474,9 +474,6 @@
             font-size: $caption-font-size;
         }
 
-        > :nth-child(3) {
-            display: none;
-        }
     }
 
     .tasks-wrapper {
@@ -541,6 +538,18 @@
 
     .task-date-picker {
         width: 170px;
+    }
+}
+
+@media (max-width: 520px) {
+    :host {
+        --task-columns: 30px minmax(0, 1fr) 78px 88px 28px;
+    }
+
+    .task-list-header {
+        > :nth-child(3) {
+            display: none;
+        }
     }
 }
 
