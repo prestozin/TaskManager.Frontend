@@ -393,6 +393,17 @@
 }
 
 @media (max-width: 1400px) {
+    .summary-title {
+        min-height: 44px;
+
+        line-height: 1.25;
+        text-align: center;
+    }
+
+    .summary-item strong {
+        margin-top: 6px;
+    }
+
     .chart-content {
         grid-template-columns: 170px minmax(0, 1fr);
 
