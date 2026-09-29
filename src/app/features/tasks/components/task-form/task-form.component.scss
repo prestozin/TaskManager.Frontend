@@ -275,37 +275,3 @@
     }
 }
 
-@media (max-width: 420px) {
-    .container {
-        width: calc(100vw - 16px);
-        padding: 18px 14px;
-    }
-
-    .container-header {
-        gap: 10px;
-
-        .img-icon {
-            width: 44px;
-            height: 44px;
-        }
-
-        .header-texts {
-            .header-title {
-                font-size: $section-title-font-size;
-            }
-
-            .header-subtitle {
-                font-size: $body-font-size;
-            }
-        }
-    }
-
-    .container-footer {
-        flex-direction: column;
-
-        .btn-cancel,
-        .btn-submit {
-            width: 100%;
-        }
-    }
-}
