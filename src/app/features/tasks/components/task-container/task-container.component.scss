@@ -398,8 +398,17 @@
 }
 
 @media (max-width: 900px) {
+    :host {
+        --task-columns: 34px minmax(160px, 1fr) 105px 100px 105px 24px;
+        --task-row-padding: 6px 16px;
+    }
+
     .container-header {
         padding: 20px;
+    }
+
+    .task-list-header {
+        padding: 0 16px;
     }
 
     .search-container,
@@ -457,7 +466,26 @@
     }
 
     .task-details-dialog {
-        width: 100%;
+        top: 50%;
+        left: 50%;
+
+        inset: auto;
+
+        width: min(420px, calc(100vw - 40px));
+        height: auto;
+        max-height: calc(100dvh - 40px);
+
+        overflow-y: auto;
+
+        border-radius: 16px;
+
+        transform: translate(-50%, -50%);
+
+        animation: none;
+    }
+
+    .task-details-content {
+        height: auto;
     }
 
     .container {
