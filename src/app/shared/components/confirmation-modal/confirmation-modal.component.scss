@@ -83,3 +83,24 @@
         }
     }
 }
+
+@media (max-width: 380px) {
+    .overlay {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 18px 14px;
+        gap: 24px;
+    }
+
+    .texts {
+        .modal-title {
+            font-size: $section-title-font-size;
+        }
+
+        .modal-description {
+            font-size: $small-font-size;
+        }
+    }
+}
