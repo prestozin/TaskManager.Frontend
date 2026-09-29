@@ -482,3 +482,56 @@ main {
         padding: 15px 10px;
     }
 }
+
+@media (max-width: 420px) {
+    .sidebar {
+        padding: 12px;
+
+        .sidebar-header {
+            gap: 10px;
+
+            h2 {
+                font-size: 21px;
+            }
+
+            .logo-img {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        .sidebar-menu {
+            margin-top: 12px;
+            gap: 6px;
+        }
+
+        .sidebar-link {
+            height: 42px;
+            padding: 0 9px;
+            gap: 8px;
+
+            .icon-menu {
+                width: 20px;
+                height: 20px;
+                font-size: 20px;
+            }
+
+            p {
+                font-size: $small-font-size;
+            }
+        }
+    }
+
+    .header-content {
+        height: 64px;
+        padding: 0 12px;
+    }
+
+    .user-dropdown {
+        width: min(200px, calc(100vw - 24px));
+    }
+
+    .body-content {
+        padding: 12px 8px;
+    }
+}
