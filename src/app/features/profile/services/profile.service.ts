@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { environment } from '@env/environment.development';
+import { environment } from '@env/environment';
 import {
     ChangePasswordRequest,
     EditProfileRequest,

@@ -2,7 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { environment } from '@env/environment.development';
+import { environment } from '@env/environment';
 import { ReportParams } from '@features/report/models/report.models';
 import { ESortOrder, ETaskSort } from '@features/tasks/enums/task.enum';
 

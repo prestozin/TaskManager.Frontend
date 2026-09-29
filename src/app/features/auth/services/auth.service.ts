@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { environment } from '@env/environment.development';
+import { environment } from '@env/environment';
 import { ResultResponse } from '@shared/models/response.models';
 
 import { LoginRequest, LoginResponse, RegisterRequest } from '../models/auth.models';

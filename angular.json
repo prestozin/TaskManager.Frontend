@@ -22,7 +22,9 @@
           "builder": "@angular/build:application",
           "options": {
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": [
+                "src/styles"
+              ]
             },
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
@@ -38,10 +40,19 @@
                 "output": "/assets/"
               }
             ],
-            "styles": ["src/theme.less", "src/styles.scss"]
+            "styles": [
+              "src/theme.less",
+              "src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.production.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -56,7 +67,24 @@
               ],
               "outputHashing": "all"
             },
+            "remote": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.production.ts"
+                }
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
             "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -72,6 +100,9 @@
             },
             "development": {
               "buildTarget": "task-manager-frontend:build:development"
+            },
+            "remote": {
+              "buildTarget": "task-manager-frontend:build:remote"
             }
           },
           "defaultConfiguration": "development"
