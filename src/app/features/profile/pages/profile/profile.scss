@@ -200,8 +200,9 @@
     background-color: $disabled-field-background-color;
     color: $muted-text-color;
     font-size: $input-font-size;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .field-helper {
@@ -243,6 +244,41 @@
     }
 }
 
+@media (max-width: 1450px) {
+    .profile-page {
+        padding: 0 20px 20px;
+    }
+
+    .profile-content {
+        grid-template-columns: 300px minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .account-info {
+        padding: 28px;
+    }
+
+    .account-info-data {
+        column-gap: 20px;
+    }
+
+    .btn-save-profile {
+        min-width: 150px;
+        height: 40px;
+        padding: 0 18px;
+    }
+}
+
+@media (max-width: 950px) {
+    .profile-content {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-user {
+        padding: 30px;
+    }
+}
+
 @media (max-width: 1000px) {
     .profile-page {
         padding: 0 20px 20px;
@@ -254,16 +290,6 @@
     }
 
     .account-info {
-        padding: 30px;
-    }
-}
-
-@media (max-width: 800px) {
-    .profile-content {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-user {
         padding: 30px;
     }
 }
