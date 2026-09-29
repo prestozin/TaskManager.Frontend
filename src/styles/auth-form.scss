@@ -67,13 +67,22 @@
 
     @media (max-width: 520px) {
         form {
+            width: 100%;
+            max-width: 380px;
+
             --input-width: 100%;
             --input-padding: 0 24px;
             --error-message-margin: 3px 0 0 24px;
+
+            app-input-forms {
+                display: block;
+                width: 100%;
+            }
         }
 
         .form-message {
             width: 100%;
+            max-width: 380px;
         }
 
         .auth-footer {

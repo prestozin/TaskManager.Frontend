@@ -206,45 +206,34 @@
 
 @media (max-width: 900px) {
     .auth-page {
-        align-items: flex-start;
+        align-items: center;
+        min-height: 100dvh;
+        padding: 20px;
     }
 
     .auth-content {
-        flex-direction: column;
-        max-width: 720px;
+        display: block;
+        max-width: 620px;
         height: auto;
-    }
-
-    .brand-section,
-    .form-section {
-        width: 100%;
-        height: auto;
+        min-height: 0;
+        overflow: visible;
+        scale: 1;
     }
 
     .brand-section {
-        min-height: 280px;
-    }
-
-    .brand-features .brand-title {
-        top: 45px;
-        left: 50%;
-        transform: translateX(-50%);
-        white-space: nowrap;
-    }
-
-    .feature-list {
-        top: 115px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: max-content;
-    }
-
-    .brand-logo {
         display: none;
     }
 
     .form-section {
+        width: 100%;
+        height: auto;
+        min-height: calc(100dvh - 40px);
         padding: 45px 20px;
+    }
+
+    .form-card {
+        width: 100%;
+        max-width: 540px;
     }
 }
 
@@ -255,44 +244,22 @@
     }
 
     .auth-content {
+        width: 100%;
+        max-width: none;
+        min-height: 100dvh;
         border-radius: 0;
         box-shadow: none;
     }
 
-    .brand-section {
-        min-height: 220px;
-    }
-
-    .brand-features .brand-title {
-        top: 35px;
-        font-size: 30px;
-    }
-
-    .feature-list {
-        top: 95px;
-        gap: 10px;
-    }
-
-    .feature {
-        gap: 10px;
-
-        .feature-icon {
-            width: 24px;
-            height: 24px;
-        }
-
-        p {
-            font-size: $body-font-size;
-        }
-    }
-
     .form-section {
-        padding: 30px 20px;
+        min-height: 100dvh;
+        padding: 24px 18px;
     }
 
     .form-card {
         width: 100%;
-        padding: 45px 20px;
+        max-width: 430px;
+        padding: 42px 20px;
         border: none;
         box-shadow: none;
 
@@ -300,5 +267,41 @@
             font-size: 32px;
             text-align: center;
         }
+    }
+}
+
+@media (min-width: 901px) and (max-height: 860px) {
+    .auth-content {
+        height: calc(100vh - 40px);
+        max-height: 800px;
+        scale: 1;
+    }
+
+    .form-card {
+        padding: 50px 60px;
+    }
+
+    .brand-features .brand-title {
+        top: 22%;
+    }
+
+    .feature-list {
+        top: 36%;
+    }
+
+    .brand-logo {
+        right: 60px;
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 420px) {
+    .form-section {
+        padding: 20px 14px;
+    }
+
+    .form-card {
+        padding: 34px 14px;
     }
 }

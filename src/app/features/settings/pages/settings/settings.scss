@@ -411,3 +411,36 @@ nz-switch,
         @include zorro.page-size-select;
     }
 }
+
+@media (max-width: 480px) {
+    .settings-page {
+        padding: 0 6px;
+    }
+
+    .settings-card {
+        padding: 14px 12px;
+    }
+
+    .card-header {
+        align-items: flex-start;
+    }
+
+    .option-content {
+        gap: 10px;
+    }
+
+    .option-text {
+        h4 {
+            font-size: $body-font-size;
+        }
+
+        p {
+            font-size: $small-font-size;
+        }
+    }
+
+    .change-password-content,
+    .delete-account-content {
+        padding: 12px 0 2px;
+    }
+}

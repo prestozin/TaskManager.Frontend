@@ -398,8 +398,17 @@
 }
 
 @media (max-width: 900px) {
+    :host {
+        --task-columns: 34px minmax(160px, 1fr) 105px 100px 105px 24px;
+        --task-row-padding: 6px 16px;
+    }
+
     .container-header {
         padding: 20px;
+    }
+
+    .task-list-header {
+        padding: 0 16px;
     }
 
     .search-container,
@@ -424,6 +433,15 @@
 }
 
 @media (max-width: 650px) {
+    :host {
+        --task-columns: 30px minmax(0, 1fr) 90px 78px 88px 28px;
+        --task-row-padding: 6px 8px;
+        --task-title-size: #{$small-font-size};
+        --task-description-size: #{$caption-font-size};
+        --task-details-size: #{$caption-font-size};
+        --task-badge-size: 12px;
+    }
+
     .header-top {
         align-items: stretch;
         flex-direction: column;
@@ -448,16 +466,46 @@
     }
 
     .task-details-dialog {
-        width: 100%;
+        inset: auto;
+
+        top: 50%;
+        left: 50%;
+
+        width: min(420px, calc(100vw - 40px));
+        height: auto;
+        max-height: calc(100dvh - 40px);
+
+        overflow-y: auto;
+
+        border-radius: 16px;
+
+        transform: translate(-50%, -50%);
+
+        animation: none;
+    }
+
+    .task-details-content {
+        height: auto;
     }
 
     .container {
-        overflow-x: auto;
+        overflow: hidden;
     }
 
-    .task-list-header,
+    .task-list-header {
+        grid-template-columns: var(--task-columns);
+
+        padding: 0 8px;
+
+        .column-title,
+        .column-sortable {
+            font-size: $caption-font-size;
+        }
+
+    }
+
     .tasks-wrapper {
-        min-width: 800px;
+        min-width: 0;
     }
 }
 
@@ -492,5 +540,77 @@
 
     .task-checkbox {
         @include zorro.task-checkbox;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+    .container-header {
+        padding: 20px 24px;
+    }
+
+    .task-filters {
+        gap: 12px;
+    }
+
+    .search-container {
+        width: 240px;
+    }
+
+    .priority-select {
+        width: 200px;
+    }
+
+    .status-select {
+        width: 180px;
+    }
+
+    .task-date-picker {
+        width: 170px;
+    }
+}
+
+@media (max-width: 520px) {
+    :host {
+        --task-columns: 30px minmax(0, 1fr) 78px 88px 28px;
+    }
+
+    .task-list-header {
+        > :nth-child(3) {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        border-radius: 14px;
+    }
+
+    .container-header {
+        padding: 16px 14px;
+    }
+
+    .header-top {
+        margin-bottom: 16px;
+
+        gap: 14px;
+    }
+
+    .task-filters {
+        gap: 12px;
+    }
+
+    .filter-label {
+        margin-left: 6px;
+
+        font-size: $small-font-size;
+    }
+
+    .container-footer {
+        padding: 12px 14px;
+    }
+
+    .pagination {
+        gap: 8px;
     }
 }

@@ -70,16 +70,47 @@
 }
 
 @media (max-width: 480px) {
+    .overlay {
+        padding: 20px;
+    }
+
     .container {
-        padding: 22px 18px;
-        gap: 28px;
+        width: min(340px, calc(100vw - 40px));
+        min-height: 0;
+
+        padding: 20px 18px;
+
+        gap: 24px;
+    }
+
+    .texts {
+        .modal-title {
+            font-size: $section-title-font-size;
+        }
+
+        .modal-description {
+            font-size: $small-font-size;
+        }
     }
 
     .buttons {
-        flex-direction: column;
+        gap: 10px;
 
         .btn {
-            width: 100%;
+            width: auto;
+            min-width: 110px;
+
+            flex: 1;
+
+            font-size: $body-font-size;
         }
+    }
+}
+
+@media (max-width: 340px) {
+    .container {
+        width: calc(100vw - 28px);
+
+        padding: 18px 14px;
     }
 }

@@ -147,8 +147,11 @@
 
     .btn-cancel,
     .btn-submit {
-        width: 145px;
+        width: auto;
+        min-width: 145px;
         height: 42px;
+
+        padding: 0 18px;
 
         border: 1px solid $primary-blue-color;
         border-radius: $large-border-radius;
@@ -173,28 +176,73 @@
 
 @media (max-width: 650px) {
     .container {
-        width: calc(100vw - 24px);
+        width: min(420px, calc(100vw - 40px));
+        max-height: calc(100dvh - 48px);
 
-        padding: 22px 18px;
+        padding: 18px;
 
-        gap: 22px;
+        gap: 16px;
+
+        overflow-y: auto;
     }
 
     .container-header {
+        gap: 10px;
+
         .img-icon {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
+        }
+
+        .header-texts {
+            .header-title {
+                font-size: $section-title-font-size;
+            }
+
+            .header-subtitle {
+                font-size: $body-font-size;
+            }
         }
     }
 
     .container-content {
-        gap: 16px;
+        gap: 14px;
+
+        .content-box {
+            gap: 6px;
+
+            .task-title {
+                margin-left: 10px;
+                font-size: $large-text-font-size;
+            }
+        }
 
         .dropdown-container {
-            flex-direction: column;
+            flex-direction: row;
 
-            gap: 16px;
+            gap: 10px;
+
+            .select-field {
+                gap: 6px;
+
+                .task-title {
+                    margin-left: 10px;
+                    font-size: $large-text-font-size;
+                }
+            }
         }
+    }
+
+    .form-title {
+        --input-height: 46px;
+    }
+
+    .form-description {
+        --input-height: 96px;
+    }
+
+    .task-select {
+        height: 46px;
     }
 
     .container-footer {
@@ -203,12 +251,21 @@
         .btn-cancel,
         .btn-submit {
             flex: 1;
-            width: auto;
+            min-width: 0;
+            height: 40px;
         }
     }
+}
 
-    .form-description {
-        --input-height: 120px;
+@media (max-width: 360px) {
+    .container {
+        width: calc(100vw - 28px);
+
+        padding: 16px 14px;
+    }
+
+    .container-content .dropdown-container {
+        gap: 8px;
     }
 }
 
@@ -217,3 +274,4 @@
         @include zorro.task-form-select;
     }
 }
+

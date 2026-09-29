@@ -392,6 +392,43 @@
     }
 }
 
+@media (max-width: 1400px) {
+    .summary-title {
+        min-height: 44px;
+
+        line-height: 1.25;
+        text-align: center;
+    }
+
+    .summary-item strong {
+        margin-top: 6px;
+    }
+
+    .chart-content {
+        grid-template-columns: 170px minmax(0, 1fr);
+
+        gap: 16px;
+    }
+
+    .legend-item {
+        grid-template-columns: minmax(0, 1fr) 40px 55px;
+
+        gap: 6px;
+    }
+}
+
+@media (max-width: 1150px) {
+    .charts {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-content {
+        grid-template-columns: 200px minmax(0, 1fr);
+
+        gap: 24px;
+    }
+}
+
 @media (max-width: 1050px) {
     .report-page {
         padding: 0 20px 20px;
@@ -477,5 +514,45 @@
 
     .report-date {
         @include zorro.report-date-picker;
+    }
+}
+
+@media (max-width: 480px) {
+    .report-header {
+        margin-bottom: 16px;
+        gap: 14px;
+    }
+
+    .summary-card,
+    .chart-card {
+        padding: 16px 14px;
+    }
+
+    .summary-list {
+        row-gap: 14px;
+    }
+
+    .summary-title {
+        gap: 7px;
+        font-size: $small-font-size;
+    }
+
+    .chart-content {
+        min-height: auto;
+    }
+
+    .donut-chart {
+        width: 140px;
+        height: 140px;
+    }
+
+    .legend-item {
+        grid-template-columns: minmax(0, 1fr) 40px 52px;
+        gap: 6px;
+        font-size: $small-font-size;
+    }
+
+    .task-list-header {
+        padding: 14px;
     }
 }
