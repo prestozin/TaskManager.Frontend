@@ -122,10 +122,6 @@
 
 @media (max-width: 650px) {
     .task {
-        .date {
-            display: none;
-        }
-
         .priority,
         .status {
             min-width: 0;
@@ -140,5 +136,11 @@
 
             padding: 5px;
         }
+    }
+}
+
+@media (max-width: 520px) {
+    .task .date {
+        display: none;
     }
 }
