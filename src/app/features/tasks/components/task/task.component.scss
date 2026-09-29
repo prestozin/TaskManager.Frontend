@@ -119,3 +119,26 @@
         @include zorro.task-checkbox;
     }
 }
+
+@media (max-width: 650px) {
+    .task {
+        .date {
+            display: none;
+        }
+
+        .priority,
+        .status {
+            min-width: 0;
+            min-height: 32px;
+
+            padding: 4px 6px;
+        }
+
+        .btn-options {
+            width: 28px;
+            height: 28px;
+
+            padding: 5px;
+        }
+    }
+}
