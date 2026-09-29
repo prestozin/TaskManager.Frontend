@@ -302,3 +302,52 @@
         }
     }
 }
+
+@media (min-width: 901px) and (max-height: 860px) {
+    .auth-content {
+        height: calc(100vh - 40px);
+        max-height: 800px;
+        scale: 1;
+    }
+
+    .form-card {
+        padding: 50px 60px;
+    }
+
+    .brand-features .brand-title {
+        top: 22%;
+    }
+
+    .feature-list {
+        top: 36%;
+    }
+
+    .brand-logo {
+        right: 60px;
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 420px) {
+    .brand-section {
+        min-height: 200px;
+    }
+
+    .brand-features .brand-title {
+        top: 30px;
+        font-size: 28px;
+    }
+
+    .feature-list {
+        top: 82px;
+    }
+
+    .form-section {
+        padding: 24px 14px;
+    }
+
+    .form-card {
+        padding: 36px 14px;
+    }
+}
