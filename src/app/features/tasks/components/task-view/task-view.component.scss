@@ -151,3 +151,14 @@
         }
     }
 }
+
+@media (max-width: 380px) {
+    .container {
+        padding: 20px 16px;
+
+        .task-infos {
+            margin-top: 32px;
+            gap: 20px;
+        }
+    }
+}
