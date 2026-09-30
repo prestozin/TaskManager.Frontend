@@ -1,47 +1,24 @@
-import {
-    Component,
-    computed,
-    DestroyRef,
-    HostListener,
-    inject,
-    OnInit
-} from '@angular/core';
-
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DOCUMENT } from '@angular/common';
+import { Component, computed, DestroyRef, HostListener, inject, OnInit, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
 
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzDatePickerComponent, NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
-import {
-    TASK_DETAILS_CLOSE_DELAY_MS,
-    TASK_SEARCH_MAX_LENGTH
-} from '@shared/constants/constants';
-
+import { TASK_DETAILS_CLOSE_DELAY_MS, TASK_SEARCH_MAX_LENGTH } from '@shared/constants/constants';
 import { Messages } from '@shared/constants/messages';
 import { SelectableOption } from '@shared/models/selectables.models';
-import {
-    formatDateToApi,
-    parseApiDate
-} from '@shared/utils/date.util';
+import { formatDateToApi, parseApiDate } from '@shared/utils/date.util';
 
-import {
-    ETaskFilter,
-    ETaskFormMode,
-    ETaskModal,
-    ETaskSort
-} from '../../enums/task.enum';
-
+import { ETaskFilter, ETaskFormMode, ETaskModal, ETaskSort } from '../../enums/task.enum';
 import { TaskFacade } from '../../facades/task.facade';
-import {
-    TaskCreateRequest,
-    TaskEditRequest
-} from '../../models/task.models';
-
+import { TaskCreateRequest, TaskEditRequest } from '../../models/task.models';
 import { TaskState } from '../../states/task.state';
 
 import { TaskComponent } from '../task/task.component';
@@ -49,8 +26,10 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 import { TaskOptionsComponent } from '../task-options/task-options.component';
 import { TaskViewComponent } from '../task-view/task-view.component';
 
-const TASK_OPTIONS_HEIGHT = 60;
-const TASK_OPTIONS_RIGHT_OFFSET = 15;
+const TASK_OPTIONS_HEIGHT = 140;
+const TASK_OPTIONS_VERTICAL_OFFSET = 12;
+const TASK_OPTIONS_HORIZONTAL_OFFSET = 8;
+const TASK_OPTIONS_VIEWPORT_MARGIN = 16;
 
 @Component({
     selector: 'app-task-container',
@@ -75,6 +54,7 @@ export class TaskContainerComponent implements OnInit {
     private readonly taskFacade = inject(TaskFacade);
     private readonly taskState = inject(TaskState);
     private readonly destroyRef = inject(DestroyRef);
+    private readonly document = inject(DOCUMENT);
 
     readonly tasks = this.taskFacade.tasks;
     readonly pagedResponse = this.taskFacade.pagedResponse;
@@ -96,6 +76,14 @@ export class TaskContainerComponent implements OnInit {
     readonly taskOptionsPosition = this.taskState.taskOptionsPosition;
     readonly activeModal = this.taskState.activeModal;
     readonly isClosingTaskDetails = this.taskState.isClosingTaskDetails;
+
+    readonly startDatePicker = viewChild<NzDatePickerComponent>('startDatePicker');
+    readonly endDatePicker = viewChild<NzDatePickerComponent>('endDatePicker');
+
+    readonly prioritySelectOpen = signal(false);
+    readonly statusSelectOpen = signal(false);
+    readonly startDatePickerOpen = signal(false);
+    readonly endDatePickerOpen = signal(false);
 
     readonly searchControl = new FormControl('', { nonNullable: true });
     readonly pageInput = new FormControl<number | null>(null);
@@ -164,8 +152,7 @@ export class TaskContainerComponent implements OnInit {
     );
 
     readonly isLastPage = computed(() =>
-        this.totalPages() === 0 ||
-        this.currentPage() === this.totalPages()
+        this.totalPages() === 0 || this.currentPage() === this.totalPages()
     );
 
     readonly visiblePageButtons = computed(() => {
@@ -192,45 +179,32 @@ export class TaskContainerComponent implements OnInit {
     });
 
     readonly areVisibleTasksChecked = computed(() =>
-        this.tasks().length > 0 &&
-        this.tasks().every(task => this.checkedTaskIds().has(task.id))
+        this.tasks().length > 0 && this.tasks().every(task => this.checkedTaskIds().has(task.id))
     );
 
     readonly taskFormMode = computed(() =>
-        this.activeModal() === ETaskModal.Edit
-            ? ETaskFormMode.Edit
-            : ETaskFormMode.Create
+        this.activeModal() === ETaskModal.Edit ? ETaskFormMode.Edit : ETaskFormMode.Create
     );
 
     readonly taskFormTask = computed(() =>
-        this.activeModal() === ETaskModal.Edit
-            ? this.selectedTask()
-            : null
+        this.activeModal() === ETaskModal.Edit ? this.selectedTask() : null
     );
 
     readonly showTaskForm = computed(() =>
         this.activeModal() === ETaskModal.Create ||
-        (
-            this.activeModal() === ETaskModal.Edit &&
-            this.selectedTask() !== null
-        )
+        (this.activeModal() === ETaskModal.Edit && this.selectedTask() !== null)
     );
 
     readonly taskDetails = computed(() =>
-        this.activeModal() === ETaskModal.View
-            ? this.selectedTask()
-            : null
+        this.activeModal() === ETaskModal.View ? this.selectedTask() : null
     );
 
     readonly showDeleteConfirmation = computed(() =>
-        this.activeModal() === ETaskModal.Delete ||
-        this.activeModal() === ETaskModal.DeleteChecked
+        this.activeModal() === ETaskModal.Delete || this.activeModal() === ETaskModal.DeleteChecked
     );
 
     readonly deleteConfirmationTitle = computed(() =>
-        this.activeModal() === ETaskModal.DeleteChecked
-            ? Messages.DeleteTasksTitle
-            : Messages.DeleteTaskTitle
+        this.activeModal() === ETaskModal.DeleteChecked ? Messages.DeleteTasksTitle : Messages.DeleteTaskTitle
     );
 
     readonly deleteConfirmationDescription = Messages.IrreversibleAction;
@@ -251,13 +225,20 @@ export class TaskContainerComponent implements OnInit {
             .subscribe(search => {
                 this.taskFacade.searchTasks(search);
             });
+
+        fromEvent(this.document, 'scroll', { capture: true })
+            .pipe(
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => {
+                this.closeTaskOptions();
+                this.closeFilterOverlays();
+            });
     }
 
     selectPriorityById(id: number | null): void {
         const selectedId = id ?? ETaskFilter.All;
-
-        const priority = this.priorityOptions()
-            .find(option => option.id === selectedId);
+        const priority = this.priorityOptions().find(option => option.id === selectedId);
 
         if (!priority)
             return;
@@ -267,9 +248,7 @@ export class TaskContainerComponent implements OnInit {
 
     selectStatusById(id: number | null): void {
         const selectedId = id ?? ETaskFilter.All;
-
-        const status = this.statusOptions()
-            .find(option => option.id === selectedId);
+        const status = this.statusOptions().find(option => option.id === selectedId);
 
         if (!status)
             return;
@@ -288,7 +267,15 @@ export class TaskContainerComponent implements OnInit {
     clearFilters(): void {
         this.searchControl.reset();
 
+        this.closeFilterOverlays();
         this.taskFacade.clearFilters();
+    }
+
+    closeFilterOverlays(): void {
+        this.prioritySelectOpen.set(false);
+        this.statusSelectOpen.set(false);
+        this.startDatePickerOpen.set(false);
+        this.endDatePickerOpen.set(false);
     }
 
     orderByCreatedAt(): void {
@@ -388,27 +375,27 @@ export class TaskContainerComponent implements OnInit {
     }
 
     openTaskOptions(taskId: string, element: HTMLElement): void {
-        const taskPage = element.closest('.task-page') as HTMLElement | null;
-        const container = element.closest('.container') as HTMLElement | null;
+        const view = this.document.defaultView;
 
-        if (!taskPage || !container)
+        if (!view)
             return;
 
         const elementRect = element.getBoundingClientRect();
-        const taskPageRect = taskPage.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
+        const spaceBelow = view.innerHeight - elementRect.bottom;
 
-        const spaceBelow = containerRect.bottom - elementRect.bottom;
-        const openUpward = spaceBelow < TASK_OPTIONS_HEIGHT;
+        const openUpward =
+            spaceBelow < TASK_OPTIONS_HEIGHT + TASK_OPTIONS_VERTICAL_OFFSET + TASK_OPTIONS_VIEWPORT_MARGIN;
 
         this.taskState.setActiveTask(taskId);
 
         this.taskState.setTaskOptionsPosition({
             top: openUpward
-                ? elementRect.top - taskPageRect.top - TASK_OPTIONS_HEIGHT
-                : elementRect.bottom - taskPageRect.top,
+                ? elementRect.top - TASK_OPTIONS_VERTICAL_OFFSET
+                : elementRect.bottom + TASK_OPTIONS_VERTICAL_OFFSET,
 
-            right: taskPageRect.right - elementRect.right + TASK_OPTIONS_RIGHT_OFFSET
+            right: view.innerWidth - elementRect.left + TASK_OPTIONS_HORIZONTAL_OFFSET,
+
+            openUpward
         });
     }
 

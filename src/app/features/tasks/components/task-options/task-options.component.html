@@ -1,5 +1,6 @@
 <div
     class="task-options"
+    [class.open-upward]="position().openUpward"
     [style.top.px]="position().top"
     [style.right.px]="position().right">
 
@@ -7,36 +8,45 @@
         class="btn-view"
         type="button"
         (click)="viewTaskClicked.emit()">
+
         <nz-icon
             class="option-icon"
             nzType="eye"
             nzTheme="outline">
         </nz-icon>
+
         <span>Visualizar</span>
+
     </button>
 
     <button
         class="btn-edit"
         type="button"
         (click)="editTaskClicked.emit()">
+
         <nz-icon
             class="option-icon"
             nzType="edit"
             nzTheme="outline">
         </nz-icon>
+
         <span>Editar</span>
+
     </button>
 
     <button
         class="btn-delete"
         type="button"
         (click)="deleteTaskClicked.emit()">
+
         <nz-icon
             class="option-icon"
             nzType="delete"
             nzTheme="outline">
         </nz-icon>
+
         <span>Excluir</span>
+
     </button>
 
 </div>

@@ -38,6 +38,7 @@ export interface DeleteTaskRequest {
 export interface TaskOptionsPosition {
     top: number;
     right: number;
+    openUpward: boolean;
 }
 
 export class TaskPagedParams extends PagedParams {

@@ -131,6 +131,8 @@ export class Report implements OnInit {
   );
 
   isPeriodOpen = false;
+  isStartDateOpen = false;
+  isEndDateOpen = false;
 
   ngOnInit(): void {
     this.taskFacade.initializeReport();
@@ -156,8 +158,18 @@ export class Report implements OnInit {
     this.isPeriodOpen = isOpen;
   }
 
+  setStartDateOpen(isOpen: boolean): void {
+    this.isStartDateOpen = isOpen;
+  }
+
+  setEndDateOpen(isOpen: boolean): void {
+    this.isEndDateOpen = isOpen;
+  }
+
   closeOverlays(): void {
     this.isPeriodOpen = false;
+    this.isStartDateOpen = false;
+    this.isEndDateOpen = false;
   }
 
   private getStatus(statusId: ETaskStatus): ReportItemResponse | undefined {

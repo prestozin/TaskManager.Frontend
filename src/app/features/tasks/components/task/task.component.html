@@ -32,13 +32,20 @@
         {{ status() }}
     </p>
 
-    @if (showOptions()) {
-        <img
-            class="btn-options"
+  @if (showOptions()) {
+        <button
             #optionsButton
-            src="icons/task-dots.svg"
-            alt="Opções da tarefa"
+            class="btn-options"
+            type="button"
+            aria-label="Opções da tarefa"
             (click)="$event.stopPropagation(); optionsClicked.emit(optionsButton)">
+
+            <nz-icon
+                nzType="more"
+                nzTheme="outline">
+            </nz-icon>
+
+        </button>
     }
 
 </div>

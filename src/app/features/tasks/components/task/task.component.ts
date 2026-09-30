@@ -11,13 +11,15 @@ import {
 
 import { TaskResponse } from '../../models/task.models';
 import { TASK_DESCRIPTION_PREVIEW_LENGTH } from '@shared/constants/constants';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-task',
   imports: [
     DatePipe,
     NgClass,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzIconModule
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss'

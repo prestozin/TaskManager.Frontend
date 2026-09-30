@@ -37,7 +37,10 @@
                         class="report-date"
                         nzFormat="dd/MM/yyyy"
                         nzPlaceHolder="dd/mm/aaaa"
+                        [nzOpen]="isStartDateOpen"
                         [ngModel]="startDate()"
+                        (click)="isStartDateOpen = true"
+                        (nzOnOpenChange)="setStartDateOpen($event)"
                         (ngModelChange)="selectStartDate($event)">
                     </nz-date-picker>
                 </div>
@@ -49,7 +52,10 @@
                         class="report-date"
                         nzFormat="dd/MM/yyyy"
                         nzPlaceHolder="dd/mm/aaaa"
+                        [nzOpen]="isEndDateOpen"
                         [ngModel]="endDate()"
+                        (click)="isEndDateOpen = true"
+                        (nzOnOpenChange)="setEndDateOpen($event)"
                         (ngModelChange)="selectEndDate($event)">
                     </nz-date-picker>
                 </div>

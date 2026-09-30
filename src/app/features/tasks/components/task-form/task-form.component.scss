@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
 
-    width: min(540px, calc(100vw - 32px));
+    width: min(500px, calc(100vw - 32px));
 
     padding: 30px;
 
@@ -28,13 +28,15 @@
     color: $primary-blue-color;
 
     .img-icon {
-        width: 55px;
-        height: 55px;
+        font-size: 50px;
+        padding: 10px;
     }
 
     .header-texts {
         display: flex;
         flex-direction: column;
+
+        min-width: 0;
 
         gap: 4px;
 
@@ -138,7 +140,6 @@
 
 .container-footer {
     display: flex;
-
     justify-content: flex-end;
 
     width: 100%;
@@ -158,6 +159,8 @@
 
         font-size: $section-title-font-size;
 
+        white-space: nowrap;
+
         &:active {
             transform: scale(0.95);
         }
@@ -169,17 +172,18 @@
     }
 
     .btn-submit {
-        background-color: $primary-blue-color;
+        background-color: $secondary-blue-color;
         color: $white-color;
     }
 }
 
 @media (max-width: 650px) {
     .container {
-        width: min(420px, calc(100vw - 40px));
-        max-height: calc(100dvh - 48px);
+        width: calc(100vw - 28px);
+        max-width: 420px;
+        max-height: calc(100dvh - 32px);
 
-        padding: 18px;
+        padding: 18px 16px;
 
         gap: 16px;
 
@@ -190,8 +194,8 @@
         gap: 10px;
 
         .img-icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
         }
 
         .header-texts {
@@ -212,25 +216,31 @@
             gap: 6px;
 
             .task-title {
-                margin-left: 10px;
+                margin-left: 8px;
+
                 font-size: $large-text-font-size;
             }
         }
 
         .dropdown-container {
-            flex-direction: row;
-
             gap: 10px;
 
             .select-field {
                 gap: 6px;
 
                 .task-title {
-                    margin-left: 10px;
+                    margin-left: 8px;
+
                     font-size: $large-text-font-size;
                 }
             }
         }
+    }
+
+    .form-title,
+    .form-description {
+        --input-padding: 10px 14px;
+        --error-message-margin: 3px 0 0 8px;
     }
 
     .form-title {
@@ -246,26 +256,65 @@
     }
 
     .container-footer {
-        gap: 10px;
+        gap: 8px;
 
         .btn-cancel,
         .btn-submit {
-            flex: 1;
             min-width: 0;
             height: 40px;
+
+            padding: 0 10px;
+
+            font-size: $body-font-size;
+        }
+
+        .btn-cancel {
+            flex: 0.9;
+        }
+
+        .btn-submit {
+            flex: 1.1;
         }
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
     .container {
-        width: calc(100vw - 28px);
+        width: calc(100vw - 20px);
 
-        padding: 16px 14px;
+        padding: 16px 12px;
     }
 
-    .container-content .dropdown-container {
-        gap: 8px;
+    .container-header {
+        .img-icon {
+            width: 36px;
+            height: 36px;
+        }
+    }
+
+    .container-content {
+        .dropdown-container {
+            gap: 8px;
+        }
+    }
+
+    .container-footer {
+        gap: 6px;
+
+        .btn-cancel,
+        .btn-submit {
+            padding: 0 8px;
+
+            font-size: $small-font-size;
+        }
+
+        .btn-cancel {
+            flex: 0.85;
+        }
+
+        .btn-submit {
+            flex: 1.15;
+        }
     }
 }
 
@@ -274,4 +323,3 @@
         @include zorro.task-form-select;
     }
 }
-

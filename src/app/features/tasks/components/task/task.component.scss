@@ -97,11 +97,23 @@
     }
 
     .btn-options {
-        justify-self: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         width: 30px;
         height: 30px;
+
         padding: 6px;
+
+        border: none;
         border-radius: $small-border-radius;
+
+        background-color: transparent;
+        color: $primary-blue-color;
+
+        font-size: 20px;
+
         cursor: pointer;
 
         &:hover {
@@ -122,6 +134,7 @@
 
 @media (max-width: 650px) {
     .task {
+
         .priority,
         .status {
             min-width: 0;

@@ -6,7 +6,9 @@
 
             <div class="header-top">
 
-                <h2 class="header-title">Minhas Tarefas</h2>
+                <h2 class="header-title">
+                    Minhas Tarefas
+                </h2>
 
                 <button
                     class="btn-new-task"
@@ -67,14 +69,21 @@
                             class="task-select priority-select"
                             nzDropdownClassName="task-select-dropdown"
                             [nzDropdownMatchSelectWidth]="true"
+                            [nzOpen]="prioritySelectOpen()"
                             [ngModel]="selectedPriorityId()"
+                            (nzOpenChange)="prioritySelectOpen.set($event)"
                             (ngModelChange)="selectPriorityById($event)">
 
-                            @for (priority of priorityOptions(); track priority.id) {
+                            @for (
+                                priority of priorityOptions();
+                                track priority.id
+                            ) {
+
                                 <nz-option
                                     [nzValue]="priority.id"
                                     [nzLabel]="priority.name">
                                 </nz-option>
+
                             }
 
                         </nz-select>
@@ -91,14 +100,21 @@
                             class="task-select status-select"
                             nzDropdownClassName="task-select-dropdown"
                             [nzDropdownMatchSelectWidth]="true"
+                            [nzOpen]="statusSelectOpen()"
                             [ngModel]="selectedStatusId()"
+                            (nzOpenChange)="statusSelectOpen.set($event)"
                             (ngModelChange)="selectStatusById($event)">
 
-                            @for (status of statusOptions(); track status.id) {
+                            @for (
+                                status of statusOptions();
+                                track status.id
+                            ) {
+
                                 <nz-option
                                     [nzValue]="status.id"
                                     [nzLabel]="status.name">
                                 </nz-option>
+
                             }
 
                         </nz-select>
@@ -111,12 +127,15 @@
                             Data inicial
                         </label>
 
-                        <nz-date-picker
+                       <nz-date-picker
                             class="task-date-picker"
                             nzFormat="dd/MM/yyyy"
                             nzPlaceHolder="Data inicial"
                             [nzAllowClear]="false"
+                            [nzOpen]="startDatePickerOpen()"
                             [ngModel]="startDate()"
+                            (click)="startDatePickerOpen.set(true)"
+                            (nzOnOpenChange)="startDatePickerOpen.set($event)"
                             (ngModelChange)="selectStartDate($event)">
                         </nz-date-picker>
 
@@ -128,14 +147,17 @@
                             Data final
                         </label>
 
-                        <nz-date-picker
-                            class="task-date-picker"
-                            nzFormat="dd/MM/yyyy"
-                            nzPlaceHolder="Data final"
-                            [nzAllowClear]="false"
-                            [ngModel]="endDate()"
-                            (ngModelChange)="selectEndDate($event)">
-                        </nz-date-picker>
+                   <nz-date-picker
+                        class="task-date-picker"
+                        nzFormat="dd/MM/yyyy"
+                        nzPlaceHolder="Data final"
+                        [nzAllowClear]="false"
+                        [nzOpen]="endDatePickerOpen()"
+                        [ngModel]="endDate()"
+                        (click)="endDatePickerOpen.set(true)"
+                        (nzOnOpenChange)="endDatePickerOpen.set($event)"
+                        (ngModelChange)="selectEndDate($event)">
+                    </nz-date-picker>
 
                     </div>
 
@@ -211,7 +233,10 @@
 
         <div class="tasks-wrapper">
 
-            @for (taskRow of taskRows(); track taskRow.task.id) {
+            @for (
+                taskRow of taskRows();
+                track taskRow.task.id
+            ) {
 
                 <app-task
                     [task]="taskRow.task"
@@ -241,7 +266,11 @@
     <footer class="container-footer">
 
         <p class="footer-text">
-            Mostrando {{ displayedTaskCount() }} de {{ totalTaskCount() }} tarefas
+            Mostrando
+            {{ displayedTaskCount() }}
+            de
+            {{ totalTaskCount() }}
+            tarefas
         </p>
 
         <div class="pagination">
@@ -266,7 +295,10 @@
                 &lt;
             </button>
 
-            @for (pageButton of visiblePageButtons(); track pageButton.page) {
+            @for (
+                pageButton of visiblePageButtons();
+                track pageButton.page
+            ) {
 
                 <button
                     class="btn-page"

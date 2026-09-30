@@ -18,6 +18,7 @@ import {
   TaskEditRequest,
   TaskResponse
 } from '../../models/task.models';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-task-form',
@@ -25,7 +26,8 @@ import {
     FormsModule,
     InputFormsComponent,
     NzButtonModule,
-    NzSelectModule
+    NzSelectModule,
+    NzIconModule
   ],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.scss'

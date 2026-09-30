@@ -5,25 +5,41 @@
 }
 
 .task-options {
-    position: absolute;
+    position: fixed;
+
     display: flex;
     flex-direction: column;
+
     min-width: 150px;
+
     gap: 6px;
+
     border: 1px solid #dddddd;
     border-radius: $large-border-radius;
+
     background-color: $white-color;
+
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
     z-index: 1000;
+
+    &.open-upward {
+        transform: translateY(-100%);
+    }
 
     button {
         display: flex;
         align-items: center;
+
         padding: 10px 14px;
+
         gap: 7px;
+
         border: none;
+
         background-color: transparent;
         color: $primary-blue-color;
+
         font-size: $small-font-size;
         text-align: left;
 
@@ -34,10 +50,6 @@
         &:hover {
             background-color: $secondary-blue-color;
             color: $white-color;
-
-            svg {
-                color: $white-color;
-            }
         }
 
         &:active {
