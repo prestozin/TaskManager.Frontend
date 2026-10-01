@@ -56,7 +56,16 @@
 
 .report-date {
     width: 170px;
-    height: $control-height;
+
+    @include zorro.task-date-picker;
+
+    ::ng-deep .ant-picker-input>input {
+        color: $primary-blue-color !important;
+
+        &::placeholder {
+            color: $primary-blue-color !important;
+        }
+    }
 }
 
 .btn-clear-filters {

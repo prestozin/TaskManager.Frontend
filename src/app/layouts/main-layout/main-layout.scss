@@ -90,8 +90,9 @@ $sidebar-width: 300px;
 
         .logo-img {
             display: block;
-            width: 115px;
-            height: 115px;
+            margin-left: 30px;
+            width: 140px;
+            height: 140px;
             object-fit: contain;
         }
     }
@@ -288,6 +289,19 @@ $sidebar-width: 300px;
         background-color: $secondary-blue-color;
         color: $white-color;
     }
+}
+
+.dropdown-logout {
+    width: 20px;
+    height: 20px;
+    background-color: $primary-blue-color;
+
+    mask: url('/icons/exit-icon.svg') center / contain no-repeat;
+    -webkit-mask: url('/icons/exit-icon.svg') center / contain no-repeat;
+}
+
+.btn-dropdown:hover .dropdown-logout {
+    background-color: $white-color;
 }
 
 main {
