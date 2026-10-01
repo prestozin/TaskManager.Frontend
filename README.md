@@ -1,59 +1,165 @@
-# TaskManagerFrontend
+# TaskManager Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.4.
+Frontend da aplicação TaskManager, desenvolvido em Angular com componentes standalone, Signals, Facades e gerenciamento de estado por feature.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- Angular 22
+- TypeScript 6
+- SCSS
+- RxJS
+- Ng-Zorro Ant Design
+- Vitest
+- npm
 
-```bash
-ng serve
+## Funcionalidades
+
+- Autenticação de usuários
+- Gerenciamento de tarefas
+- Criação, edição, visualização e exclusão de tarefas
+- Filtros por texto, status, prioridade e período
+- Paginação e ordenação
+- Seleção múltipla de tarefas
+- Relatórios
+- Perfil do usuário
+- Configurações
+- Layout responsivo
+- Route guard para páginas autenticadas
+- Interceptor para autenticação e loading global
+
+## Arquitetura
+
+O projeto utiliza componentes standalone e separa responsabilidades entre componentes, Facades e State.
+
+```text
+src/
+├── app/
+│   ├── core/
+│   ├── layouts/
+│   ├── features/
+│   │   ├── auth/
+│   │   ├── home-page/
+│   │   ├── profile/
+│   │   ├── report/
+│   │   ├── settings/
+│   │   └── tasks/
+│   └── shared/
+├── environments/
+└── styles/
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Requisitos
 
-## Code scaffolding
+- Node.js
+- npm 11+
+- Angular CLI 22
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Instale as dependências:
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
+## Configuração
 
-To build the project run:
+As URLs da API são definidas nos arquivos:
+
+```text
+src/environments/environment.development.ts
+src/environments/environment.production.ts
+```
+
+Ambiente local:
+
+```text
+http://localhost:7102/api
+```
+
+Ambiente de produção:
+
+```text
+https://taskmanager-api-a1v2.onrender.com/api
+```
+
+## Execução
+
+### Desenvolvimento local
 
 ```bash
-ng build
+npm run start:local
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Aplicação:
 
-## Running unit tests
+```text
+http://localhost:4200
+```
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Conectando à API remota
 
 ```bash
-ng test
+npm run start:remote
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+### Build de produção
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Os arquivos gerados ficam no diretório `dist/`.
 
-## Additional Resources
+## Testes
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm test
+```
+
+O projeto utiliza Vitest através do Angular CLI.
+
+## Scripts
+
+| Comando | Descrição |
+|---|---|
+| `npm run start:local` | Servidor local com API local |
+| `npm run start:remote` | Servidor local utilizando a API remota |
+| `npm run start:prod` | Servidor utilizando a configuração de produção |
+| `npm run build` | Build de produção |
+| `npm run watch` | Build em modo watch |
+| `npm test` | Testes unitários |
+
+## Autenticação
+
+O login é realizado através da API. Após a autenticação, o token JWT é armazenado pelo frontend e utilizado pelo interceptor nas requisições protegidas.
+
+O acesso às páginas autenticadas é controlado pelo route guard.
+
+## API
+
+API de produção:
+
+```text
+https://taskmanager-api-a1v2.onrender.com
+```
+
+Health check:
+
+```text
+GET /health
+```
+
+## Desenvolvimento
+
+Para adicionar uma nova funcionalidade:
+
+1. Criar ou alterar a feature correspondente.
+2. Criar os componentes necessários.
+3. Definir modelos e enums quando necessário.
+4. Adicionar operações ao State e Facade quando houver estado compartilhado ou chamadas à API.
+5. Adicionar a rota quando a funcionalidade possuir uma nova página.
+6. Implementar os testes.
+7. Validar o comportamento em desktop e mobile.
+
+## Licença
+
+Projeto desenvolvido para fins de estudo e portfólio.
