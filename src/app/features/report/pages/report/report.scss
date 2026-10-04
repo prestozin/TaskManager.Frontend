@@ -51,7 +51,8 @@
 .report-select {
     width: 210px;
     height: $control-height;
-    color: $primary-blue-color;
+    
+    @include zorro.report-select;
 }
 
 .report-date {

@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -18,4 +18,6 @@ export class AuthLayoutComponent {
   readonly primaryButtonText = input.required<string>();
 
   readonly submitClicked = output<void>();
+
+  readonly isLoading = input(false); 
 }

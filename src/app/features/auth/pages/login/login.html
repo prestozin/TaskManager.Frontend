@@ -1,6 +1,7 @@
 <app-auth-layout
     title="Bem-vindo(a)!"
     primaryButtonText="ENTRAR"
+    [isLoading]="isLoading()"
     (submitClicked)="submit()">
 
     <form auth-form [formGroup]="loginForm">

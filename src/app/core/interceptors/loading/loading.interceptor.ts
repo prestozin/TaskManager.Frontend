@@ -1,26 +1,20 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpContextToken, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { finalize } from 'rxjs';
 
 import { LoadingService } from '@core/services/loading/loading.service';
 
+export const SKIP_LOADING = new HttpContextToken<boolean>(() => false);
+
 export const loadingInterceptor: HttpInterceptorFn = (request, next) => {
     const loadingService = inject(LoadingService);
 
-    const minimumLoadingTime = 500;
-    const startTime = Date.now();
+    if (request.context.get(SKIP_LOADING))
+        return next(request);
 
     loadingService.show();
 
     return next(request).pipe(
-        finalize(() => {
-            const elapsedTime = Date.now() - startTime;
-
-            const remainingTime = Math.max(minimumLoadingTime - elapsedTime,0);
-
-            setTimeout(() => {
-                loadingService.hide();
-            }, remainingTime);
-        })
+        finalize(() => loadingService.hide())
     );
 };

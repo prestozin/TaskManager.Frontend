@@ -1,7 +1,11 @@
 @if (isLoading()) {
-  <div class="global-loading">
-        <nz-spin nzSimple nzSize="large"></nz-spin>
-  </div>
+    <div class="global-loading">
+        <nz-spin [nzIndicator]="customSpinner"></nz-spin>
+    </div>
 }
 
 <router-outlet></router-outlet>
+
+<ng-template #customSpinner>
+    <span class="custom-spinner"></span>
+</ng-template>

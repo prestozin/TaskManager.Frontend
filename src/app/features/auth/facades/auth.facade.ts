@@ -22,6 +22,8 @@ export class AuthFacade {
     private readonly authState = inject(AuthState);
     private readonly tokenService = inject(TokenService);
 
+    readonly isLoading = this.authState.isLoading;
+
     get successMessage() {
         return this.authState.successMessage;
     }
@@ -31,50 +33,54 @@ export class AuthFacade {
     }
 
     login(request: LoginRequest): void {
+        this.isLoading.set(true);
         this.clearMessages();
 
-        this.authService.login(request).subscribe({
-            next: response => {
-                if (!response.isSuccess) {
-                    this.authState.errorMessage.set(response.message);
-                    return;
+        this.authService.login(request).pipe(
+            finalize(() => this.isLoading.set(false))).subscribe({
+                next: response => {
+                    if (!response.isSuccess) {
+                        this.authState.errorMessage.set(response.message);
+                        return;
+                    }
+
+                    this.authState.successMessage.set(response.message);
+                    this.tokenService.save(response.data!);
+
+                    setTimeout(() => {
+                        this.router.navigate(['/tasks']);
+                    }, 1000);
+                },
+
+                error: (error: HttpErrorResponse) => {
+                    this.authState.errorMessage.set(getHttpErrorMessage(error));
                 }
-
-                this.authState.successMessage.set(response.message);
-                this.tokenService.save(response.data!);
-
-                setTimeout(() => {
-                    this.router.navigate(['/tasks']);
-                }, 1500);
-            },
-
-            error: (error: HttpErrorResponse) => {
-                this.authState.errorMessage.set(getHttpErrorMessage(error));
-            }
-        });
+            });
     }
 
     register(request: RegisterRequest): void {
+        this.isLoading.set(true);
         this.clearMessages();
 
-        this.authService.register(request).subscribe({
-            next: response => {
-                if (!response.isSuccess) {
-                    this.authState.errorMessage.set(response.message);
-                    return;
+        this.authService.register(request).pipe(
+            finalize(() => this.isLoading.set(false))).subscribe({
+                next: response => {
+                    if (!response.isSuccess) {
+                        this.authState.errorMessage.set(response.message);
+                        return;
+                    }
+
+                    this.authState.successMessage.set(response.message);
+
+                    setTimeout(() => {
+                        this.router.navigate(['/login']);
+                    }, 3000);
+                },
+
+                error: (error: HttpErrorResponse) => {
+                    this.authState.errorMessage.set(getHttpErrorMessage(error));
                 }
-
-                this.authState.successMessage.set(response.message);
-
-                setTimeout(() => {
-                    this.router.navigate(['/login']);
-                }, 3000);
-            },
-
-            error: (error: HttpErrorResponse) => {
-                this.authState.errorMessage.set(getHttpErrorMessage(error));
-            }
-        });
+            });
     }
 
     logout(): void {

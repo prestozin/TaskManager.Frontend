@@ -15,6 +15,7 @@
                     class="btn-submit"
                     nz-button
                     nzType="primary"
+                    [nzLoading]="isLoading()"
                     type="button"
                     (click)="submitClicked.emit()">
                     {{ primaryButtonText() }}

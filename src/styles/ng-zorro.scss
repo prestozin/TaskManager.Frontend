@@ -111,10 +111,21 @@
 }
 
 @mixin report-select {
+    .ant-select-selector {
+        color: $primary-blue-color;
+        border-radius: $small-border-radius !important;
+        border: 1px solid $muted-text-color;
+
+        &:hover {
+            border-color: $primary-blue-color;
+        }
+    }
+
     .ant-select-selection-item {
         display: flex;
         align-items: center;
         font-size: $small-font-size;
+        border-radius: $small-border-radius;
     }
 }
 

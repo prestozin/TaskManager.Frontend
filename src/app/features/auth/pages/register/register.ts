@@ -41,6 +41,8 @@ export class Register implements OnInit {
   readonly successMessage = this.authFacade.successMessage;
   readonly errorMessage = this.authFacade.errorMessage;
 
+  readonly isLoading = this.authFacade.isLoading;
+
   readonly registerForm = new FormGroup(
     {
       name: new FormControl('', {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -25,6 +25,8 @@ export class Login implements OnInit {
 
   readonly successMessage = this.authFacade.successMessage;
   readonly errorMessage = this.authFacade.errorMessage;
+
+  readonly isLoading = this.authFacade.isLoading;
 
   readonly loginForm = new FormGroup({
     email: new FormControl('', {
