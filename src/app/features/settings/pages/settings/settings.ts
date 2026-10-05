@@ -52,6 +52,40 @@ export class Settings {
     readonly showConfirmPassword = signal(false);
     readonly showDeletePassword = signal(false);
 
+
+    get currentPasswordError(): string | null {
+        return getFormControlErrorMessage(this.currentPassword);
+    }
+
+    get newPasswordError(): string | null {
+        return getFormControlErrorMessage(this.newPassword);
+    }
+
+    get confirmPasswordError(): string | null {
+        const controlError = getFormControlErrorMessage(this.confirmNewPassword);
+
+        if (controlError)
+            return controlError;
+
+        if (this.passwordsMismatch)
+            return Messages.PasswordsDoNotMatch;
+
+        return null;
+    }
+
+    get deletePasswordError(): string | null {
+        return getFormControlErrorMessage(this.deletePassword);
+    }
+
+    get passwordsMismatch(): boolean {
+        return (
+            this.confirmNewPassword.touched &&
+            !!this.newPassword.value &&
+            !!this.confirmNewPassword.value &&
+            this.newPassword.value !== this.confirmNewPassword.value
+        );
+    }
+
     readonly deletePassword = new FormControl('', {
         nonNullable: true,
         validators: [
@@ -97,39 +131,6 @@ export class Settings {
         this.getPasswordFieldView(this.showDeletePassword())
     );
 
-    get currentPasswordError(): string | null {
-        return getFormControlErrorMessage(this.currentPassword);
-    }
-
-    get newPasswordError(): string | null {
-        return getFormControlErrorMessage(this.newPassword);
-    }
-
-    get confirmPasswordError(): string | null {
-        const controlError = getFormControlErrorMessage(this.confirmNewPassword);
-
-        if (controlError)
-            return controlError;
-
-        if (this.passwordsMismatch)
-            return Messages.PasswordsDoNotMatch;
-
-        return null;
-    }
-
-    get deletePasswordError(): string | null {
-        return getFormControlErrorMessage(this.deletePassword);
-    }
-
-    get passwordsMismatch(): boolean {
-        return (
-            this.confirmNewPassword.touched &&
-            !!this.newPassword.value &&
-            !!this.confirmNewPassword.value &&
-            this.newPassword.value !== this.confirmNewPassword.value
-        );
-    }
-
     toggleChangePassword(): void {
         if (this.isChangePasswordOpen()) {
             this.closeChangePassword();
@@ -164,11 +165,9 @@ export class Settings {
     }
 
     confirmChangePassword(): void {
-        if (
-            this.currentPassword.invalid ||
+        if (this.currentPassword.invalid ||
             this.newPassword.invalid ||
-            this.confirmNewPassword.invalid
-        ) {
+            this.confirmNewPassword.invalid) {
             this.currentPassword.markAsTouched();
             this.newPassword.markAsTouched();
             this.confirmNewPassword.markAsTouched();

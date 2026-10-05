@@ -3,10 +3,7 @@ import { inject, Injectable } from '@angular/core';
 
 import { FeedbackService } from '@core/services/feedback/feedback.service';
 import { AuthFacade } from '@features/auth/facades/auth.facade';
-import {
-    ChangePasswordRequest,
-    EditProfileRequest
-} from '@features/profile/models/profile.models';
+import { ChangePasswordRequest, EditProfileRequest } from '@features/profile/models/profile.models';
 import { ProfileService } from '@features/profile/services/profile.service';
 import { ProfileState } from '@features/profile/states/profile.state';
 import { EFeedbackType } from '@shared/enums/feedback.enum';

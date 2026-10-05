@@ -167,8 +167,7 @@ export class TaskFormComponent implements OnInit {
     if (id === null)
       return;
 
-    const priority = this.priorityOptions()
-      .find(option => option.id === id);
+    const priority = this.priorityOptions().find(option => option.id === id);
 
     if (!priority)
       return;
@@ -180,8 +179,7 @@ export class TaskFormComponent implements OnInit {
     if (id === null)
       return;
 
-    const status = this.statusOptions()
-      .find(option => option.id === id);
+    const status = this.statusOptions().find(option => option.id === id);
 
     if (!status)
       return;

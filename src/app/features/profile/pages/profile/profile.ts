@@ -6,9 +6,12 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { ProfileFacade } from '@features/profile/facades/profile.facade';
+
 import { EditProfileRequest } from '@features/profile/models/profile.models';
+
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
+
 import {
   NAME_MAX_LENGTH,
   NAME_MIN_LENGTH,
@@ -16,6 +19,7 @@ import {
   PROFILE_AREA_MAX_LENGTH,
   PROFILE_ROLE_MAX_LENGTH
 } from '@shared/constants/constants';
+
 import { capitalizeFirst } from '@shared/utils/string.util';
 
 @Component({
@@ -85,9 +89,7 @@ export class Profile {
   readonly userRole = computed(() => {
     const role = this.profile()?.role;
 
-    return role
-      ? capitalizeFirst(role)
-      : 'Cargo não informado';
+    return role ? capitalizeFirst(role) : 'Cargo não informado';
   });
 
   private readonly profileEffect = effect(() => {

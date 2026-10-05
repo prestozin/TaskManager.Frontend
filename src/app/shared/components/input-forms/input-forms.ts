@@ -20,9 +20,6 @@ export class InputFormsComponent {
   readonly placeholder = input('');
   readonly maxLength = input<number | null>(null);
 
-  readonly isTextarea = computed(() =>
-    this.type() === 'textarea'
-  );
 
   get isInvalid(): boolean {
     const control = this.control();
@@ -33,4 +30,6 @@ export class InputFormsComponent {
   get errorMessage(): string | null {
     return getFormControlErrorMessage(this.control());
   }
+
+  readonly isTextarea = computed(() => this.type() === 'textarea');
 }

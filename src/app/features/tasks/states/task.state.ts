@@ -1,23 +1,13 @@
 import { computed, Injectable, signal } from '@angular/core';
 
 import { EReportPeriod } from '@features/report/enums/report.enum';
-import {
-    ReportParams,
-    ReportResponse
-} from '@features/report/models/report.models';
-import {
-    ESortOrder,
-    ETaskFilter,
-    ETaskModal,
-    ETaskSort
-} from '@features/tasks/enums/task.enum';
-import {
-    TaskOptionsPosition,
-    TaskPagedParams,
-    TaskResponse
-} from '@features/tasks/models/task.models';
+import { ESortOrder, ETaskFilter, ETaskModal, ETaskSort } from '@features/tasks/enums/task.enum';
+
+import { ReportParams, ReportResponse } from '@features/report/models/report.models';
+import { TaskOptionsPosition, TaskPagedParams, TaskResponse } from '@features/tasks/models/task.models';
 import { PagedResponse } from '@shared/models/pagination.models';
 import { SelectableOption } from '@shared/models/selectables.models';
+
 import { getDateMonthsAgo } from '@shared/utils/date.util';
 
 @Injectable({
@@ -64,9 +54,8 @@ export class TaskState {
     readonly selectedReportStartDate = signal<string | null>(null);
     readonly selectedReportEndDate = signal<string | null>(null);
 
-    readonly currentPage = computed(
-        () => this.pagedResponse()?.pageNumber ?? 1
-    );
+    readonly currentPage = computed(() => this.pagedResponse()?.pageNumber ?? 1);
+
 
     constructor() {
         this.pagedParams.startDate = this.selectedStartDate();
@@ -175,10 +164,7 @@ export class TaskState {
     }
 
     toggleSort(sort: ETaskSort): void {
-        this.pagedParams.order =
-            this.pagedParams.order === ESortOrder.Asc
-                ? ESortOrder.Desc
-                : ESortOrder.Asc;
+        this.pagedParams.order = this.pagedParams.order === ESortOrder.Asc ? ESortOrder.Desc : ESortOrder.Asc;
 
         this.pagedParams.sort = sort;
     }
@@ -205,9 +191,7 @@ export class TaskState {
     }
 
     toggleAllCheckedTasks(taskIds: string[]): void {
-        const allChecked = taskIds.every(taskId =>
-            this.checkedTaskIds().has(taskId)
-        );
+        const allChecked = taskIds.every(taskId => this.checkedTaskIds().has(taskId));
 
         if (allChecked)
             this.checkedTaskIds.set(new Set());
@@ -267,10 +251,7 @@ export class TaskState {
         this.selectedReportPeriod.set(period);
     }
 
-    setReportDateRange(
-        startDate: string | null,
-        endDate: string | null
-    ): void {
+    setReportDateRange(startDate: string | null, endDate: string | null): void {
         this.selectedReportStartDate.set(startDate);
         this.selectedReportEndDate.set(endDate);
 

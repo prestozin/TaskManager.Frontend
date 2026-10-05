@@ -14,19 +14,19 @@ export class FeedbackService {
     showMessage(message: string, description: string, type: EFeedbackType): void {
         switch (type) {
             case EFeedbackType.Success:
-                this.notification.success(message, description, { nzDuration: 5000 });
+                this.notification.success(message, description, { nzDuration: 3000 });
                 break;
 
             case EFeedbackType.Error:
-                this.notification.error(message, description, { nzDuration: 5000 });
+                this.notification.error(message, description, { nzDuration: 3000 });
                 break;
 
             case EFeedbackType.Warning:
-                this.notification.warning(message, description, { nzDuration: 5000 });
+                this.notification.warning(message, description, { nzDuration: 3000 });
                 break;
 
             case EFeedbackType.Info:
-                this.notification.info(message, description, { nzDuration: 5000 });
+                this.notification.info(message, description, { nzDuration: 3000 });
                 break;
         }
     }

@@ -3,11 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '@env/environment';
-import {
-    ChangePasswordRequest,
-    EditProfileRequest,
-    ProfileResponse
-} from '@features/profile/models/profile.models';
+
+import { ChangePasswordRequest, EditProfileRequest, ProfileResponse } from '@features/profile/models/profile.models';
 import { ResultResponse } from '@shared/models/response.models';
 
 @Injectable({
@@ -19,16 +16,11 @@ export class ProfileService {
     private readonly apiUrl = `${environment.apiUrl}/User`;
 
     getProfile(): Observable<ResultResponse<ProfileResponse>> {
-        return this.httpClient.get<ResultResponse<ProfileResponse>>(
-            `${this.apiUrl}/GetUser`
-        );
+        return this.httpClient.get<ResultResponse<ProfileResponse>>(`${this.apiUrl}/GetUser`);
     }
 
     editProfile(request: EditProfileRequest): Observable<ResultResponse<string>> {
-        return this.httpClient.put<ResultResponse<string>>(
-            `${this.apiUrl}/EditUser`,
-            request
-        );
+        return this.httpClient.put<ResultResponse<string>>(`${this.apiUrl}/EditUser`, request);
     }
 
     deleteProfile(password: string): Observable<ResultResponse<string>> {
@@ -43,9 +35,6 @@ export class ProfileService {
     }
 
     changePassword(request: ChangePasswordRequest): Observable<ResultResponse<string>> {
-        return this.httpClient.patch<ResultResponse<string>>(
-            `${this.apiUrl}/ChangePassword`,
-            request
-        );
+        return this.httpClient.patch<ResultResponse<string>>(`${this.apiUrl}/ChangePassword`, request);
     }
 }

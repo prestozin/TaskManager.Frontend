@@ -6,10 +6,7 @@ import { finalize } from 'rxjs';
 import { TokenService } from '@core/services/token/token.service';
 import { AuthService } from '@features/auth/services/auth.service';
 import { AuthState } from '@features/auth/states/auth.state';
-import {
-    LoginRequest,
-    RegisterRequest
-} from '@features/auth/models/auth.models';
+import { LoginRequest, RegisterRequest } from '@features/auth/models/auth.models';
 import { getHttpErrorMessage } from '@shared/utils/http-error.util';
 
 @Injectable({

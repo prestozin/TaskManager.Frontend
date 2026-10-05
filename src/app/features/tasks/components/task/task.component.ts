@@ -3,11 +3,7 @@ import { Component, computed, input, output } from '@angular/core';
 
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
-import {
-  capitalizeFirst,
-  normalizeClass,
-  truncateText
-} from '@shared/utils/string.util';
+import { capitalizeFirst, normalizeClass, truncateText } from '@shared/utils/string.util';
 
 import { TaskResponse } from '../../models/task.models';
 import { TASK_DESCRIPTION_PREVIEW_LENGTH } from '@shared/constants/constants';

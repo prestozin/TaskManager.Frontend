@@ -3,10 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '@env/environment';
-import {
-    ReportParams,
-    ReportResponse
-} from '@features/report/models/report.models';
+
+import { ReportParams, ReportResponse } from '@features/report/models/report.models';
 import {
     DeleteTaskRequest,
     TaskCreateRequest,
@@ -17,6 +15,7 @@ import {
 } from '@features/tasks/models/task.models';
 import { PagedResponse } from '@shared/models/pagination.models';
 import { ResultResponse } from '@shared/models/response.models';
+
 import { convertLocalDateToUtc } from '@shared/utils/date.util';
 
 @Injectable({
@@ -28,43 +27,35 @@ export class TaskService {
     private readonly apiUrl = `${environment.apiUrl}/Task`;
 
     getTaskById(taskId: string): Observable<ResultResponse<TaskResponse>> {
-        return this.httpClient.get<ResultResponse<TaskResponse>>(
-            `${this.apiUrl}/${taskId}`
-        );
+        return this.httpClient.get<ResultResponse<TaskResponse>>(`${this.apiUrl}/${taskId}`);
     }
 
     addTask(request: TaskCreateRequest): Observable<ResultResponse<string>> {
-        return this.httpClient.post<ResultResponse<string>>(
-            `${this.apiUrl}/CreateTask`,
-            request
-        );
+        return this.httpClient.post<ResultResponse<string>>(`${this.apiUrl}/CreateTask`, request);
     }
 
     editTask(request: TaskEditRequest): Observable<ResultResponse<string>> {
-        return this.httpClient.put<ResultResponse<string>>(
-            `${this.apiUrl}/EditTask`,
-            request
-        );
+        return this.httpClient.put<ResultResponse<string>>(`${this.apiUrl}/EditTask`, request);
     }
 
     deleteTask(request: DeleteTaskRequest): Observable<ResultResponse<string>> {
-        return this.httpClient.delete<ResultResponse<string>>(
-            `${this.apiUrl}/DeleteTask`,
-            { body: request }
+        return this.httpClient.delete<ResultResponse<string>>(`${this.apiUrl}/DeleteTask`,
+            {
+                body: request
+            }
         );
     }
 
     getPaged(params: TaskPagedParams): Observable<ResultResponse<PagedResponse<TaskResponse>>> {
-        return this.httpClient.get<ResultResponse<PagedResponse<TaskResponse>>>(
-            `${this.apiUrl}/GetPaged`,
-            { params: this.buildHttpParams(params) }
+        return this.httpClient.get<ResultResponse<PagedResponse<TaskResponse>>>(`${this.apiUrl}/GetPaged`,
+            {
+                params: this.buildHttpParams(params)
+            }
         );
     }
 
     getSelectables(): Observable<ResultResponse<TaskSelectablesResponse>> {
-        return this.httpClient.get<ResultResponse<TaskSelectablesResponse>>(
-            `${this.apiUrl}/GetSelectables`
-        );
+        return this.httpClient.get<ResultResponse<TaskSelectablesResponse>>(`${this.apiUrl}/GetSelectables`);
     }
 
     getReport(request: ReportParams): Observable<ResultResponse<ReportResponse>> {

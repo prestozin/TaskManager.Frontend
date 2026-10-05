@@ -4,10 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { FeedbackService } from '@core/services/feedback/feedback.service';
 import { EReportPeriod } from '@features/report/enums/report.enum';
 import { ETaskSort } from '@features/tasks/enums/task.enum';
-import {
-    TaskCreateRequest,
-    TaskEditRequest
-} from '@features/tasks/models/task.models';
+import { TaskCreateRequest, TaskEditRequest } from '@features/tasks/models/task.models';
 import { TaskService } from '@features/tasks/services/task.service';
 import { TaskState } from '@features/tasks/states/task.state';
 import { Messages } from '@shared/constants/messages';

@@ -5,21 +5,12 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { EReportPeriod } from '@features/report/enums/report.enum';
-import {
-  ReportItemResponse,
-  ReportPeriodOption
-} from '@features/report/models/report.models';
+import { ReportItemResponse, ReportPeriodOption } from '@features/report/models/report.models';
 import { TaskComponent } from '@features/tasks/components/task/task.component';
-import {
-  ETaskPriority,
-  ETaskStatus
-} from '@features/tasks/enums/task.enum';
+import { ETaskPriority, ETaskStatus } from '@features/tasks/enums/task.enum';
 import { TaskFacade } from '@features/tasks/facades/task.facade';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
-import {
-  formatDateToApi,
-  parseApiDate
-} from '@shared/utils/date.util';
+import { formatDateToApi, parseApiDate } from '@shared/utils/date.util';
 
 @Component({
   selector: 'app-report',
@@ -62,9 +53,9 @@ export class Report implements OnInit {
     parseApiDate(this.selectedStartDate())
   );
 
-  readonly endDate = computed(() =>
-    parseApiDate(this.selectedEndDate())
-  );
+  readonly endDate =
+    computed(() => parseApiDate(this.selectedEndDate())
+    );
 
   readonly totalTasks = computed(() =>
     this.report()?.totalTasks ?? 0

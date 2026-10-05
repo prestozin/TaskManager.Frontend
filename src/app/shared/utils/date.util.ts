@@ -29,11 +29,7 @@ export function getDateMonthsAgo(monthsAgo: number): string {
 export function convertLocalDateToUtc(date: string, endOfDay = false): string {
     const [year, month, day] = date.split('-').map(Number);
 
-    const localDate = new Date(
-        year,
-        month - 1,
-        endOfDay ? day + 1 : day
-    );
+    const localDate = new Date(year, month - 1, endOfDay ? day + 1 : day);
 
     return localDate.toISOString();
 }

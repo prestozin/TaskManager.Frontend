@@ -201,7 +201,10 @@
 
                     </div>
 
-                    <nz-switch [ngModel]="confirmBeforeDelete()" (ngModelChange)="setConfirmBeforeDelete($event)"></nz-switch>
+                    <nz-switch 
+                        [ngModel]="confirmBeforeDelete()" 
+                        (ngModelChange)="setConfirmBeforeDelete($event)">
+                    </nz-switch>
 
                 </div>
 
@@ -289,9 +292,7 @@
                                 <div>
                                     <strong>Atenção: esta ação é permanente.</strong>
 
-                                    <p>
-                                        Todos os seus dados serão excluídos e não poderão ser recuperados.
-                                    </p>
+                                    <p> Todos os seus dados serão excluídos e não poderão ser recuperados. </p>
                                 </div>
                             </div>
 
@@ -316,6 +317,7 @@
                                 @if (deletePasswordError; as errorMessage) {
                                     <p class="password-error">{{ errorMessage }}</p>
                                 }
+                                
                             </div>
 
                             <div class="delete-account-actions">

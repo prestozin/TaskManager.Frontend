@@ -13,24 +13,17 @@
     }
 
     <div class="task-info">
-        <p class="task-title" (click)="taskClicked.emit(task().id)">
-            {{ title() }}
-        </p>
 
+        <p class="task-title" (click)="taskClicked.emit(task().id)"> {{ title() }} </p>
         <p class="description">{{ description() }}</p>
+
     </div>
 
-    <p class="task-details date">
-        {{ task().createdAt | date:'dd/MM/yyyy' }}
-    </p>
+    <p class="task-details date"> {{ task().createdAt | date:'dd/MM/yyyy' }} </p>
 
-    <p class="task-details priority" [ngClass]="priorityClass()">
-        {{ priority() }}
-    </p>
+    <p class="task-details priority" [ngClass]="priorityClass()"> {{ priority() }} </p>
 
-    <p class="task-details status" [ngClass]="statusClass()">
-        {{ status() }}
-    </p>
+    <p class="task-details status" [ngClass]="statusClass()"> {{ status() }} </p>
 
   @if (showOptions()) {
         <button

@@ -7,7 +7,9 @@ export class LoadingService {
 
     private readonly pendingRequests = signal(0);
 
-    readonly isLoading = computed(() => this.pendingRequests() > 0);
+    readonly isLoading = computed(() =>
+        this.pendingRequests() > 0
+    );
 
     show(): void {
         this.pendingRequests.update(count => count + 1);
