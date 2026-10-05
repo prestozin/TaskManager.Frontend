@@ -1,6 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
+import { provideNzIcons } from 'ng-zorro-antd/icon';
+import {
+    AimOutline,
+    ArrowRightOutline,
+    BarChartOutline,
+    CheckCircleOutline,
+    ClipboardOutline
+} from '@ant-design/icons-angular/icons';
+
 import { FrontPage } from './front-page';
 
 describe('FrontPage', () => {
@@ -10,7 +19,16 @@ describe('FrontPage', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [FrontPage],
-            providers: [provideRouter([])]
+            providers: [
+                provideRouter([]),
+                provideNzIcons([
+                    ArrowRightOutline,
+                    ClipboardOutline,
+                    BarChartOutline,
+                    AimOutline,
+                    CheckCircleOutline
+                ])
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(FrontPage);
