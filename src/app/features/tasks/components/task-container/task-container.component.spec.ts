@@ -1,4 +1,3 @@
-import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ETaskFilter, ETaskModal, ETaskSort } from '../../enums/task.enum';
@@ -242,7 +241,7 @@ describe('TaskContainerComponent', () => {
   });
 
   it('ShouldCloseTaskOptions_WhenDocumentIsClicked', () => {
-    state.setTaskOptionsPosition({ top: 10, right: 20 });
+    state.setTaskOptionsPosition({ top: 10, right: 20, openUpward: false });
 
     component.onDocumentClick();
 

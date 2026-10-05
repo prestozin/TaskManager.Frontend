@@ -10,23 +10,24 @@ import { EFeedbackType } from '@shared/enums/feedback.enum';
 export class FeedbackService {
 
     private readonly notification = inject(NzNotificationService);
+    private readonly notificationDuration = 3000;
 
     showMessage(message: string, description: string, type: EFeedbackType): void {
         switch (type) {
             case EFeedbackType.Success:
-                this.notification.success(message, description, { nzDuration: 3000 });
+                this.notification.success(message, description, { nzDuration: this.notificationDuration });
                 break;
 
             case EFeedbackType.Error:
-                this.notification.error(message, description, { nzDuration: 3000 });
+                this.notification.error(message, description, { nzDuration: this.notificationDuration });
                 break;
 
             case EFeedbackType.Warning:
-                this.notification.warning(message, description, { nzDuration: 3000 });
+                this.notification.warning(message, description, { nzDuration: this.notificationDuration });
                 break;
 
             case EFeedbackType.Info:
-                this.notification.info(message, description, { nzDuration: 3000 });
+                this.notification.info(message, description, { nzDuration: this.notificationDuration });
                 break;
         }
     }

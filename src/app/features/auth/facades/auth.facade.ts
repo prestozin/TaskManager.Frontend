@@ -7,7 +7,7 @@ import { TokenService } from '@core/services/token/token.service';
 import { AuthService } from '@features/auth/services/auth.service';
 import { AuthState } from '@features/auth/states/auth.state';
 import { LoginRequest, RegisterRequest } from '@features/auth/models/auth.models';
-import { getHttpErrorMessage } from '@shared/utils/http-error.util';
+import { getHttpErrorMessage } from '@shared/utils/http-error/http-error.util';
 
 @Injectable({
     providedIn: 'root'
@@ -83,7 +83,6 @@ export class AuthFacade {
     logout(): void {
         this.clearMessages();
         this.tokenService.clear();
-
         this.router.navigate(['/login']);
     }
 

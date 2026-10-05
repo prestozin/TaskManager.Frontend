@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth.guard';
 import { Login } from '@features/auth/pages/login/login';
 import { Register } from '@features/auth/pages/register/register';
-import { FrontPage } from '@features/home-page/home-page/front-page';
+import { FrontPage } from '@features/front-page/front-page';
 import { Profile } from '@features/profile/pages/profile/profile';
 import { Report } from '@features/report/pages/report/report';
 import { Settings } from '@features/settings/pages/settings/settings';

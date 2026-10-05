@@ -2,7 +2,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
 
 import { TaskResponse } from '@features/tasks/models/task.models';
-import { capitalizeFirst, normalizeClass } from '@shared/utils/string.util';
+import { capitalizeFirst, normalizeClass } from '@shared/utils/string/string.util';
 
 @Component({
   selector: 'app-task-view',

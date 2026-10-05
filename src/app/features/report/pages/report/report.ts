@@ -10,7 +10,7 @@ import { TaskComponent } from '@features/tasks/components/task/task.component';
 import { ETaskPriority, ETaskStatus } from '@features/tasks/enums/task.enum';
 import { TaskFacade } from '@features/tasks/facades/task.facade';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
-import { formatDateToApi, parseApiDate } from '@shared/utils/date.util';
+import { formatDateToApi, parseApiDate } from '@shared/utils/date/date.util';
 
 @Component({
   selector: 'app-report',

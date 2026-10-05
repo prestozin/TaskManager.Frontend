@@ -1,4 +1,5 @@
-import { capitalizeFirst, normalizeClass, truncateText } from './string.util';
+import { normalizeClass, capitalizeFirst, truncateText } from "./string.util";
+
 
 describe('string.util', () => {
   it('ShouldNormalizeClass_WhenValueContainsAccentAndSpaces', () => {

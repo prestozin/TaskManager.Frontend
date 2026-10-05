@@ -4,20 +4,12 @@ import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
-import {
-  TASK_DESCRIPTION_MAX_LENGTH,
-  TASK_TITLE_MAX_LENGTH,
-  TASK_TITLE_MIN_LENGTH
-} from '@shared/constants/constants';
+import { TASK_DESCRIPTION_MAX_LENGTH, TASK_TITLE_MAX_LENGTH, TASK_TITLE_MIN_LENGTH } from '@shared/constants/constants';
 import { InputFormsComponent } from '@shared/components/input-forms/input-forms';
 import { SelectableOption } from '@shared/models/selectables.models';
 
 import { ETaskFormMode } from '../../enums/task.enum';
-import {
-  TaskCreateRequest,
-  TaskEditRequest,
-  TaskResponse
-} from '../../models/task.models';
+import { TaskCreateRequest, TaskEditRequest, TaskResponse } from '../../models/task.models';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
@@ -65,21 +57,15 @@ export class TaskFormComponent implements OnInit {
   });
 
   readonly formTitle = computed(() =>
-    this.mode() === ETaskFormMode.Create
-      ? 'Adicionar nova tarefa'
-      : 'Editar tarefa'
+    this.mode() === ETaskFormMode.Create ? 'Adicionar nova tarefa' : 'Editar tarefa'
   );
 
   readonly formSubtitle = computed(() =>
-    this.mode() === ETaskFormMode.Create
-      ? 'Preencha as informações da nova tarefa'
-      : 'Altere as informações da tarefa'
+    this.mode() === ETaskFormMode.Create ? 'Preencha as informações da nova tarefa' : 'Altere as informações da tarefa'
   );
 
   readonly submitText = computed(() =>
-    this.mode() === ETaskFormMode.Create
-      ? 'Criar'
-      : 'Salvar alterações'
+    this.mode() === ETaskFormMode.Create? 'Criar' : 'Salvar alterações'
   );
 
   readonly selectedPriorityId = computed(() =>

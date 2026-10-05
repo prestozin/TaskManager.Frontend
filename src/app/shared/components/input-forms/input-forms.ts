@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
-import { getFormControlErrorMessage } from '@shared/utils/form-error.util';
+import { getFormControlErrorMessage } from '@shared/utils/form-error/form-error.util';
 
 type InputType = 'text' | 'email' | 'password' | 'textarea';
 

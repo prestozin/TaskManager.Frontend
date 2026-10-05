@@ -1,9 +1,5 @@
-import {
-  convertLocalDateToUtc,
-  formatDateToApi,
-  getDateMonthsAgo,
-  parseApiDate
-} from './date.util';
+import { formatDateToApi, parseApiDate, getDateMonthsAgo, convertLocalDateToUtc } from "./date.util";
+
 
 describe('date.util', () => {
   afterEach(() => {

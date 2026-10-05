@@ -8,7 +8,7 @@ import { TaskOptionsPosition, TaskPagedParams, TaskResponse } from '@features/ta
 import { PagedResponse } from '@shared/models/pagination.models';
 import { SelectableOption } from '@shared/models/selectables.models';
 
-import { getDateMonthsAgo } from '@shared/utils/date.util';
+import { getDateMonthsAgo } from '@shared/utils/date/date.util';
 
 @Injectable({
     providedIn: 'root'

@@ -158,7 +158,7 @@ describe('TaskState', () => {
   it('ShouldResetUiState_WhenResetUiStateIsCalled', () => {
     state.setActiveTask('task-1');
     state.toggleCheckedTask('task-1');
-    state.setTaskOptionsPosition({ top: 10, right: 20 });
+    state.setTaskOptionsPosition({ top: 10, right: 20, openUpward: false });
     state.openModal(ETaskModal.View);
     state.startClosingTaskDetails();
 

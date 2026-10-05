@@ -6,9 +6,7 @@
 
             <div class="header-top">
 
-                <h2 class="header-title">
-                    Minhas Tarefas
-                </h2>
+                <h2 class="header-title">Minhas Tarefas</h2>
 
                 <button
                     class="btn-new-task"
@@ -61,9 +59,7 @@
 
                     <div class="filter-field">
 
-                        <label class="filter-label">
-                            Prioridade
-                        </label>
+                        <label class="filter-label">Prioridade</label>
 
                         <nz-select
                             class="task-select priority-select"
@@ -74,10 +70,7 @@
                             (nzOpenChange)="prioritySelectOpen.set($event)"
                             (ngModelChange)="selectPriorityById($event)">
 
-                            @for (
-                                priority of priorityOptions();
-                                track priority.id
-                            ) {
+                            @for (priority of priorityOptions(); track priority.id) {
 
                                 <nz-option
                                     [nzValue]="priority.id"
@@ -92,9 +85,7 @@
 
                     <div class="filter-field">
 
-                        <label class="filter-label">
-                            Status
-                        </label>
+                        <label class="filter-label">Status</label>
 
                         <nz-select
                             class="task-select status-select"
@@ -105,10 +96,7 @@
                             (nzOpenChange)="statusSelectOpen.set($event)"
                             (ngModelChange)="selectStatusById($event)">
 
-                            @for (
-                                status of statusOptions();
-                                track status.id
-                            ) {
+                            @for (status of statusOptions(); track status.id) {
 
                                 <nz-option
                                     [nzValue]="status.id"
@@ -123,9 +111,7 @@
 
                     <div class="filter-field">
 
-                        <label class="filter-label">
-                            Data inicial
-                        </label>
+                        <label class="filter-label">Data inicial</label>
 
                        <nz-date-picker
                             class="task-date-picker"
@@ -143,9 +129,7 @@
 
                     <div class="filter-field">
 
-                        <label class="filter-label">
-                            Data final
-                        </label>
+                        <label class="filter-label">Data final</label>
 
                    <nz-date-picker
                         class="task-date-picker"
@@ -191,9 +175,7 @@
                 (nzCheckedChange)="toggleAllVisibleTasks()">
             </label>
 
-            <p class="column-title">
-                Tarefas
-            </p>
+            <p class="column-title">Tarefas</p>
 
             <button
                 class="column-title column-sortable"
@@ -233,10 +215,7 @@
 
         <div class="tasks-wrapper">
 
-            @for (
-                taskRow of taskRows();
-                track taskRow.task.id
-            ) {
+            @for (taskRow of taskRows(); track taskRow.task.id) {
 
                 <app-task
                     [task]="taskRow.task"
@@ -266,18 +245,12 @@
     <footer class="container-footer">
 
         <p class="footer-text">
-            Mostrando
-            {{ displayedTaskCount() }}
-            de
-            {{ totalTaskCount() }}
-            tarefas
+            Mostrando {{ displayedTaskCount() }} de {{ totalTaskCount() }} tarefas
         </p>
 
         <div class="pagination">
 
-            <span class="pagination-label">
-                Páginas:
-            </span>
+            <span class="pagination-label">Páginas:</span>
 
             <button
                 class="btn-page"
@@ -295,10 +268,7 @@
                 &lt;
             </button>
 
-            @for (
-                pageButton of visiblePageButtons();
-                track pageButton.page
-            ) {
+            @for (pageButton of visiblePageButtons(); track pageButton.page) {
 
                 <button
                     class="btn-page"

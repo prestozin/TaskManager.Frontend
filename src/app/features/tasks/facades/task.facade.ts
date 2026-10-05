@@ -10,8 +10,8 @@ import { TaskState } from '@features/tasks/states/task.state';
 import { Messages } from '@shared/constants/messages';
 import { EFeedbackType } from '@shared/enums/feedback.enum';
 import { SelectableOption } from '@shared/models/selectables.models';
-import { formatDateToApi } from '@shared/utils/date.util';
-import { getHttpErrorMessage } from '@shared/utils/http-error.util';
+import { formatDateToApi } from '@shared/utils/date/date.util';
+import { getHttpErrorMessage } from '@shared/utils/http-error/http-error.util';
 
 @Injectable({
     providedIn: 'root'

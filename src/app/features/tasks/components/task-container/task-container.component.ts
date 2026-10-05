@@ -14,7 +14,7 @@ import { ConfirmationModalComponent } from '@shared/components/confirmation-moda
 import { TASK_DETAILS_CLOSE_DELAY_MS, TASK_SEARCH_MAX_LENGTH } from '@shared/constants/constants';
 import { Messages } from '@shared/constants/messages';
 import { SelectableOption } from '@shared/models/selectables.models';
-import { formatDateToApi, parseApiDate } from '@shared/utils/date.util';
+import { formatDateToApi, parseApiDate } from '@shared/utils/date/date.util';
 
 import { ETaskFilter, ETaskFormMode, ETaskModal, ETaskSort } from '../../enums/task.enum';
 import { TaskFacade } from '../../facades/task.facade';

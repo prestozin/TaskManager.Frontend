@@ -20,7 +20,7 @@ import {
   PROFILE_ROLE_MAX_LENGTH
 } from '@shared/constants/constants';
 
-import { capitalizeFirst } from '@shared/utils/string.util';
+import { capitalizeFirst } from '@shared/utils/string/string.util';
 
 @Component({
   selector: 'app-profile',

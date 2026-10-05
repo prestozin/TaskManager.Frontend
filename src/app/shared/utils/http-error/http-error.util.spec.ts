@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { Messages } from '@shared/constants/messages';
-
 import { getHttpErrorMessage } from './http-error.util';
 
 describe('http-error.util', () => {

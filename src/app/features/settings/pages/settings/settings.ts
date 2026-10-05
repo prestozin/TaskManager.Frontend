@@ -16,7 +16,7 @@ import {
     TASK_PAGE_SIZE_OPTIONS,
 } from '@shared/constants/constants';
 import { Messages } from '@shared/constants/messages';
-import { getFormControlErrorMessage } from '@shared/utils/form-error.util';
+import { getFormControlErrorMessage } from '@shared/utils/form-error/form-error.util';
 
 @Component({
     selector: 'app-settings',

@@ -16,7 +16,7 @@ import {
 import { PagedResponse } from '@shared/models/pagination.models';
 import { ResultResponse } from '@shared/models/response.models';
 
-import { convertLocalDateToUtc } from '@shared/utils/date.util';
+import { convertLocalDateToUtc } from '@shared/utils/date/date.util';
 
 @Injectable({
     providedIn: 'root'

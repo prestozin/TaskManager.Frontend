@@ -7,7 +7,7 @@ import { ChangePasswordRequest, EditProfileRequest } from '@features/profile/mod
 import { ProfileService } from '@features/profile/services/profile.service';
 import { ProfileState } from '@features/profile/states/profile.state';
 import { EFeedbackType } from '@shared/enums/feedback.enum';
-import { getHttpErrorMessage } from '@shared/utils/http-error.util';
+import { getHttpErrorMessage } from '@shared/utils/http-error/http-error.util';
 
 @Injectable({
     providedIn: 'root'
