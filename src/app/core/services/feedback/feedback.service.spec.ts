@@ -39,7 +39,7 @@ describe('FeedbackService', () => {
     expect(notification.success).toHaveBeenCalledWith(
       'Message',
       'Description',
-      { nzDuration: 5000 }
+      { nzDuration: 3000 }
     );
   });
 
