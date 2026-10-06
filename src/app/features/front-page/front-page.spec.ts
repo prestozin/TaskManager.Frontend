@@ -1,16 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, input } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { provideNzIcons } from 'ng-zorro-antd/icon';
-import {
-    AimOutline,
-    ArrowRightOutline,
-    BarChartOutline,
-    CheckCircleOutline,
-    ClipboardOutline
-} from '@ant-design/icons-angular/icons';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { FrontPage } from './front-page';
+
+@Component({
+    selector: 'nz-icon',
+    standalone: true,
+    template: ''
+})
+class MockNzIconComponent {
+    readonly nzType = input('');
+    readonly nzTheme = input('');
+}
 
 describe('FrontPage', () => {
     let component: FrontPage;
@@ -19,17 +23,17 @@ describe('FrontPage', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [FrontPage],
-            providers: [
-                provideRouter([]),
-                provideNzIcons([
-                    ArrowRightOutline,
-                    ClipboardOutline,
-                    BarChartOutline,
-                    AimOutline,
-                    CheckCircleOutline
-                ])
-            ]
-        }).compileComponents();
+            providers: [provideRouter([])]
+        })
+        .overrideComponent(FrontPage, {
+            remove: {
+                imports: [NzIconModule]
+            },
+            add: {
+                imports: [MockNzIconComponent]
+            }
+        })
+        .compileComponents();
 
         fixture = TestBed.createComponent(FrontPage);
         component = fixture.componentInstance;
