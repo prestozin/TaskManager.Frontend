@@ -1,8 +1,13 @@
 @use "variables" as *;
 
-.form-control {
+.input-wrapper {
+    position: relative;
     width: var(--input-width, 380px);
     max-width: 100%;
+}
+
+.form-control {
+    width: 100%;
     height: var(--input-height, 66px);
     padding: var(--input-padding, 0 40px);
     border: var(--input-border, 2px solid #{$input-border-color});
@@ -11,6 +16,7 @@
     color: var(--input-text-color, black);
     font-size: var(--input-font-size, #{$large-text-font-size});
     outline: none;
+    box-sizing: border-box;
 
     &::placeholder {
         color: var(--input-placeholder-color, inherit);
@@ -26,6 +32,32 @@
     }
 }
 
+.input-wrapper .form-control {
+    padding-right: 70px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: $primary-blue-color;
+    font-size: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    &:hover {
+        color: $secondary-blue-color;
+    }
+}
+
 textarea.form-control {
     min-height: var(--textarea-min-height, var(--input-height, 66px));
     padding: var(--textarea-padding, var(--input-padding, 12px 20px));
@@ -33,7 +65,13 @@ textarea.form-control {
 }
 
 .error-message {
-    margin: var(--error-message-margin, 3px 0 0 40px);
-    color: var(--error-message-color, #{$error-color});
-    font-size: var(--error-message-font-size, 13px);
+    margin: 3px 0 0 40px;
+    width: 340px;
+
+    p {
+        margin: 0;
+        color: var(--error-message-color, #{$error-color});
+        font-size: var(--error-message-font-size, 13px);
+        line-height: 18px;
+    }
 }

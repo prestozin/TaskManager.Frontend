@@ -8,15 +8,32 @@
     </textarea>
 }
 @else {
-    <input
-        class="form-control"
-        [type]="type()"
-        [formControl]="control()"
-        [placeholder]="placeholder()"
-        [maxlength]="maxLength()"
-        [class.invalid]="isInvalid">
+    <div class="input-wrapper">
+        <input
+            class="form-control"
+            [type]="inputType()"
+            [formControl]="control()"
+            [placeholder]="placeholder()"
+            [maxlength]="maxLength()"
+            [class.invalid]="isInvalid">
+
+        @if (type() === 'password') {
+            <button
+                type="button"
+                class="password-toggle"
+                [attr.aria-label]="isPasswordVisible() ? 'Ocultar senha' : 'Mostrar senha'"
+                (click)="togglePasswordVisibility()">
+                <nz-icon
+                    [nzType]="isPasswordVisible() ? 'eye-invisible' : 'eye'"
+                    nzTheme="outline">
+                </nz-icon>
+            </button>
+        }
+    </div>
 }
 
-@if (errorMessage; as message) {
-    <p class="error-message">{{ message }}</p>
-}
+<div class="error-message">
+    @if (errorMessage; as message) {
+        <p>{{ message }}</p>
+    }
+</div>

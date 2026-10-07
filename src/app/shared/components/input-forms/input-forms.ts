@@ -1,14 +1,16 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { getFormControlErrorMessage } from '@shared/utils/form-error/form-error.util';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 type InputType = 'text' | 'email' | 'password' | 'textarea';
 
 @Component({
   selector: 'app-input-forms',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzIconModule
   ],
   templateUrl: './input-forms.html',
   styleUrl: './input-forms.scss'
@@ -19,6 +21,8 @@ export class InputFormsComponent {
   readonly type = input<InputType>('text');
   readonly placeholder = input('');
   readonly maxLength = input<number | null>(null);
+
+  readonly isPasswordVisible = signal(false);
 
 
   get isInvalid(): boolean {
@@ -31,5 +35,18 @@ export class InputFormsComponent {
     return getFormControlErrorMessage(this.control());
   }
 
-  readonly isTextarea = computed(() => this.type() === 'textarea');
+  readonly isTextarea = computed(() =>
+    this.type() === 'textarea'
+  );
+
+  readonly inputType = computed(() => {
+    if (this.type() !== 'password')
+      return this.type();
+
+    return this.isPasswordVisible() ? 'text' : 'password';
+  });
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible.update(visible => !visible);
+  }
 }

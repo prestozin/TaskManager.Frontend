@@ -43,16 +43,9 @@
 
         label {
             color: $primary-blue-color;
-            font-size: $body-font-size;
+            font-size: $input-font-size;
         }
     }
-}
-
-.report-select {
-    width: 210px;
-    height: $control-height;
-    
-    @include zorro.report-select;
 }
 
 .report-date {
@@ -520,6 +513,9 @@
 
 :host ::ng-deep {
     .report-select {
+        width: 210px;
+        height: $control-height;
+
         @include zorro.report-select;
     }
 
@@ -532,6 +528,14 @@
     .report-header {
         margin-bottom: 16px;
         gap: 14px;
+    }
+
+    :host ::ng-deep {
+
+        .report-select,
+        .report-date {
+            width: 100% !important;
+        }
     }
 
     .summary-card,

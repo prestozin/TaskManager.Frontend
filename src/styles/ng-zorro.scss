@@ -124,8 +124,12 @@
     .ant-select-selection-item {
         display: flex;
         align-items: center;
-        font-size: $small-font-size;
+        font-size: $body-font-size;
         border-radius: $small-border-radius;
+    }
+
+    .ant-select-arrow {
+        color: $primary-blue-color !important;
     }
 }
 
@@ -143,6 +147,10 @@
         &::placeholder {
             font-size: $body-font-size;
         }
+    }
+
+    .ant-picker-suffix {
+        color: $primary-blue-color !important;
     }
 }
 
