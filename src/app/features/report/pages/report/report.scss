@@ -219,58 +219,6 @@
     gap: 30px;
 }
 
-.donut-chart {
-    position: relative;
-    width: 160px;
-    height: 160px;
-    margin: auto;
-    border-radius: 50%;
-
-    &::after {
-        content: "";
-        position: absolute;
-        inset: 29px;
-        border-radius: 50%;
-        background-color: $white-color;
-    }
-}
-
-.status-chart {
-    background: conic-gradient($success-color 0% 33.3%,
-            $warning-color 33.3% 58.3%,
-            $info-color 58.3% 87.5%,
-            $error-color 87.5% 100%);
-}
-
-.priority-chart {
-    background: conic-gradient($error-color 0% 25%,
-            $priority-medium-color 25% 75%,
-            $priority-low-color 75% 100%);
-}
-
-.donut-center {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-
-    strong {
-        color: $primary-blue-color;
-        font-size: 26px;
-        font-weight: $font-weight-semibold;
-        line-height: 1;
-    }
-
-    span {
-        margin-top: 6px;
-        color: $muted-text-color;
-        font-size: $small-font-size;
-    }
-}
-
 .chart-legend {
     display: flex;
     flex-direction: column;
@@ -318,34 +266,6 @@
     text-align: right;
 }
 
-.status-pending {
-    --legend-color: #{$info-color};
-}
-
-.status-progress {
-    --legend-color: #{$warning-color};
-}
-
-.status-completed {
-    --legend-color: #{$success-color};
-}
-
-.status-canceled {
-    --legend-color: #{$error-color};
-}
-
-.priority-low {
-    --legend-color: #{$priority-low-color};
-}
-
-.priority-medium {
-    --legend-color: #{$priority-medium-color};
-}
-
-.priority-high {
-    --legend-color: #{$error-color};
-}
-
 .task-list-card {
     overflow: hidden;
 }
@@ -356,6 +276,8 @@
 }
 
 .task-list {
+    min-width: 0;
+
     app-task {
         --task-columns-without-checkbox-options: 1fr 200px 200px 200px;
         --task-title-size: #{$body-font-size};
@@ -399,7 +321,6 @@
 @media (max-width: 1400px) {
     .summary-title {
         min-height: 44px;
-
         line-height: 1.25;
         text-align: center;
     }
@@ -410,13 +331,11 @@
 
     .chart-content {
         grid-template-columns: 170px minmax(0, 1fr);
-
         gap: 16px;
     }
 
     .legend-item {
         grid-template-columns: minmax(0, 1fr) 40px 55px;
-
         gap: 6px;
     }
 }
@@ -428,7 +347,6 @@
 
     .chart-content {
         grid-template-columns: 200px minmax(0, 1fr);
-
         gap: 24px;
     }
 }
@@ -469,8 +387,12 @@
     .task-list {
         overflow-x: auto;
 
-        .task-list-columns,
+        .task-list-columns {
+            min-width: 820px;
+        }
+
         app-task {
+            display: block;
             min-width: 820px;
         }
     }
@@ -554,11 +476,6 @@
 
     .chart-content {
         min-height: auto;
-    }
-
-    .donut-chart {
-        width: 140px;
-        height: 140px;
     }
 
     .legend-item {

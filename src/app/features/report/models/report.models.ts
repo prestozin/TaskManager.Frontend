@@ -26,3 +26,15 @@ export interface ReportPeriodOption {
     value: EReportPeriod;
     label: string;
 }
+
+export interface ChartItem {
+    label: string;
+    count: number;
+    className: string;
+}
+
+export interface DonutChartSegment extends ChartItem {
+    percentage: number;
+    dashArray: string;
+    dashOffset: number;
+}

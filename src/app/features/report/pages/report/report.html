@@ -153,12 +153,10 @@
 
                 <div class="chart-content">
 
-                    <div class="donut-chart status-chart">
-                        <div class="donut-center">
-                            <strong>{{ totalTasks() }}</strong>
-                            <span>tarefas</span>
-                        </div>
-                    </div>
+                    <app-report-chart
+                        [items]="statusChartItems()"
+                        ariaLabel="Distribuição das tarefas por status">
+                    </app-report-chart>
 
                     <div class="chart-legend">
 
@@ -221,12 +219,10 @@
 
                 <div class="chart-content">
 
-                    <div class="donut-chart priority-chart">
-                        <div class="donut-center">
-                            <strong>{{ totalTasks() }}</strong>
-                            <span>tarefas</span>
-                        </div>
-                    </div>
+                   <app-report-chart
+                        [items]="priorityChartItems()"
+                        ariaLabel="Distribuição das tarefas por prioridade">
+                    </app-report-chart>
 
                     <div class="chart-legend">
 

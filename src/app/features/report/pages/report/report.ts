@@ -5,12 +5,13 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { EReportPeriod } from '@features/report/enums/report.enum';
-import { ReportItemResponse, ReportPeriodOption } from '@features/report/models/report.models';
+import { ChartItem, ReportItemResponse, ReportPeriodOption } from '@features/report/models/report.models';
 import { TaskComponent } from '@features/tasks/components/task/task.component';
 import { ETaskPriority, ETaskStatus } from '@features/tasks/enums/task.enum';
 import { TaskFacade } from '@features/tasks/facades/task.facade';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout';
 import { formatDateToApi, parseApiDate } from '@shared/utils/date/date.util';
+import { ReportChartComponent } from '@features/report/components/chart/report-chart.component/report-chart.component';
 
 @Component({
   selector: 'app-report',
@@ -19,7 +20,8 @@ import { formatDateToApi, parseApiDate } from '@shared/utils/date/date.util';
     TaskComponent,
     FormsModule,
     NzDatePickerModule,
-    NzSelectModule
+    NzSelectModule,
+    ReportChartComponent
   ],
   templateUrl: './report.html',
   styleUrl: './report.scss'
@@ -48,6 +50,19 @@ export class Report implements OnInit {
       label: 'Últimos 90 dias'
     }
   ];
+
+  readonly statusChartItems = computed<ChartItem[]>(() => [
+    { label: 'Concluídas', count: this.completedCount(), className: 'status-completed' },
+    { label: 'Em progresso', count: this.progressCount(), className: 'status-progress' },
+    { label: 'Pendentes', count: this.pendingCount(), className: 'status-pending' },
+    { label: 'Canceladas', count: this.canceledCount(), className: 'status-canceled' }
+  ]);
+
+  readonly priorityChartItems = computed<ChartItem[]>(() => [
+    { label: 'Alta', count: this.highPriorityCount(), className: 'priority-high' },
+    { label: 'Média', count: this.mediumPriorityCount(), className: 'priority-medium' },
+    { label: 'Baixa', count: this.lowPriorityCount(), className: 'priority-low' }
+  ]);
 
   readonly startDate = computed(() =>
     parseApiDate(this.selectedStartDate())
@@ -171,3 +186,4 @@ export class Report implements OnInit {
     return this.report()?.priority.find(priority => priority.id === priorityId);
   }
 }
+ 

@@ -1,0 +1,78 @@
+@use "variables" as *;
+
+.donut-chart {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: auto;
+    flex-shrink: 0;
+
+    svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+    }
+
+    circle {
+        cursor: pointer;
+        transition: opacity 150ms ease;
+
+        &:hover {
+            opacity: 0.75;
+        }
+    }
+}
+
+.donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    pointer-events: none;
+    text-align: center;
+
+    strong {
+        color: $primary-blue-color;
+        font-size: 24px;
+        font-weight: $font-weight-semibold;
+    }
+
+    span {
+        max-width: 110px;
+        color: $muted-text-color;
+        text-align: center;
+        font-size: 12px;
+    }
+}
+
+.status-pending {
+    --legend-color: #{$info-color};
+}
+
+.status-progress {
+    --legend-color: #{$warning-color};
+}
+
+.status-completed {
+    --legend-color: #{$success-color};
+}
+
+.status-canceled {
+    --legend-color: #{$error-color};
+}
+
+.priority-low {
+    --legend-color: #{$priority-low-color};
+}
+
+.priority-medium {
+    --legend-color: #{$priority-medium-color};
+}
+
+.priority-high {
+    --legend-color: #{$error-color};
+}

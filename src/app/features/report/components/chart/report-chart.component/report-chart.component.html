@@ -1,0 +1,30 @@
+<div class="donut-chart">
+    <svg viewBox="0 0 160 160" [attr.aria-label]="ariaLabel()" role="img">
+        @for (segment of segments(); track segment.className) {
+            <circle
+                cx="80"
+                cy="80"
+                r="65"
+                fill="none"
+                stroke="var(--legend-color)"
+                stroke-width="22"
+                [attr.stroke-dasharray]="segment.dashArray"
+                [attr.stroke-dashoffset]="segment.dashOffset"
+                [class]="segment.className"
+                (mouseenter)="activeSegment.set(segment)"
+                (mouseleave)="activeSegment.set(null)">
+            </circle>
+        }
+    </svg>
+
+    <div class="donut-center">
+        @if (activeSegment(); as segment) {
+            <strong>{{ segment.percentage }}%</strong>
+            <span>{{ segment.label }}</span>
+            <span>{{ segment.count }} tarefas</span>
+        } @else {
+            <strong>{{ total() }}</strong>
+            <span>tarefas</span>
+        }
+    </div>
+</div>
