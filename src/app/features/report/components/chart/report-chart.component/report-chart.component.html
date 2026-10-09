@@ -1,6 +1,6 @@
 <div class="donut-chart">
     <svg viewBox="0 0 160 160" [attr.aria-label]="ariaLabel()" role="img">
-        @for (segment of segments(); track segment.className) {
+        @for (segment of animatedSegments(); track segment.trackId; let i = $index) {
             <circle
                 cx="80"
                 cy="80"
@@ -11,6 +11,8 @@
                 [attr.stroke-dasharray]="segment.dashArray"
                 [attr.stroke-dashoffset]="segment.dashOffset"
                 [class]="segment.className"
+                [style.--segment-index]="i"
+                class="chart-segment"
                 (mouseenter)="activeSegment.set(segment)"
                 (mouseleave)="activeSegment.set(null)">
             </circle>
@@ -23,7 +25,7 @@
             <span>{{ segment.label }}</span>
             <span>{{ segment.count }} tarefas</span>
         } @else {
-            <strong>{{ total() }}</strong>
+            <strong>{{ totalTasksCount() }}</strong>
             <span>tarefas</span>
         }
     </div>
