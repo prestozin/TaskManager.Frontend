@@ -25,15 +25,15 @@ describe('FrontPage', () => {
             imports: [FrontPage],
             providers: [provideRouter([])]
         })
-        .overrideComponent(FrontPage, {
-            remove: {
-                imports: [NzIconModule]
-            },
-            add: {
-                imports: [MockNzIconComponent]
-            }
-        })
-        .compileComponents();
+            .overrideComponent(FrontPage, {
+                remove: {
+                    imports: [NzIconModule]
+                },
+                add: {
+                    imports: [MockNzIconComponent]
+                }
+            })
+            .compileComponents();
 
         fixture = TestBed.createComponent(FrontPage);
         component = fixture.componentInstance;
@@ -66,15 +66,20 @@ describe('FrontPage', () => {
         ]);
     });
 
-    it('should keep account links pointing to login', () => {
-        const element = fixture.nativeElement as HTMLElement;
-        const accountLinks = Array.from(
-            element.querySelectorAll<HTMLAnchorElement>('.btn-login, .about .btn-primary')
-        );
 
-        expect(accountLinks).toHaveLength(2);
-        expect(accountLinks.every(link => link.getAttribute('href') === '/login')).toBe(true);
+    it('should point account links to their correct routes', () => {
+        const element = fixture.nativeElement as HTMLElement;
+
+        const loginLink =
+            element.querySelector<HTMLAnchorElement>('.btn-login');
+
+        const registerLink =
+            element.querySelector<HTMLAnchorElement>('.about .btn-primary');
+
+        expect(loginLink?.getAttribute('href')).toBe('/login');
+        expect(registerLink?.getAttribute('href')).toBe('/register');
     });
+
 
     it('should render the dashboard preview with accessible text', () => {
         const element = fixture.nativeElement as HTMLElement;

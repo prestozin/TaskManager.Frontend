@@ -431,6 +431,10 @@
     .card-header {
         align-items: flex-start;
     }
+
+    .column-title-date{
+        display: none;
+    }
 }
 
 :host ::ng-deep {

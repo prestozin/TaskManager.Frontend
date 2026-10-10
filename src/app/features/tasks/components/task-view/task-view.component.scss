@@ -108,6 +108,11 @@
         border: 1px solid $error-color;
         background-color: transparent;
         color: $error-text-color;
+
+        &:hover {
+            background-color: $error-color;
+            color: $white-color;
+        }
     }
 
     .btn-edit {
@@ -115,6 +120,11 @@
         border: 1px solid $primary-blue-color;
         background-color: $white-color;
         color: $primary-blue-color;
+
+        &:hover {
+            background-color: $secondary-blue-color;
+            color: $white-color;
+        }
     }
 
     .btn-close {
@@ -132,35 +142,58 @@
 
     .container {
         height: auto;
-
         padding: 22px 20px;
 
         .task-infos {
             margin-top: 24px;
-
             gap: 18px;
         }
 
         .buttons {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             margin-top: 26px;
-
-            gap: 10px;
+            gap: 8px;
         }
 
         .delete-wrapper {
-            grid-column: 1 / -1;
-
-            width: 100%;
+            grid-column: auto;
+            width: auto;
             margin-right: 0;
+            gap: 0;
         }
 
         .btn-delete,
         .btn-edit,
         .btn-close {
             width: 100%;
+            min-width: 0;
+            height: 38px;
+            padding: 0 4px;
+            font-size: 15px;
+            white-space: nowrap;
+        }
+    }
+}
+
+@media (max-width: 380px) {
+    .container {
+        padding: 18px 16px;
+
+        .task-infos {
+            margin-top: 20px;
+            gap: 16px;
+        }
+
+        .buttons {
+            gap: 5px;
+        }
+
+        .btn-delete,
+        .btn-edit,
+        .btn-close {
+            padding: 0 2px;
+            font-size: 12px;
         }
     }
 }
